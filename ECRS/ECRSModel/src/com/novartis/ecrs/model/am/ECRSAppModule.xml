@@ -5,8 +5,25 @@
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="ECRSAppModule"
   Version="11.1.2.64.36"
-  ClearCacheOnRollback="true">
+  ClearCacheOnRollback="true"
+  ComponentClass="com.novartis.ecrs.model.am.ECRSAppModuleImpl"
+  ComponentInterface="com.novartis.ecrs.model.am.common.ECRSAppModule"
+  ClientProxyName="com.novartis.ecrs.model.am.client.ECRSAppModuleClient">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
   <ViewUsage
     Name="CrsContentVO"
     ViewObjectName="com.novartis.ecrs.model.view.CrsContentVO"/>
+  <ViewUsage
+    Name="CrsUserRolesVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsUserRolesVO"/>
+  <ClientInterface>
+    <Method
+      Name="fetchDesignees"
+      MethodName="fetchDesignees">
+      <Return
+        Type="java.util.List"/>
+    </Method>
+  </ClientInterface>
 </AppModule>

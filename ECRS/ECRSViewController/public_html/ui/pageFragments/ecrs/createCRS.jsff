@@ -85,13 +85,9 @@
                             <f:selectItems value="#{bindings.BslName.items}"
                                            id="si3"/>
                         </af:selectOneChoice>
-                        <af:selectManyChoice value="#{bindings.CrsContentVO.inputValue}"
-                                             label="#{bindings.CrsContentVO.label}"
-                                             id="smc1"
-                                             contentStyle="width:170px;"
-                                             rendered="false">
-                            <f:selectItems value="#{bindings.CrsContentVO.items}"
-                                           id="si4"/>
+                        <af:selectManyChoice label="Designee" id="smc2" contentStyle="width:170px;"
+                                             value="#{pageFlowScope.manageCRSBean.selDesigneeList}">
+                            <f:selectItems value="#{pageFlowScope.manageCRSBean.designeeList}" id="si11"/>
                         </af:selectManyChoice>
                         <af:selectOneChoice value="#{bindings.TaslName.inputValue}"
                                             label="#{ecrsviewcontrollerBundle.CRS_TASL}"

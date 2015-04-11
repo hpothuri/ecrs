@@ -44,16 +44,6 @@
     <list IterBinding="CrsContentVOIterator" StaticList="false"
           Uses="LOV_MedicalLeadName" id="MedicalLeadName" DTSupportsMRU="true"
           SelectItemValueMode="ListObject"/>
-    <list IterBinding="CrsContentVOIterator" ListOperMode="multiSelect"
-          ListIter="CrsContentVOIterator" id="CrsContentVO"
-          SelectItemValueMode="ListObject">
-      <AttrNames>
-        <Item Value="Designee"/>
-      </AttrNames>
-      <ListDisplayAttrNames>
-        <Item Value="Designee"/>
-      </ListDisplayAttrNames>
-    </list>
     <attributeValues IterBinding="CrsContentVOIterator" id="ReleaseStatusFlag">
       <AttrNames>
         <Item Value="ReleaseStatusFlag"/>
@@ -79,5 +69,14 @@
     <list IterBinding="CrsContentVOIterator" StaticList="false"
           Uses="LOV_StateId" id="StateId" DTSupportsMRU="true"
           SelectItemValueMode="ListObject"/>
+    <methodAction id="fetchDesignees" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="fetchDesignees" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.fetchDesignees_ECRSAppModuleDataControl_dataProvider_fetchDesignees_result"/>
+    <attributeValues IterBinding="CrsContentVOIterator" id="Designee">
+      <AttrNames>
+        <Item Value="Designee"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>
