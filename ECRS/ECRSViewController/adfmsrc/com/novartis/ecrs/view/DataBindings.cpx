@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="11.1.2.64.36" id="DataBindings"
+             SeparateXMLFiles="false" Package="com.novartis.ecrs.view" ClientType="Generic">
+  <pageMap>
+    <page path="/pages/Home.jspx" usageId="com_novartis_ecrs_view_HomePageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="com_novartis_ecrs_view_HomePageDef" path="pages.HomePageDef"/>
+  </pageDefinitionUsages>
+</Application>
