@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="ManageCRSTF">
+    <default-activity>crsFlowRouter</default-activity>
+    <input-parameter-definition id="__4">
+      <name>flowType</name>
+      <value>#{pageFlowScope.flowType}</value>
+      <class>java.lang.String</class>
+      <required/>
+    </input-parameter-definition>
+    <managed-bean id="__1">
+      <managed-bean-name>manageCRSBean</managed-bean-name>
+      <managed-bean-class>com.novartis.ecrs.ui.bean.ManageCRSBean</managed-bean-class>
+      <managed-bean-scope>pageFlow</managed-bean-scope>
+    </managed-bean>
+    <view id="serach">
+      <page>/ui/pageFragments/ecrs/searchCRS.jsff</page>
+      <train-stop>
+       <display-name id="__15">Search</display-name>
+        <ignore>#{pageFlowScope.manageCRSBean.flowType == 'C'}</ignore>
+      </train-stop>
+    </view>
+    <view id="create">
+      <page>/ui/pageFragments/ecrs/createCRS.jsff</page>
+      <train-stop>
+       <display-name id="__14">Add Details</display-name>
+      </train-stop>
+    </view>
+    <view id="RiskDef">
+      <page>/ui/pageFragments/ecrs/AddRiskDefinitions.jsff</page>
+      <train-stop>
+       <display-name id="__16">Add Risk Definitions</display-name>
+      </train-stop>
+    </view>
+    <router id="crsFlowRouter">
+      <case id="__10">
+        <expression>#{pageFlowScope.flowType == 'C'}</expression>
+        <outcome>toCreate</outcome>
+      </case>
+      <default-outcome>toUpdate</default-outcome>
+    </router>
+    <method-call id="createRow">
+      <method>#{pageFlowScope.manageCRSBean.createCrsRow}</method>
+      <outcome>
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <train/>
+    <control-flow-rule id="__5">
+      <from-activity-id>crsFlowRouter</from-activity-id>
+      <control-flow-case id="__6">
+        <from-outcome>toUpdate</from-outcome>
+        <to-activity-id>serach</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__7">
+        <from-outcome>toCreate</from-outcome>
+        <to-activity-id>createRow</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__2">
+      <from-activity-id>createRow</from-activity-id>
+      <control-flow-case id="__3">
+        <from-outcome>CreateInsert</from-outcome>
+        <to-activity-id>create</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="ecrsviewcontrollerBundle"
+           value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.CREATE}" id="ph1">
+        <f:facet name="context"/>
+        <f:facet name="menuBar"/>
+        <f:facet name="toolbar"/>
+        <f:facet name="legend"/>
+        <f:facet name="info"/>
+        <af:panelGroupLayout id="pgl5" layout="vertical">
+            <af:panelBox text="#{ecrsviewcontrollerBundle.DETAILS}" id="pb1">
+                <f:facet name="toolbar">
+                    <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}"
+                                      id="cb4"
+                                      actionListener="#{pageFlowScope.manageCRSBean.onClickCreateSave}"/>
+                </f:facet>
+                <af:panelGroupLayout id="pgl3" layout="horizontal">
+                    <af:panelFormLayout id="pfl1" maxColumns="2" rows="6"
+                                        labelWidth="150" fieldWidth="200">
+                        <f:facet name="footer"/>
+                        <af:selectOneChoice value="#{bindings.CompoundType.inputValue}"
+                                            label="#{bindings.CompoundType.label}"
+                                            required="true"
+                                            shortDesc="#{bindings.CompoundType.hints.tooltip}"
+                                            id="soc1" autoSubmit="true"
+                                            contentStyle="width:150px;">
+                            <f:selectItems value="#{bindings.CompoundType.items}"
+                                           id="si1"/>
+                        </af:selectOneChoice>
+                        <af:selectOneChoice value="#{bindings.CompoundId.inputValue}"
+                                            label="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
+                                            required="true"
+                                            shortDesc="#{bindings.CompoundId.hints.tooltip}"
+                                            id="soc2"
+                                            contentStyle="width:150px;"
+                                            autoSubmit="true">
+                            <f:selectItems value="#{bindings.CompoundId.items}"
+                                           id="si2"/>
+                        </af:selectOneChoice>
+                        <af:inputText value="#{bindings.TradeName.inputValue}"
+                                      label="#{bindings.TradeName.hints.label}"
+                                      required="#{bindings.TradeName.hints.mandatory}"
+                                      columns="#{bindings.TradeName.hints.displayWidth}"
+                                      maximumLength="#{bindings.TradeName.hints.precision}"
+                                      shortDesc="#{bindings.TradeName.hints.tooltip}"
+                                      id="it1" contentStyle="width:150px;">
+                            <f:validator binding="#{bindings.TradeName.validator}"/>
+                        </af:inputText>
+                        <af:inputText value="#{bindings.GenericName.inputValue}"
+                                      label="#{bindings.GenericName.hints.label}"
+                                      required="#{bindings.GenericName.hints.mandatory}"
+                                      columns="#{bindings.GenericName.hints.displayWidth}"
+                                      maximumLength="#{bindings.GenericName.hints.precision}"
+                                      shortDesc="#{bindings.GenericName.hints.tooltip}"
+                                      id="it2" contentStyle="width:150px;">
+                            <f:validator binding="#{bindings.GenericName.validator}"/>
+                        </af:inputText>
+                        <af:inputText value="#{bindings.Indication.inputValue}"
+                                      label="#{bindings.Indication.hints.label}"
+                                      required="#{bindings.Indication.hints.mandatory}"
+                                      columns="#{bindings.Indication.hints.displayWidth}"
+                                      maximumLength="#{bindings.Indication.hints.precision}"
+                                      shortDesc="#{bindings.Indication.hints.tooltip}"
+                                      id="it3" contentStyle="width:150px;"
+                                      autoSubmit="true">
+                            <f:validator binding="#{bindings.Indication.validator}"/>
+                        </af:inputText>
+                        <af:selectOneChoice label="#{ecrsviewcontrollerBundle.MARKETED}"
+                                            id="soc8"
+                                            value="#{bindings.IsMarketedFlag.inputValue}"
+                                            required="#{bindings.IsMarketedFlag.hints.mandatory}">
+                            <af:selectItem label="Yes" value="Y" id="si9"/>
+                            <af:selectItem label="No" value="N" id="si10"/>
+                        </af:selectOneChoice>
+                        <af:selectOneChoice value="#{bindings.BslName.inputValue}"
+                                            label="#{ecrsviewcontrollerBundle.BSL}"
+                                            required="true"
+                                            shortDesc="#{bindings.BslName.hints.tooltip}"
+                                            id="soc3"
+                                            contentStyle="width:170px;">
+                            <f:selectItems value="#{bindings.BslName.items}"
+                                           id="si3"/>
+                        </af:selectOneChoice>
+                        <af:selectManyChoice value="#{bindings.CrsContentVO.inputValue}"
+                                             label="#{bindings.CrsContentVO.label}"
+                                             id="smc1"
+                                             contentStyle="width:170px;"
+                                             rendered="false">
+                            <f:selectItems value="#{bindings.CrsContentVO.items}"
+                                           id="si4"/>
+                        </af:selectManyChoice>
+                        <af:selectOneChoice value="#{bindings.TaslName.inputValue}"
+                                            label="#{ecrsviewcontrollerBundle.CRS_TASL}"
+                                            required="true"
+                                            shortDesc="#{bindings.TaslName.hints.tooltip}"
+                                            id="soc5"
+                                            contentStyle="width:170px;">
+                            <f:selectItems value="#{bindings.TaslName.items}"
+                                           id="si5"/>
+                        </af:selectOneChoice>
+                        <af:selectOneChoice value="#{bindings.MedicalLeadName.inputValue}"
+                                            label="#{ecrsviewcontrollerBundle.CRS_MEDICAL_LEAD}"
+                                            required="true"
+                                            shortDesc="#{bindings.MedicalLeadName.hints.tooltip}"
+                                            id="soc6"
+                                            contentStyle="width:170px;">
+                            <f:selectItems value="#{bindings.MedicalLeadName.items}"
+                                           id="si6"/>
+                        </af:selectOneChoice>
+                    </af:panelFormLayout>
+                    <af:spacer width="50" height="10" id="s3"/>
+                    <af:panelGroupLayout id="pgl4" layout="vertical"
+                                         valign="top">
+                        <af:panelFormLayout id="pfl2" fieldWidth="100">
+                            <f:facet name="footer"/>
+                            <af:selectOneChoice value="#{bindings.StateId.inputValue}"
+                                                label="#{bindings.StateId.label}"
+                                                required="#{bindings.StateId.hints.mandatory}"
+                                                shortDesc="#{bindings.StateId.hints.tooltip}"
+                                                id="soc4" readOnly="true">
+                                <f:selectItems value="#{bindings.StateId.items}"
+                                               id="si7"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice label="#{ecrsviewcontrollerBundle.CRS_STATUS}#{ecrsviewcontrollerBundle.COLON}"
+                                                id="soc7"
+                                                value="#{bindings.ReleaseStatusFlag.inputValue}"
+                                                readOnly="true">
+                                <af:selectItem label="Pending" id="si8"
+                                               value="P"/>
+                            </af:selectOneChoice>
+                        </af:panelFormLayout>
+                    </af:panelGroupLayout>
+                </af:panelGroupLayout>
+                <af:spacer width="10" height="10" id="s2"/>
+                <af:panelFormLayout id="pgl1" rows="1"
+                                    fieldWidth="200" labelWidth="150">
+                    <af:inputText label="#{ecrsviewcontrollerBundle.CRS_NAME} #{ecrsviewcontrollerBundle.COLON}"
+                                  id="it5" readOnly="true"
+                                  value="#{bindings.CrsName.inputValue}"
+                                  partialTriggers="soc2 it3"/>
+                    <af:inputText label="#{ecrsviewcontrollerBundle.CRS_ID} #{ecrsviewcontrollerBundle.COLON}"
+                                  id="it6" readOnly="true"
+                                  value="#{bindings.CrsId.inputValue}"/>
+                </af:panelFormLayout>
+            </af:panelBox>
+            <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}" id="pb2"
+                         contentStyle="height:150px;">
+                <f:facet name="toolbar">
+                    <af:panelGroupLayout id="pgl2">
+                        <af:commandButton text="#{ecrsviewcontrollerBundle.DEMOTE_TO_DRAFT}"
+                                          id="cb1"
+                                          disabled="#{bindings.StateId.inputValue eq 1}"/>
+                        <af:commandButton text="#{ecrsviewcontrollerBundle.REVIEW}"
+                                          id="cb2"/>
+                        <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE}"
+                                          id="cb3"/>
+                        <f:facet name="separator">
+                            <af:spacer width="10" height="10" id="s1"/>
+                        </f:facet>
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:panelBox>
+            <af:panelGroupLayout id="pgl6" layout="horizontal">
+                <af:commandButton text="#{ecrsviewcontrollerBundle.BACK}"
+                                  id="cb5"
+                                  action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}"/>
+                <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}"
+                                  id="cb6"
+                                  action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getNext}"/>
+                <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}"
+                                  id="cb7"/>
+                <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}"
+                                         id="plam1"/>
+                <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}#{ecrsviewcontrollerBundle.COLON}"
+                                         id="plam2"/>
+                <f:facet name="separator">
+                    <af:spacer width="10" height="10" id="s4"/>
+                </f:facet>
+            </af:panelGroupLayout>
+        </af:panelGroupLayout>
+    </af:panelHeader>
+</jsp:root>

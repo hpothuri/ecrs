@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.2.64.36" id="createCRSPageDef"
+                Package="ui.pageFragments.ecrs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="CrsContentVO" RangeSize="25"
+              DataControl="ECRSAppModuleDataControl" id="CrsContentVOIterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="CrsContentVOIterator" StaticList="false"
+          Uses="LOV_CompoundType" id="CompoundType" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="CrsContentVOIterator" StaticList="false"
+          Uses="LOV_CompoundId" id="CompoundId" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject"/>
+    <attributeValues IterBinding="CrsContentVOIterator" id="TradeName">
+      <AttrNames>
+        <Item Value="TradeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="GenericName">
+      <AttrNames>
+        <Item Value="GenericName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="Indication">
+      <AttrNames>
+        <Item Value="Indication"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="IsMarketedFlag">
+      <AttrNames>
+        <Item Value="IsMarketedFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CrsContentVOIterator" StaticList="false"
+          Uses="LOV_BslName" id="BslName" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="CrsContentVOIterator" StaticList="false"
+          Uses="LOV_TaslName" id="TaslName" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="CrsContentVOIterator" StaticList="false"
+          Uses="LOV_MedicalLeadName" id="MedicalLeadName" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="CrsContentVOIterator" ListOperMode="multiSelect"
+          ListIter="CrsContentVOIterator" id="CrsContentVO"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Designee"/>
+      </AttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Designee"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="CrsContentVOIterator" id="ReleaseStatusFlag">
+      <AttrNames>
+        <Item Value="ReleaseStatusFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CrsName">
+      <AttrNames>
+        <Item Value="CrsName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CrsId">
+      <AttrNames>
+        <Item Value="CrsId"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="CrsContentVOIterator" id="CreateInsert"
+            InstanceName="ECRSAppModuleDataControl.CrsContentVO"
+            DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="Commit" InstanceName="ECRSAppModuleDataControl"
+            DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true"
+            Action="commitTransaction"/>
+    <list IterBinding="CrsContentVOIterator" StaticList="false"
+          Uses="LOV_StateId" id="StateId" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject"/>
+  </bindings>
+</pageDefinition>
