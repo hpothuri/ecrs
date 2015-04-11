@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Application xmlns="http://xmlns.oracle.com/adfm/application" version="11.1.2.64.36" id="DataBindings"
-             SeparateXMLFiles="false" Package="com.novartis.ecrs.view" ClientType="Generic">
+<Application xmlns="http://xmlns.oracle.com/adfm/application"
+             version="11.1.2.64.36" id="DataBindings" SeparateXMLFiles="false"
+             Package="com.novartis.ecrs.view" ClientType="Generic">
   <pageMap>
-    <page path="/pages/Home.jspx" usageId="com_novartis_ecrs_view_HomePageDef"/>
+    <page path="/ui/pageFragments/ecrs/createCRS.jsff"
+          usageId="com_novartis_ecrs_view_createCRSPageDef"/>
+    <page path="/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF@CreateInsert"
+          usageId="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_CreateInsertPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
-    <page id="com_novartis_ecrs_view_HomePageDef" path="pages.HomePageDef"/>
+    <page id="com_novartis_ecrs_view_createCRSPageDef"
+          path="ui.pageFragments.ecrs.createCRSPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_CreateInsertPageDef"
+          path="taskflows.ManageCRSTF_ManageCRSTF_CreateInsertPageDef"/>
   </pageDefinitionUsages>
+  <dataControlUsages>
+    <BC4JDataControl id="ECRSAppModuleDataControl"
+                     Package="com.novartis.ecrs.model.am"
+                     FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                     SupportsTransactions="true" SupportsFindMode="true"
+                     SupportsRangesize="true" SupportsResetState="true"
+                     SupportsSortCollection="true"
+                     Configuration="ECRSAppModuleLocal" syncMode="Immediate"
+                     xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+  </dataControlUsages>
 </Application>
