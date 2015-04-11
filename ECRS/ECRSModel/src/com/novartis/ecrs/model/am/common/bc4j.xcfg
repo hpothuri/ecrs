@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
+   <AppModuleConfigBag ApplicationName="com.novartis.ecrs.model.am.ECRSAppModule">
+      <AppModuleConfig name="ECRSAppModule" ApplicationName="com.novartis.ecrs.model.am.ECRSAppModule" DeployPlatform="LOCAL" JDBCName="CRSConn" jbo.project="com.novartis.ecrs.model.ECRSModel">
+         <Security AppModuleJndiName="com.novartis.ecrs.model.am.ECRSAppModule"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>

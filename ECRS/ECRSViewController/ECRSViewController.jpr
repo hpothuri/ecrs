@@ -181,8 +181,8 @@
       </list>
    </hash>
    <hash n="oracle.jdeveloper.model.J2eeSettings">
-      <value n="j2eeWebAppName" v="ECRS-ECRSViewController-webapp"/>
-      <value n="j2eeWebContextRoot" v="ECRS-ECRSViewController-context-root"/>
+      <value n="j2eeWebAppName" v="ECRS"/>
+      <value n="j2eeWebContextRoot" v="ECRS"/>
    </hash>
    <hash n="oracle.jdevimpl.config.JProjectLibraries">
       <list n="exportedReferences">

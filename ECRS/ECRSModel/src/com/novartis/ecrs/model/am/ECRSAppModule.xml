@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+<AppModule
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ECRSAppModule"
+  Version="11.1.2.64.36"
+  ClearCacheOnRollback="true">
+  <ViewUsage
+    Name="CrsContentVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsContentVO"/>
+</AppModule>

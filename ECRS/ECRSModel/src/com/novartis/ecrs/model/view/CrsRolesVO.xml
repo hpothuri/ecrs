@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CrsRolesVO"
+  Version="11.1.2.64.36"
+  SelectList="CrsRolesEO.ROLE_ID, 
+       CrsRolesEO.ROLE_NAME, 
+       CrsRolesEO.ROLE_DESC"
+  FromList="CRS.CRS_ROLES CrsRolesEO"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <EntityUsage
+    Name="CrsRolesEO"
+    Entity="com.novartis.ecrs.model.entity.CrsRolesEO"/>
+  <ViewAttribute
+    Name="RoleId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RoleId"
+    EntityUsage="CrsRolesEO"
+    AliasName="ROLE_ID"/>
+  <ViewAttribute
+    Name="RoleName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RoleName"
+    EntityUsage="CrsRolesEO"
+    AliasName="ROLE_NAME"/>
+  <ViewAttribute
+    Name="RoleDesc"
+    PrecisionRule="true"
+    EntityAttrName="RoleDesc"
+    EntityUsage="CrsRolesEO"
+    AliasName="ROLE_DESC"/>
+</ViewObject>

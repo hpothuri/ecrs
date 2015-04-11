@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CrsStateVO"
+  Version="11.1.2.64.36"
+  SelectList="CrsStateEO.STATE_ID, 
+       CrsStateEO.STATE_NAME, 
+       CrsStateEO.STATE_DESC"
+  FromList="CRS.CRS_STATES CrsStateEO"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <EntityUsage
+    Name="CrsStateEO"
+    Entity="com.novartis.ecrs.model.entity.CrsStateEO"/>
+  <ViewAttribute
+    Name="StateId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="StateId"
+    EntityUsage="CrsStateEO"
+    AliasName="STATE_ID"/>
+  <ViewAttribute
+    Name="StateName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="StateName"
+    EntityUsage="CrsStateEO"
+    AliasName="STATE_NAME"/>
+  <ViewAttribute
+    Name="StateDesc"
+    PrecisionRule="true"
+    EntityAttrName="StateDesc"
+    EntityUsage="CrsStateEO"
+    AliasName="STATE_DESC"/>
+  <ViewLinkAccessor
+    Name="CrsContentVO"
+    ViewLink="com.novartis.ecrs.model.view.link.CrsContentIdxStateFkLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+</ViewObject>

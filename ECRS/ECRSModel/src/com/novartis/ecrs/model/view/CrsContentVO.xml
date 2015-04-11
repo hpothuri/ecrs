@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CrsContentVO"
+  Version="11.1.2.64.36"
+  SelectList="CrsContentEO.CRS_ID, 
+       CrsContentEO.CRS_NAME, 
+       CrsContentEO.STATE_ID, 
+       CrsContentEO.COMPOUND_ID, 
+       CrsContentEO.GENERIC_NAME, 
+       CrsContentEO.TRADE_NAME, 
+       CrsContentEO.INDICATION, 
+       CrsContentEO.IS_MARKETED_FLAG, 
+       CrsContentEO.RELEASE_STATUS_FLAG, 
+       CrsContentEO.BSL_NAME, 
+       CrsContentEO.DESIGNEE, 
+       CrsContentEO.MQM_COMMENT, 
+       CrsContentEO.TASL_NAME, 
+       CrsContentEO.TASL_REJECT_COMMENT, 
+       CrsContentEO.MEDICAL_LEAD_NAME, 
+       CrsContentEO.MEDICAL_LEAD_REJECT_COMMENT, 
+       CrsContentEO.CRS_EFFECTIVE_DT"
+  FromList="CRS.CRS_CONTENT CrsContentEO"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="com.novartis.ecrs.model.view.CrsContentVORowImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="CrsCompoundVA"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsCompoundVO">
+    <ViewCriteriaUsage
+      Name="findByCompoundType"
+      FullName="com.novartis.ecrs.model.view.CrsCompoundVO.findByCompoundType"/>
+    <ParameterMap>
+      <PIMap Variable="bindCompoundType">
+        <TransientExpression><![CDATA[CompoundType]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="CompundTypeLOVVA"
+    ViewObjectName="com.novartis.ecrs.model.lov.CompundTypeLOVVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="CrsBSLUserVA"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsUserRolesVO">
+    <ViewCriteriaUsage
+      Name="findByRoleName"
+      FullName="com.novartis.ecrs.model.view.CrsUserRolesVO.findByRoleName"/>
+    <ParameterMap>
+      <PIMap Variable="bindRoleName">
+        <TransientExpression><![CDATA['BSL']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="CrsTASLUserVA"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsUserRolesVO">
+    <ViewCriteriaUsage
+      Name="findByRoleName"
+      FullName="com.novartis.ecrs.model.view.CrsUserRolesVO.findByRoleName"/>
+    <ParameterMap>
+      <PIMap Variable="bindRoleName">
+        <TransientExpression><![CDATA['TASL']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="CrsMLUserVA"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsUserRolesVO">
+    <ViewCriteriaUsage
+      Name="findByRoleName"
+      FullName="com.novartis.ecrs.model.view.CrsUserRolesVO.findByRoleName"/>
+    <ParameterMap>
+      <PIMap Variable="bindRoleName">
+        <TransientExpression><![CDATA['ML']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="CrsUserVA"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsUserRolesVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="CrsStateVA"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsStateVO"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_CompoundId"
+    ListVOName="CrsCompoundVA"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CompoundId"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="CompoundCode"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CompoundId"/>
+      <Item Value="CompoundCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CompoundCode"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CompoundType"
+    ListVOName="CompundTypeLOVVA"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CompoundType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CompoundType"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CompoundType"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_BslName"
+    ListVOName="CrsBSLUserVA"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BslName"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_TaslName"
+    ListVOName="CrsTASLUserVA"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TaslName"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_MedicalLeadName"
+    ListVOName="CrsMLUserVA"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="MedicalLeadName"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Designee"
+    ListVOName="CrsBSLUserVA"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Designee"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_StateId"
+    ListVOName="CrsStateVA"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="StateId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="StateId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="StateName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <EntityUsage
+    Name="CrsContentEO"
+    Entity="com.novartis.ecrs.model.entity.CrsContentEO"/>
+  <ViewAttribute
+    Name="CrsId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CrsId"
+    EntityUsage="CrsContentEO"
+    AliasName="CRS_ID"/>
+  <ViewAttribute
+    Name="CrsName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CrsName"
+    EntityUsage="CrsContentEO"
+    AliasName="CRS_NAME">
+    <Dependencies>
+      <Item
+        Value="CompoundCode"/>
+      <Item
+        Value="Indication"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StateId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="StateId"
+    EntityUsage="CrsContentEO"
+    AliasName="STATE_ID"
+    LOVName="LOV_StateId">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CompoundId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CompoundId"
+    EntityUsage="CrsContentEO"
+    AliasName="COMPOUND_ID"
+    LOVName="LOV_CompoundId">
+    <Dependencies>
+      <Item
+        Value="CompoundType"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="GenericName"
+    PrecisionRule="true"
+    EntityAttrName="GenericName"
+    EntityUsage="CrsContentEO"
+    AliasName="GENERIC_NAME"/>
+  <ViewAttribute
+    Name="TradeName"
+    PrecisionRule="true"
+    EntityAttrName="TradeName"
+    EntityUsage="CrsContentEO"
+    AliasName="TRADE_NAME"/>
+  <ViewAttribute
+    Name="Indication"
+    PrecisionRule="true"
+    EntityAttrName="Indication"
+    EntityUsage="CrsContentEO"
+    AliasName="INDICATION">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="IsMarketedFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="IsMarketedFlag"
+    EntityUsage="CrsContentEO"
+    AliasName="IS_MARKETED_FLAG"/>
+  <ViewAttribute
+    Name="ReleaseStatusFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ReleaseStatusFlag"
+    EntityUsage="CrsContentEO"
+    AliasName="RELEASE_STATUS_FLAG"/>
+  <ViewAttribute
+    Name="BslName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="BslName"
+    EntityUsage="CrsContentEO"
+    AliasName="BSL_NAME"
+    LOVName="LOV_BslName">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Designee"
+    PrecisionRule="true"
+    EntityAttrName="Designee"
+    EntityUsage="CrsContentEO"
+    AliasName="DESIGNEE"
+    LOVName="LOV_Designee">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MqmComment"
+    PrecisionRule="true"
+    EntityAttrName="MqmComment"
+    EntityUsage="CrsContentEO"
+    AliasName="MQM_COMMENT"/>
+  <ViewAttribute
+    Name="TaslName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="TaslName"
+    EntityUsage="CrsContentEO"
+    AliasName="TASL_NAME"
+    LOVName="LOV_TaslName">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TaslRejectComment"
+    PrecisionRule="true"
+    EntityAttrName="TaslRejectComment"
+    EntityUsage="CrsContentEO"
+    AliasName="TASL_REJECT_COMMENT"/>
+  <ViewAttribute
+    Name="MedicalLeadName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="MedicalLeadName"
+    EntityUsage="CrsContentEO"
+    AliasName="MEDICAL_LEAD_NAME"
+    LOVName="LOV_MedicalLeadName">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MedicalLeadRejectComment"
+    PrecisionRule="true"
+    EntityAttrName="MedicalLeadRejectComment"
+    EntityUsage="CrsContentEO"
+    AliasName="MEDICAL_LEAD_REJECT_COMMENT"/>
+  <ViewAttribute
+    Name="CrsEffectiveDt"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CrsEffectiveDt"
+    EntityUsage="CrsContentEO"
+    AliasName="CRS_EFFECTIVE_DT"/>
+  <ViewAttribute
+    Name="CompoundType"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_CompoundType">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CompoundCode"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+</ViewObject>

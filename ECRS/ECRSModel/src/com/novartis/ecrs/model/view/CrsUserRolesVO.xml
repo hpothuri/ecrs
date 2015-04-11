@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CrsUserRolesVO"
+  Version="11.1.2.64.36"
+  SelectList="CrsUserRolesEO.USER_NAME, 
+       CrsUserRolesEO.ROLE_ID, 
+       CrsUserRolesEO.ACTIVE_FLAG, 
+       CrsUserRolesEO.USER_COMMENT, 
+       CrsRolesEO.ROLE_NAME, 
+       CrsRolesEO.ROLE_DESC, 
+       CrsRolesEO.ROLE_ID AS ROLE_ID1"
+  FromList="CRS.CRS_USER_ROLES CrsUserRolesEO, CRS.CRS_ROLES CrsRolesEO"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  Where="CrsUserRolesEO.ROLE_ID = CrsRolesEO.ROLE_ID">
+  <Variable
+    Name="bindRoleName"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
+  <EntityUsage
+    Name="CrsUserRolesEO"
+    Entity="com.novartis.ecrs.model.entity.CrsUserRolesEO"/>
+  <EntityUsage
+    Name="CrsRolesEO"
+    Entity="com.novartis.ecrs.model.entity.CrsRolesEO"
+    SourceUsage="com.novartis.ecrs.model.view.CrsUserRolesVO.CrsUserRolesEO"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    Association="com.novartis.ecrs.model.entity.assoc.CrsUserRolesToRolesAssoc"
+    AssociationEnd="com.novartis.ecrs.model.entity.assoc.CrsUserRolesToRolesAssoc.CrsRolesEO"
+    JoinType="INNER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="com.novartis.ecrs.model.entity.CrsUserRolesEO.RoleId"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="com.novartis.ecrs.model.entity.CrsRolesEO.RoleId"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <ViewAttribute
+    Name="UserName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserName"
+    EntityUsage="CrsUserRolesEO"
+    AliasName="USER_NAME"/>
+  <ViewAttribute
+    Name="RoleId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RoleId"
+    EntityUsage="CrsUserRolesEO"
+    AliasName="ROLE_ID"/>
+  <ViewAttribute
+    Name="ActiveFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ActiveFlag"
+    EntityUsage="CrsUserRolesEO"
+    AliasName="ACTIVE_FLAG"/>
+  <ViewAttribute
+    Name="UserComment"
+    PrecisionRule="true"
+    EntityAttrName="UserComment"
+    EntityUsage="CrsUserRolesEO"
+    AliasName="USER_COMMENT"/>
+  <ViewAttribute
+    Name="RoleName"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RoleName"
+    EntityUsage="CrsRolesEO"
+    AliasName="ROLE_NAME"/>
+  <ViewAttribute
+    Name="RoleDesc"
+    PrecisionRule="true"
+    EntityAttrName="RoleDesc"
+    EntityUsage="CrsRolesEO"
+    AliasName="ROLE_DESC"/>
+  <ViewAttribute
+    Name="RoleId1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RoleId"
+    EntityUsage="CrsRolesEO"
+    AliasName="ROLE_ID1"/>
+  <ViewCriteria
+    Name="findByRoleName"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsUserRolesVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="CrsUserRolesVOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="findByRoleName_CrsUserRolesVOCriteria_row_0_ActiveFlag"
+        ViewAttribute="ActiveFlag"
+        Operator="="
+        Conjunction="AND"
+        Value="A"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="RoleName"
+        ViewAttribute="RoleName"
+        Operator="="
+        Conjunction="AND"
+        Value=":bindRoleName"
+        UpperColumns="0"
+        GenerateIsNullClauseForBindVars="false"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+</ViewObject>

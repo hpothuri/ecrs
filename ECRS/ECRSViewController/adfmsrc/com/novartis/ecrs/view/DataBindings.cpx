@@ -2,26 +2,32 @@
 <Application xmlns="http://xmlns.oracle.com/adfm/application"
              version="11.1.2.64.36" id="DataBindings" SeparateXMLFiles="false"
              Package="com.novartis.ecrs.view" ClientType="Generic">
+  <definitionFactories>
+    <factory nameSpace="http://xmlns.oracle.com/adf/controller/binding"
+             className="oracle.adf.controller.internal.binding.TaskFlowBindingDefFactoryImpl"/>
+    <dtfactory className="oracle.adf.controller.internal.dtrt.binding.BindingDTObjectFactory"/>
+  </definitionFactories>
   <pageMap>
     <page path="/ui/pageFragments/ecrs/createCRS.jsff"
           usageId="com_novartis_ecrs_view_createCRSPageDef"/>
-    <page path="/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF@CreateInsert"
-          usageId="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_CreateInsertPageDef"/>
+    <page path="/pages/CrsCreate.jspx"
+          usageId="com_novartis_ecrs_view_CrsCreatePageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
           path="ui.pageFragments.ecrs.createCRSPageDef"/>
-    <page id="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_CreateInsertPageDef"
-          path="taskflows.ManageCRSTF_ManageCRSTF_CreateInsertPageDef"/>
+    <page id="com_novartis_ecrs_view_CrsCreatePageDef"
+          path="pages.CrsCreatePageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
+    
     <BC4JDataControl id="ECRSAppModuleDataControl"
                      Package="com.novartis.ecrs.model.am"
                      FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
                      SupportsTransactions="true" SupportsFindMode="true"
                      SupportsRangesize="true" SupportsResetState="true"
-                     SupportsSortCollection="true"
-                     Configuration="ECRSAppModuleLocal" syncMode="Immediate"
+                     SupportsSortCollection="true" Configuration="ECRSAppModule"
+                     syncMode="Immediate"
                      xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
   </dataControlUsages>
 </Application>
