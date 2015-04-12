@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="riskPurposeDetailsPageDef"
+                Package="ui.pageFragments.riskpurpose">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="CrsRiskPurposesVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="CrsRiskPurposesVOIterator"/>
+    <iterator Binds="RiskPurposeTransientVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="RiskPurposeTransientVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="CrsRiskPurposesVOIterator" id="RiskPurposeCode">
+      <AttrNames>
+        <Item Value="RiskPurposeCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsRiskPurposesVOIterator" id="RiskPurposeDesc">
+      <AttrNames>
+        <Item Value="RiskPurposeDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsRiskPurposesVOIterator" id="RiskPurposeId">
+      <AttrNames>
+        <Item Value="RiskPurposeId"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="RiskPurposeTransientVOIterator" id="CreateInsert" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

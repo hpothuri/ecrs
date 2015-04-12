@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="searchRiskPurposePageDef"
+                Package="ui.pageFragments.riskpurpose">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="RiskPurposeTransientVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="RiskPurposeTransientVOIterator"/>
+    <iterator Binds="CrsRiskPurposesVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="CrsRiskPurposesVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="RiskPurposeTransientVOIterator" id="RiskPurposeCode">
+      <AttrNames>
+        <Item Value="RiskPurposeCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RiskPurposeTransientVOIterator" id="RiskPurposeId">
+      <AttrNames>
+        <Item Value="RiskPurposeId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="CrsRiskPurposesVOIterator" id="CrsRiskPurposesVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsRiskPurposesVO" Name="CrsRiskPurposesVO0">
+        <AttrNames>
+          <Item Value="RiskPurposeId"/>
+          <Item Value="RiskPurposeCode"/>
+          <Item Value="RiskPurposeDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="CrsRiskPurposesVOIterator" id="CreateInsert"
+            InstanceName="ECRSAppModuleDataControl.CrsRiskPurposesVO" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>
