@@ -2,6 +2,7 @@ package com.novartis.ecrs.ui.bean;
 
 
 import com.novartis.ecrs.model.view.CrsContentVORowImpl;
+import com.novartis.ecrs.ui.constants.ViewConstants;
 import com.novartis.ecrs.ui.utility.ADFUtils;
 
 import java.io.Serializable;
@@ -11,7 +12,6 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.event.ActionEvent;
-
 import javax.faces.model.SelectItem;
 
 import oracle.adf.model.binding.DCBindingContainer;
@@ -68,6 +68,13 @@ public class ManageCRSBean implements Serializable {
                 designees = designees + "," + des;
             }
             ADFUtils.setEL("#{bindings.Designee.inputValue}", designees.substring(1));
+        }
+        //TODO check with Donna
+        //if compound type is non-compound then set marketed flag to 'N' 
+        if(ADFUtils.evaluateEL("#{bindings.CompoundType.inputValue}")!=null ){
+            String compType = (String)ADFUtils.evaluateEL("#{bindings.CompoundType.inputValue}");
+            if(ViewConstants.COMP_TYPE_NON_COMPOUND.equals(compType))
+                ADFUtils.setEL("#{bindings.IsMarketedFlag.inputValue}", "N");
         }
         ADFUtils.invokeEL("#{bindings.Commit.execute}");
         ADFUtils.showFacesMessage("Record saved successfully.", FacesMessage.SEVERITY_INFO);

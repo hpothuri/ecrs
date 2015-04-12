@@ -373,6 +373,9 @@ public class CrsContentVORowImpl extends ViewRowImpl {
         if (getCompoundCode() != null && getIndication() != null)
             setAttributeInternal(CRSNAME,
                                  getCompoundCode() + " " + getIndication());
+        if (getCompoundCode() != null &&
+            "NON-COMPOUND".equals(getCompoundType()))
+            setAttributeInternal(CRSNAME, getCompoundCode());
         return (String) getAttributeInternal(CRSNAME);
     }
 
@@ -381,7 +384,6 @@ public class CrsContentVORowImpl extends ViewRowImpl {
      * @param value value to set the CRS_NAME
      */
     public void setCrsName(String value) {
-          setAttributeInternal(CRSNAME, getCompoundCode() + " " +getIndication());
         //setAttributeInternal(CRSNAME, value);
     }
 

@@ -51,7 +51,8 @@
                                       columns="#{bindings.TradeName.hints.displayWidth}"
                                       maximumLength="#{bindings.TradeName.hints.precision}"
                                       shortDesc="#{bindings.TradeName.hints.tooltip}"
-                                      id="it1" contentStyle="width:150px;">
+                                      id="it1" contentStyle="width:150px;"
+                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND'}">
                             <f:validator binding="#{bindings.TradeName.validator}"/>
                         </af:inputText>
                         <af:inputText value="#{bindings.GenericName.inputValue}"
@@ -60,7 +61,8 @@
                                       columns="#{bindings.GenericName.hints.displayWidth}"
                                       maximumLength="#{bindings.GenericName.hints.precision}"
                                       shortDesc="#{bindings.GenericName.hints.tooltip}"
-                                      id="it2" contentStyle="width:150px;">
+                                      id="it2" contentStyle="width:150px;"
+                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND'}">
                             <f:validator binding="#{bindings.GenericName.validator}"/>
                         </af:inputText>
                         <af:inputText value="#{bindings.Indication.inputValue}"
@@ -70,13 +72,15 @@
                                       maximumLength="#{bindings.Indication.hints.precision}"
                                       shortDesc="#{bindings.Indication.hints.tooltip}"
                                       id="it3" contentStyle="width:150px;"
-                                      autoSubmit="true">
+                                      autoSubmit="true"
+                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND'}">
                             <f:validator binding="#{bindings.Indication.validator}"/>
                         </af:inputText>
                         <af:selectOneChoice label="#{ecrsviewcontrollerBundle.MARKETED}"
                                             id="soc8"
                                             value="#{bindings.IsMarketedFlag.inputValue}"
-                                            required="#{bindings.IsMarketedFlag.hints.mandatory}">
+                                            required="false"
+                                            readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND'}">
                             <af:selectItem label="Yes" value="Y" id="si9"/>
                             <af:selectItem label="No" value="N" id="si10"/>
                         </af:selectOneChoice>
