@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="searchRolesPageDef"
+                Package="ui.pageFragments.roles">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="RolesTransientVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="RolesTransientVOIterator"/>
+    <iterator Binds="CrsRolesVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsRolesVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="RolesTransientVOIterator" id="RoleName">
+      <AttrNames>
+        <Item Value="RoleName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RolesTransientVOIterator" id="RoleId">
+      <AttrNames>
+        <Item Value="RoleId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="CrsRolesVOIterator" id="CrsRolesVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsRolesVO" Name="CrsRolesVO0">
+        <AttrNames>
+          <Item Value="RoleId"/>
+          <Item Value="RoleName"/>
+          <Item Value="RoleDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="CrsRolesVOIterator" id="CreateInsert" InstanceName="ECRSAppModuleDataControl.CrsRolesVO"
+            DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

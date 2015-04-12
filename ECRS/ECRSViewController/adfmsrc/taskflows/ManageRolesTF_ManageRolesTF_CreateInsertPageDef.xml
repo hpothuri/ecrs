@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36"
+                id="ManageRolesTF_ManageRolesTF_CreateInsertPageDef" Package="taskflows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="RolesTransientVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="RolesTransientVOIterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="RolesTransientVOIterator" id="CreateInsert" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

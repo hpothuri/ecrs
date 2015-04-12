@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="ManageRolesTF">
+    <default-activity>CreateInsert</default-activity>
+    <managed-bean id="__3">
+      <managed-bean-name>rolesBean</managed-bean-name>
+      <managed-bean-class>com.novartis.ecrs.ui.bean.RolesBean</managed-bean-class>
+      <managed-bean-scope>pageFlow</managed-bean-scope>
+    </managed-bean>
+    <method-call id="CreateInsert">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome>
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <view id="searchRoles">
+      <page>/ui/pageFragments/roles/searchRoles.jsff</page>
+      <train-stop>
+        <display-name>Search</display-name>
+      </train-stop>
+    </view>
+    <view id="roleDetails">
+      <page>/ui/pageFragments/roles/roleDetails.jsff</page>
+      <train-stop>
+        <display-name>Details</display-name>
+      </train-stop>
+    </view>
+    <train/>
+    <control-flow-rule id="__1">
+      <from-activity-id>CreateInsert</from-activity-id>
+      <control-flow-case id="__2">
+        <from-outcome>CreateInsert</from-outcome>
+        <to-activity-id>searchRoles</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+  <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
+  <af:panelGroupLayout id="pgl1" layout="scroll">
+    <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="t1"/>
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.SEARCH}" id="ph1">
+      <f:facet name="context"/>
+      <f:facet name="menuBar"/>
+      <f:facet name="toolbar"/>
+      <f:facet name="legend"/>
+      <f:facet name="info"/>
+      <af:panelFormLayout id="pfl1">
+        <af:inputText value="#{bindings.RoleName.inputValue}" label="#{ecrsviewcontrollerBundle.ROLE_NAME}"
+                      required="#{bindings.RoleName.hints.mandatory}" columns="#{bindings.RoleName.hints.displayWidth}"
+                      maximumLength="#{bindings.RoleName.hints.precision}"
+                      shortDesc="#{bindings.RoleName.hints.tooltip}" id="it1">
+          <f:validator binding="#{bindings.RoleName.validator}"/>
+        </af:inputText>
+        <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.ROLE_ID}" id="plam1">
+          <af:inputText value="#{bindings.RoleId.inputValue}" label="#{ecrsviewcontrollerBundle.ROLE_ID}"
+                        required="#{bindings.RoleId.hints.mandatory}" columns="#{bindings.RoleId.hints.displayWidth}"
+                        maximumLength="#{bindings.RoleId.hints.precision}" shortDesc="#{bindings.RoleId.hints.tooltip}"
+                        id="it2" simple="true">
+            <f:validator binding="#{bindings.RoleId.validator}"/>
+            <af:convertNumber groupingUsed="false" pattern="#{bindings.RoleId.format}"/>
+          </af:inputText>
+          <f:facet name="end">
+            <af:commandButton text="#{ecrsviewcontrollerBundle.SEARCH}" id="cb1"
+                              action="#{pageFlowScope.rolesBean.onSearch}"/>
+          </f:facet>
+        </af:panelLabelAndMessage>
+      </af:panelFormLayout>
+    </af:panelHeader>
+    <af:spacer width="10" height="10" id="s1"/>
+    <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+      <f:facet name="menus"/>
+      <f:facet name="toolbar">
+        <af:toolbar id="t3">
+          <af:commandImageLink text="Create" id="cil1" action="#{pageFlowScope.rolesBean.createRole}"/>
+        </af:toolbar>
+      </f:facet>
+      <f:facet name="statusbar"/>
+      <af:table value="#{bindings.CrsRolesVO.collectionModel}" var="row" rows="#{bindings.CrsRolesVO.rangeSize}"
+                emptyText="#{bindings.CrsRolesVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                fetchSize="#{bindings.CrsRolesVO.rangeSize}" rowBandingInterval="0"
+                selectedRowKeys="#{bindings.CrsRolesVO.collectionModel.selectedRow}"
+                selectionListener="#{bindings.CrsRolesVO.collectionModel.makeCurrent}" rowSelection="single" id="t2"
+                styleClass="AFStretchWidth" columnStretching="last">
+        <af:column sortProperty="#{bindings.CrsRolesVO.hints.RoleId.name}" sortable="true"
+                   headerText="#{ecrsviewcontrollerBundle.ROLE_ID}" id="c1">
+          <af:commandLink shortDesc="#{bindings.CrsRolesVO.hints.RoleId.tooltip}" id="ot1" text="#{row.RoleId}"
+                          action="#{pageFlowScope.rolesBean.editRole}">
+          </af:commandLink>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsRolesVO.hints.RoleName.name}" sortable="true"
+                   headerText="#{ecrsviewcontrollerBundle.ROLE_NAME}" id="c2">
+          <af:outputText value="#{row.RoleName}" shortDesc="#{bindings.CrsRolesVO.hints.RoleName.tooltip}" id="ot2"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsRolesVO.hints.RoleDesc.name}" sortable="true"
+                   headerText="#{ecrsviewcontrollerBundle.ROLE_DESCRIPTION}" id="c3">
+          <af:outputText value="#{row.RoleDesc}" shortDesc="#{bindings.CrsRolesVO.hints.RoleDesc.tooltip}" id="ot3"/>
+        </af:column>
+      </af:table>
+    </af:panelCollection>
+  </af:panelGroupLayout>
+</jsp:root>

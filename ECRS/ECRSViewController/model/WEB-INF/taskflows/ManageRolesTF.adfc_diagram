@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <MethodCall
+      id="MethodCall2">
+      <property
+         name="activityId">CreateInsert</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>CreateInsert&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">255.5</property>
+      <property
+         name="x">324.01465</property>
+   </MethodCall>
+   <View
+      id="View3">
+      <property
+         name="activityId">searchRoles</property>
+      <property
+         name="page">/ui/pageFragments/roles/searchRoles.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>searchRoles&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="trainStop">true</property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">201.59766</property>
+      <property
+         name="x">552.0</property>
+      <property
+         name="pageFragment">true</property>
+   </View>
+   <View
+      id="View4">
+      <property
+         name="activityId">roleDetails</property>
+      <property
+         name="page">/ui/pageFragments/roles/roleDetails.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>roleDetails&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="trainStop">true</property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">231.29883</property>
+      <property
+         name="x">741.0</property>
+      <property
+         name="pageFragment">true</property>
+   </View>
+   <TrainFlow
+      islink="true"
+      id="TrainFlow5"
+      from="View3"
+      to="View4">
+      <property
+         name="sdm:polyPoints">R50,593.0,201.24707,700.0,230.94824,L50</property>
+   </TrainFlow>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase6"
+      from="MethodCall2"
+      to="View3">
+      <property
+         name="fromOutcome">CreateInsert</property>
+      <property
+         name="sdm:polyPoints">R50,365.01465,255.14941,511.0,201.24707,L50</property>
+   </ControlFlowCase>
+</SDM>
