@@ -77,7 +77,7 @@
       <ViewCriteriaItem
         Name="CompoundType"
         ViewAttribute="CompoundType"
-        Operator="STARTSWITH"
+        Operator="="
         Conjunction="AND"
         Value=":bindCompoundType"
         UpperColumns="0"

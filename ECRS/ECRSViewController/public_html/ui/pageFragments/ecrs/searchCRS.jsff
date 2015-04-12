@@ -15,5 +15,17 @@
     <f:facet name="toolbar"/>
     <f:facet name="legend"/>
     <f:facet name="info"/>
+    <af:panelGroupLayout id="pgl1">
+      <af:panelBox text="#{ecrsviewcontrollerBundle.SEARCH}" id="pb1">
+        <f:facet name="toolbar"/>
+        <af:panelFormLayout id="pfl1">
+          <f:facet name="footer"/>
+        </af:panelFormLayout>
+        <af:separator id="s1"/>
+        <af:panelFormLayout id="pfl2">
+          <f:facet name="footer"/>
+        </af:panelFormLayout>
+      </af:panelBox>
+    </af:panelGroupLayout>
   </af:panelHeader>
 </jsp:root>

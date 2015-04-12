@@ -114,6 +114,11 @@
                 <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
                 <actions>view</actions>
               </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.SearchCRSPageDef</name>
+                <actions>view</actions>
+              </permission>
             </permissions>
           </grant>
           <grant>
@@ -149,6 +154,11 @@
               <permission>
                 <class>oracle.adf.controller.security.TaskFlowPermission</class>
                 <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.SearchCRSPageDef</name>
                 <actions>view</actions>
               </permission>
             </permissions>
@@ -188,6 +198,11 @@
                 <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
                 <actions>view</actions>
               </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.SearchCRSPageDef</name>
+                <actions>view</actions>
+              </permission>
             </permissions>
           </grant>
           <grant>
@@ -223,6 +238,11 @@
               <permission>
                 <class>oracle.adf.controller.security.TaskFlowPermission</class>
                 <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.SearchCRSPageDef</name>
                 <actions>view</actions>
               </permission>
             </permissions>

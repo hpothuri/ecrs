@@ -12,12 +12,16 @@
           usageId="com_novartis_ecrs_view_createCRSPageDef"/>
     <page path="/pages/CrsCreate.jspx"
           usageId="com_novartis_ecrs_view_CrsCreatePageDef"/>
+    <page path="/pages/SearchCRS.jspx"
+          usageId="com_novartis_ecrs_view_SearchCRSPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
           path="ui.pageFragments.ecrs.createCRSPageDef"/>
     <page id="com_novartis_ecrs_view_CrsCreatePageDef"
           path="pages.CrsCreatePageDef"/>
+    <page id="com_novartis_ecrs_view_SearchCRSPageDef"
+          path="pages.SearchCRSPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     
