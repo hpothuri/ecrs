@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36"
+                id="CompoundsTF_CompoundsTF_CreateInsertPageDef" Package="taskflows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="CompoundTransientVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="CompoundTransientVOIterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="CompoundTransientVOIterator" id="CreateInsert" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

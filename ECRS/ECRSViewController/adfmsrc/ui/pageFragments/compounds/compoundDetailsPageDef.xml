@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="compoundDetailsPageDef"
+                Package="ui.pageFragments.compounds">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="CrsCompoundVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsCompoundVOIterator"/>
+    <iterator Binds="CompoundTransientVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="CompoundTransientVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="CrsCompoundVOIterator" id="CompoundId">
+      <AttrNames>
+        <Item Value="CompoundId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsCompoundVOIterator" id="CompoundCode">
+      <AttrNames>
+        <Item Value="CompoundCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsCompoundVOIterator" id="CompoundDesc">
+      <AttrNames>
+        <Item Value="CompoundDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CrsCompoundVOIterator" StaticList="false" Uses="LOV_CompoundType" id="CompoundType"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="CompoundTransientVOIterator" id="CreateInsert" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="Commit" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+  </bindings>
+</pageDefinition>
