@@ -22,4 +22,10 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         Object _ret = this.riInvokeExportedMethod(this,"fetchDesignees",null,null);
         return (List)_ret;
     }
+
+    public void filterCRSContent() {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"filterCRSContent",null,null);
+        return;
+    }
 }

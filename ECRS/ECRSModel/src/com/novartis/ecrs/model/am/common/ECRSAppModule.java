@@ -9,4 +9,6 @@ import oracle.jbo.ApplicationModule;
 // ---------------------------------------------------------------------
 public interface ECRSAppModule extends ApplicationModule {
     List fetchDesignees();
+
+    void filterCRSContent();
 }

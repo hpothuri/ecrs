@@ -127,7 +127,28 @@ public class ManageCRSBean implements Serializable {
         return selDesigneeList;
     }
 
+    /**
+     * Invokes AMImpl method to filter CRSContent vo with entered search criteria.
+     * @param actionEvent
+     */
     public void onClickSearch(ActionEvent actionEvent) {
         // Add event code here...
+        DCBindingContainer bc = ADFUtils.getDCBindingContainer();
+        OperationBinding ob = bc.getOperationBinding("filterCRSContent");
+        ob.execute();
+        if(ob.getErrors() != null){
+            //log error
+        }
+    }
+
+    /**
+     * Invokes execute empty row set on crs content vo.
+     */
+    public void invokeEmptyRowSetOnContentVO() {
+        // Add event code here...
+        DCBindingContainer bc =
+            ADFUtils.findBindingContainerByName(ViewConstants.PAGE_DEF_SEARCH);
+        DCIteratorBinding iter = bc.findIteratorBinding("CrsContentVOIterator");
+        iter.getViewObject().executeEmptyRowSet();
     }
 }

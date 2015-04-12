@@ -85,5 +85,10 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
+    <methodAction id="filterCRSContent"
+                  InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="filterCRSContent" IsViewObjectMethod="false"/>
   </bindings>
 </pageDefinition>

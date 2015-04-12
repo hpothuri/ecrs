@@ -46,5 +46,11 @@
       <Return
         Type="java.util.List"/>
     </Method>
+    <Method
+      Name="filterCRSContent"
+      MethodName="filterCRSContent">
+      <Return
+        Type="void"/>
+    </Method>
   </ClientInterface>
 </AppModule>

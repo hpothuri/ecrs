@@ -30,7 +30,7 @@
                               shortDesc="#{bindings.CompoundType.hints.tooltip}"
                               id="soc1"
                               label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
-                              contentStyle="width:170px;">
+                              contentStyle="width:170px;" autoSubmit="true">
             <f:selectItems value="#{bindings.CompoundType.items}" id="si1"/>
           </af:selectOneChoice>
           <af:selectOneChoice value="#{bindings.CompoundCode.inputValue}"
@@ -64,12 +64,13 @@
                         maximumLength="#{bindings.Indication.hints.precision}"
                         shortDesc="#{bindings.Indication.hints.tooltip}"
                         id="it4" contentStyle="width:170px;"/>
-          <af:inputText value="#{bindings.Marketed.inputValue}"
-                        label="#{bindings.Marketed.hints.label}"
-                        columns="#{bindings.Marketed.hints.displayWidth}"
-                        maximumLength="#{bindings.Marketed.hints.precision}"
-                        shortDesc="#{bindings.Marketed.hints.tooltip}"
-                        id="it5" contentStyle="width:170px;"/>
+          <af:selectOneChoice value="#{bindings.Marketed.inputValue}"
+                              label="#{bindings.Marketed.hints.label}"
+                              shortDesc="#{bindings.Marketed.hints.tooltip}"
+                              id="it5" contentStyle="width:170px;">
+            <af:selectItem label="Yes" value="Y" id="si99"/>
+            <af:selectItem label="No" value="N" id="si60"/>
+          </af:selectOneChoice>
           <af:selectOneChoice value="#{bindings.Designee.inputValue}"
                               label="#{bindings.Designee.label}"
                               shortDesc="#{bindings.Designee.hints.tooltip}"
@@ -126,7 +127,9 @@
                 rowBandingInterval="0"
                 selectedRowKeys="#{bindings.CrsContentVO.collectionModel.selectedRow}"
                 selectionListener="#{bindings.CrsContentVO.collectionModel.makeCurrent}"
-                rowSelection="single" id="t2">
+                rowSelection="single" id="t2" styleClass="AFStretchWidth"
+                columnStretching="column:c9" contentDelivery="immediate"
+                autoHeightRows="-1">
         <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsName.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.CRS_NAME}"
@@ -165,15 +168,15 @@
           <af:selectOneChoice value="#{row.bindings.CompoundId.inputValue}"
                               label="#{row.bindings.CompoundId.label}"
                               required="#{bindings.CrsContentVO.hints.CompoundId.mandatory}"
-                              shortDesc="#{bindings.CrsContentVO.hints.CompoundId.tooltip}"
-                              readOnly="true" id="soc9">
+                              shortDesc="#{bindings.CrsContentVO.hints.CompoundId.tooltip}" id="soc9"
+                              readOnly="true">
             <f:selectItems value="#{row.bindings.CompoundId.items}" id="si11"/>
           </af:selectOneChoice>
         </af:column>
         <af:column sortProperty="#{bindings.CrsContentVO.hints.GenericName.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.GENERIC_NAME}"
-                   id="c5" align="center">
+                   id="c5" align="center" width="80">
           <af:outputText value="#{row.GenericName}"
                          shortDesc="#{bindings.CrsContentVO.hints.GenericName.tooltip}"
                          id="ot3"/>
@@ -181,7 +184,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.TradeName.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.TRADE_NAME}"
-                   id="c6" align="center">
+                   id="c6" align="center" width="80">
           <af:outputText value="#{row.TradeName}"
                          shortDesc="#{bindings.CrsContentVO.hints.TradeName.tooltip}"
                          id="ot4"/>
@@ -189,7 +192,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.Indication.name}"
                    sortable="false"
                    headerText="#{bindings.CrsContentVO.hints.Indication.label}"
-                   id="c7" align="center">
+                   id="c7" align="center" width="80">
           <af:outputText value="#{row.Indication}"
                          shortDesc="#{bindings.CrsContentVO.hints.Indication.tooltip}"
                          id="ot5"/>
@@ -252,6 +255,26 @@
           </af:selectOneChoice>
         </af:column>
       </af:table>
+      <af:panelGroupLayout id="pgl6" layout="horizontal">
+                <af:commandButton text="#{ecrsviewcontrollerBundle.BACK}"
+                                  id="cb5"
+                                  action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}"
+                                  rendered="false"/>
+                <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}"
+                                  id="cb6"
+                                  action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getNext}"/>
+                <af:goButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}"
+                                  id="cb7"
+                             destination="'ECRS/faces/pages/Home.jspx'"
+                             targetFrame="_parent"/>
+                <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}"
+                                         id="plam1"/>
+                <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}#{ecrsviewcontrollerBundle.COLON}"
+                                         id="plam2"/>
+                <f:facet name="separator">
+                    <af:spacer width="10" height="10" id="s4"/>
+                </f:facet>
+            </af:panelGroupLayout>
     </af:panelGroupLayout>
   </af:panelHeader>
 </jsp:root>
