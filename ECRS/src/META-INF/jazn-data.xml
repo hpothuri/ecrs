@@ -277,6 +277,16 @@
                 <name>pages.ManageRiskPurposePageDef</name>
                 <actions>view</actions>
               </permission>
+              <permission>
+                <class>oracle.adf.controller.security.TaskFlowPermission</class>
+                <name>/WEB-INF/taskflows/ManageRolesTF.xml#ManageRolesTF</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.ManageRolesPageDef</name>
+                <actions>view</actions>
+              </permission>
             </permissions>
           </grant>
         </jazn-policy>

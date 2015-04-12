@@ -28,6 +28,11 @@
     <page path="/ui/pageFragments/riskpurpose/riskPurposeDetails.jsff"
           usageId="com_novartis_ecrs_view_riskPurposeDetailsPageDef"/>
     <page path="/pages/ManageRiskPurpose.jspx" usageId="com_novartis_ecrs_view_ManageRiskPurposePageDef"/>
+    <page path="/WEB-INF/taskflows/ManageRolesTF.xml#ManageRolesTF@CreateInsert"
+          usageId="com_novartis_ecrs_view_ManageRolesTF_ManageRolesTF_CreateInsertPageDef"/>
+    <page path="/ui/pageFragments/roles/searchRoles.jsff" usageId="com_novartis_ecrs_view_searchRolesPageDef"/>
+    <page path="/ui/pageFragments/roles/roleDetails.jsff" usageId="com_novartis_ecrs_view_roleDetailsPageDef"/>
+    <page path="/pages/ManageRoles.jspx" usageId="com_novartis_ecrs_view_ManageRolesPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -48,6 +53,11 @@
     <page id="com_novartis_ecrs_view_riskPurposeDetailsPageDef"
           path="ui.pageFragments.riskpurpose.riskPurposeDetailsPageDef"/>
     <page id="com_novartis_ecrs_view_ManageRiskPurposePageDef" path="pages.ManageRiskPurposePageDef"/>
+    <page id="com_novartis_ecrs_view_ManageRolesTF_ManageRolesTF_CreateInsertPageDef"
+          path="taskflows.ManageRolesTF_ManageRolesTF_CreateInsertPageDef"/>
+    <page id="com_novartis_ecrs_view_searchRolesPageDef" path="ui.pageFragments.roles.searchRolesPageDef"/>
+    <page id="com_novartis_ecrs_view_roleDetailsPageDef" path="ui.pageFragments.roles.roleDetailsPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageRolesPageDef" path="pages.ManageRolesPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

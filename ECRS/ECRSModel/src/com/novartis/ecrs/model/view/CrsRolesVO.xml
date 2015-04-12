@@ -13,6 +13,14 @@
   CustomQuery="false"
   PageIterMode="Full"
   UseGlueCode="false">
+  <Variable
+    Name="bindRoleId"
+    Kind="viewcriteria"
+    Type="java.lang.Integer"/>
+  <Variable
+    Name="bindRoleName"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
   <EntityUsage
     Name="CrsRolesEO"
     Entity="com.novartis.ecrs.model.entity.CrsRolesEO"/>
@@ -36,4 +44,48 @@
     EntityAttrName="RoleDesc"
     EntityUsage="CrsRolesEO"
     AliasName="ROLE_DESC"/>
+  <ViewCriteria
+    Name="searchRoles"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsRolesVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="CrsRolesVOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="RoleId"
+        ViewAttribute="RoleId"
+        Operator="="
+        Conjunction="AND"
+        Value=":bindRoleId"
+        IsBindVarValue="true"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="RoleName"
+        ViewAttribute="RoleName"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Value=":bindRoleName"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
 </ViewObject>

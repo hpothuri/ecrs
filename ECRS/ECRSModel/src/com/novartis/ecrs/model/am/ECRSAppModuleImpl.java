@@ -6,6 +6,8 @@ import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
 
+import com.novartis.ecrs.model.view.trans.RolesTransientVOImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,5 +92,21 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getCrsRiskPurposesVO() {
         return (ViewObjectImpl)findViewObject("CrsRiskPurposesVO");
+    }
+
+    /**
+     * Container's getter for RolesTransientVO.
+     * @return RolesTransientVO
+     */
+    public RolesTransientVOImpl getRolesTransientVO() {
+        return (RolesTransientVOImpl)findViewObject("RolesTransientVO");
+    }
+
+    /**
+     * Container's getter for CrsRolesVO.
+     * @return CrsRolesVO
+     */
+    public ViewObjectImpl getCrsRolesVO() {
+        return (ViewObjectImpl)findViewObject("CrsRolesVO");
     }
 }

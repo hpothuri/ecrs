@@ -30,6 +30,12 @@
   <ViewUsage
     Name="CrsRiskPurposesVO"
     ViewObjectName="com.novartis.ecrs.model.view.CrsRiskPurposesVO"/>
+  <ViewUsage
+    Name="RolesTransientVO"
+    ViewObjectName="com.novartis.ecrs.model.view.trans.RolesTransientVO"/>
+  <ViewUsage
+    Name="CrsRolesVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsRolesVO"/>
   <ClientInterface>
     <Method
       Name="fetchDesignees"
