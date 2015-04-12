@@ -21,6 +21,13 @@
     <page path="/ui/pageFragments/compounds/compoundDetails.jsff"
           usageId="com_novartis_ecrs_view_compoundDetailsPageDef"/>
     <page path="/pages/ManageCompound.jspx" usageId="com_novartis_ecrs_view_ManageCompoundPageDef"/>
+    <page path="/WEB-INF/taskflows/RiskPurposeTF.xml#RiskPurposeTF@CreateInsert"
+          usageId="com_novartis_ecrs_view_RiskPurposeTF_RiskPurposeTF_CreateInsertPageDef"/>
+    <page path="/ui/pageFragments/riskpurpose/searchRiskPurpose.jsff"
+          usageId="com_novartis_ecrs_view_searchRiskPurposePageDef"/>
+    <page path="/ui/pageFragments/riskpurpose/riskPurposeDetails.jsff"
+          usageId="com_novartis_ecrs_view_riskPurposeDetailsPageDef"/>
+    <page path="/pages/ManageRiskPurpose.jspx" usageId="com_novartis_ecrs_view_ManageRiskPurposePageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -34,6 +41,13 @@
           path="taskflows.CompoundsTF_CompoundsTF_CreateInsertPageDef"/>
     <page id="com_novartis_ecrs_view_compoundDetailsPageDef" path="ui.pageFragments.compounds.compoundDetailsPageDef"/>
     <page id="com_novartis_ecrs_view_ManageCompoundPageDef" path="pages.ManageCompoundPageDef"/>
+    <page id="com_novartis_ecrs_view_RiskPurposeTF_RiskPurposeTF_CreateInsertPageDef"
+          path="taskflows.RiskPurposeTF_RiskPurposeTF_CreateInsertPageDef"/>
+    <page id="com_novartis_ecrs_view_searchRiskPurposePageDef"
+          path="ui.pageFragments.riskpurpose.searchRiskPurposePageDef"/>
+    <page id="com_novartis_ecrs_view_riskPurposeDetailsPageDef"
+          path="ui.pageFragments.riskpurpose.riskPurposeDetailsPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageRiskPurposePageDef" path="pages.ManageRiskPurposePageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

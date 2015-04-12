@@ -24,6 +24,12 @@
   <ViewUsage
     Name="CrsCompoundVO"
     ViewObjectName="com.novartis.ecrs.model.view.CrsCompoundVO"/>
+  <ViewUsage
+    Name="RiskPurposeTransientVO"
+    ViewObjectName="com.novartis.ecrs.model.view.trans.RiskPurposeTransientVO"/>
+  <ViewUsage
+    Name="CrsRiskPurposesVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsRiskPurposesVO"/>
   <ClientInterface>
     <Method
       Name="fetchDesignees"
