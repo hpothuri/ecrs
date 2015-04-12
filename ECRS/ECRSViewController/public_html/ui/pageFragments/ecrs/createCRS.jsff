@@ -11,6 +11,10 @@
         <f:facet name="toolbar"/>
         <f:facet name="legend"/>
         <f:facet name="info"/>
+        <af:panelGroupLayout id="pg62" layout="horizontal" halign="center">
+            <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
+                      id="t1"/>
+        </af:panelGroupLayout>
         <af:panelGroupLayout id="pgl5" layout="vertical">
             <af:panelBox text="#{ecrsviewcontrollerBundle.DETAILS}" id="pb1">
                 <f:facet name="toolbar">
@@ -85,7 +89,8 @@
                             <f:selectItems value="#{bindings.BslName.items}"
                                            id="si3"/>
                         </af:selectOneChoice>
-                        <af:selectManyChoice label="Designee" id="smc2" contentStyle="width:170px;"
+                        <af:selectManyChoice label="Designee" id="smc2"
+                                             contentStyle="width:150px;"
                                              value="#{pageFlowScope.manageCRSBean.selDesigneeList}">
                             <f:selectItems value="#{pageFlowScope.manageCRSBean.designeeList}" id="si11"/>
                         </af:selectManyChoice>
@@ -144,7 +149,7 @@
                 </af:panelFormLayout>
             </af:panelBox>
             <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}" id="pb2"
-                         contentStyle="height:150px;">
+                         contentStyle="height:100px;">
                 <f:facet name="toolbar">
                     <af:panelGroupLayout id="pgl2">
                         <af:commandButton text="#{ecrsviewcontrollerBundle.DEMOTE_TO_DRAFT}"
