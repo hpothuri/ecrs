@@ -18,6 +18,12 @@
   <ViewUsage
     Name="CrsUserRolesVO"
     ViewObjectName="com.novartis.ecrs.model.view.CrsUserRolesVO"/>
+  <ViewUsage
+    Name="CompoundTransientVO"
+    ViewObjectName="com.novartis.ecrs.model.view.trans.CompoundTransientVO"/>
+  <ViewUsage
+    Name="CrsCompoundVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsCompoundVO"/>
   <ClientInterface>
     <Method
       Name="fetchDesignees"

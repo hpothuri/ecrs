@@ -16,5 +16,7 @@
     <JaasSecurityContext initialContextFactoryClass="oracle.adf.share.security.JAASInitialContextFactory"
                          jaasProviderClass="oracle.adf.share.security.providers.jps.JpsSecurityContext"
                          authorizationEnforce="true" authenticationRequire="true"/>
+    <CredentialStoreContext credentialStoreClass="oracle.adf.share.security.providers.jps.CSFCredentialStore"
+                            credentialStoreLocation="../../src/META-INF/jps-config.xml"/>
   </adf-security-child>
 </adf-config>

@@ -14,6 +14,13 @@
           usageId="com_novartis_ecrs_view_CrsCreatePageDef"/>
     <page path="/pages/SearchCRS.jspx"
           usageId="com_novartis_ecrs_view_SearchCRSPageDef"/>
+    <page path="/ui/pageFragments/compounds/searchCompounds.jsff"
+          usageId="com_novartis_ecrs_view_searchCompoundsPageDef"/>
+    <page path="/WEB-INF/taskflows/CompoundsTF.xml#CompoundsTF@CreateInsert"
+          usageId="com_novartis_ecrs_view_CompoundsTF_CompoundsTF_CreateInsertPageDef"/>
+    <page path="/ui/pageFragments/compounds/compoundDetails.jsff"
+          usageId="com_novartis_ecrs_view_compoundDetailsPageDef"/>
+    <page path="/pages/ManageCompound.jspx" usageId="com_novartis_ecrs_view_ManageCompoundPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -22,6 +29,11 @@
           path="pages.CrsCreatePageDef"/>
     <page id="com_novartis_ecrs_view_SearchCRSPageDef"
           path="pages.SearchCRSPageDef"/>
+    <page id="com_novartis_ecrs_view_searchCompoundsPageDef" path="ui.pageFragments.compounds.searchCompoundsPageDef"/>
+    <page id="com_novartis_ecrs_view_CompoundsTF_CompoundsTF_CreateInsertPageDef"
+          path="taskflows.CompoundsTF_CompoundsTF_CreateInsertPageDef"/>
+    <page id="com_novartis_ecrs_view_compoundDetailsPageDef" path="ui.pageFragments.compounds.compoundDetailsPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageCompoundPageDef" path="pages.ManageCompoundPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

@@ -2,6 +2,8 @@ package com.novartis.ecrs.model.am;
 
 import com.novartis.ecrs.model.am.common.ECRSAppModule;
 
+import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,5 +56,21 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             rs.closeRowSetIterator();
         }
         return designeeList;
+    }
+
+    /**
+     * Container's getter for CompoundTransientVO.
+     * @return CompoundTransientVO
+     */
+    public CompoundTransientVOImpl getCompoundTransientVO() {
+        return (CompoundTransientVOImpl)findViewObject("CompoundTransientVO");
+    }
+
+    /**
+     * Container's getter for CrsCompoundVO.
+     * @return CrsCompoundVO
+     */
+    public ViewObjectImpl getCrsCompoundVO() {
+        return (ViewObjectImpl)findViewObject("CrsCompoundVO");
     }
 }
