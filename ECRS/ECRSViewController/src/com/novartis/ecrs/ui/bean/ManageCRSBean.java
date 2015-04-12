@@ -126,4 +126,8 @@ public class ManageCRSBean implements Serializable {
     public List<String> getSelDesigneeList() {
         return selDesigneeList;
     }
+
+    public void onClickSearch(ActionEvent actionEvent) {
+        // Add event code here...
+    }
 }

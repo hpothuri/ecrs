@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.2.64.36" id="searchCRSPageDef"
+                Package="ui.pageFragments.ecrs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ECrsSearchVO" RangeSize="25"
+              DataControl="ECRSAppModuleDataControl" id="ECrsSearchVOIterator"/>
+    <iterator Binds="CrsContentVO" RangeSize="25"
+              DataControl="ECRSAppModuleDataControl" id="CrsContentVOIterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="ECrsSearchVOIterator" StaticList="false"
+          Uses="LOV_CompoundType" id="CompoundType" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ECrsSearchVOIterator" StaticList="false"
+          Uses="LOV_CompoundCode" id="CompoundCode" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ECrsSearchVOIterator" StaticList="false" Uses="LOV_State"
+          id="State" DTSupportsMRU="false" SelectItemValueMode="ListObject"/>
+    <attributeValues IterBinding="ECrsSearchVOIterator" id="GenericName">
+      <AttrNames>
+        <Item Value="GenericName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ECrsSearchVOIterator" id="TradeName">
+      <AttrNames>
+        <Item Value="TradeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ECrsSearchVOIterator" id="Indication">
+      <AttrNames>
+        <Item Value="Indication"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ECrsSearchVOIterator" id="Marketed">
+      <AttrNames>
+        <Item Value="Marketed"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ECrsSearchVOIterator" StaticList="false"
+          Uses="LOV_Designee" id="Designee" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ECrsSearchVOIterator" StaticList="false"
+          Uses="LOV_CrsTasl" id="CrsTasl" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ECrsSearchVOIterator" StaticList="false"
+          Uses="LOV_CrsMedicalLead" id="CrsMedicalLead" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ECrsSearchVOIterator" StaticList="false"
+          Uses="LOV_CrsBsl" id="CrsBsl" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <attributeValues IterBinding="ECrsSearchVOIterator" id="CrsName">
+      <AttrNames>
+        <Item Value="CrsName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ECrsSearchVOIterator" id="CrsId">
+      <AttrNames>
+        <Item Value="CrsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ECrsSearchVOIterator" id="ReleaseStatus">
+      <AttrNames>
+        <Item Value="ReleaseStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="CrsContentVOIterator" id="CrsContentVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsContentVO"
+                      Name="CrsContentVO0">
+        <AttrNames>
+          <Item Value="CrsName"/>
+          <Item Value="StateId"/>
+          <Item Value="CrsId"/>
+          <Item Value="CompoundId"/>
+          <Item Value="GenericName"/>
+          <Item Value="TradeName"/>
+          <Item Value="Indication"/>
+          <Item Value="IsMarketedFlag"/>
+          <Item Value="Designee"/>
+          <Item Value="TaslName"/>
+          <Item Value="MedicalLeadName"/>
+          <Item Value="BslName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

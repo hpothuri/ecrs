@@ -15,17 +15,243 @@
     <f:facet name="toolbar"/>
     <f:facet name="legend"/>
     <f:facet name="info"/>
-    <af:panelGroupLayout id="pgl1">
+    <af:panelGroupLayout id="pgl1" layout="vertical">
       <af:panelBox text="#{ecrsviewcontrollerBundle.SEARCH}" id="pb1">
         <f:facet name="toolbar"/>
-        <af:panelFormLayout id="pfl1">
+        <af:panelFormLayout id="pfl1" maxColumns="3" rows="4" labelWidth="120">
+          <af:selectOneChoice value="#{bindings.ReleaseStatus.inputValue}"
+                              label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
+                              shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
+                              id="it8" contentStyle="width:170px;">
+            <af:selectItem label="CURRENT" id="si8" value="C"/>
+            <af:selectItem label="PENDING" id="si9" value="P"/>
+          </af:selectOneChoice>
+          <af:selectOneChoice value="#{bindings.CompoundType.inputValue}"
+                              shortDesc="#{bindings.CompoundType.hints.tooltip}"
+                              id="soc1"
+                              label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
+                              contentStyle="width:170px;">
+            <f:selectItems value="#{bindings.CompoundType.items}" id="si1"/>
+          </af:selectOneChoice>
+          <af:selectOneChoice value="#{bindings.CompoundCode.inputValue}"
+                              label="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
+                              shortDesc="#{bindings.CompoundCode.hints.tooltip}"
+                              id="soc2" contentStyle="width:170px;">
+            <f:selectItems value="#{bindings.CompoundCode.items}" id="si2"/>
+          </af:selectOneChoice>
+          <af:selectOneChoice value="#{bindings.State.inputValue}"
+                              label="#{bindings.State.label}"
+                              shortDesc="#{bindings.State.hints.tooltip}"
+                              id="soc3" contentStyle="width:170px;">
+            <f:selectItems value="#{bindings.State.items}" id="si3"/>
+          </af:selectOneChoice>
+          <af:inputText value="#{bindings.GenericName.inputValue}"
+                        columns="#{bindings.GenericName.hints.displayWidth}"
+                        maximumLength="#{bindings.GenericName.hints.precision}"
+                        shortDesc="#{bindings.GenericName.hints.tooltip}"
+                        id="it2"
+                        label="#{ecrsviewcontrollerBundle.GENERIC_NAME}"
+                        contentStyle="width:170px;"/>
+          <af:inputText value="#{bindings.TradeName.inputValue}"
+                        label="#{ecrsviewcontrollerBundle.TRADE_NAME}"
+                        columns="#{bindings.TradeName.hints.displayWidth}"
+                        maximumLength="#{bindings.TradeName.hints.precision}"
+                        shortDesc="#{bindings.TradeName.hints.tooltip}"
+                        id="it3" contentStyle="width:170px;"/>
+          <af:inputText value="#{bindings.Indication.inputValue}"
+                        label="#{bindings.Indication.hints.label}"
+                        columns="#{bindings.Indication.hints.displayWidth}"
+                        maximumLength="#{bindings.Indication.hints.precision}"
+                        shortDesc="#{bindings.Indication.hints.tooltip}"
+                        id="it4" contentStyle="width:170px;"/>
+          <af:inputText value="#{bindings.Marketed.inputValue}"
+                        label="#{bindings.Marketed.hints.label}"
+                        columns="#{bindings.Marketed.hints.displayWidth}"
+                        maximumLength="#{bindings.Marketed.hints.precision}"
+                        shortDesc="#{bindings.Marketed.hints.tooltip}"
+                        id="it5" contentStyle="width:170px;"/>
+          <af:selectOneChoice value="#{bindings.Designee.inputValue}"
+                              label="#{bindings.Designee.label}"
+                              shortDesc="#{bindings.Designee.hints.tooltip}"
+                              id="soc4" contentStyle="width:170px;">
+            <f:selectItems value="#{bindings.Designee.items}" id="si4"/>
+          </af:selectOneChoice>
+          <af:selectOneChoice value="#{bindings.CrsTasl.inputValue}"
+                              label="#{ecrsviewcontrollerBundle.CRS_TASL}"
+                              shortDesc="#{bindings.CrsTasl.hints.tooltip}"
+                              id="soc5" contentStyle="width:170px;">
+            <f:selectItems value="#{bindings.CrsTasl.items}" id="si5"/>
+          </af:selectOneChoice>
+          <af:selectOneChoice value="#{bindings.CrsMedicalLead.inputValue}"
+                              shortDesc="#{bindings.CrsMedicalLead.hints.tooltip}"
+                              id="soc6"
+                              label="#{ecrsviewcontrollerBundle.CRS_MEDICAL_LEAD}"
+                              contentStyle="width:170px;">
+            <f:selectItems value="#{bindings.CrsMedicalLead.items}" id="si6"/>
+          </af:selectOneChoice>
+          <af:selectOneChoice value="#{bindings.CrsBsl.inputValue}"
+                              shortDesc="#{bindings.CrsBsl.hints.tooltip}"
+                              id="soc7"
+                              label="#{ecrsviewcontrollerBundle.CRS_BSL}"
+                              contentStyle="width:170px;">
+            <f:selectItems value="#{bindings.CrsBsl.items}" id="si7"/>
+          </af:selectOneChoice>
           <f:facet name="footer"/>
         </af:panelFormLayout>
         <af:separator id="s1"/>
-        <af:panelFormLayout id="pfl2">
-          <f:facet name="footer"/>
-        </af:panelFormLayout>
+        <af:panelGroupLayout id="pgl2" layout="horizontal">
+          <af:inputText value="#{bindings.CrsName.inputValue}"
+                        columns="#{bindings.CrsName.hints.displayWidth}"
+                        maximumLength="#{bindings.CrsName.hints.precision}"
+                        shortDesc="#{bindings.CrsName.hints.tooltip}" id="it6"
+                        contentStyle="width:170px;"
+                        label="#{ecrsviewcontrollerBundle.CRS_NAME}"/>
+          <af:inputText value="#{bindings.CrsId.inputValue}"
+                        label="#{ecrsviewcontrollerBundle.CRS_ID}"
+                        columns="#{bindings.CrsId.hints.displayWidth}"
+                        maximumLength="#{bindings.CrsId.hints.precision}"
+                        shortDesc="#{bindings.CrsId.hints.tooltip}" id="it7"
+                        contentStyle="width:170px;"/>
+          <af:commandButton text="#{ecrsviewcontrollerBundle.SEARCH}" id="cb1"
+                            actionListener="#{pageFlowScope.manageCRSBean.onClickSearch}"/>
+          <f:facet name="separator">
+            <af:spacer width="20" height="10" id="s2"/>
+          </f:facet>
+        </af:panelGroupLayout>
       </af:panelBox>
+      <af:table value="#{bindings.CrsContentVO.collectionModel}" var="row"
+                rows="#{bindings.CrsContentVO.rangeSize}"
+                emptyText="#{bindings.CrsContentVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                fetchSize="#{bindings.CrsContentVO.rangeSize}"
+                rowBandingInterval="0"
+                selectedRowKeys="#{bindings.CrsContentVO.collectionModel.selectedRow}"
+                selectionListener="#{bindings.CrsContentVO.collectionModel.makeCurrent}"
+                rowSelection="single" id="t2">
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsName.name}"
+                   sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.CRS_NAME}"
+                   id="c1" align="center" width="70">
+          <af:outputText value="#{row.CrsName}"
+                         shortDesc="#{bindings.CrsContentVO.hints.CrsName.tooltip}"
+                         id="ot1"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.StateId.name}"
+                   sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.STATE}"
+                   id="c2" align="center" width="50">
+          <af:selectOneChoice value="#{row.bindings.StateId.inputValue}"
+                              label="#{row.bindings.StateId.label}"
+                              required="#{bindings.CrsContentVO.hints.StateId.mandatory}"
+                              shortDesc="#{bindings.CrsContentVO.hints.StateId.tooltip}"
+                              readOnly="true" id="soc8">
+            <f:selectItems value="#{row.bindings.StateId.items}" id="si10"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsId.name}"
+                   sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.CRS_ID}"
+                   id="c3" width="70">
+          <af:outputText value="#{row.CrsId}"
+                         shortDesc="#{bindings.CrsContentVO.hints.CrsId.tooltip}"
+                         id="ot2">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.CrsContentVO.hints.CrsId.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.CompoundId.name}"
+                   sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
+                   id="c4" align="center" width="80">
+          <af:selectOneChoice value="#{row.bindings.CompoundId.inputValue}"
+                              label="#{row.bindings.CompoundId.label}"
+                              required="#{bindings.CrsContentVO.hints.CompoundId.mandatory}"
+                              shortDesc="#{bindings.CrsContentVO.hints.CompoundId.tooltip}"
+                              readOnly="true" id="soc9">
+            <f:selectItems value="#{row.bindings.CompoundId.items}" id="si11"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.GenericName.name}"
+                   sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.GENERIC_NAME}"
+                   id="c5" align="center">
+          <af:outputText value="#{row.GenericName}"
+                         shortDesc="#{bindings.CrsContentVO.hints.GenericName.tooltip}"
+                         id="ot3"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.TradeName.name}"
+                   sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.TRADE_NAME}"
+                   id="c6" align="center">
+          <af:outputText value="#{row.TradeName}"
+                         shortDesc="#{bindings.CrsContentVO.hints.TradeName.tooltip}"
+                         id="ot4"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.Indication.name}"
+                   sortable="false"
+                   headerText="#{bindings.CrsContentVO.hints.Indication.label}"
+                   id="c7" align="center">
+          <af:outputText value="#{row.Indication}"
+                         shortDesc="#{bindings.CrsContentVO.hints.Indication.tooltip}"
+                         id="ot5"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.IsMarketedFlag.name}"
+                   sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.MARKETED}"
+                   id="c8" align="center" width="50">
+          <af:outputText value="#{row.IsMarketedFlag}"
+                         shortDesc="#{bindings.CrsContentVO.hints.IsMarketedFlag.tooltip}"
+                         id="ot6"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.Designee.name}"
+                   sortable="false"
+                   headerText="#{bindings.CrsContentVO.hints.Designee.label}"
+                   id="c9" align="center">
+          <af:selectOneChoice value="#{row.bindings.Designee.inputValue}"
+                              label="#{row.bindings.Designee.label}"
+                              required="#{bindings.CrsContentVO.hints.Designee.mandatory}"
+                              shortDesc="#{bindings.CrsContentVO.hints.Designee.tooltip}"
+                              readOnly="true" id="soc10">
+            <f:selectItems value="#{row.bindings.Designee.items}" id="si12"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.TaslName.name}"
+                   sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.CRS_TASL}"
+                   id="c10" align="center" width="80">
+          <af:selectOneChoice value="#{row.bindings.TaslName.inputValue}"
+                              label="#{row.bindings.TaslName.label}"
+                              required="#{bindings.CrsContentVO.hints.TaslName.mandatory}"
+                              shortDesc="#{bindings.CrsContentVO.hints.TaslName.tooltip}"
+                              readOnly="true" id="soc11">
+            <f:selectItems value="#{row.bindings.TaslName.items}" id="si13"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.MedicalLeadName.name}"
+                   sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.CRS_MEDICAL_LEAD}"
+                   id="c11" align="center" width="80">
+          <af:selectOneChoice value="#{row.bindings.MedicalLeadName.inputValue}"
+                              label="#{row.bindings.MedicalLeadName.label}"
+                              required="#{bindings.CrsContentVO.hints.MedicalLeadName.mandatory}"
+                              shortDesc="#{bindings.CrsContentVO.hints.MedicalLeadName.tooltip}"
+                              readOnly="true" id="soc12">
+            <f:selectItems value="#{row.bindings.MedicalLeadName.items}"
+                           id="si14"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.BslName.name}"
+                   sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.CRS_BSL}"
+                   id="c12" width="80" align="center">
+          <af:selectOneChoice value="#{row.bindings.BslName.inputValue}"
+                              label="#{row.bindings.BslName.label}"
+                              required="#{bindings.CrsContentVO.hints.BslName.mandatory}"
+                              shortDesc="#{bindings.CrsContentVO.hints.BslName.tooltip}"
+                              readOnly="true" id="soc13">
+            <f:selectItems value="#{row.bindings.BslName.items}" id="si15"/>
+          </af:selectOneChoice>
+        </af:column>
+      </af:table>
     </af:panelGroupLayout>
   </af:panelHeader>
 </jsp:root>

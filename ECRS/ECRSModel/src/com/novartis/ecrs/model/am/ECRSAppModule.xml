@@ -36,6 +36,9 @@
   <ViewUsage
     Name="CrsRolesVO"
     ViewObjectName="com.novartis.ecrs.model.view.CrsRolesVO"/>
+  <ViewUsage
+    Name="ECrsSearchVO"
+    ViewObjectName="com.novartis.ecrs.model.view.ECrsSearchVO"/>
   <ClientInterface>
     <Method
       Name="fetchDesignees"

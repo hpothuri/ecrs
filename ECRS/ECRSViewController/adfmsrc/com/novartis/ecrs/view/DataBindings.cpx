@@ -33,6 +33,8 @@
     <page path="/ui/pageFragments/roles/searchRoles.jsff" usageId="com_novartis_ecrs_view_searchRolesPageDef"/>
     <page path="/ui/pageFragments/roles/roleDetails.jsff" usageId="com_novartis_ecrs_view_roleDetailsPageDef"/>
     <page path="/pages/ManageRoles.jspx" usageId="com_novartis_ecrs_view_ManageRolesPageDef"/>
+    <page path="/ui/pageFragments/ecrs/searchCRS.jsff"
+          usageId="com_novartis_ecrs_view_searchCRSPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -58,6 +60,8 @@
     <page id="com_novartis_ecrs_view_searchRolesPageDef" path="ui.pageFragments.roles.searchRolesPageDef"/>
     <page id="com_novartis_ecrs_view_roleDetailsPageDef" path="ui.pageFragments.roles.roleDetailsPageDef"/>
     <page id="com_novartis_ecrs_view_ManageRolesPageDef" path="pages.ManageRolesPageDef"/>
+    <page id="com_novartis_ecrs_view_searchCRSPageDef"
+          path="ui.pageFragments.ecrs.searchCRSPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

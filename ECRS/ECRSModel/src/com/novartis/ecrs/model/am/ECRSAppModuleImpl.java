@@ -109,4 +109,12 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public ViewObjectImpl getCrsRolesVO() {
         return (ViewObjectImpl)findViewObject("CrsRolesVO");
     }
+
+    /**
+     * Container's getter for ECrsSearchVO1.
+     * @return ECrsSearchVO1
+     */
+    public ViewObjectImpl getECrsSearchVO() {
+        return (ViewObjectImpl)findViewObject("ECrsSearchVO");
+    }
 }

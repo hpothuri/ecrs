@@ -27,7 +27,7 @@
                                         labelWidth="150" fieldWidth="200">
                         <f:facet name="footer"/>
                         <af:selectOneChoice value="#{bindings.CompoundType.inputValue}"
-                                            label="#{bindings.CompoundType.label}"
+                                            label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
                                             required="true"
                                             shortDesc="#{bindings.CompoundType.hints.tooltip}"
                                             id="soc1" autoSubmit="true"
