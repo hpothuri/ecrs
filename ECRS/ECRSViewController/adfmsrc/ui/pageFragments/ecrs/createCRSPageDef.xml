@@ -10,9 +10,6 @@
   </executables>
   <bindings>
     <list IterBinding="CrsContentVOIterator" StaticList="false"
-          Uses="LOV_CompoundType" id="CompoundType" DTSupportsMRU="true"
-          SelectItemValueMode="ListObject"/>
-    <list IterBinding="CrsContentVOIterator" StaticList="false"
           Uses="LOV_CompoundId" id="CompoundId" DTSupportsMRU="true"
           SelectItemValueMode="ListObject"/>
     <attributeValues IterBinding="CrsContentVOIterator" id="TradeName">
@@ -76,6 +73,16 @@
     <attributeValues IterBinding="CrsContentVOIterator" id="Designee">
       <AttrNames>
         <Item Value="Designee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CompoundType">
+      <AttrNames>
+        <Item Value="CompoundType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CrsCompoundType">
+      <AttrNames>
+        <Item Value="CrsCompoundType"/>
       </AttrNames>
     </attributeValues>
   </bindings>

@@ -10,7 +10,12 @@
   AliasName="CrsContentEO"
   BindingStyle="OracleName"
   UseGlueCode="false"
-  xmlns:validation="http://xmlns.oracle.com/adfm/validation">
+  xmlns:validation="http://xmlns.oracle.com/adfm/validation"
+  RowClass="com.novartis.ecrs.model.entity.CrsContentEOImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
   <Attribute
     Name="CrsId"
     IsNotNull="true"
@@ -23,7 +28,7 @@
     TableName="CRS.CRS_CONTENT"
     PrimaryKey="true"
     RetrievedOnInsert="true">
-    <TransientExpression><![CDATA[(new oracle.jbo.server.SequenceImpl("CRS_CONTENT_SEQ",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
+    <TransientExpression><![CDATA[-999]]></TransientExpression>
   </Attribute>
   <Attribute
     Name="CrsName"

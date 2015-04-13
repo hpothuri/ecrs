@@ -11,7 +11,7 @@
         <f:facet name="toolbar"/>
         <f:facet name="legend"/>
         <f:facet name="info"/>
-        <af:panelGroupLayout id="pg62" layout="horizontal" halign="center">
+        <af:panelGroupLayout id="pg62" layout="horizontal" halign="start">
             <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
                       id="t1"/>
         </af:panelGroupLayout>
@@ -25,24 +25,38 @@
                 <af:panelGroupLayout id="pgl3" layout="horizontal">
                     <af:panelFormLayout id="pfl1" maxColumns="3" rows="6"
                                         labelWidth="150" fieldWidth="200">
-                        <af:selectOneChoice value="#{bindings.CompoundType.inputValue}"
-                                            label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
-                                            required="true"
-                                            shortDesc="#{bindings.CompoundType.hints.tooltip}"
-                                            id="soc1"
-                                            contentStyle="width:160px;" autoSubmit="true">
-                            <f:selectItems value="#{bindings.CompoundType.items}"
-                                           id="si1"/>
-                        </af:selectOneChoice>
                         <af:selectOneChoice value="#{bindings.CompoundId.inputValue}"
                                             label="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
                                             shortDesc="#{bindings.CompoundId.hints.tooltip}"
                                             id="soc2"
-                                            contentStyle="width:160px;" partialTriggers="soc1" showRequired="true"
+                                            contentStyle="width:160px;"
+                                            partialTriggers="soc1"
+                                            showRequired="true"
                                             autoSubmit="true">
                             <f:selectItems value="#{bindings.CompoundId.items}"
                                            id="si2"/>
                         </af:selectOneChoice>
+                        <af:inputText value="#{not empty bindings.CompoundType.inputValue ? bindings.CompoundType.inputValue :  bindings.CrsCompoundType.inputValue}"
+                                      label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
+                                      required="#{bindings.CrsCompoundType.hints.mandatory}"
+                                      shortDesc="#{bindings.CrsCompoundType.hints.tooltip}"
+                                      id="it4" contentStyle="width:160px;"
+                                      autoSubmit="true" readOnly="true"
+                                      columns="#{bindings.CrsCompoundType.hints.displayWidth}"
+                                      maximumLength="#{bindings.CrsCompoundType.hints.precision}"
+                                      partialTriggers="soc2">
+                            <f:validator binding="#{bindings.CrsCompoundType.validator}"/>
+                        </af:inputText>
+                        <af:inputText value="#{bindings.CompoundType.inputValue}"
+                                            label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
+                                            required="true"
+                                            shortDesc="#{bindings.CompoundType.hints.tooltip}"
+                                            id="soc1"
+                                            contentStyle="width:160px;" autoSubmit="true"
+                                      readOnly="true" rendered="false">
+                            <!--<f:selectItems value="#{bindings.CompoundType.items}"
+                                           id="si1"/>-->
+                        </af:inputText>
                         <af:inputText value="#{bindings.TradeName.inputValue}"
                                       label="#{bindings.TradeName.hints.label}"
                                       required="#{bindings.TradeName.hints.mandatory}"
@@ -141,7 +155,7 @@
                                   partialTriggers="soc2 it3"/>
                     <af:inputText label="#{ecrsviewcontrollerBundle.CRS_ID} #{ecrsviewcontrollerBundle.COLON}"
                                   id="it6" readOnly="true"
-                                  value="#{bindings.CrsId.inputValue}"/>
+                                  value="#{bindings.CrsId.inputValue &lt; 0 ? '' : bindings.CrsId.inputValue}"/>
                 </af:panelFormLayout>
             </af:panelBox>
             <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}" id="pb2"
@@ -172,7 +186,8 @@
                                   id="cb7"/>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}"
                                          id="plam1">
-                    <af:outputText value="v17.1" id="ot2"/>
+                    <af:outputText id="ot2"
+                                   value="#{ecrsviewcontrollerBundle.DICIONARY_CURR_VERSION_NO}"/>
                 </af:panelLabelAndMessage>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}#{ecrsviewcontrollerBundle.COLON}"
                                          id="plam2">
@@ -182,6 +197,9 @@
                     <af:spacer width="10" height="10" id="s4"/>
                 </f:facet>
             </af:panelGroupLayout>
+            <f:facet name="separator">
+                <af:spacer width="10" height="10" id="s7"/>
+            </f:facet>
         </af:panelGroupLayout>
     </af:panelHeader>
 </jsp:root>

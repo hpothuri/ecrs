@@ -122,73 +122,76 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public void filterCRSContent(){
         String whereClause = "";
         ViewObjectImpl searchVO = this.getECrsSearchVO();
+        
         ECrsSearchVORowImpl row = (ECrsSearchVORowImpl) searchVO.getCurrentRow();
         
         if (row.getReleaseStatus() != null)
             whereClause +=
-                    "CrsContentEO.RELEASE_STATUS_FLAG = '" + row.getReleaseStatus() +
+                    "RELEASE_STATUS_FLAG = '" + row.getReleaseStatus() +
                     "' AND ";
         if (row.getCompoundCodeId() != null)
             whereClause +=
-                    "CrsContentEO.COMPOUND_ID =" + row.getCompoundCodeId() +
+                    "COMPOUND_ID =" + row.getCompoundCodeId() +
                     " AND ";
         if (row.getState() != null)
             whereClause +=
-                    "CrsContentEO.STATE_ID =" + row.getState() + " AND ";
+                    "STATE_ID =" + row.getState() + " AND ";
         if (row.getGenericName() != null)
             whereClause +=
-                    "CrsContentEO.GENERIC_NAME LIKE '%" + row.getGenericName() +
+                    "GENERIC_NAME LIKE '%" + row.getGenericName() +
                     "%' AND ";
         if (row.getTradeName() != null)
             whereClause +=
-                    "CrsContentEO.TRADE_NAME LIKE '%" + row.getTradeName() +
+                    "TRADE_NAME LIKE '%" + row.getTradeName() +
                     "%' AND ";
 
         if (row.getIndication() != null)
             whereClause +=
-                    "CrsContentEO.INDICATION LIKE '%" + row.getIndication() +
+                    "INDICATION LIKE '%" + row.getIndication() +
                     "%' AND ";
         if (row.getMarketed() != null)
             whereClause +=
-                    "CrsContentEO.IS_MARKETED_FLAG ='" + row.getMarketed() +
+                    "IS_MARKETED_FLAG ='" + row.getMarketed() +
                     "' AND ";
         if (row.getDesignee() != null)
             whereClause +=
-                    "CrsContentEO.DESIGNEE ='" + row.getDesignee() + "' AND ";
+                    "DESIGNEE LIKE '%" + row.getDesignee() + "%' AND ";
 
         if (row.getCrsTasl() != null)
             whereClause +=
-                    "CrsContentEO.TASL_NAME ='" + row.getCrsTasl() + "' AND ";
+                    "TASL_NAME ='" + row.getCrsTasl() + "' AND ";
         if (row.getCrsMedicalLead() != null)
             whereClause +=
-                    "CrsContentEO.MEDICAL_LEAD_NAME ='" + row.getCrsMedicalLead() +
+                    "MEDICAL_LEAD_NAME ='" + row.getCrsMedicalLead() +
                     "' AND ";
         if (row.getCrsBsl() != null)
             whereClause +=
-                    "CrsContentEO.BSL_NAME = '" + row.getCrsBsl() + "' AND ";
+                    "BSL_NAME = '" + row.getCrsBsl() + "' AND ";
         
         if (row.getCrsName() != null)
             whereClause +=
-                    "CrsContentEO.CRS_NAME LIKE '%" + row.getCrsName() +
+                    "CRS_NAME LIKE '%" + row.getCrsName() +
                     "%' AND ";
 
         if (row.getCrsId() != null)
             whereClause +=
-                    "CrsContentEO.CRS_ID LIKE '%" + row.getCrsId() +
+                    "CRS_ID LIKE '%" + row.getCrsId() +
                     "%' AND ";
         
         if (whereClause.endsWith("AND "))
             whereClause =
                     whereClause.substring(0, whereClause.length() - 4) + "";
         
-        //System.out.println("----->"+whereClause);
         ViewObjectImpl crsContentVO = this.getCrsContentVO();
+       // crsContentVO.setNestedSelectForFullSql(false);
+        //System.out.println("----->"+whereClause);
+       // System.out.println("--->>>"+ crsContentVO.getWhereClause());
         crsContentVO.setWhereClause(null);
         crsContentVO.applyViewCriteria(null);
         crsContentVO.executeQuery();
         //Apply whereClause to crsContentVO
         crsContentVO.setWhereClause(whereClause);
-        //System.out.println("----->"+crsContentVO.getQuery());
+       // System.out.println("----->"+crsContentVO.getQuery());
         crsContentVO.executeQuery(); 
     }
 }

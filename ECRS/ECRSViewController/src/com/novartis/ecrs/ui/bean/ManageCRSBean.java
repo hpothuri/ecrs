@@ -19,12 +19,15 @@ import oracle.adf.model.binding.DCIteratorBinding;
 
 import oracle.binding.OperationBinding;
 
+import org.apache.myfaces.trinidad.event.SelectionEvent;
+
 
 public class ManageCRSBean implements Serializable {
     @SuppressWarnings("compatibility:7725300081501535999")
     private static final long serialVersionUID = 2040469805807166652L;
     private List<SelectItem> designeeList;
     private List<String> selDesigneeList;
+    private String selectedCrsName;
 
     public ManageCRSBean() {
         super();
@@ -71,11 +74,11 @@ public class ManageCRSBean implements Serializable {
         }
         //TODO check with Donna
         //if compound type is non-compound then set marketed flag to 'N' 
-        if(ADFUtils.evaluateEL("#{bindings.CompoundType.inputValue}")!=null ){
-            String compType = (String)ADFUtils.evaluateEL("#{bindings.CompoundType.inputValue}");
-            if(ViewConstants.COMP_TYPE_NON_COMPOUND.equals(compType))
-                ADFUtils.setEL("#{bindings.IsMarketedFlag.inputValue}", "N");
-        }
+//        if(ADFUtils.evaluateEL("#{bindings.CompoundType.inputValue}")!=null ){
+//            String compType = (String)ADFUtils.evaluateEL("#{bindings.CompoundType.inputValue}");
+//            if(ViewConstants.COMP_TYPE_NON_COMPOUND.equals(compType))
+//                ADFUtils.setEL("#{bindings.IsMarketedFlag.inputValue}", "N");
+//        }
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0) 
@@ -154,6 +157,42 @@ public class ManageCRSBean implements Serializable {
         DCBindingContainer bc =
             ADFUtils.findBindingContainerByName(ViewConstants.PAGE_DEF_SEARCH);
         DCIteratorBinding iter = bc.findIteratorBinding("CrsContentVOIterator");
-        iter.getViewObject().executeEmptyRowSet();
+        if (iter.getViewObject() != null)
+            iter.getViewObject().executeEmptyRowSet();
+    }
+
+
+    /**
+     * Custom selection listener to populate crs name and designee list.
+     * @param selectionEvent
+     */
+    public void searchTableSelectionListener(SelectionEvent selectionEvent) {
+        // Add event code here...
+        ADFUtils.invokeEL("#{bindings.CrsContentVO.collectionModel.makeCurrent}", new Class[] {SelectionEvent.class},
+                                 new Object[] { selectionEvent });
+        // get the selected row , by this you can get any attribute of that row
+        CrsContentVORowImpl selectedRow =
+                   (CrsContentVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentVOIterator.currentRow}");
+        setSelectedCrsName(selectedRow.getCrsName());
+        
+        List<String> designeeList = new ArrayList<String>();
+        String[] designeeArray = selectedRow.getDesignee().split("[,]");
+        if(designeeArray.length>0){
+            for(int i = 0;i<designeeArray.length;i++){
+                designeeList.add(designeeArray[i]);
+            }
+        }
+        setSelDesigneeList(designeeList);
+    }
+
+    /**
+     * @param selectedCrsName
+     */
+    public void setSelectedCrsName(String selectedCrsName) {
+        this.selectedCrsName = selectedCrsName;
+    }
+
+    public String getSelectedCrsName() {
+        return selectedCrsName;
     }
 }

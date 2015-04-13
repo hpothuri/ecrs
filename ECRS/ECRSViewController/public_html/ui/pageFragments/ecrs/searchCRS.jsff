@@ -5,8 +5,9 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
   <c:set var="ecrsviewcontrollerBundle"
          value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
-  <af:panelHeader text="#{ecrsviewcontrollerBundle.SEARCH}" id="ph1">
-    <af:panelGroupLayout id="pg22" layout="horizontal" halign="center">
+  <af:panelHeader text="#{ecrsviewcontrollerBundle.SEARCH}" id="ph1" size="1"
+                  inlineStyle="padding:5px;">
+    <af:panelGroupLayout id="pg22" layout="horizontal" halign="start">
       <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
                 id="t1"/>
     </af:panelGroupLayout>
@@ -126,7 +127,7 @@
                 fetchSize="#{bindings.CrsContentVO.rangeSize}"
                 rowBandingInterval="0"
                 selectedRowKeys="#{bindings.CrsContentVO.collectionModel.selectedRow}"
-                selectionListener="#{bindings.CrsContentVO.collectionModel.makeCurrent}"
+                selectionListener="#{pageFlowScope.manageCRSBean.searchTableSelectionListener}"
                 rowSelection="single" id="t2" styleClass="AFStretchWidth"
                 columnStretching="column:c9" contentDelivery="immediate"
                 autoHeightRows="-1">
@@ -153,7 +154,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsId.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.CRS_ID}"
-                   id="c3" width="70">
+                   id="c3" width="50" align="center">
           <af:outputText value="#{row.CrsId}"
                          shortDesc="#{bindings.CrsContentVO.hints.CrsId.tooltip}"
                          id="ot2">
@@ -164,7 +165,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.CompoundId.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
-                   id="c4" align="center" width="80">
+                   id="c4" align="center" width="70" displayIndex="-1">
           <af:selectOneChoice value="#{row.bindings.CompoundId.inputValue}"
                               label="#{row.bindings.CompoundId.label}"
                               required="#{bindings.CrsContentVO.hints.CompoundId.mandatory}"
@@ -209,13 +210,9 @@
                    sortable="false"
                    headerText="#{bindings.CrsContentVO.hints.Designee.label}"
                    id="c9" align="center">
-          <af:selectOneChoice value="#{row.bindings.Designee.inputValue}"
-                              label="#{row.bindings.Designee.label}"
-                              required="#{bindings.CrsContentVO.hints.Designee.mandatory}"
-                              shortDesc="#{bindings.CrsContentVO.hints.Designee.tooltip}"
-                              readOnly="true" id="soc10">
-            <f:selectItems value="#{row.bindings.Designee.items}" id="si12"/>
-          </af:selectOneChoice>
+          <af:outputText value="#{row.Designee}"
+                         shortDesc="#{bindings.CrsContentVO.hints.Designee.tooltip}"
+                         id="ot7"/>
         </af:column>
         <af:column sortProperty="#{bindings.CrsContentVO.hints.TaslName.name}"
                    sortable="false"
@@ -268,13 +265,21 @@
                              destination="'ECRS/faces/pages/Home.jspx'"
                              targetFrame="_parent"/>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}"
-                                         id="plam1"/>
+                                         id="plam1">
+          <af:outputText value="#{ecrsviewcontrollerBundle.DICIONARY_CURR_VERSION_NO}" id="ot8"/>
+        </af:panelLabelAndMessage>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}#{ecrsviewcontrollerBundle.COLON}"
-                                         id="plam2"/>
+                                         id="plam2">
+          <af:outputText value="#{pageFlowScope.manageCRSBean.selectedCrsName}" id="ot9"
+                         partialTriggers="t2"/>
+        </af:panelLabelAndMessage>
                 <f:facet name="separator">
                     <af:spacer width="10" height="10" id="s4"/>
                 </f:facet>
             </af:panelGroupLayout>
+      <f:facet name="separator">
+        <af:spacer width="10" height="10" id="s3"/>
+      </f:facet>
     </af:panelGroupLayout>
   </af:panelHeader>
 </jsp:root>

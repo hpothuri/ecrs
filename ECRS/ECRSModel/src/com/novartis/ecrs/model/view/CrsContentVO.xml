@@ -5,49 +5,25 @@
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="CrsContentVO"
   Version="11.1.2.64.36"
-  SelectList="CrsContentEO.CRS_ID, 
-       CrsContentEO.CRS_NAME, 
-       CrsContentEO.STATE_ID, 
-       CrsContentEO.COMPOUND_ID, 
-       CrsContentEO.GENERIC_NAME, 
-       CrsContentEO.TRADE_NAME, 
-       CrsContentEO.INDICATION, 
-       CrsContentEO.IS_MARKETED_FLAG, 
-       CrsContentEO.RELEASE_STATUS_FLAG, 
-       CrsContentEO.BSL_NAME, 
-       CrsContentEO.DESIGNEE, 
-       CrsContentEO.MQM_COMMENT, 
-       CrsContentEO.TASL_NAME, 
-       CrsContentEO.TASL_REJECT_COMMENT, 
-       CrsContentEO.MEDICAL_LEAD_NAME, 
-       CrsContentEO.MEDICAL_LEAD_REJECT_COMMENT, 
-       CrsContentEO.CRS_EFFECTIVE_DT"
-  FromList="CRS.CRS_CONTENT CrsContentEO"
   BindingStyle="OracleName"
-  CustomQuery="false"
+  CustomQuery="true"
   PageIterMode="Full"
   UseGlueCode="false"
   RowClass="com.novartis.ecrs.model.view.CrsContentVORowImpl">
   <DesignTime>
     <Attr Name="_codeGenFlag2" Value="Access"/>
     <Attr Name="_isCodegen" Value="true"/>
+    <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
   <ViewAccessor
     Name="CrsCompoundVA"
     ViewObjectName="com.novartis.ecrs.model.view.CrsCompoundVO">
-    <ViewCriteriaUsage
-      Name="findByCompoundType"
-      FullName="com.novartis.ecrs.model.view.CrsCompoundVO.findByCompoundType"/>
     <ParameterMap>
       <PIMap Variable="bindCompoundType">
         <TransientExpression><![CDATA[CompoundType]]></TransientExpression>
       </PIMap>
     </ParameterMap>
   </ViewAccessor>
-  <ViewAccessor
-    Name="CompundTypeLOVVA"
-    ViewObjectName="com.novartis.ecrs.model.lov.CompundTypeLOVVO"
-    RowLevelBinds="true"/>
   <ViewAccessor
     Name="CrsBSLUserVA"
     ViewObjectName="com.novartis.ecrs.model.view.CrsUserRolesVO">
@@ -103,30 +79,15 @@
     </AttrArray>
     <AttrArray Name="DerivedAttrNames">
       <Item Value="CompoundCode"/>
+      <Item Value="CompoundType"/>
     </AttrArray>
     <AttrArray Name="ListAttrNames">
       <Item Value="CompoundId"/>
       <Item Value="CompoundCode"/>
+      <Item Value="CompoundType"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="CompoundCode"/>
-    </AttrArray>
-    <DisplayCriteria/>
-  </ListBinding>
-  <ListBinding
-    Name="LOV_CompoundType"
-    ListVOName="CompundTypeLOVVA"
-    ListRangeSize="-1"
-    NullValueFlag="none"
-    MRUCount="0">
-    <AttrArray Name="AttrNames">
-      <Item Value="CompoundType"/>
-    </AttrArray>
-    <AttrArray Name="ListAttrNames">
-      <Item Value="CompoundType"/>
-    </AttrArray>
-    <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="CompoundType"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
@@ -219,9 +180,48 @@
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
+  <SQLQuery><![CDATA[SELECT CrsContentEO.CRS_ID, 
+       CrsContentEO.CRS_NAME, 
+       CrsContentEO.STATE_ID, 
+       CrsContentEO.COMPOUND_ID, 
+       CrsContentEO.GENERIC_NAME, 
+       CrsContentEO.TRADE_NAME, 
+       CrsContentEO.INDICATION, 
+       CrsContentEO.IS_MARKETED_FLAG, 
+       CrsContentEO.RELEASE_STATUS_FLAG, 
+       CrsContentEO.BSL_NAME, 
+       CrsContentEO.DESIGNEE, 
+       CrsContentEO.MQM_COMMENT, 
+       CrsContentEO.TASL_NAME, 
+       CrsContentEO.TASL_REJECT_COMMENT, 
+       CrsContentEO.MEDICAL_LEAD_NAME, 
+       CrsContentEO.MEDICAL_LEAD_REJECT_COMMENT, 
+       CrsContentEO.CRS_EFFECTIVE_DT,
+       CrsCompoundEO.COMPOUND_TYPE as CRS_COMPOUND_TYPE
+FROM CRS.CRS_CONTENT CrsContentEO, CRS.CRS_COMPOUNDS CrsCompoundEO
+WHERE CrsContentEO.COMPOUND_ID(+) = CrsCompoundEO.COMPOUND_ID]]></SQLQuery>
   <EntityUsage
     Name="CrsContentEO"
     Entity="com.novartis.ecrs.model.entity.CrsContentEO"/>
+  <EntityUsage
+    Name="CrsCompoundEO"
+    Entity="com.novartis.ecrs.model.entity.CrsCompoundEO"
+    Association="com.novartis.ecrs.model.entity.assoc.CrsContentIdxCompoundFkAssoc"
+    AssociationEnd="com.novartis.ecrs.model.entity.assoc.CrsContentIdxCompoundFkAssoc.CrsCompoundEO"
+    SourceUsage="com.novartis.ecrs.model.view.CrsContentVO.CrsContentEO"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    JoinType="RIGHT OUTER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="com.novartis.ecrs.model.entity.CrsContentEO.CompoundId"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="com.novartis.ecrs.model.entity.CrsCompoundEO.CompoundId"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
   <ViewAttribute
     Name="CrsId"
     IsNotNull="true"
@@ -266,16 +266,12 @@
     EntityUsage="CrsContentEO"
     AliasName="COMPOUND_ID"
     LOVName="LOV_CompoundId">
-    <Dependencies>
-      <Item
-        Value="CompoundType"/>
-    </Dependencies>
     <Properties>
       <SchemaBasedProperties>
-        <CONTROLTYPE
-          Value="choice"/>
         <AUTOSUBMIT
           Value="true"/>
+        <CONTROLTYPE
+          Value="choice"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -310,7 +306,9 @@
     PrecisionRule="true"
     EntityAttrName="IsMarketedFlag"
     EntityUsage="CrsContentEO"
-    AliasName="IS_MARKETED_FLAG"/>
+    AliasName="IS_MARKETED_FLAG">
+    <TransientExpression><![CDATA['N']]></TransientExpression>
+  </ViewAttribute>
   <ViewAttribute
     Name="ReleaseStatusFlag"
     IsNotNull="true"
@@ -403,6 +401,25 @@
     EntityUsage="CrsContentEO"
     AliasName="CRS_EFFECTIVE_DT"/>
   <ViewAttribute
+    Name="CrsCompoundType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="12"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CRS_COMPOUND_TYPE"
+    Expression="CRS_COMPOUND_TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="12"/>
+    </DesignTime>
+    <Dependencies>
+      <Item
+        Value="CompoundId"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
     Name="CompoundType"
     IsSelected="false"
     IsPersistent="false"
@@ -410,12 +427,9 @@
     Type="java.lang.String"
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
-    SQLType="VARCHAR"
-    LOVName="LOV_CompoundType">
+    SQLType="VARCHAR">
     <Properties>
       <SchemaBasedProperties>
-        <CONTROLTYPE
-          Value="choice"/>
         <AUTOSUBMIT
           Value="true"/>
       </SchemaBasedProperties>

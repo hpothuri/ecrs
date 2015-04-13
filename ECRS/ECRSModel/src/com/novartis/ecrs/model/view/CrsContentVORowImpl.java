@@ -1,5 +1,8 @@
 package com.novartis.ecrs.model.view;
 
+import com.novartis.ecrs.model.entity.CrsCompoundEOImpl;
+import com.novartis.ecrs.model.entity.CrsContentEOImpl;
+
 import oracle.jbo.RowSet;
 import oracle.jbo.domain.Timestamp;
 import oracle.jbo.server.AttributeDefImpl;
@@ -15,6 +18,7 @@ public class CrsContentVORowImpl extends ViewRowImpl {
 
 
     public static final int ENTITY_CRSCONTENTEO = 0;
+    public static final int ENTITY_CRSCOMPOUNDEO = 1;
 
     /**
      * AttributesEnum: generated enum for identifying attributes and accessors. Do not modify.
@@ -190,6 +194,16 @@ public class CrsContentVORowImpl extends ViewRowImpl {
             }
         }
         ,
+        CrsCompoundType {
+            public Object get(CrsContentVORowImpl obj) {
+                return obj.getCrsCompoundType();
+            }
+
+            public void put(CrsContentVORowImpl obj, Object value) {
+                obj.setCrsCompoundType((String)value);
+            }
+        }
+        ,
         CompoundType {
             public Object get(CrsContentVORowImpl obj) {
                 return obj.getCompoundType();
@@ -213,16 +227,6 @@ public class CrsContentVORowImpl extends ViewRowImpl {
         CrsCompoundVA {
             public Object get(CrsContentVORowImpl obj) {
                 return obj.getCrsCompoundVA();
-            }
-
-            public void put(CrsContentVORowImpl obj, Object value) {
-                obj.setAttributeInternal(index(), value);
-            }
-        }
-        ,
-        CompundTypeLOVVA {
-            public Object get(CrsContentVORowImpl obj) {
-                return obj.getCompundTypeLOVVA();
             }
 
             public void put(CrsContentVORowImpl obj, Object value) {
@@ -325,10 +329,10 @@ public class CrsContentVORowImpl extends ViewRowImpl {
     public static final int MEDICALLEADNAME = AttributesEnum.MedicalLeadName.index();
     public static final int MEDICALLEADREJECTCOMMENT = AttributesEnum.MedicalLeadRejectComment.index();
     public static final int CRSEFFECTIVEDT = AttributesEnum.CrsEffectiveDt.index();
+    public static final int CRSCOMPOUNDTYPE = AttributesEnum.CrsCompoundType.index();
     public static final int COMPOUNDTYPE = AttributesEnum.CompoundType.index();
     public static final int COMPOUNDCODE = AttributesEnum.CompoundCode.index();
     public static final int CRSCOMPOUNDVA = AttributesEnum.CrsCompoundVA.index();
-    public static final int COMPUNDTYPELOVVA = AttributesEnum.CompundTypeLOVVA.index();
     public static final int CRSBSLUSERVA = AttributesEnum.CrsBSLUserVA.index();
     public static final int CRSTASLUSERVA = AttributesEnum.CrsTASLUserVA.index();
     public static final int CRSMLUSERVA = AttributesEnum.CrsMLUserVA.index();
@@ -345,8 +349,17 @@ public class CrsContentVORowImpl extends ViewRowImpl {
      * Gets CrsContentEO entity object.
      * @return the CrsContentEO
      */
-    public EntityImpl getCrsContentEO() {
-        return (EntityImpl)getEntity(ENTITY_CRSCONTENTEO);
+    public CrsContentEOImpl getCrsContentEO() {
+        return (CrsContentEOImpl)getEntity(ENTITY_CRSCONTENTEO);
+    }
+
+
+    /**
+     * Gets CrsCompoundEO entity object.
+     * @return the CrsCompoundEO
+     */
+    public CrsCompoundEOImpl getCrsCompoundEO() {
+        return (CrsCompoundEOImpl)getEntity(ENTITY_CRSCOMPOUNDEO);
     }
 
     /**
@@ -628,6 +641,22 @@ public class CrsContentVORowImpl extends ViewRowImpl {
     }
 
     /**
+     * Gets the attribute value for the calculated attribute CrsCompoundType.
+     * @return the CrsCompoundType
+     */
+    public String getCrsCompoundType() {
+        return (String) getAttributeInternal(CRSCOMPOUNDTYPE);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for the calculated attribute CrsCompoundType.
+     * @param value value to set the  CrsCompoundType
+     */
+    public void setCrsCompoundType(String value) {
+        setAttributeInternal(CRSCOMPOUNDTYPE, value);
+    }
+
+    /**
      * Gets the attribute value for the calculated attribute CompoundType.
      * @return the CompoundType
      */
@@ -666,12 +695,6 @@ public class CrsContentVORowImpl extends ViewRowImpl {
         return (RowSet)getAttributeInternal(CRSCOMPOUNDVA);
     }
 
-    /**
-     * Gets the view accessor <code>RowSet</code> CompundTypeLOVVA.
-     */
-    public RowSet getCompundTypeLOVVA() {
-        return (RowSet)getAttributeInternal(COMPUNDTYPELOVVA);
-    }
 
     /**
      * Gets the view accessor <code>RowSet</code> CrsBSLUserVA.
