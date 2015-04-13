@@ -28,9 +28,9 @@
                 </attribute>
             </component>
         </af:xmlContent>
-        <af:panelGroupLayout id="pt_pgl1" layout="scroll" inlineStyle="background-color:White;">
+        <af:panelGroupLayout id="pt_pgl1" layout="scroll" inlineStyle="background-color: #b1b1b1;">
             <af:panelGroupLayout id="pt_pgl4" layout="vertical"
-                                 inlineStyle="width:#{attrs.contentWidth};margin: 0 auto;">
+                                 inlineStyle="width:#{attrs.contentWidth};margin: 0 auto; background-color: white;">
                 <af:panelGroupLayout id="pt_pgl3" layout="horizontal" styleClass="AFStretchWidth">
                     <af:goImageLink id="pt_gil1" icon="/images/Novartis.PNG"/>
                     <af:panelGroupLayout id="pt_pgl2" layout="horizontal">

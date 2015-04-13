@@ -303,6 +303,16 @@
     </validation:OnAttributes>
     <validation:OnCondition><![CDATA[CompoundId!=null && Indication !=null]]></validation:OnCondition>
   </validation:UniqueKeyValidationBean>
+  <validation:UniqueKeyValidationBean
+    Name="CrsContentEO_Rule_1"
+    ResId="A_CRS_WITH_THE_SAME_ID_ALREADY"
+    KeyName="CrsContentIdxPk">
+    <validation:OnAttributes>
+      <validation:Item
+        Value="CrsId"/>
+    </validation:OnAttributes>
+    <validation:OnCondition><![CDATA[CrsId!=null]]></validation:OnCondition>
+  </validation:UniqueKeyValidationBean>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>

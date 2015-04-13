@@ -76,8 +76,13 @@ public class ManageCRSBean implements Serializable {
             if(ViewConstants.COMP_TYPE_NON_COMPOUND.equals(compType))
                 ADFUtils.setEL("#{bindings.IsMarketedFlag.inputValue}", "N");
         }
-        ADFUtils.invokeEL("#{bindings.Commit.execute}");
-        ADFUtils.showFacesMessage("Record saved successfully.", FacesMessage.SEVERITY_INFO);
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0) 
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+         else
+            ADFUtils.showFacesMessage("Record saved successfully.", FacesMessage.SEVERITY_INFO);
+        //    ADFUtils.invokeEL("#{bindings.Commit.execute}");
     }
 
     /**

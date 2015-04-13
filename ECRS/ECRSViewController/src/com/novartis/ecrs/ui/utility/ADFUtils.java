@@ -18,6 +18,8 @@ import oracle.adf.model.binding.DCIteratorBinding;
 
 import oracle.binding.BindingContainer;
 
+import oracle.binding.OperationBinding;
+
 import oracle.javatools.resourcebundle.BundleFactory;
 
 import oracle.jbo.domain.Timestamp;
@@ -215,4 +217,19 @@ public class ADFUtils {
 //    public static void main(String a[]){
 //        System.out.println("-----"+ getSqlTimeStamp());
 //    }
+    
+        /**
+     * Find an operation binding in the current binding container by name.
+     * @param name operation binding name
+     * @return operation binding
+     */
+    public static OperationBinding findOperation(String name) {
+        OperationBinding op =
+            getDCBindingContainer().getOperationBinding(name);
+        if (op == null) {
+            throw new RuntimeException("Operation '" + name + "' not found");
+        }
+        return op;
+    }
+
 }

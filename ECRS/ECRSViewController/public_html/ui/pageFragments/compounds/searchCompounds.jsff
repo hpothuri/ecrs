@@ -3,7 +3,7 @@
           xmlns:f="http://java.sun.com/jsf/core">
   <af:panelGroupLayout id="pgl1" layout="scroll">
     <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="t1"/>
-    <af:panelHeader text="Search" id="ph1">
+    <af:panelHeader text="Search" id="ph1" size="1" inlineStyle="padding:5px;">
       <f:facet name="context"/>
       <f:facet name="menuBar"/>
       <f:facet name="toolbar"/>
@@ -19,7 +19,7 @@
                       required="#{bindings.CompoundCode.hints.mandatory}"
                       columns="#{bindings.CompoundCode.hints.displayWidth}"
                       maximumLength="#{bindings.CompoundCode.hints.precision}"
-                      shortDesc="#{bindings.CompoundCode.hints.tooltip}" id="it2">
+                      shortDesc="#{bindings.CompoundCode.hints.tooltip}" id="it2" contentStyle="width: 100px;">
           <f:validator binding="#{bindings.CompoundCode.validator}"/>
         </af:inputText>
         <af:panelLabelAndMessage label="Compound Id" id="plam1">
@@ -27,7 +27,8 @@
                         required="#{bindings.CompoundId.hints.mandatory}"
                         columns="#{bindings.CompoundId.hints.displayWidth}"
                         maximumLength="#{bindings.CompoundId.hints.precision}"
-                        shortDesc="#{bindings.CompoundId.hints.tooltip}" id="it1" simple="true">
+                        shortDesc="#{bindings.CompoundId.hints.tooltip}" id="it1" simple="true"
+                        contentStyle="width: 100px;">
             <f:validator binding="#{bindings.CompoundId.validator}"/>
           </af:inputText>
           <f:facet name="end">

@@ -5,7 +5,7 @@
           xmlns:c="http://java.sun.com/jsp/jstl/core">
     <c:set var="ecrsviewcontrollerBundle"
            value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
-    <af:panelHeader text="#{ecrsviewcontrollerBundle.CREATE}" id="ph1">
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.CREATE}" id="ph1" size="1" inlineStyle="padding:5px;">
         <f:facet name="context"/>
         <f:facet name="menuBar"/>
         <f:facet name="toolbar"/>
@@ -23,24 +23,22 @@
                                       actionListener="#{pageFlowScope.manageCRSBean.onClickCreateSave}"/>
                 </f:facet>
                 <af:panelGroupLayout id="pgl3" layout="horizontal">
-                    <af:panelFormLayout id="pfl1" maxColumns="2" rows="6"
+                    <af:panelFormLayout id="pfl1" maxColumns="3" rows="6"
                                         labelWidth="150" fieldWidth="200">
-                        <f:facet name="footer"/>
                         <af:selectOneChoice value="#{bindings.CompoundType.inputValue}"
                                             label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
                                             required="true"
                                             shortDesc="#{bindings.CompoundType.hints.tooltip}"
-                                            id="soc1" autoSubmit="true"
-                                            contentStyle="width:150px;">
+                                            id="soc1"
+                                            contentStyle="width:160px;" autoSubmit="true">
                             <f:selectItems value="#{bindings.CompoundType.items}"
                                            id="si1"/>
                         </af:selectOneChoice>
                         <af:selectOneChoice value="#{bindings.CompoundId.inputValue}"
                                             label="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
-                                            required="true"
                                             shortDesc="#{bindings.CompoundId.hints.tooltip}"
                                             id="soc2"
-                                            contentStyle="width:150px;"
+                                            contentStyle="width:160px;" partialTriggers="soc1" showRequired="true"
                                             autoSubmit="true">
                             <f:selectItems value="#{bindings.CompoundId.items}"
                                            id="si2"/>
@@ -94,7 +92,7 @@
                                            id="si3"/>
                         </af:selectOneChoice>
                         <af:selectManyChoice label="Designee" id="smc2"
-                                             contentStyle="width:150px;"
+                                             contentStyle="width:150px !important;"
                                              value="#{pageFlowScope.manageCRSBean.selDesigneeList}">
                             <f:selectItems value="#{pageFlowScope.manageCRSBean.designeeList}" id="si11"/>
                         </af:selectManyChoice>
@@ -116,31 +114,25 @@
                             <f:selectItems value="#{bindings.MedicalLeadName.items}"
                                            id="si6"/>
                         </af:selectOneChoice>
+                        <af:spacer width="10" height="10" id="s5"/>
+                        <af:spacer width="10" height="10" id="s6"/>
+                        <af:selectOneChoice value="#{bindings.StateId.inputValue}"
+                                            label="#{ecrsviewcontrollerBundle.STATE}#{ecrsviewcontrollerBundle.COLON}"
+                                            required="#{bindings.StateId.hints.mandatory}"
+                                            shortDesc="#{bindings.StateId.hints.tooltip}" id="soc4" readOnly="true">
+                            <f:selectItems value="#{bindings.StateId.items}" id="si7"/>
+                        </af:selectOneChoice>
+                        <af:selectOneChoice label="#{ecrsviewcontrollerBundle.CRS_STATUS}#{ecrsviewcontrollerBundle.COLON}"
+                                            id="soc7" value="#{bindings.ReleaseStatusFlag.inputValue}" readOnly="true">
+                            <af:selectItem label="Pending" id="si8" value="P"/>
+                        </af:selectOneChoice>
                     </af:panelFormLayout>
-                    <af:spacer width="50" height="10" id="s3"/>
-                    <af:panelGroupLayout id="pgl4" layout="vertical"
-                                         valign="top">
-                        <af:panelFormLayout id="pfl2" fieldWidth="100">
-                            <f:facet name="footer"/>
-                            <af:selectOneChoice value="#{bindings.StateId.inputValue}"
-                                                label="#{bindings.StateId.label}"
-                                                required="#{bindings.StateId.hints.mandatory}"
-                                                shortDesc="#{bindings.StateId.hints.tooltip}"
-                                                id="soc4" readOnly="true">
-                                <f:selectItems value="#{bindings.StateId.items}"
-                                               id="si7"/>
-                            </af:selectOneChoice>
-                            <af:selectOneChoice label="#{ecrsviewcontrollerBundle.CRS_STATUS}#{ecrsviewcontrollerBundle.COLON}"
-                                                id="soc7"
-                                                value="#{bindings.ReleaseStatusFlag.inputValue}"
-                                                readOnly="true">
-                                <af:selectItem label="Pending" id="si8"
-                                               value="P"/>
-                            </af:selectOneChoice>
-                        </af:panelFormLayout>
+                    <af:panelGroupLayout id="pgl7" layout="horizontal" valign="top" rendered="false">
+                        <af:panelGroupLayout id="pgl4" layout="vertical"/>
                     </af:panelGroupLayout>
                 </af:panelGroupLayout>
                 <af:spacer width="10" height="10" id="s2"/>
+                <af:separator id="s3"/>
                 <af:panelFormLayout id="pgl1" rows="1"
                                     fieldWidth="200" labelWidth="150">
                     <af:inputText label="#{ecrsviewcontrollerBundle.CRS_NAME} #{ecrsviewcontrollerBundle.COLON}"
@@ -179,9 +171,13 @@
                 <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}"
                                   id="cb7"/>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}"
-                                         id="plam1"/>
+                                         id="plam1">
+                    <af:outputText value="v17.1" id="ot2"/>
+                </af:panelLabelAndMessage>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}#{ecrsviewcontrollerBundle.COLON}"
-                                         id="plam2"/>
+                                         id="plam2">
+                    <af:outputText value="#{bindings.CrsName.inputValue}" id="ot1" partialTriggers="soc2 it3"/>
+                </af:panelLabelAndMessage>
                 <f:facet name="separator">
                     <af:spacer width="10" height="10" id="s4"/>
                 </f:facet>
