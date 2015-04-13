@@ -126,7 +126,6 @@
                 emptyText="#{bindings.CrsContentVO.viewable ? 'No data to display.' : 'Access Denied.'}"
                 fetchSize="#{bindings.CrsContentVO.rangeSize}"
                 rowBandingInterval="0"
-                selectedRowKeys="#{bindings.CrsContentVO.collectionModel.selectedRow}"
                 selectionListener="#{pageFlowScope.manageCRSBean.searchTableSelectionListener}"
                 rowSelection="single" id="t2" styleClass="AFStretchWidth"
                 columnStretching="column:c9" contentDelivery="immediate"
