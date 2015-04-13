@@ -129,6 +129,10 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             whereClause +=
                     "RELEASE_STATUS_FLAG = '" + row.getReleaseStatus() +
                     "' AND ";
+        if (row.getCompoundType() != null)
+                    whereClause +=
+                            "CRS_COMPOUND_TYPE ='" + row.getCompoundType() +
+                            "' AND ";
         if (row.getCompoundCodeId() != null)
             whereClause +=
                     "COMPOUND_ID =" + row.getCompoundCodeId() +
