@@ -8,7 +8,7 @@
             <af:form id="f1">
                 <af:pageTemplate viewId="/pageTemplate/EcrsTemplate.jspx" id="pt1">
                     <f:facet name="content">
-                        <af:outputText value="outputText1" id="ot1"/>
+                        <af:outputText value="outputText1" id="ot1" visible="false"/>
                     </f:facet>
                 </af:pageTemplate>
             </af:form>
