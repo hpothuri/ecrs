@@ -1,9 +1,10 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
    <AppModuleConfigBag ApplicationName="com.novartis.ecrs.model.am.ECRSAppModule">
-      <AppModuleConfig name="ECRSAppModule" ApplicationName="com.novartis.ecrs.model.am.ECRSAppModule" DeployPlatform="LOCAL" JDBCName="CRSConn" jbo.project="com.novartis.ecrs.model.ECRSModel" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="com.novartis.ecrs.model.ECRSModel" name="ECRSAppModule" ApplicationName="com.novartis.ecrs.model.am.ECRSAppModule">
          <Database jbo.locking.mode="optimistic"/>
          <Security AppModuleJndiName="com.novartis.ecrs.model.am.ECRSAppModule"/>
+         <Custom JDBCDataSource="jdbc/EcrsDS"/>
       </AppModuleConfig>
    </AppModuleConfigBag>
 </BC4JConfig>
