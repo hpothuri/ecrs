@@ -22,6 +22,35 @@
     Name="bindRoleName"
     Kind="viewcriteria"
     Type="java.lang.String"/>
+  <Variable
+    Name="bindRoleId"
+    Kind="viewcriteria"
+    Type="java.lang.Integer"/>
+  <Variable
+    Name="bindUserName"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
+  <ViewAccessor
+    Name="CrsRolesVA"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsRolesVO"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_RoleId"
+    ListVOName="CrsRolesVA"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="RoleId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="RoleId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="RoleName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
   <EntityUsage
     Name="CrsUserRolesEO"
     Entity="com.novartis.ecrs.model.entity.CrsUserRolesEO"/>
@@ -57,7 +86,15 @@
     PrecisionRule="true"
     EntityAttrName="RoleId"
     EntityUsage="CrsUserRolesEO"
-    AliasName="ROLE_ID"/>
+    AliasName="ROLE_ID"
+    LOVName="LOV_RoleId">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ViewAttribute
     Name="ActiveFlag"
     IsNotNull="true"
@@ -132,6 +169,50 @@
         Value=":bindRoleName"
         UpperColumns="0"
         GenerateIsNullClauseForBindVars="false"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewCriteria
+    Name="searchUserRoles"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsUserRolesVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="CrsUserRolesVOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="UserName"
+        ViewAttribute="UserName"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Value=":bindUserName"
+        IsBindVarValue="true"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="RoleId"
+        ViewAttribute="RoleId"
+        Operator="="
+        Conjunction="AND"
+        Value=":bindRoleId"
         IsBindVarValue="true"
         Required="Optional"/>
     </ViewCriteriaRow>

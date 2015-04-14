@@ -54,6 +54,16 @@
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.UPDATE}" id="cmi2"/>
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.BROWSER__SEARCH}" id="cmi3"/>
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.REPORTS}" id="cmi4"/>
+                        <af:menu text="#{ecrsviewcontrollerBundle.ADMINISTRATION}" id="pt_m1">
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.COMPOUNDS}" id="pt_gmi1"
+                                                action="compound"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.STATES}" id="pt_gmi2" action="states"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="pt_gmi3"
+                                                action="riskPurpose"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.ROLES}" id="pt_gmi4" action="roles"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.USER_ROLES}" id="pt_gmi5"
+                                                action="userRoles"/>
+                        </af:menu>
                     </af:menuBar>
                     <af:separator id="s1"/>
                 </af:panelGroupLayout>

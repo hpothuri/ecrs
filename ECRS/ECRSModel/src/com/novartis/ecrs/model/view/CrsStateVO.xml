@@ -13,6 +13,14 @@
   CustomQuery="false"
   PageIterMode="Full"
   UseGlueCode="false">
+  <Variable
+    Name="bindStateId"
+    Kind="viewcriteria"
+    Type="java.lang.Integer"/>
+  <Variable
+    Name="bindStateName"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
   <EntityUsage
     Name="CrsStateEO"
     Entity="com.novartis.ecrs.model.entity.CrsStateEO"/>
@@ -36,6 +44,50 @@
     EntityAttrName="StateDesc"
     EntityUsage="CrsStateEO"
     AliasName="STATE_DESC"/>
+  <ViewCriteria
+    Name="searchStates"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsStateVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="CrsStateVOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="StateId"
+        ViewAttribute="StateId"
+        Operator="="
+        Conjunction="AND"
+        Value=":bindStateId"
+        IsBindVarValue="true"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="StateName"
+        ViewAttribute="StateName"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Value=":bindStateName"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <ViewLinkAccessor
     Name="CrsContentVO"
     ViewLink="com.novartis.ecrs.model.view.link.CrsContentIdxStateFkLink"

@@ -39,6 +39,15 @@
   <ViewUsage
     Name="ECrsSearchVO"
     ViewObjectName="com.novartis.ecrs.model.view.ECrsSearchVO"/>
+  <ViewUsage
+    Name="CrsStateVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsStateVO"/>
+  <ViewUsage
+    Name="StateTransientVO"
+    ViewObjectName="com.novartis.ecrs.model.view.trans.StateTransientVO"/>
+  <ViewUsage
+    Name="UserRolesTransientVO"
+    ViewObjectName="com.novartis.ecrs.model.view.trans.UserRolesTransientVO"/>
   <ClientInterface>
     <Method
       Name="fetchDesignees"

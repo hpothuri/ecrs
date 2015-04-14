@@ -21,7 +21,7 @@ public class SessionBean {
             String[] roles = secCtx.getUserRoles();
             if(roles != null){
                 for(String role : roles){
-                    if("BSL".equalsIgnoreCase(role) || "MQM".equalsIgnoreCase(role) || "TASL".equalsIgnoreCase(role) || "ML".equalsIgnoreCase(role)){
+                    if("ADMIN".equalsIgnoreCase(role) || "BSL".equalsIgnoreCase(role) || "MQM".equalsIgnoreCase(role) || "TASL".equalsIgnoreCase(role) || "ML".equalsIgnoreCase(role)){
                         userRole = role;
                         break;
                     }

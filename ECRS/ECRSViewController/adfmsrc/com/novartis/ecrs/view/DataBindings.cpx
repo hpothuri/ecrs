@@ -35,6 +35,18 @@
     <page path="/pages/ManageRoles.jspx" usageId="com_novartis_ecrs_view_ManageRolesPageDef"/>
     <page path="/ui/pageFragments/ecrs/searchCRS.jsff"
           usageId="com_novartis_ecrs_view_searchCRSPageDef"/>
+    <page path="/WEB-INF/taskflows/ManageStatesTF.xml#ManageStatesTF@CreateInsert"
+          usageId="com_novartis_ecrs_view_ManageStatesTF_ManageStatesTF_CreateInsertPageDef"/>
+    <page path="/ui/pageFragments/states/searchStates.jsff" usageId="com_novartis_ecrs_view_searchStatesPageDef"/>
+    <page path="/ui/pageFragments/states/stateDetails.jsff" usageId="com_novartis_ecrs_view_stateDetailsPageDef"/>
+    <page path="/pages/ManageStates.jspx" usageId="com_novartis_ecrs_view_ManageStatesPageDef"/>
+    <page path="/pages/ManageUserRoles.jspx" usageId="com_novartis_ecrs_view_ManageUserRolesPageDef"/>
+    <page path="/WEB-INF/taskflows/ManageUserRolesTF.xml#ManageUserRolesTF@CreateInsert"
+          usageId="com_novartis_ecrs_view_ManageUserRolesTF_ManageUserRolesTF_CreateInsertPageDef"/>
+    <page path="/ui/pageFragments/userroles/searchUserRoles.jsff"
+          usageId="com_novartis_ecrs_view_searchUserRolesPageDef"/>
+    <page path="/ui/pageFragments/userroles/userRoleDetails.jsff"
+          usageId="com_novartis_ecrs_view_userRoleDetailsPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -62,6 +74,16 @@
     <page id="com_novartis_ecrs_view_ManageRolesPageDef" path="pages.ManageRolesPageDef"/>
     <page id="com_novartis_ecrs_view_searchCRSPageDef"
           path="ui.pageFragments.ecrs.searchCRSPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageStatesTF_ManageStatesTF_CreateInsertPageDef"
+          path="taskflows.ManageStatesTF_ManageStatesTF_CreateInsertPageDef"/>
+    <page id="com_novartis_ecrs_view_searchStatesPageDef" path="ui.pageFragments.states.searchStatesPageDef"/>
+    <page id="com_novartis_ecrs_view_stateDetailsPageDef" path="ui.pageFragments.states.stateDetailsPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageStatesPageDef" path="pages.ManageStatesPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageUserRolesPageDef" path="pages.ManageUserRolesPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageUserRolesTF_ManageUserRolesTF_CreateInsertPageDef"
+          path="taskflows.ManageUserRolesTF_ManageUserRolesTF_CreateInsertPageDef"/>
+    <page id="com_novartis_ecrs_view_searchUserRolesPageDef" path="ui.pageFragments.userroles.searchUserRolesPageDef"/>
+    <page id="com_novartis_ecrs_view_userRoleDetailsPageDef" path="ui.pageFragments.userroles.userRoleDetailsPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

@@ -9,7 +9,12 @@
   DBObjectName="CRS.CRS_STATES"
   AliasName="CrsStateEO"
   BindingStyle="OracleName"
-  UseGlueCode="false">
+  UseGlueCode="false"
+  RowClass="com.novartis.ecrs.model.entity.CrsStateEOImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
   <Attribute
     Name="StateId"
     IsNotNull="true"
@@ -20,7 +25,8 @@
     Type="java.lang.Integer"
     ColumnType="NUMBER"
     TableName="CRS.CRS_STATES"
-    PrimaryKey="true"/>
+    PrimaryKey="true"
+    DefaultValue="-1"/>
   <Attribute
     Name="StateName"
     IsNotNull="true"

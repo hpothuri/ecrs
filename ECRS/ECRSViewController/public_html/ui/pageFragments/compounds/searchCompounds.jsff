@@ -41,8 +41,8 @@
         <f:facet name="menus"/>
         <f:facet name="toolbar">
           <af:toolbar id="t3">
-            <af:commandImageLink text="Create" id="cil1"
-                                 action="#{pageFlowScope.compoundsBean.createCompound}"/>
+            <af:commandImageLink id="cil1"
+                                 action="#{pageFlowScope.compoundsBean.createCompound}" icon="/images/Create.png"/>
           </af:toolbar>
         </f:facet>
         <f:facet name="statusbar"/>

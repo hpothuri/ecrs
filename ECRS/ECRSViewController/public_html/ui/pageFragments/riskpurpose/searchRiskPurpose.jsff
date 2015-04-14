@@ -40,8 +40,8 @@
       <f:facet name="menus"/>
       <f:facet name="toolbar">
         <af:toolbar id="t3">
-          <af:commandImageLink text="#{ecrsviewcontrollerBundle.CREATE}" id="cil1"
-                               action="#{pageFlowScope.riskPurposeBean.createRiskPurpose}"/>
+          <af:commandImageLink id="cil1"
+                               action="#{pageFlowScope.riskPurposeBean.createRiskPurpose}" icon="/images/Create.png"/>
         </af:toolbar>
       </f:facet>
       <f:facet name="statusbar"/>

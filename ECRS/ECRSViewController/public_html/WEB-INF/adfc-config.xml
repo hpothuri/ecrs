@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="windows-1252" ?>
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="ManageUserRoles">
+    <page>/pages/ManageUserRoles.jspx</page>
+  </view>
+  <view id="ManageStates">
+    <page>/pages/ManageStates.jspx</page>
+  </view>
+  <view id="ManageRoles">
+    <page>/pages/ManageRoles.jspx</page>
+  </view>
+  <view id="ManageRiskPurpose">
+    <page>/pages/ManageRiskPurpose.jspx</page>
+  </view>
+  <view id="ManageCompound">
+    <page>/pages/ManageCompound.jspx</page>
+  </view>
+  <control-flow-rule id="__2">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__3">
+      <from-outcome>userRoles</from-outcome>
+      <to-activity-id>ManageUserRoles</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>states</from-outcome>
+      <to-activity-id>ManageStates</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__5">
+      <from-outcome>roles</from-outcome>
+      <to-activity-id>ManageRoles</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__6">
+      <from-outcome>riskPurpose</from-outcome>
+      <to-activity-id>ManageRiskPurpose</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__7">
+      <from-outcome>compound</from-outcome>
+      <to-activity-id>ManageCompound</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
   <managed-bean id="__1">
     <managed-bean-name>sessionBean</managed-bean-name>
     <managed-bean-class>com.novartis.ecrs.view.beans.SessionBean</managed-bean-class>

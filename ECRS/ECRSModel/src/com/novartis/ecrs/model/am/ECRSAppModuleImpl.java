@@ -7,6 +7,10 @@ import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RolesTransientVOImpl;
 
+import com.novartis.ecrs.model.view.trans.StateTransientVOImpl;
+
+import com.novartis.ecrs.model.view.trans.UserRolesTransientVOImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -197,5 +201,29 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         crsContentVO.setWhereClause(whereClause);
        // System.out.println("----->"+crsContentVO.getQuery());
         crsContentVO.executeQuery(); 
+    }
+
+    /**
+     * Container's getter for CrsStateVO.
+     * @return CrsStateVO
+     */
+    public ViewObjectImpl getCrsStateVO() {
+        return (ViewObjectImpl)findViewObject("CrsStateVO");
+    }
+
+    /**
+     * Container's getter for StateTransientVO.
+     * @return StateTransientVO
+     */
+    public StateTransientVOImpl getStateTransientVO() {
+        return (StateTransientVOImpl)findViewObject("StateTransientVO");
+    }
+
+    /**
+     * Container's getter for UserRolesTransientVO.
+     * @return UserRolesTransientVO
+     */
+    public UserRolesTransientVOImpl getUserRolesTransientVO() {
+        return (UserRolesTransientVOImpl)findViewObject("UserRolesTransientVO");
     }
 }
