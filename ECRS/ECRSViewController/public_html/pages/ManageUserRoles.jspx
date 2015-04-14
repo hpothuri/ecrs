@@ -7,7 +7,9 @@
             <af:form id="f1">
                 <af:pageTemplate viewId="/pageTemplate/EcrsTemplate.jspx" id="pt1">
                     <f:facet name="content">
-                        <af:region value="#{bindings.ManageRolesTF1.regionModel}" id="r1"/>
+                        <af:group id="g1">
+                            <af:region value="#{bindings.ManageUserRolesTF1.regionModel}" id="r2"/>
+                        </af:group>
                     </f:facet>
                 </af:pageTemplate>
             </af:form>

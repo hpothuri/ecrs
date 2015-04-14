@@ -6,6 +6,8 @@
     <variableIterator id="variables"/>
     <taskFlow id="ManageRolesTF1" taskFlowId="/WEB-INF/taskflows/ManageRolesTF.xml#ManageRolesTF" activation="deferred"
               xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+    <taskFlow id="ManageUserRolesTF1" taskFlowId="/WEB-INF/taskflows/ManageUserRolesTF.xml#ManageUserRolesTF"
+              activation="deferred" xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
   </executables>
   <bindings/>
 </pageDefinition>
