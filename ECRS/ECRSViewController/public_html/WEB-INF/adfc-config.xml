@@ -15,6 +15,15 @@
   <view id="ManageCompound">
     <page>/pages/ManageCompound.jspx</page>
   </view>
+  <view id="SearchCRS">
+    <page>/pages/SearchCRS.jspx</page>
+  </view>
+  <view id="CrsCreate">
+    <page>/pages/CrsCreate.jspx</page>
+  </view>
+  <view id="Home">
+    <page>/pages/Home.jspx</page>
+  </view>
   <control-flow-rule id="__2">
     <from-activity-id>*</from-activity-id>
     <control-flow-case id="__3">
@@ -36,6 +45,18 @@
     <control-flow-case id="__7">
       <from-outcome>compound</from-outcome>
       <to-activity-id>ManageCompound</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__8">
+      <from-outcome>update</from-outcome>
+      <to-activity-id>SearchCRS</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__9">
+      <from-outcome>create</from-outcome>
+      <to-activity-id>CrsCreate</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__10">
+      <from-outcome>home</from-outcome>
+      <to-activity-id>Home</to-activity-id>
     </control-flow-case>
   </control-flow-rule>
   <managed-bean id="__1">

@@ -32,7 +32,7 @@
             <af:panelGroupLayout id="pt_pgl4" layout="vertical"
                                  inlineStyle="width:#{attrs.contentWidth};margin: 0 auto; background-color: white;">
                 <af:panelGroupLayout id="pt_pgl3" layout="horizontal" styleClass="AFStretchWidth">
-                    <af:goImageLink id="pt_gil1" icon="/images/Novartis.PNG"/>
+                    <af:commandImageLink id="pt_gil1" icon="/images/Novartis.PNG" action="home"/>
                     <af:panelGroupLayout id="pt_pgl2" layout="horizontal">
                         <af:commandButton text="Login" id="pt_cb1" visible="#{!securityContext.authenticated}">
                             <af:showPopupBehavior triggerType="click" popupId="pt_p1"/>
@@ -50,19 +50,19 @@
                 </af:panelGroupLayout>
                 <af:panelGroupLayout id="pgl1" layout="scroll">
                     <af:menuBar id="mb1">
-                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CREATE}" id="cmi1"/>
-                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.UPDATE}" id="cmi2"/>
-                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.BROWSER__SEARCH}" id="cmi3"/>
-                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.REPORTS}" id="cmi4"/>
+                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CREATE}" id="cmi1" action="create" immediate="true"/>
+                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.UPDATE}" id="cmi2" action="update" immediate="true"/>
+                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.BROWSER__SEARCH}" id="cmi3" immediate="true"/>
+                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.REPORTS}" id="cmi4" immediate="true"/>
                         <af:menu text="#{ecrsviewcontrollerBundle.ADMINISTRATION}" id="pt_m1">
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.COMPOUNDS}" id="pt_gmi1"
-                                                action="compound"/>
-                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.STATES}" id="pt_gmi2" action="states"/>
+                                                action="compound" immediate="true"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.STATES}" id="pt_gmi2" action="states" immediate="true"/>
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="pt_gmi3"
-                                                action="riskPurpose"/>
-                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.ROLES}" id="pt_gmi4" action="roles"/>
+                                                action="riskPurpose" immediate="true"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.ROLES}" id="pt_gmi4" action="roles" immediate="true"/>
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.USER_ROLES}" id="pt_gmi5"
-                                                action="userRoles"/>
+                                                action="userRoles" immediate="true"/>
                         </af:menu>
                     </af:menuBar>
                     <af:separator id="s1"/>

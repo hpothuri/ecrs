@@ -34,7 +34,7 @@
       <property
          name="fromOutcome">userRoles</property>
       <property
-         name="sdm:polyPoints">R45,505.48407,146.94824,710.6904,163.44824,L50</property>
+         name="sdm:polyPoints">R50,505.43546,150.44824,710.6904,163.44824,L50</property>
    </ControlFlowCase>
    <View
       id="View5">
@@ -59,7 +59,7 @@
       <property
          name="fromOutcome">states</property>
       <property
-         name="sdm:polyPoints">R55,504.0,153.94824,708.6924,338.44824,L50</property>
+         name="sdm:polyPoints">R61,504.0,157.44824,708.6924,338.44824,L50</property>
    </ControlFlowCase>
    <View
       id="View7">
@@ -109,7 +109,7 @@
       <property
          name="fromOutcome">riskPurpose</property>
       <property
-         name="sdm:polyPoints">L50,432.0,150.44824,286.6963,277.44824,T50</property>
+         name="sdm:polyPoints">L61,432.0,157.44824,286.6963,277.44824,T50</property>
    </ControlFlowCase>
    <View
       id="View11">
@@ -134,6 +134,81 @@
       <property
          name="fromOutcome">compound</property>
       <property
-         name="sdm:polyPoints">L62,R39</property>
+         name="sdm:polyPoints">L50,430.40414,150.44824,247.03516,186.44824,R50</property>
+   </ControlFlowCase>
+   <View
+      id="View13">
+      <property
+         name="activityId">SearchCRS</property>
+      <property
+         name="page">/pages/SearchCRS.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>SearchCRS&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">-14.201172</property>
+      <property
+         name="x">674.6787</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase14"
+      from="WildcardControlFlowRule2"
+      to="View13">
+      <property
+         name="fromOutcome">update</property>
+      <property
+         name="sdm:polyPoints">R39,504.0,143.44824,674.6787,39.448242,B50</property>
+   </ControlFlowCase>
+   <View
+      id="View15">
+      <property
+         name="activityId">CrsCreate</property>
+      <property
+         name="page">/pages/CrsCreate.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>CrsCreate&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">6.798828</property>
+      <property
+         name="x">290.5</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase16"
+      from="WildcardControlFlowRule2"
+      to="View15">
+      <property
+         name="fromOutcome">create</property>
+      <property
+         name="sdm:polyPoints">L39,432.0,143.44824,290.5,60.448242,B50</property>
+   </ControlFlowCase>
+   <View
+      id="View17">
+      <property
+         name="activityId">Home</property>
+      <property
+         name="page">/pages/Home.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>Home&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">-2.2011719</property>
+      <property
+         name="x">493.5</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase18"
+      from="WildcardControlFlowRule2"
+      to="View17">
+      <property
+         name="fromOutcome">home</property>
+      <property
+         name="sdm:polyPoints">T50,468.0,107.94824,493.5,51.448242,B50</property>
    </ControlFlowCase>
 </SDM>

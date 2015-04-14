@@ -195,4 +195,9 @@ public class ManageCRSBean implements Serializable {
     public String getSelectedCrsName() {
         return selectedCrsName;
     }
+
+    public String onClickNext() {
+        String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getNext}");
+        return returnValue;
+    }
 }

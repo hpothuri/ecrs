@@ -181,7 +181,7 @@
                                   action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}"
                                   id="cb6"
-                                  action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getNext}"/>
+                                  action="#{pageFlowScope.manageCRSBean.onClickNext}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}"
                                   id="cb7"/>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}"

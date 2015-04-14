@@ -268,12 +268,17 @@
             <grantee>
               <principals>
                 <principal>
-                  <name>anonymous-role</name>
-                  <class>oracle.security.jps.internal.core.principals.JpsAnonymousRoleImpl</class>
+                  <name>CRSADMIN</name>
+                  <class>oracle.security.jps.internal.core.principals.JpsXmlEnterpriseRoleImpl</class>
                 </principal>
               </principals>
             </grantee>
             <permissions>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.ManageUserRolesPageDef</name>
+                <actions>view</actions>
+              </permission>
               <permission>
                 <class>oracle.adf.share.security.authorization.RegionPermission</class>
                 <name>pages.ManageCompoundPageDef</name>
@@ -294,31 +299,9 @@
                 <name>pages.ManageStatesPageDef</name>
                 <actions>view</actions>
               </permission>
-            </permissions>
-          </grant>
-          <grant>
-            <grantee>
-              <principals>
-                <principal>
-                  <name>ADMIN</name>
-                  <class>oracle.security.jps.internal.core.principals.JpsXmlEnterpriseRoleImpl</class>
-                </principal>
-              </principals>
-            </grantee>
-            <permissions>
               <permission>
                 <class>oracle.adf.controller.security.TaskFlowPermission</class>
-                <name>/WEB-INF/taskflows/CompoundsTF.xml#CompoundsTF</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.controller.security.TaskFlowPermission</class>
-                <name>/WEB-INF/taskflows/ManageRolesTF.xml#ManageRolesTF</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.controller.security.TaskFlowPermission</class>
-                <name>/WEB-INF/taskflows/ManageStatesTF.xml#ManageStatesTF</name>
+                <name>/WEB-INF/taskflows/RiskPurposeTF.xml#RiskPurposeTF</name>
                 <actions>view</actions>
               </permission>
               <permission>
@@ -328,24 +311,32 @@
               </permission>
               <permission>
                 <class>oracle.adf.controller.security.TaskFlowPermission</class>
-                <name>/WEB-INF/taskflows/RiskPurposeTF.xml#RiskPurposeTF</name>
+                <name>/WEB-INF/taskflows/ManageStatesTF.xml#ManageStatesTF</name>
                 <actions>view</actions>
               </permission>
-            </permissions>
-          </grant>
-          <grant>
-            <grantee>
-              <principals>
-                <principal>
-                  <name>CRSADMIN</name>
-                  <class>oracle.security.jps.internal.core.principals.JpsXmlEnterpriseRoleImpl</class>
-                </principal>
-              </principals>
-            </grantee>
-            <permissions>
+              <permission>
+                <class>oracle.adf.controller.security.TaskFlowPermission</class>
+                <name>/WEB-INF/taskflows/ManageRolesTF.xml#ManageRolesTF</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.controller.security.TaskFlowPermission</class>
+                <name>/WEB-INF/taskflows/CompoundsTF.xml#CompoundsTF</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.controller.security.TaskFlowPermission</class>
+                <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
+                <actions>view</actions>
+              </permission>
               <permission>
                 <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.ManageUserRolesPageDef</name>
+                <name>pages.CrsCreatePageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.SearchCRSPageDef</name>
                 <actions>view</actions>
               </permission>
             </permissions>
