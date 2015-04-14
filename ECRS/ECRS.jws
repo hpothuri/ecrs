@@ -43,7 +43,7 @@
                </list>
             </hash>
             <url n="earURL" path="deploy/ECRS_Project1_ECRS.ear"/>
-            <value n="enterpriseAppName" v="ECRS_Project1_ECRS"/>
+            <value n="enterpriseAppName" v="ECRSApp"/>
             <hash n="fileGroups">
                <list n="groups">
                   <hash>
