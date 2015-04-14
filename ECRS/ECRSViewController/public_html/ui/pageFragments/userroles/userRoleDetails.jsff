@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+  <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
+  <af:panelGroupLayout id="pgl1" layout="scroll">
+    <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="t1"/>
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.DETAILS}" id="ph1">
+      <f:facet name="context"/>
+      <f:facet name="menuBar"/>
+      <f:facet name="toolbar"/>
+      <f:facet name="legend"/>
+      <f:facet name="info"/>
+      <af:panelGroupLayout id="pgl2" layout="horizontal" styleClass="AFStretchWidth" halign="end">
+        <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb1"
+                          action="#{pageFlowScope.userRolesBean.onSave}"/>
+        <af:commandButton text="#{ecrsviewcontrollerBundle.BACK_0}" id="cb2"
+                          action="#{pageFlowScope.userRolesBean.onClickBack}"/>
+        <f:facet name="separator">
+          <af:spacer width="10" height="10" id="s1"/>
+        </f:facet>
+      </af:panelGroupLayout>
+      <af:panelFormLayout id="pfl1">
+        <af:inputText value="#{bindings.UserName.inputValue}" label="#{ecrsviewcontrollerBundle.USER_NAME}"
+                      required="#{bindings.UserName.hints.mandatory}" columns="#{bindings.UserName.hints.displayWidth}"
+                      maximumLength="#{bindings.UserName.hints.precision}"
+                      shortDesc="#{bindings.UserName.hints.tooltip}" id="it1">
+          <f:validator binding="#{bindings.UserName.validator}"/>
+        </af:inputText>
+        <af:selectOneChoice value="#{bindings.RoleId.inputValue}" label="#{bindings.RoleId.label}"
+                            required="#{bindings.RoleId.hints.mandatory}" shortDesc="#{bindings.RoleId.hints.tooltip}"
+                            id="soc2">
+          <f:selectItems value="#{bindings.RoleId.items}" id="si3"/>
+        </af:selectOneChoice>
+        <af:inputText value="#{bindings.UserComment.inputValue}" label="#{ecrsviewcontrollerBundle.USER_COMMENT}"
+                      required="#{bindings.UserComment.hints.mandatory}"
+                      columns="#{bindings.UserComment.hints.displayWidth}"
+                      maximumLength="#{bindings.UserComment.hints.precision}"
+                      shortDesc="#{bindings.UserComment.hints.tooltip}" id="it4" contentStyle="width:200px;">
+          <f:validator binding="#{bindings.UserComment.validator}"/>
+        </af:inputText>
+        <af:selectOneChoice label="#{ecrsviewcontrollerBundle.ACTIVE}" id="soc1"
+                            value="#{bindings.ActiveFlag.inputValue}">
+          <af:selectItem label="A" value="A" id="si1"/>
+          <af:selectItem label="I" value="I" id="si2"/>
+        </af:selectOneChoice>
+      </af:panelFormLayout>
+    </af:panelHeader>
+  </af:panelGroupLayout>
+</jsp:root>

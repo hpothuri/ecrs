@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="searchStatesPageDef"
+                Package="ui.pageFragments.states">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="StateTransientVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="StateTransientVOIterator"/>
+    <iterator Binds="CrsStateVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsStateVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="StateTransientVOIterator" id="StateId">
+      <AttrNames>
+        <Item Value="StateId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StateTransientVOIterator" id="StateName">
+      <AttrNames>
+        <Item Value="StateName"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="CrsStateVOIterator" id="CrsStateVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsStateVO" Name="CrsStateVO0">
+        <AttrNames>
+          <Item Value="StateId"/>
+          <Item Value="StateName"/>
+          <Item Value="StateDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="CrsStateVOIterator" id="CreateInsert" InstanceName="ECRSAppModuleDataControl.CrsStateVO"
+            DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

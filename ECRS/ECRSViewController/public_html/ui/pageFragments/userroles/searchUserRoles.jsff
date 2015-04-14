@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+  <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
+  <af:panelGroupLayout id="pgl1" layout="scroll">
+    <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="t1"/>
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.SEARCH}" id="ph1">
+      <f:facet name="context"/>
+      <f:facet name="menuBar"/>
+      <f:facet name="toolbar"/>
+      <f:facet name="legend"/>
+      <f:facet name="info"/>
+      <af:panelFormLayout id="pfl1">
+        <af:inputText value="#{bindings.UserName.inputValue}" label="#{ecrsviewcontrollerBundle.USER_NAME}"
+                      required="#{bindings.UserName.hints.mandatory}" columns="#{bindings.UserName.hints.displayWidth}"
+                      maximumLength="#{bindings.UserName.hints.precision}"
+                      shortDesc="#{bindings.UserName.hints.tooltip}" id="it1">
+          <f:validator binding="#{bindings.UserName.validator}"/>
+        </af:inputText>
+        <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.ROLE_ID}" id="plam1">
+          <af:inputText value="#{bindings.RoleId.inputValue}" label="#{ecrsviewcontrollerBundle.ROLE_ID}"
+                        required="#{bindings.RoleId.hints.mandatory}" columns="#{bindings.RoleId.hints.displayWidth}"
+                        maximumLength="#{bindings.RoleId.hints.precision}" shortDesc="#{bindings.RoleId.hints.tooltip}"
+                        id="it2" simple="true">
+            <f:validator binding="#{bindings.RoleId.validator}"/>
+            <af:convertNumber groupingUsed="false" pattern="#{bindings.RoleId.format}"/>
+          </af:inputText>
+          <f:facet name="end">
+            <af:commandButton text="#{ecrsviewcontrollerBundle.SEARCH}" id="cb1"
+                              action="#{pageFlowScope.userRolesBean.onSearch}"/>
+          </f:facet>
+        </af:panelLabelAndMessage>
+      </af:panelFormLayout>
+      <af:spacer width="10" height="10" id="s1"/>
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="t3">
+            <af:commandImageLink id="cil1"
+                                 action="#{pageFlowScope.userRolesBean.createUserRole}" icon="/images/Create.png"/>
+          </af:toolbar>
+        </f:facet>
+        <f:facet name="statusbar"/>
+        <af:table value="#{bindings.CrsUserRolesVO.collectionModel}" var="row"
+                  rows="#{bindings.CrsUserRolesVO.rangeSize}"
+                  emptyText="#{bindings.CrsUserRolesVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.CrsUserRolesVO.rangeSize}" rowBandingInterval="0"
+                  selectedRowKeys="#{bindings.CrsUserRolesVO.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.CrsUserRolesVO.collectionModel.makeCurrent}" rowSelection="single"
+                  id="t2" styleClass="AFStretchWidth" columnStretching="last">
+          <af:column sortProperty="#{bindings.CrsUserRolesVO.hints.UserName.name}" sortable="true"
+                     headerText="#{ecrsviewcontrollerBundle.USER_NAME}" id="c1">
+            <af:commandLink shortDesc="#{bindings.CrsUserRolesVO.hints.UserName.tooltip}" id="ot1"
+                            text="#{row.UserName}" action="#{pageFlowScope.userRolesBean.editUserRole}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.CrsUserRolesVO.hints.RoleId.name}" sortable="true"
+                     headerText="#{ecrsviewcontrollerBundle.ROLE_ID}" id="c2">
+            <af:outputText value="#{row.RoleId}" shortDesc="#{bindings.CrsUserRolesVO.hints.RoleId.tooltip}" id="ot2">
+              <af:convertNumber groupingUsed="false" pattern="#{bindings.CrsUserRolesVO.hints.RoleId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.CrsUserRolesVO.hints.ActiveFlag.name}" sortable="true"
+                     headerText="#{ecrsviewcontrollerBundle.ACTIVE}" id="c3">
+            <af:outputText value="#{row.ActiveFlag}" shortDesc="#{bindings.CrsUserRolesVO.hints.ActiveFlag.tooltip}"
+                           id="ot3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.CrsUserRolesVO.hints.UserComment.name}" sortable="true"
+                     headerText="#{ecrsviewcontrollerBundle.USER_COMMENT}" id="c4">
+            <af:outputText value="#{row.UserComment}" shortDesc="#{bindings.CrsUserRolesVO.hints.UserComment.tooltip}"
+                           id="ot4"/>
+          </af:column>
+        </af:table>
+      </af:panelCollection>
+    </af:panelHeader>
+  </af:panelGroupLayout>
+</jsp:root>

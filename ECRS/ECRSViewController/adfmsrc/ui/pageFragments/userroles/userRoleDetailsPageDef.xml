@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="userRoleDetailsPageDef"
+                Package="ui.pageFragments.userroles">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="CrsUserRolesVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsUserRolesVOIterator"/>
+    <iterator Binds="UserRolesTransientVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="UserRolesTransientVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="CrsUserRolesVOIterator" id="UserName">
+      <AttrNames>
+        <Item Value="UserName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsUserRolesVOIterator" id="ActiveFlag">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsUserRolesVOIterator" id="UserComment">
+      <AttrNames>
+        <Item Value="UserComment"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="UserRolesTransientVOIterator" id="CreateInsert" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <list IterBinding="CrsUserRolesVOIterator" StaticList="false" Uses="LOV_RoleId" id="RoleId" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject"/>
+  </bindings>
+</pageDefinition>

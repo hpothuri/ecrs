@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+  <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
+  <af:panelGroupLayout id="pgl1" layout="scroll">
+    <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="t1"/>
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.DETAILS}" id="ph1">
+      <f:facet name="context"/>
+      <f:facet name="menuBar"/>
+      <f:facet name="toolbar"/>
+      <f:facet name="legend"/>
+      <f:facet name="info"/>
+      <af:panelGroupLayout id="pgl2" layout="horizontal" styleClass="AFStretchWidth" halign="end">
+        <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb1" action="#{pageFlowScope.stateBean.onSave}"/>
+        <af:commandButton text="#{ecrsviewcontrollerBundle.BACK_0}" id="cb2" immediate="true"
+                          action="#{pageFlowScope.stateBean.onClickBack}"/>
+        <f:facet name="separator">
+          <af:spacer width="10" height="10" id="s1"/>
+        </f:facet>
+      </af:panelGroupLayout>
+      <af:panelFormLayout id="pfl1">
+        <af:inputText value="#{bindings.StateName.inputValue}" label="#{ecrsviewcontrollerBundle.STATE_NAME}"
+                      required="#{bindings.StateName.hints.mandatory}"
+                      columns="#{bindings.StateName.hints.displayWidth}"
+                      maximumLength="#{bindings.StateName.hints.precision}"
+                      shortDesc="#{bindings.StateName.hints.tooltip}" id="it2">
+          <f:validator binding="#{bindings.StateName.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.StateDesc.inputValue}" label="#{ecrsviewcontrollerBundle.STATE_DESCRIPTION}"
+                      required="#{bindings.StateDesc.hints.mandatory}"
+                      columns="#{bindings.StateDesc.hints.displayWidth}"
+                      maximumLength="#{bindings.StateDesc.hints.precision}"
+                      shortDesc="#{bindings.StateDesc.hints.tooltip}" id="it3" contentStyle="width:200px;">
+          <f:validator binding="#{bindings.StateDesc.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.StateId.inputValue == -1 ? '' : bindings.StateId.inputValue}" label="#{ecrsviewcontrollerBundle.STATE_ID}"
+                      required="#{bindings.StateId.hints.mandatory}" columns="#{bindings.StateId.hints.displayWidth}"
+                      maximumLength="#{bindings.StateId.hints.precision}" shortDesc="#{bindings.StateId.hints.tooltip}"
+                      id="it1" readOnly="true">
+          <f:validator binding="#{bindings.StateId.validator}"/>
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.StateId.format}"/>
+        </af:inputText>
+      </af:panelFormLayout>
+    </af:panelHeader>
+  </af:panelGroupLayout>
+</jsp:root>

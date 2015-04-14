@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="searchUserRolesPageDef"
+                Package="ui.pageFragments.userroles">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="UserRolesTransientVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="UserRolesTransientVOIterator"/>
+    <iterator Binds="CrsUserRolesVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsUserRolesVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="UserRolesTransientVOIterator" id="UserName">
+      <AttrNames>
+        <Item Value="UserName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserRolesTransientVOIterator" id="RoleId">
+      <AttrNames>
+        <Item Value="RoleId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="CrsUserRolesVOIterator" id="CrsUserRolesVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsUserRolesVO" Name="CrsUserRolesVO0">
+        <AttrNames>
+          <Item Value="UserName"/>
+          <Item Value="RoleId"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="UserComment"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="CrsUserRolesVOIterator" id="CreateInsert"
+            InstanceName="ECRSAppModuleDataControl.CrsUserRolesVO" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

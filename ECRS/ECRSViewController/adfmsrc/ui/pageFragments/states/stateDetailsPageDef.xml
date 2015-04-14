@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="stateDetailsPageDef"
+                Package="ui.pageFragments.states">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="CrsStateVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsStateVOIterator"/>
+    <iterator Binds="StateTransientVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="StateTransientVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="CrsStateVOIterator" id="StateId">
+      <AttrNames>
+        <Item Value="StateId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsStateVOIterator" id="StateName">
+      <AttrNames>
+        <Item Value="StateName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsStateVOIterator" id="StateDesc">
+      <AttrNames>
+        <Item Value="StateDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="StateTransientVOIterator" id="CreateInsert" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>
