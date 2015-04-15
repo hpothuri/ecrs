@@ -1,13 +1,12 @@
 package com.novartis.ecrs.ui.utility;
 
+
 import com.sun.el.MethodExpressionImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-
 import java.io.InputStreamReader;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.sql.Connection;
@@ -15,7 +14,6 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +36,6 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
-import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
 import javax.naming.Context;
@@ -62,9 +59,6 @@ import oracle.adf.model.binding.DCParameter;
 import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.UIXTable;
 import oracle.adf.view.rich.component.rich.RichPopup;
-import oracle.adf.view.rich.component.rich.data.RichColumn;
-import oracle.adf.view.rich.component.rich.data.RichTable;
-
 import oracle.adf.view.rich.context.AdfFacesContext;
 
 import oracle.binding.AttributeBinding;
@@ -72,13 +66,16 @@ import oracle.binding.BindingContainer;
 import oracle.binding.ControlBinding;
 import oracle.binding.OperationBinding;
 
+import oracle.javatools.resourcebundle.BundleFactory;
+
 import oracle.jbo.Key;
 import oracle.jbo.NavigatableRowIterator;
 import oracle.jbo.Row;
 import oracle.jbo.ViewObject;
 import oracle.jbo.common.DefLocaleContext;
+import oracle.jbo.domain.Timestamp;
 import oracle.jbo.uicli.binding.JUCtrlValueBinding;
-//import org.apache.log4j.Logger;
+
 import org.apache.myfaces.trinidad.component.UIXEditableValue;
 import org.apache.myfaces.trinidad.context.RequestContext;
 import org.apache.myfaces.trinidad.event.SelectionEvent;
@@ -86,7 +83,9 @@ import org.apache.myfaces.trinidad.model.RowKeySet;
 import org.apache.myfaces.trinidad.render.ExtendedRenderKitService;
 import org.apache.myfaces.trinidad.util.Service;
 
-import oracle.javatools.resourcebundle.BundleFactory;
+
+//import org.apache.log4j.Logger;
+
 
 public class ADFUtils {
     public ADFUtils() {
@@ -1849,5 +1848,10 @@ public class ADFUtils {
             request.getContextPath();
     }
 
+    static public Timestamp getJBOTimeStamp() {
+        Date date = new Date(System.currentTimeMillis());
+        Timestamp timestampObj = new Timestamp(date);
+        return timestampObj;
+    }
 }
 
