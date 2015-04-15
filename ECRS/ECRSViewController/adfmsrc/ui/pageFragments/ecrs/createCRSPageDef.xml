@@ -85,5 +85,10 @@
         <Item Value="CrsCompoundType"/>
       </AttrNames>
     </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CompoundCode">
+      <AttrNames>
+        <Item Value="CompoundCode"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

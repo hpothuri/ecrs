@@ -23,7 +23,8 @@
           <af:selectOneChoice value="#{bindings.ReleaseStatus.inputValue}"
                               label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
                               shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
-                              id="it8" contentStyle="width:170px;">
+                              id="it8" contentStyle="width:170px;"
+                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
             <af:selectItem label="CURRENT" id="si8" value="C"/>
             <af:selectItem label="PENDING" id="si9" value="P"/>
           </af:selectOneChoice>
@@ -31,19 +32,22 @@
                               shortDesc="#{bindings.CompoundType.hints.tooltip}"
                               id="soc1"
                               label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
-                              contentStyle="width:170px;" autoSubmit="true">
+                              contentStyle="width:170px;" autoSubmit="true"
+                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
             <f:selectItems value="#{bindings.CompoundType.items}" id="si1"/>
           </af:selectOneChoice>
           <af:selectOneChoice value="#{bindings.CompoundCode.inputValue}"
                               label="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
                               shortDesc="#{bindings.CompoundCode.hints.tooltip}"
-                              id="soc2" contentStyle="width:170px;">
+                              id="soc2" contentStyle="width:170px;"
+                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
             <f:selectItems value="#{bindings.CompoundCode.items}" id="si2"/>
           </af:selectOneChoice>
           <af:selectOneChoice value="#{bindings.State.inputValue}"
                               label="#{bindings.State.label}"
                               shortDesc="#{bindings.State.hints.tooltip}"
-                              id="soc3" contentStyle="width:170px;">
+                              id="soc3" contentStyle="width:170px;"
+                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
             <f:selectItems value="#{bindings.State.items}" id="si3"/>
           </af:selectOneChoice>
           <af:inputText value="#{bindings.GenericName.inputValue}"
@@ -52,50 +56,58 @@
                         shortDesc="#{bindings.GenericName.hints.tooltip}"
                         id="it2"
                         label="#{ecrsviewcontrollerBundle.GENERIC_NAME}"
-                        contentStyle="width:170px;"/>
+                        contentStyle="width:170px;"
+                        disabled="#{pageFlowScope.manageCRSBean.inboxDisable}"/>
           <af:inputText value="#{bindings.TradeName.inputValue}"
                         label="#{ecrsviewcontrollerBundle.TRADE_NAME}"
                         columns="#{bindings.TradeName.hints.displayWidth}"
                         maximumLength="#{bindings.TradeName.hints.precision}"
                         shortDesc="#{bindings.TradeName.hints.tooltip}"
-                        id="it3" contentStyle="width:170px;"/>
+                        id="it3" contentStyle="width:170px;"
+                        disabled="#{pageFlowScope.manageCRSBean.inboxDisable}"/>
           <af:inputText value="#{bindings.Indication.inputValue}"
                         label="#{bindings.Indication.hints.label}"
                         columns="#{bindings.Indication.hints.displayWidth}"
                         maximumLength="#{bindings.Indication.hints.precision}"
                         shortDesc="#{bindings.Indication.hints.tooltip}"
-                        id="it4" contentStyle="width:170px;"/>
+                        id="it4" contentStyle="width:170px;"
+                        disabled="#{pageFlowScope.manageCRSBean.inboxDisable}"/>
           <af:selectOneChoice value="#{bindings.Marketed.inputValue}"
                               label="#{bindings.Marketed.hints.label}"
                               shortDesc="#{bindings.Marketed.hints.tooltip}"
-                              id="it5" contentStyle="width:170px;">
+                              id="it5" contentStyle="width:170px;"
+                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
             <af:selectItem label="Yes" value="Y" id="si99"/>
             <af:selectItem label="No" value="N" id="si60"/>
           </af:selectOneChoice>
           <af:selectOneChoice value="#{bindings.Designee.inputValue}"
                               label="#{bindings.Designee.label}"
                               shortDesc="#{bindings.Designee.hints.tooltip}"
-                              id="soc4" contentStyle="width:170px;">
+                              id="soc4" contentStyle="width:170px;"
+                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
             <f:selectItems value="#{bindings.Designee.items}" id="si4"/>
           </af:selectOneChoice>
           <af:selectOneChoice value="#{bindings.CrsTasl.inputValue}"
                               label="#{ecrsviewcontrollerBundle.CRS_TASL}"
                               shortDesc="#{bindings.CrsTasl.hints.tooltip}"
-                              id="soc5" contentStyle="width:170px;">
+                              id="soc5" contentStyle="width:170px;"
+                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
             <f:selectItems value="#{bindings.CrsTasl.items}" id="si5"/>
           </af:selectOneChoice>
           <af:selectOneChoice value="#{bindings.CrsMedicalLead.inputValue}"
                               shortDesc="#{bindings.CrsMedicalLead.hints.tooltip}"
                               id="soc6"
                               label="#{ecrsviewcontrollerBundle.CRS_MEDICAL_LEAD}"
-                              contentStyle="width:170px;">
+                              contentStyle="width:170px;"
+                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
             <f:selectItems value="#{bindings.CrsMedicalLead.items}" id="si6"/>
           </af:selectOneChoice>
           <af:selectOneChoice value="#{bindings.CrsBsl.inputValue}"
                               shortDesc="#{bindings.CrsBsl.hints.tooltip}"
                               id="soc7"
                               label="#{ecrsviewcontrollerBundle.CRS_BSL}"
-                              contentStyle="width:170px;">
+                              contentStyle="width:170px;"
+                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
             <f:selectItems value="#{bindings.CrsBsl.items}" id="si7"/>
           </af:selectOneChoice>
           <f:facet name="footer"/>
@@ -107,13 +119,20 @@
                         maximumLength="#{bindings.CrsName.hints.precision}"
                         shortDesc="#{bindings.CrsName.hints.tooltip}" id="it6"
                         contentStyle="width:170px;"
-                        label="#{ecrsviewcontrollerBundle.CRS_NAME}"/>
+                        label="#{ecrsviewcontrollerBundle.CRS_NAME}"
+                        disabled="#{pageFlowScope.manageCRSBean.inboxDisable}"/>
           <af:inputText value="#{bindings.CrsId.inputValue}"
                         label="#{ecrsviewcontrollerBundle.CRS_ID}"
                         columns="#{bindings.CrsId.hints.displayWidth}"
                         maximumLength="#{bindings.CrsId.hints.precision}"
                         shortDesc="#{bindings.CrsId.hints.tooltip}" id="it7"
-                        contentStyle="width:170px;"/>
+                        contentStyle="width:170px;"
+                        disabled="#{pageFlowScope.manageCRSBean.inboxDisable}"/>
+          <af:selectBooleanCheckbox
+                                    label="#{ecrsviewcontrollerBundle.INBOX}" id="sbc1"
+                                    valueChangeListener="#{pageFlowScope.manageCRSBean.onSelectInbox}"
+                                    autoSubmit="true"
+                                    rendered="#{pageFlowScope.manageCRSBean.loggedInUserRole ne 'BSL'}"/>
           <af:commandButton text="#{ecrsviewcontrollerBundle.SEARCH}" id="cb1"
                             actionListener="#{pageFlowScope.manageCRSBean.onClickSearch}"/>
           <f:facet name="separator">
@@ -252,17 +271,11 @@
         </af:column>
       </af:table>
       <af:panelGroupLayout id="pgl6" layout="horizontal">
-                <af:commandButton text="#{ecrsviewcontrollerBundle.BACK}"
-                                  id="cb5"
-                                  action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}"
-                                  rendered="false"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}"
                                   id="cb6"
                                   action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getNext}"/>
-                <af:goButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}"
-                                  id="cb7"
-                             destination="'ECRS/faces/pages/Home.jspx'"
-                             targetFrame="_parent"/>
+                <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}"
+                                  id="cb7" action="home"/>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}"
                                          id="plam1">
           <af:outputText value="#{ecrsviewcontrollerBundle.DICIONARY_CURR_VERSION_NO}" id="ot8"/>

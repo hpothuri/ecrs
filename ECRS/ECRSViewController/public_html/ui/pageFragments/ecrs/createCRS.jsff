@@ -30,9 +30,9 @@
                                             shortDesc="#{bindings.CompoundId.hints.tooltip}"
                                             id="soc2"
                                             contentStyle="width:160px;"
-                                            partialTriggers="soc1"
                                             showRequired="true"
-                                            autoSubmit="true">
+                                            autoSubmit="true"
+                                            valueChangeListener="#{pageFlowScope.manageCRSBean.onCompCodeSelect}">
                             <f:selectItems value="#{bindings.CompoundId.items}"
                                            id="si2"/>
                         </af:selectOneChoice>
@@ -178,7 +178,8 @@
             <af:panelGroupLayout id="pgl6" layout="horizontal">
                 <af:commandButton text="#{ecrsviewcontrollerBundle.BACK}"
                                   id="cb5"
-                                  action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}"/>
+                                  action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}"
+                                  visible="#{pageFlowScope.flowType eq 'U'}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}"
                                   id="cb6"
                                   action="#{pageFlowScope.manageCRSBean.onClickNext}"/>
@@ -201,5 +202,15 @@
                 <af:spacer width="10" height="10" id="s7"/>
             </f:facet>
         </af:panelGroupLayout>
+        <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                  binding="#{pageFlowScope.manageCRSBean.successPopupBinding}">
+            <af:dialog id="d1" type="ok"
+                       title="#{ecrsviewcontrollerBundle.INFO}"
+                       titleIconSource="/images/info_icon.png"
+                       closeIconVisible="false" inlineStyle="width:200px;">
+                <f:facet name="buttonBar"/>
+                <af:outputText value="#{ecrsviewcontrollerBundle.RECORD_SAVED_SUCCESSFULLY}" id="ot3"/>
+            </af:dialog>
+        </af:popup>
     </af:panelHeader>
 </jsp:root>

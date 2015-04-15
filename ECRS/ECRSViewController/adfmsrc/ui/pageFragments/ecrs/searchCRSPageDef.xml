@@ -89,6 +89,10 @@
                   InstanceName="data.ECRSAppModuleDataControl.dataProvider"
                   DataControl="ECRSAppModuleDataControl"
                   RequiresUpdateModel="true" Action="invokeMethod"
-                  MethodName="filterCRSContent" IsViewObjectMethod="false"/>
+                  MethodName="filterCRSContent" IsViewObjectMethod="false">
+      <NamedData NDName="userInRole" NDType="java.lang.String"/>
+      <NamedData NDName="userName" NDType="java.lang.String"/>
+      <NamedData NDName="isInboxDisable" NDType="boolean"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

@@ -1,6 +1,7 @@
 package com.novartis.ecrs.ui.bean;
 
 
+import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.CrsContentVORowImpl;
 import com.novartis.ecrs.ui.constants.ViewConstants;
 import com.novartis.ecrs.ui.utility.ADFUtils;
@@ -11,11 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.model.binding.DCIteratorBinding;
+import oracle.adf.view.rich.component.rich.RichPopup;
 
 import oracle.binding.OperationBinding;
 
@@ -28,13 +32,16 @@ public class ManageCRSBean implements Serializable {
     private List<SelectItem> designeeList;
     private List<String> selDesigneeList;
     private String selectedCrsName;
+    private RichPopup successPopupBinding;
 
     public ManageCRSBean() {
         super();
+        getUserRole();
     }
     
     private String flowType;
-
+    private boolean inboxDisable;
+    private String loggedInUserRole;
     /**
      */
     public void getCrsFlowType() {
@@ -72,20 +79,13 @@ public class ManageCRSBean implements Serializable {
             }
             ADFUtils.setEL("#{bindings.Designee.inputValue}", designees.substring(1));
         }
-        //TODO check with Donna
-        //if compound type is non-compound then set marketed flag to 'N' 
-//        if(ADFUtils.evaluateEL("#{bindings.CompoundType.inputValue}")!=null ){
-//            String compType = (String)ADFUtils.evaluateEL("#{bindings.CompoundType.inputValue}");
-//            if(ViewConstants.COMP_TYPE_NON_COMPOUND.equals(compType))
-//                ADFUtils.setEL("#{bindings.IsMarketedFlag.inputValue}", "N");
-//        }
+
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0) 
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
          else
-            ADFUtils.showFacesMessage("Record saved successfully.", FacesMessage.SEVERITY_INFO);
-        //    ADFUtils.invokeEL("#{bindings.Commit.execute}");
+            ADFUtils.showPopup(getSuccessPopupBinding());
     }
 
     /**
@@ -140,13 +140,17 @@ public class ManageCRSBean implements Serializable {
      * @param actionEvent
      */
     public void onClickSearch(ActionEvent actionEvent) {
-        // Add event code here...
+        // TODO get user name
         DCBindingContainer bc = ADFUtils.getDCBindingContainer();
         OperationBinding ob = bc.getOperationBinding("filterCRSContent");
+        ob.getParamsMap().put("userInRole", loggedInUserRole);
+        ob.getParamsMap().put("userName", "");
+        ob.getParamsMap().put("isInboxDisable", isInboxDisable());
         ob.execute();
-        if(ob.getErrors() != null){
-            //log error
-        }
+        if (ob.getErrors().size() > 0)
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
+                                      FacesMessage.SEVERITY_ERROR);
+        //TODO log the error 
     }
 
     /**
@@ -161,7 +165,6 @@ public class ManageCRSBean implements Serializable {
             iter.getViewObject().executeEmptyRowSet();
     }
 
-
     /**
      * Custom selection listener to populate crs name and designee list.
      * @param selectionEvent
@@ -174,15 +177,17 @@ public class ManageCRSBean implements Serializable {
         CrsContentVORowImpl selectedRow =
                    (CrsContentVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentVOIterator.currentRow}");
         setSelectedCrsName(selectedRow.getCrsName());
-        
+        setSelDesigneeList(null);
         List<String> designeeList = new ArrayList<String>();
-        String[] designeeArray = selectedRow.getDesignee().split("[,]");
-        if(designeeArray.length>0){
-            for(int i = 0;i<designeeArray.length;i++){
-                designeeList.add(designeeArray[i]);
+        if (selectedRow.getDesignee() != null) {
+            String[] designeeArray = selectedRow.getDesignee().split("[,]");
+            if (designeeArray.length > 0) {
+                for (int i = 0; i < designeeArray.length; i++) {
+                    designeeList.add(designeeArray[i]);
+                }
             }
+            setSelDesigneeList(designeeList);
         }
-        setSelDesigneeList(designeeList);
     }
 
     /**
@@ -199,5 +204,88 @@ public class ManageCRSBean implements Serializable {
     public String onClickNext() {
         String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getNext}");
         return returnValue;
+    }
+
+    public void onSelectInbox(ValueChangeEvent vce) {
+        // Add event code here...
+        if (vce!=null) {
+            if (vce.getNewValue() != null &&
+                !vce.getNewValue().equals(vce.getOldValue()) &&
+                (Boolean)vce.getNewValue()) {
+                if (!ModelConstants.USER_IN_ROLE_BSL.equals(loggedInUserRole)) {
+                    setInboxDisable(Boolean.TRUE);
+                }
+            } else
+                setInboxDisable(Boolean.FALSE);
+
+            ADFUtils.addPartialTarget(vce.getComponent().getParent().getParent());
+        }
+    }
+
+    /**
+     * @param inboxDisable
+     */
+    public void setInboxDisable(boolean inboxDisable) {
+        this.inboxDisable = inboxDisable;
+    }
+
+    /**
+     * @return
+     */
+    public boolean isInboxDisable() {
+        return inboxDisable;
+    }
+
+    /**
+     * @param loggedInUserRole
+     */
+    public void setLoggedInUserRole(String loggedInUserRole) {
+        this.loggedInUserRole = loggedInUserRole;
+    }
+
+    /**
+     * @return
+     */
+    public String getLoggedInUserRole() {
+        return loggedInUserRole;
+    }
+
+    /**
+     * Set null to trade,generic,indication and isMarketed attributes.
+     * @param vce
+     */
+    public void onCompCodeSelect(ValueChangeEvent vce) {
+        // Add event code here...
+        if (vce != null) {
+            vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            if (vce.getNewValue() != null &&
+                !vce.getNewValue().equals(vce.getOldValue()) &&
+                ViewConstants.NON_COMPOUND_ROUTINE.equals(ADFUtils.evaluateEL("#{bindings.CompoundCode.inputValue}"))) {
+                ADFUtils.setEL("#{bindings.TradeName.inputValue}", null);
+                ADFUtils.setEL("#{bindings.GenericName.inputValue}", null);
+                ADFUtils.setEL("#{bindings.Indication.inputValue}", null);
+                //TODO make this enable when isMarketedFlag null
+                //  ADFUtils.setEL("#{bindings.IsMarketedFlag.inputValue}", null);
+            }
+        }
+    }
+
+    public void setSuccessPopupBinding(RichPopup successPopupBinding) {
+        this.successPopupBinding = successPopupBinding;
+    }
+
+    public RichPopup getSuccessPopupBinding() {
+        return successPopupBinding;
+    }
+
+    /**
+     * Invoked from constructor and intializes the userRole variable.
+     */
+    private void getUserRole() {
+        if (ADFUtils.evaluateEL("#{sessionBean.userRole}") != null) {
+            loggedInUserRole = (String)ADFUtils.evaluateEL("#{sessionBean.userRole}");
+        } else
+            ADFUtils.showFacesMessage("Role not found for the logged in user,Please contact Administrator.",
+                                      FacesMessage.SEVERITY_ERROR);
     }
 }

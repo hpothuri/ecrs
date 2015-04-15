@@ -10,5 +10,6 @@ import oracle.jbo.ApplicationModule;
 public interface ECRSAppModule extends ApplicationModule {
     List fetchDesignees();
 
-    void filterCRSContent();
+    void filterCRSContent(String userInRole, String userName,
+                          boolean isInboxDisable);
 }

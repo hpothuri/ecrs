@@ -2,13 +2,12 @@ package com.novartis.ecrs.model.am;
 
 
 import com.novartis.ecrs.model.am.common.ECRSAppModule;
+import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.ECrsSearchVORowImpl;
 import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RolesTransientVOImpl;
-
 import com.novartis.ecrs.model.view.trans.StateTransientVOImpl;
-
 import com.novartis.ecrs.model.view.trans.UserRolesTransientVOImpl;
 
 import java.util.ArrayList;
@@ -123,7 +122,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         return (ViewObjectImpl)findViewObject("ECrsSearchVO");
     }
     
-    public void filterCRSContent(){
+    public void filterCRSContent(String userInRole,String userName,boolean isInboxDisable){
         String whereClause = "";
         ViewObjectImpl searchVO = this.getECrsSearchVO();
         
@@ -141,9 +140,22 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             whereClause +=
                     "COMPOUND_ID =" + row.getCompoundCodeId() +
                     " AND ";
+        //if user role is MQM - set state = 2 and 3 , TASL  - SET State = 4 , ML - set state = 5
         if (row.getState() != null)
             whereClause +=
                     "STATE_ID =" + row.getState() + " AND ";
+        else if(isInboxDisable){
+            if(ModelConstants.USER_IN_ROLE_MQM.equals(userInRole))
+                whereClause +=
+                        "STATE_ID IN (2,3) AND ";
+            if(ModelConstants.USER_IN_ROLE_TASL.equals(userInRole))
+                whereClause +=
+                        "STATE_ID = 4 AND ";
+            if(ModelConstants.USER_IN_ROLE_ML.equals(userInRole))
+                whereClause +=
+                        "STATE_ID = 5 AND ";
+        }
+            
         if (row.getGenericName() != null)
             whereClause +=
                     "GENERIC_NAME LIKE '%" + row.getGenericName() +
@@ -162,8 +174,11 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     "IS_MARKETED_FLAG ='" + row.getMarketed() +
                     "' AND ";
         if (row.getDesignee() != null)
-            whereClause +=
-                    "DESIGNEE LIKE '%" + row.getDesignee() + "%' AND ";
+            whereClause += "DESIGNEE LIKE '%" + row.getDesignee() + "%' AND ";
+//        else {
+//            TODO if BSL set user role 
+//            whereClause += "DESIGNEE LIKE '%" + userName + "%' AND ";
+//        }
 
         if (row.getCrsTasl() != null)
             whereClause +=

@@ -60,6 +60,15 @@
       MethodName="filterCRSContent">
       <Return
         Type="void"/>
+      <Parameter
+        Name="userInRole"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="userName"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="isInboxDisable"
+        Type="boolean"/>
     </Method>
   </ClientInterface>
 </AppModule>

@@ -240,7 +240,7 @@ WHERE CrsContentEO.COMPOUND_ID(+) = CrsCompoundEO.COMPOUND_ID]]></SQLQuery>
     AliasName="CRS_NAME">
     <Dependencies>
       <Item
-        Value="CompoundCode"/>
+        Value="CompoundId"/>
       <Item
         Value="Indication"/>
     </Dependencies>

@@ -18,14 +18,16 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
     public ECRSAppModuleClient() {
     }
 
+
     public List fetchDesignees() {
         Object _ret = this.riInvokeExportedMethod(this,"fetchDesignees",null,null);
         return (List)_ret;
     }
 
-    public void filterCRSContent() {
+    public void filterCRSContent(String userInRole, String userName,
+                                 boolean isInboxDisable) {
         Object _ret =
-            this.riInvokeExportedMethod(this,"filterCRSContent",null,null);
+            this.riInvokeExportedMethod(this,"filterCRSContent",new String [] {"java.lang.String","java.lang.String","boolean"},new Object[] {userInRole, userName, new Boolean(isInboxDisable)});
         return;
     }
 }
