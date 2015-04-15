@@ -78,7 +78,8 @@ public class ManageCRSBean implements Serializable {
                 designees = designees + "," + des;
             }
             ADFUtils.setEL("#{bindings.Designee.inputValue}", designees.substring(1));
-        }
+        } else
+            ADFUtils.setEL("#{bindings.Designee.inputValue}",null);
 
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
