@@ -9,7 +9,9 @@
   CustomQuery="true"
   PageIterMode="Full"
   UseGlueCode="false"
-  RowClass="com.novartis.ecrs.model.view.CrsContentVORowImpl">
+  RowClass="com.novartis.ecrs.model.view.CrsContentVORowImpl"
+  FetchSize="20"
+  FetchMode="FETCH_AS_NEEDED">
   <DesignTime>
     <Attr Name="_codeGenFlag2" Value="Access"/>
     <Attr Name="_isCodegen" Value="true"/>

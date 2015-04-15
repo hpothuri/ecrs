@@ -12,7 +12,9 @@
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  UseGlueCode="false">
+  UseGlueCode="false"
+  FetchSize="10"
+  FetchMode="FETCH_ALL">
   <Variable
     Name="bindRoleId"
     Kind="viewcriteria"

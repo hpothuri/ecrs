@@ -13,7 +13,9 @@
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  UseGlueCode="false">
+  UseGlueCode="false"
+  FetchSize="10"
+  FetchMode="FETCH_AS_NEEDED">
   <Variable
     Name="bindCompoundType"
     Kind="viewcriteria"

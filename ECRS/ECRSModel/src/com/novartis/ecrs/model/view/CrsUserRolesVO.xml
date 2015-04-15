@@ -17,7 +17,9 @@
   CustomQuery="false"
   PageIterMode="Full"
   UseGlueCode="false"
-  Where="CrsUserRolesEO.ROLE_ID = CrsRolesEO.ROLE_ID">
+  Where="CrsUserRolesEO.ROLE_ID = CrsRolesEO.ROLE_ID"
+  FetchSize="20"
+  FetchMode="FETCH_AS_NEEDED">
   <Variable
     Name="bindRoleName"
     Kind="viewcriteria"
