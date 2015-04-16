@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CrsRiskDefinitionsEO"
+  Version="11.1.2.64.36"
+  DBObjectType="TABLE"
+  DBObjectName="CRS_RISK_DEFINITIONS"
+  AliasName="CrsRiskDefinitionsEO"
+  BindingStyle="OracleName"
+  UseGlueCode="false"
+  RowClass="com.novartis.ecrs.model.entity.CrsRiskDefinitionsEOImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Attribute
+    Name="CrsRiskDefnId"
+    IsNotNull="true"
+    Precision="10"
+    Scale="0"
+    ColumnName="CRS_RISK_DEFN_ID"
+    SQLType="NUMERIC"
+    Type="java.lang.Long"
+    ColumnType="NUMBER"
+    TableName="CRS_RISK_DEFINITIONS"
+    PrimaryKey="true">
+    <TransientExpression><![CDATA[(new oracle.jbo.server.SequenceImpl("crs_risk_definitions_seq",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
+  </Attribute>
+  <Attribute
+    Name="CrsRiskId"
+    IsNotNull="true"
+    Precision="10"
+    Scale="0"
+    ColumnName="CRS_RISK_ID"
+    SQLType="NUMERIC"
+    Type="java.lang.Long"
+    ColumnType="NUMBER"
+    TableName="CRS_RISK_DEFINITIONS"/>
+  <Attribute
+    Name="CrsQualifier"
+    Precision="15"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="$none$"
+    IsQueriable="false"
+    IsPersistent="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="MeddraLevel"
+    IsNotNull="true"
+    Precision="5"
+    ColumnName="MEDDRA_LEVEL"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="5"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="MeddraCode"
+    IsNotNull="true"
+    Precision="30"
+    ColumnName="MEDDRA_CODE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="MeddraTerm"
+    IsNotNull="true"
+    Precision="300"
+    ColumnName="MEDDRA_TERM"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="300"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="MeddraVersion"
+    IsNotNull="true"
+    Precision="15"
+    ColumnName="MEDDRA_VERSION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS"
+    DefaultValue="1">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="MeddraVersionDate"
+    IsNotNull="true"
+    ColumnName="MEDDRA_VERSION_DATE"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="DATE"
+    TableName="CRS_RISK_DEFINITIONS"
+    IsUpdateable="while_insert"
+    HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="SearchCriteriaDetails"
+    Precision="200"
+    ColumnName="SEARCH_CRITERIA_DETAILS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="TmsDictContentId"
+    IsNotNull="true"
+    Precision="10"
+    Scale="0"
+    ColumnName="TMS_DICT_CONTENT_ID"
+    SQLType="NUMERIC"
+    Type="java.lang.Long"
+    ColumnType="NUMBER"
+    TableName="CRS_RISK_DEFINITIONS"
+    DefaultValue="1"/>
+  <Attribute
+    Name="TmsDictContentEntryTs"
+    IsNotNull="true"
+    ColumnName="TMS_DICT_CONTENT_ENTRY_TS"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="DATE"
+    TableName="CRS_RISK_DEFINITIONS"
+    HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="TmsEndTs"
+    IsNotNull="true"
+    ColumnName="TMS_END_TS"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="DATE"
+    TableName="CRS_RISK_DEFINITIONS"
+    HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="TmsUpdateFlag"
+    IsNotNull="true"
+    Precision="1"
+    ColumnName="TMS_UPDATE_FLAG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS"
+    DefaultValue="N">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="TmsUpdateFlagDt"
+    IsNotNull="true"
+    ColumnName="TMS_UPDATE_FLAG_DT"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="DATE"
+    TableName="CRS_RISK_DEFINITIONS"
+    HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="MeddraQualifier"
+    Precision="15"
+    ColumnName="MEDDRA_QUALIFIER"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
+  </Attribute>
+  <Key
+    Name="CrsRiskDefnChkQual">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_CHK_QUAL"/>
+      <Attr Name="_checkCondition" Value="TMS_UPDATE_FLAG IN ('BROAD', 'NARROW', 'CHILD NARROW')"/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="CrsRiskDefnChkUpd">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_CHK_UPD"/>
+      <Attr Name="_checkCondition" Value="TMS_UPDATE_FLAG IN ('N', 'Y')"/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="CrsRiskDefnIdxIdPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_IDX_ID_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO.CrsRiskDefnId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="CrsRiskDefnIdxRiskidFk">
+    <DesignTime>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_IDX_RISKID_FK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO.CrsRiskId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_CrsRiskDefinitionsEO">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="CRS_RISK_RELATIONS_IDX_ID_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_CRS_RISK_DEFINITIONS_EO"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO.CrsRiskId"/>
+    </AttrArray>
+  </Key>
+</Entity>

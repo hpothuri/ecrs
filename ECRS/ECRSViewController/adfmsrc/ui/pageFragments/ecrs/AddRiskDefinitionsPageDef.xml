@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="AddRiskDefinitionsPageDef"
+                Package="ui.pageFragments.ecrs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="CrsRiskVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsRiskVOIterator"/>
+    <searchRegion Binds="CrsRiskVOIterator" Criteria="" Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="CrsRiskVOQuery"/>
+    <iterator Binds="CrsRiskRelationVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="CrsRiskRelationVOIterator"/>
+    <iterator Binds="CrsRiskDefinitionsVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="CrsRiskDefinitionsVOIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="CrsRiskVOIterator" id="CrsRiskVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsRiskVO" Name="CrsRiskVO0">
+        <AttrNames>
+          <Item Value="SafetyTopicOfInterest"/>
+          <Item Value="RiskPurposeSpFlag" Binds="RiskPurposeSpFlag"/>
+          <Item Value="RiskPurposeDsFlag"/>
+          <Item Value="RiskPurposeRmFlag"/>
+          <Item Value="RiskPurposePsFlag"/>
+          <Item Value="RiskPurposeIbFlag"/>
+          <Item Value="RiskPurposeCdFlag"/>
+          <Item Value="RiskPurposeOsFlag"/>
+          <Item Value="RiskPurposeMiFlag"/>
+          <Item Value="RiskPurposeErFlag"/>
+          <Item Value="SocTerm"/>
+          <Item Value="DatabaseId"/>
+          <Item Value="DataDomain"/>
+          <Item Value="MeddraTerm"/>
+          <Item Value="MeddraLevel"/>
+          <Item Value="MeddraQualifier"/>
+          <Item Value="SearchCriteriaDetails"/>
+          <Item Value="MqmComment"/>
+          <Item Value="NonMeddraComponentComment"/>
+          <Item Value="CrsRiskId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="SafetyTopicOfInterest">
+      <AttrNames>
+        <Item Value="SafetyTopicOfInterest"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="DatabaseId">
+      <AttrNames>
+        <Item Value="DatabaseId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="DataDomain">
+      <AttrNames>
+        <Item Value="DataDomain"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="SocTerm">
+      <AttrNames>
+        <Item Value="SocTerm"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="MqmComment">
+      <AttrNames>
+        <Item Value="MqmComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="NonMeddraComponentComment">
+      <AttrNames>
+        <Item Value="NonMeddraComponentComment"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="CrsRiskDefinitionsVOIterator" id="CrsRiskDefinitionsVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsRiskDefinitionsVO" Name="CrsRiskDefinitionsVO0">
+        <AttrNames>
+          <Item Value="MeddraTerm"/>
+          <Item Value="MeddraLevel"/>
+          <Item Value="MeddraQualifier"/>
+          <Item Value="MeddraCode"/>
+          <Item Value="SearchCriteriaDetails"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="CrsRiskRelationVOIterator" id="RiskPurposeSpFlag" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeSpFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskRelationVOIterator" id="RiskPurposeDsFlag" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeDsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskRelationVOIterator" id="RiskPurposeRmFlag" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeRmFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskRelationVOIterator" id="RiskPurposePsFlag" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposePsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskRelationVOIterator" id="RiskPurposeIbFlag" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeIbFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskRelationVOIterator" id="RiskPurposeCdFlag" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeCdFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskRelationVOIterator" id="RiskPurposeOsFlag" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeOsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskRelationVOIterator" id="RiskPurposeMiFlag" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeMiFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskRelationVOIterator" id="RiskPurposeErFlag" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeErFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskVOIterator" id="RiskPurposeSpFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeSpFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskVOIterator" id="RiskPurposeDsFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeDsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskVOIterator" id="RiskPurposeRmFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeRmFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskVOIterator" id="RiskPurposePsFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposePsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskVOIterator" id="RiskPurposeIbFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeIbFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskVOIterator" id="RiskPurposeCdFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeCdFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskVOIterator" id="RiskPurposeOsFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeOsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskVOIterator" id="RiskPurposeMiFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeMiFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskVOIterator" id="RiskPurposeErFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeErFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <action IterBinding="CrsRiskRelationVOIterator" id="CreateRiskRelation"
+            InstanceName="ECRSAppModuleDataControl.CrsRiskRelationVO" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="CrsRiskDefinitionsVOIterator" id="CreateRiskDefinition"
+            InstanceName="ECRSAppModuleDataControl.CrsRiskDefinitionsVO" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="CrsRiskRelationVOIterator" id="setCurrentRiskRelation"
+            InstanceName="ECRSAppModuleDataControl.CrsRiskRelationVO" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDValue="" NDType="java.lang.String"/>
+    </action>
+    <action IterBinding="CrsRiskDefinitionsVOIterator" id="DeleteRiskDefinition"
+            InstanceName="ECRSAppModuleDataControl.CrsRiskDefinitionsVO" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <methodAction id="initRiskRelation" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="initRiskRelation" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.initRiskRelation_ECRSAppModuleDataControl_dataProvider_initRiskRelation_result">
+      <NamedData NDName="crsId" NDType="java.lang.Long"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>
