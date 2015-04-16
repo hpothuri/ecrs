@@ -12,4 +12,6 @@ public interface ECRSAppModule extends ApplicationModule {
 
     void filterCRSContent(String userInRole, String userName,
                           boolean isInboxDisable);
+
+    void initRiskRelation(Long crsId);
 }

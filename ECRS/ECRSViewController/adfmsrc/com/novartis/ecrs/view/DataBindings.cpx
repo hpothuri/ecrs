@@ -47,6 +47,8 @@
           usageId="com_novartis_ecrs_view_searchUserRolesPageDef"/>
     <page path="/ui/pageFragments/userroles/userRoleDetails.jsff"
           usageId="com_novartis_ecrs_view_userRoleDetailsPageDef"/>
+    <page path="/ui/pageFragments/ecrs/AddRiskDefinitions.jsff"
+          usageId="com_novartis_ecrs_view_AddRiskDefinitionsPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -84,6 +86,7 @@
           path="taskflows.ManageUserRolesTF_ManageUserRolesTF_CreateInsertPageDef"/>
     <page id="com_novartis_ecrs_view_searchUserRolesPageDef" path="ui.pageFragments.userroles.searchUserRolesPageDef"/>
     <page id="com_novartis_ecrs_view_userRoleDetailsPageDef" path="ui.pageFragments.userroles.userRoleDetailsPageDef"/>
+    <page id="com_novartis_ecrs_view_AddRiskDefinitionsPageDef" path="ui.pageFragments.ecrs.AddRiskDefinitionsPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

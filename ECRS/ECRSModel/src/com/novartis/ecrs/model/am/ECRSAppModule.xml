@@ -48,6 +48,21 @@
   <ViewUsage
     Name="UserRolesTransientVO"
     ViewObjectName="com.novartis.ecrs.model.view.trans.UserRolesTransientVO"/>
+  <ViewUsage
+    Name="CrsRiskVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsRiskVO"/>
+  <ViewUsage
+    Name="CrsRiskRelationVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsRiskRelationVO"/>
+  <ViewUsage
+    Name="CrsRiskDefinitionsVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsRiskDefinitionsVO"/>
+  <ViewLinkUsage
+    Name="CrsRiskRelationToRiskDefintionLink1"
+    ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"
+    SrcViewUsageName="com.novartis.ecrs.model.am.ECRSAppModule.CrsRiskRelationVO"
+    DstViewUsageName="com.novartis.ecrs.model.am.ECRSAppModule.CrsRiskDefinitionsVO"
+    Reversed="false"/>
   <ClientInterface>
     <Method
       Name="fetchDesignees"
@@ -69,6 +84,15 @@
       <Parameter
         Name="isInboxDisable"
         Type="boolean"/>
+    </Method>
+    <Method
+      Name="initRiskRelation"
+      MethodName="initRiskRelation">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="crsId"
+        Type="java.lang.Long"/>
     </Method>
   </ClientInterface>
 </AppModule>

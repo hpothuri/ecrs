@@ -9,7 +9,10 @@ import com.novartis.ecrs.ui.utility.ADFUtils;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -21,9 +24,22 @@ import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.adf.view.rich.component.rich.RichPopup;
 
+import oracle.adf.view.rich.component.rich.RichDialog;
+import oracle.adf.view.rich.component.rich.RichPopup;
+
+import oracle.adf.view.rich.component.rich.data.RichTable;
+
+import oracle.adf.view.rich.event.PopupCanceledEvent;
+
 import oracle.binding.OperationBinding;
 
+import oracle.jbo.Row;
+import oracle.jbo.ViewObject;
+import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
+
 import org.apache.myfaces.trinidad.event.SelectionEvent;
+import org.apache.myfaces.trinidad.model.CollectionModel;
+import org.apache.myfaces.trinidad.model.RowKeySet;
 
 
 public class ManageCRSBean implements Serializable {
@@ -33,6 +49,9 @@ public class ManageCRSBean implements Serializable {
     private List<String> selDesigneeList;
     private String selectedCrsName;
     private RichPopup successPopupBinding;
+    private RichPopup riskDefPopup;
+    private RichTable riskDefTable;
+    private RichPopup successPopup;
 
     public ManageCRSBean() {
         super();
@@ -201,8 +220,21 @@ public class ManageCRSBean implements Serializable {
     public String getSelectedCrsName() {
         return selectedCrsName;
     }
+    
+    /**********************************************************************************************************************/
 
     public String onClickNext() {
+        String crsName = (String)ADFUtils.evaluateEL("#{bindings.CrsName.inputValue}");
+        Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
+        ADFUtils.setPageFlowScopeValue("crsId", crsId);
+        ADFUtils.setPageFlowScopeValue("crsName", crsName);
+        Map params = new HashMap<String, Object>();
+        params.put("crsId", crsId);
+        try {
+            ADFUtils.executeAction("initRiskRelation", params);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getNext}");
         return returnValue;
     }
@@ -288,5 +320,83 @@ public class ManageCRSBean implements Serializable {
         } else
             ADFUtils.showFacesMessage("Role not found for the logged in user,Please contact Administrator.",
                                       FacesMessage.SEVERITY_ERROR);
+    }
+
+    public void addRiskDefinition(ActionEvent actionEvent) {
+        DCIteratorBinding realtionIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
+        ViewObject relationVO = realtionIter.getViewObject();
+        Row relationRow = relationVO.createRow();
+        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
+        relationRow.setAttribute("CrsId", crsId);
+        relationVO.insertRow(relationRow);
+        relationVO.setCurrentRow(relationRow);
+        ADFUtils.setPageFlowScopeValue("popupMode", "Add");
+        ADFUtils.showPopup(riskDefPopup);
+    }
+
+    public void setRiskDefPopup(RichPopup riskDefPopup) {
+        this.riskDefPopup = riskDefPopup;
+    }
+
+    public RichPopup getRiskDefPopup() {
+        return riskDefPopup;
+    }
+
+    public void editRiskDefinition(ActionEvent actionEvent) {
+        ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
+        Long riskId = (Long)ADFUtils.evaluateEL("#{row.CrsRiskId}");
+        Map params = new HashMap<String, Object>();
+        params.put("rowKey", riskId);
+        try {
+            ADFUtils.executeAction("setCurrentRiskRelation", params);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ADFUtils.showPopup(riskDefPopup);
+    }
+
+    public void deleteRiskDefinitions(ActionEvent actionEvent) {
+        RowKeySet rowKeySet = (RowKeySet)riskDefTable.getSelectedRowKeys();
+        CollectionModel cm = (CollectionModel)riskDefTable.getValue();
+        for (Object facesTreeRowKey : rowKeySet) {
+            cm.setRowKey(facesTreeRowKey);
+            JUCtrlHierNodeBinding rowData = (JUCtrlHierNodeBinding)cm.getRowData();
+            rowData.getRow().remove();
+        }
+    }
+
+    public void setRiskDefTable(RichTable riskDefTable) {
+        this.riskDefTable = riskDefTable;
+    }
+
+    public RichTable getRiskDefTable() {
+        return riskDefTable;
+    }
+
+    public void saveRiskDefs(ActionEvent actionEvent) {
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0) 
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+         else
+            ADFUtils.showPopup(successPopup);
+    }
+
+    public void setSuccessPopup(RichPopup successPopup) {
+        this.successPopup = successPopup;
+    }
+
+    public RichPopup getSuccessPopup() {
+        return successPopup;
+    }
+
+    public void onCloseRiskPopup(PopupCanceledEvent popupCanceledEvent) {
+        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
+        OperationBinding oper = ADFUtils.findOperation("initRiskRelation");
+        oper.getParamsMap().put("crsId", crsId);
+        oper.execute();
+        if (oper.getErrors().size() > 0) 
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        ADFUtils.addPartialTarget(riskDefTable);
     }
 }

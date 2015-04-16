@@ -234,6 +234,13 @@
     AssociationOtherEnd="com.novartis.ecrs.model.entity.assoc.CrsContentIdxCompoundFkAssoc.CrsContentEO"
     Type="oracle.jbo.server.EntityImpl"
     IsUpdateable="true"/>
+  <AccessorAttribute
+    Name="CrsRiskRelationsEO"
+    Association="com.novartis.ecrs.model.entity.assoc.CrsRiskRelationsIdxCrsFkAssoc"
+    AssociationEnd="com.novartis.ecrs.model.entity.assoc.CrsRiskRelationsIdxCrsFkAssoc.CrsRiskRelationsEO"
+    AssociationOtherEnd="com.novartis.ecrs.model.entity.assoc.CrsRiskRelationsIdxCrsFkAssoc.CrsContentEO"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
   <Key
     Name="CoumpoundCodeInditcationAltKey"
     AltKey="true">

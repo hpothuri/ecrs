@@ -30,4 +30,9 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
             this.riInvokeExportedMethod(this,"filterCRSContent",new String [] {"java.lang.String","java.lang.String","boolean"},new Object[] {userInRole, userName, new Boolean(isInboxDisable)});
         return;
     }
+
+    public void initRiskRelation(Long crsId) {
+        Object _ret = this.riInvokeExportedMethod(this,"initRiskRelation",new String [] {"java.lang.Long"},new Object[] {crsId});
+        return;
+    }
 }

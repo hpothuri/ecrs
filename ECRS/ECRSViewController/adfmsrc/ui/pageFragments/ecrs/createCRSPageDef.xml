@@ -90,5 +90,10 @@
         <Item Value="CompoundCode"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="initRiskRelation" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="initRiskRelation" IsViewObjectMethod="false">
+      <NamedData NDName="crsId" NDType="java.lang.Long"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

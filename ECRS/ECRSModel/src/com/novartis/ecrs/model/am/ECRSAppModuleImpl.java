@@ -17,6 +17,7 @@ import oracle.jbo.Row;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.ViewObject;
 import oracle.jbo.server.ApplicationModuleImpl;
+import oracle.jbo.server.ViewLinkImpl;
 import oracle.jbo.server.ViewObjectImpl;
 
 
@@ -240,5 +241,44 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public UserRolesTransientVOImpl getUserRolesTransientVO() {
         return (UserRolesTransientVOImpl)findViewObject("UserRolesTransientVO");
+    }
+
+    /**
+     * Container's getter for CrsRiskVO.
+     * @return CrsRiskVO
+     */
+    public ViewObjectImpl getCrsRiskVO() {
+        return (ViewObjectImpl)findViewObject("CrsRiskVO");
+    }
+
+
+    /**
+     * Container's getter for CrsRiskRelationVO.
+     * @return CrsRiskRelationVO
+     */
+    public ViewObjectImpl getCrsRiskRelationVO() {
+        return (ViewObjectImpl)findViewObject("CrsRiskRelationVO");
+    }
+
+    /**
+     * Container's getter for CrsRiskDefinitionsVO.
+     * @return CrsRiskDefinitionsVO
+     */
+    public ViewObjectImpl getCrsRiskDefinitionsVO() {
+        return (ViewObjectImpl)findViewObject("CrsRiskDefinitionsVO");
+    }
+
+    /**
+     * Container's getter for CrsRiskRelationToRiskDefintionLink1.
+     * @return CrsRiskRelationToRiskDefintionLink1
+     */
+    public ViewLinkImpl getCrsRiskRelationToRiskDefintionLink1() {
+        return (ViewLinkImpl)findViewLink("CrsRiskRelationToRiskDefintionLink1");
+    }
+    
+    public void initRiskRelation(Long crsId){
+        ViewObject riskVO = this.getCrsRiskVO();
+        riskVO.setWhereClause("CRS_ID = "+crsId);
+        riskVO.executeQuery();
     }
 }

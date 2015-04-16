@@ -1,6 +1,7 @@
 package com.novartis.ecrs.model.entity;
 
 import oracle.jbo.Key;
+import oracle.jbo.RowIterator;
 import oracle.jbo.domain.Timestamp;
 import oracle.jbo.server.AttributeDefImpl;
 import oracle.jbo.server.EntityDefImpl;
@@ -26,7 +27,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setCrsId((Long)value);
             }
-        },
+        }
+        ,
         CrsName {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getCrsName();
@@ -35,7 +37,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setCrsName((String)value);
             }
-        },
+        }
+        ,
         StateId {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getStateId();
@@ -44,7 +47,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setStateId((Integer)value);
             }
-        },
+        }
+        ,
         CompoundId {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getCompoundId();
@@ -53,7 +57,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setCompoundId((Integer)value);
             }
-        },
+        }
+        ,
         GenericName {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getGenericName();
@@ -62,7 +67,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setGenericName((String)value);
             }
-        },
+        }
+        ,
         TradeName {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getTradeName();
@@ -71,7 +77,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setTradeName((String)value);
             }
-        },
+        }
+        ,
         Indication {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getIndication();
@@ -80,7 +87,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setIndication((String)value);
             }
-        },
+        }
+        ,
         IsMarketedFlag {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getIsMarketedFlag();
@@ -89,7 +97,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setIsMarketedFlag((String)value);
             }
-        },
+        }
+        ,
         ReleaseStatusFlag {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getReleaseStatusFlag();
@@ -98,7 +107,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setReleaseStatusFlag((String)value);
             }
-        },
+        }
+        ,
         BslName {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getBslName();
@@ -107,7 +117,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setBslName((String)value);
             }
-        },
+        }
+        ,
         Designee {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getDesignee();
@@ -116,7 +127,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setDesignee((String)value);
             }
-        },
+        }
+        ,
         MqmComment {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getMqmComment();
@@ -125,7 +137,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setMqmComment((String)value);
             }
-        },
+        }
+        ,
         TaslName {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getTaslName();
@@ -134,7 +147,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setTaslName((String)value);
             }
-        },
+        }
+        ,
         TaslRejectComment {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getTaslRejectComment();
@@ -143,7 +157,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setTaslRejectComment((String)value);
             }
-        },
+        }
+        ,
         MedicalLeadName {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getMedicalLeadName();
@@ -152,7 +167,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setMedicalLeadName((String)value);
             }
-        },
+        }
+        ,
         MedicalLeadRejectComment {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getMedicalLeadRejectComment();
@@ -161,7 +177,8 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setMedicalLeadRejectComment((String)value);
             }
-        },
+        }
+        ,
         CrsEffectiveDt {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getCrsEffectiveDt();
@@ -170,16 +187,18 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setCrsEffectiveDt((Timestamp)value);
             }
-        },
+        }
+        ,
         CrsStateEO {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getCrsStateEO();
             }
 
             public void put(CrsContentEOImpl obj, Object value) {
-                obj.setCrsStateEO((EntityImpl)value);
+                obj.setCrsStateEO((CrsStateEOImpl)value);
             }
-        },
+        }
+        ,
         CrsCompoundEO {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getCrsCompoundEO();
@@ -188,7 +207,18 @@ public class CrsContentEOImpl extends EntityImpl {
             public void put(CrsContentEOImpl obj, Object value) {
                 obj.setCrsCompoundEO((CrsCompoundEOImpl)value);
             }
-        };
+        }
+        ,
+        CrsRiskRelationsEO {
+            public Object get(CrsContentEOImpl obj) {
+                return obj.getCrsRiskRelationsEO();
+            }
+
+            public void put(CrsContentEOImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ;
         private static AttributesEnum[] vals = null;
         private static int firstIndex = 0;
 
@@ -216,6 +246,7 @@ public class CrsContentEOImpl extends EntityImpl {
             return vals;
         }
     }
+
     public static final int CRSID = AttributesEnum.CrsId.index();
     public static final int CRSNAME = AttributesEnum.CrsName.index();
     public static final int STATEID = AttributesEnum.StateId.index();
@@ -223,30 +254,31 @@ public class CrsContentEOImpl extends EntityImpl {
     public static final int GENERICNAME = AttributesEnum.GenericName.index();
     public static final int TRADENAME = AttributesEnum.TradeName.index();
     public static final int INDICATION = AttributesEnum.Indication.index();
-    public static final int ISMARKETEDFLAG =
-        AttributesEnum.IsMarketedFlag.index();
-    public static final int RELEASESTATUSFLAG =
-        AttributesEnum.ReleaseStatusFlag.index();
+    public static final int ISMARKETEDFLAG = AttributesEnum.IsMarketedFlag.index();
+    public static final int RELEASESTATUSFLAG = AttributesEnum.ReleaseStatusFlag.index();
     public static final int BSLNAME = AttributesEnum.BslName.index();
     public static final int DESIGNEE = AttributesEnum.Designee.index();
     public static final int MQMCOMMENT = AttributesEnum.MqmComment.index();
     public static final int TASLNAME = AttributesEnum.TaslName.index();
-    public static final int TASLREJECTCOMMENT =
-        AttributesEnum.TaslRejectComment.index();
-    public static final int MEDICALLEADNAME =
-        AttributesEnum.MedicalLeadName.index();
-    public static final int MEDICALLEADREJECTCOMMENT =
-        AttributesEnum.MedicalLeadRejectComment.index();
-    public static final int CRSEFFECTIVEDT =
-        AttributesEnum.CrsEffectiveDt.index();
+    public static final int TASLREJECTCOMMENT = AttributesEnum.TaslRejectComment.index();
+    public static final int MEDICALLEADNAME = AttributesEnum.MedicalLeadName.index();
+    public static final int MEDICALLEADREJECTCOMMENT = AttributesEnum.MedicalLeadRejectComment.index();
+    public static final int CRSEFFECTIVEDT = AttributesEnum.CrsEffectiveDt.index();
     public static final int CRSSTATEEO = AttributesEnum.CrsStateEO.index();
-    public static final int CRSCOMPOUNDEO =
-        AttributesEnum.CrsCompoundEO.index();
+    public static final int CRSCOMPOUNDEO = AttributesEnum.CrsCompoundEO.index();
+    public static final int CRSRISKRELATIONSEO = AttributesEnum.CrsRiskRelationsEO.index();
 
     /**
      * This is the default constructor (do not remove).
      */
     public CrsContentEOImpl() {
+    }
+
+    /**
+     * @return the definition object for this instance class.
+     */
+    public static synchronized EntityDefImpl getDefinitionObject() {
+        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsContentEO");
     }
 
     /**
@@ -531,10 +563,8 @@ public class CrsContentEOImpl extends EntityImpl {
      */
     protected Object getAttrInvokeAccessor(int index,
                                            AttributeDefImpl attrDef) throws Exception {
-        if ((index >= AttributesEnum.firstIndex()) &&
-            (index < AttributesEnum.count())) {
-            return AttributesEnum.staticValues()[index -
-                AttributesEnum.firstIndex()].get(this);
+        if ((index >= AttributesEnum.firstIndex()) && (index < AttributesEnum.count())) {
+            return AttributesEnum.staticValues()[index - AttributesEnum.firstIndex()].get(this);
         }
         return super.getAttrInvokeAccessor(index, attrDef);
     }
@@ -549,10 +579,8 @@ public class CrsContentEOImpl extends EntityImpl {
      */
     protected void setAttrInvokeAccessor(int index, Object value,
                                          AttributeDefImpl attrDef) throws Exception {
-        if ((index >= AttributesEnum.firstIndex()) &&
-            (index < AttributesEnum.count())) {
-            AttributesEnum.staticValues()[index -
-                AttributesEnum.firstIndex()].put(this, value);
+        if ((index >= AttributesEnum.firstIndex()) && (index < AttributesEnum.count())) {
+            AttributesEnum.staticValues()[index - AttributesEnum.firstIndex()].put(this, value);
             return;
         }
         super.setAttrInvokeAccessor(index, value, attrDef);
@@ -561,14 +589,14 @@ public class CrsContentEOImpl extends EntityImpl {
     /**
      * @return the associated entity oracle.jbo.server.EntityImpl.
      */
-    public EntityImpl getCrsStateEO() {
-        return (EntityImpl)getAttributeInternal(CRSSTATEEO);
+    public CrsStateEOImpl getCrsStateEO() {
+        return (CrsStateEOImpl)getAttributeInternal(CRSSTATEEO);
     }
 
     /**
      * Sets <code>value</code> as the associated entity oracle.jbo.server.EntityImpl.
      */
-    public void setCrsStateEO(EntityImpl value) {
+    public void setCrsStateEO(CrsStateEOImpl value) {
         setAttributeInternal(CRSSTATEEO, value);
     }
 
@@ -587,19 +615,20 @@ public class CrsContentEOImpl extends EntityImpl {
     }
 
     /**
+     * @return the associated entity oracle.jbo.RowIterator.
+     */
+    public RowIterator getCrsRiskRelationsEO() {
+        return (RowIterator)getAttributeInternal(CRSRISKRELATIONSEO);
+    }
+
+
+    /**
      * @param crsId key constituent
 
      * @return a Key object based on given key constituents.
      */
     public static Key createPrimaryKey(Long crsId) {
-        return new Key(new Object[] { crsId });
-    }
-
-    /**
-     * @return the definition object for this instance class.
-     */
-    public static synchronized EntityDefImpl getDefinitionObject() {
-        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsContentEO");
+        return new Key(new Object[]{crsId});
     }
 
     public void doDML(int operation, TransactionEvent e) {
