@@ -20,14 +20,29 @@
       <af:panelBox text="#{ecrsviewcontrollerBundle.SEARCH}" id="pb1">
         <f:facet name="toolbar"/>
         <af:panelFormLayout id="pfl1" maxColumns="3" rows="4" labelWidth="120">
-          <af:selectOneChoice value="#{bindings.ReleaseStatus.inputValue}"
-                              label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
-                              shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
-                              id="it8" contentStyle="width:170px;"
-                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
-            <af:selectItem label="CURRENT" id="si8" value="C"/>
-            <af:selectItem label="PENDING" id="si9" value="P"/>
-          </af:selectOneChoice>
+          <af:switcher id="s8" defaultFacet="loggedIn"
+                       facetName="#{securityContext.userInRole['anonymous'] ? 'notLoggedIn' : 'loggedIn'}">
+            <f:facet name="notLoggedIn">
+              <af:selectOneChoice
+                                  label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
+                                  shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
+                                  id="soc10" contentStyle="width:170px;"
+                                  disabled="#{pageFlowScope.manageCRSBean.inboxDisable}"
+                                  value="#{pageFlowScope.manageCRSBean.relStatusForAnonymous}">
+                <af:selectItem label="CURRENT" id="si12" value="C"/>
+              </af:selectOneChoice>
+            </f:facet>
+            <f:facet name="loggedIn">
+              <af:selectOneChoice value="#{bindings.ReleaseStatus.inputValue}"
+                                  label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
+                                  shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
+                                  id="it8" contentStyle="width:170px;"
+                                  disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
+                <af:selectItem label="CURRENT" id="si8" value="C"/>
+                <af:selectItem label="PENDING" id="si9" value="P"/>
+              </af:selectOneChoice>
+            </f:facet>
+          </af:switcher>
           <af:selectOneChoice value="#{bindings.CompoundType.inputValue}"
                               shortDesc="#{bindings.CompoundType.hints.tooltip}"
                               id="soc1"

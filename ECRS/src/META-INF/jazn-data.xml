@@ -341,6 +341,28 @@
               </permission>
             </permissions>
           </grant>
+          <grant>
+            <grantee>
+              <principals>
+                <principal>
+                  <name>anonymous-role</name>
+                  <class>oracle.security.jps.internal.core.principals.JpsAnonymousRoleImpl</class>
+                </principal>
+              </principals>
+            </grantee>
+            <permissions>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.BrowseSearchPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.controller.security.TaskFlowPermission</class>
+                <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
+                <actions>view</actions>
+              </permission>
+            </permissions>
+          </grant>
         </jazn-policy>
       </application>
     </applications>

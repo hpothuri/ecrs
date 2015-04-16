@@ -9,4 +9,7 @@ public class ViewConstants {
     public static final String PAGE_DEF_SEARCH = "com_novartis_ecrs_view_searchCRSPageDef";
     public static final String PAGE_DEF_CREATE = "com_novartis_ecrs_view_createCRSPageDef";
     public static final String NON_COMPOUND_ROUTINE = "ROUTINE";
+    public static final String FLOW_TYPE_CREATE = "C";
+    public static final String FLOW_TYPE_UPDATE = "U";
+    public static final String FLOW_TYPE_SEARCH = "S";
 }

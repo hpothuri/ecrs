@@ -211,4 +211,29 @@
       <property
          name="sdm:polyPoints">T50,468.0,107.94824,493.5,51.448242,B50</property>
    </ControlFlowCase>
+   <View
+      id="View19">
+      <property
+         name="activityId">BrowseSearch</property>
+      <property
+         name="page">/pages/BrowseSearch.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>BrowseSearch&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">16.097656</property>
+      <property
+         name="x">819.0176</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase20"
+      from="WildcardControlFlowRule2"
+      to="View19">
+      <property
+         name="fromOutcome">browseSearch</property>
+      <property
+         name="sdm:polyPoints">R45,505.74863,146.94824,778.0176,15.74707,L50</property>
+   </ControlFlowCase>
 </SDM>

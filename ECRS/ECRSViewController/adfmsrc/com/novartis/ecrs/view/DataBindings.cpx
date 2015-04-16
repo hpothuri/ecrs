@@ -49,6 +49,8 @@
           usageId="com_novartis_ecrs_view_userRoleDetailsPageDef"/>
     <page path="/ui/pageFragments/ecrs/AddRiskDefinitions.jsff"
           usageId="com_novartis_ecrs_view_AddRiskDefinitionsPageDef"/>
+    <page path="/pages/BrowseSearch.jspx"
+          usageId="com_novartis_ecrs_view_BrowseSearchPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -87,6 +89,8 @@
     <page id="com_novartis_ecrs_view_searchUserRolesPageDef" path="ui.pageFragments.userroles.searchUserRolesPageDef"/>
     <page id="com_novartis_ecrs_view_userRoleDetailsPageDef" path="ui.pageFragments.userroles.userRoleDetailsPageDef"/>
     <page id="com_novartis_ecrs_view_AddRiskDefinitionsPageDef" path="ui.pageFragments.ecrs.AddRiskDefinitionsPageDef"/>
+    <page id="com_novartis_ecrs_view_BrowseSearchPageDef"
+          path="pages.BrowseSearchPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

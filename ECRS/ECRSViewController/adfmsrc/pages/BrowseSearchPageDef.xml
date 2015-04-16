@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.2.64.36" id="BrowseSearchPageDef" Package="pages">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <taskFlow id="ManageCRSTF1"
+              taskFlowId="/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF"
+              activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding">
+      <parameters>
+        <parameter id="flowType" value="#{'S'}"/>
+      </parameters>
+    </taskFlow>
+  </executables>
+  <bindings/>
+</pageDefinition>

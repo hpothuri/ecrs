@@ -52,7 +52,8 @@
                     <af:menuBar id="mb1">
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CREATE}" id="cmi1" action="create" immediate="true"/>
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.UPDATE}" id="cmi2" action="update" immediate="true"/>
-                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.BROWSER__SEARCH}" id="cmi3" immediate="true"/>
+                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.BROWSER__SEARCH}" id="cmi3" immediate="true"
+                                            action="browseSearch"/>
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.REPORTS}" id="cmi4" immediate="true"/>
                         <af:menu text="#{ecrsviewcontrollerBundle.ADMINISTRATION}" id="pt_m1">
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.COMPOUNDS}" id="pt_gmi1"

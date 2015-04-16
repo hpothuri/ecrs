@@ -20,11 +20,12 @@
                 <f:facet name="toolbar">
                     <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}"
                                       id="cb4"
-                                      actionListener="#{pageFlowScope.manageCRSBean.onClickCreateSave}"/>
+                                      actionListener="#{pageFlowScope.manageCRSBean.onClickCreateSave}"
+                                      visible="#{pageFlowScope.flowType ne 'S'}"/>
                 </f:facet>
                 <af:panelGroupLayout id="pgl3" layout="horizontal">
                     <af:panelFormLayout id="pfl1" maxColumns="3" rows="6"
-                                        labelWidth="150" fieldWidth="200">
+                                        labelWidth="140" fieldWidth="200">
                         <af:selectOneChoice value="#{bindings.CompoundId.inputValue}"
                                             label="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
                                             shortDesc="#{bindings.CompoundId.hints.tooltip}"
@@ -32,7 +33,8 @@
                                             contentStyle="width:160px;"
                                             showRequired="true"
                                             autoSubmit="true"
-                                            valueChangeListener="#{pageFlowScope.manageCRSBean.onCompCodeSelect}">
+                                            valueChangeListener="#{pageFlowScope.manageCRSBean.onCompCodeSelect}"
+                                            readOnly="#{pageFlowScope.flowType eq 'S'}">
                             <f:selectItems value="#{bindings.CompoundId.items}"
                                            id="si2"/>
                         </af:selectOneChoice>
@@ -64,7 +66,7 @@
                                       maximumLength="#{bindings.TradeName.hints.precision}"
                                       shortDesc="#{bindings.TradeName.hints.tooltip}"
                                       id="it1" contentStyle="width:150px;"
-                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND'}">
+                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}">
                             <f:validator binding="#{bindings.TradeName.validator}"/>
                         </af:inputText>
                         <af:inputText value="#{bindings.GenericName.inputValue}"
@@ -74,7 +76,7 @@
                                       maximumLength="#{bindings.GenericName.hints.precision}"
                                       shortDesc="#{bindings.GenericName.hints.tooltip}"
                                       id="it2" contentStyle="width:150px;"
-                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND'}">
+                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}">
                             <f:validator binding="#{bindings.GenericName.validator}"/>
                         </af:inputText>
                         <af:inputText value="#{bindings.Indication.inputValue}"
@@ -85,29 +87,42 @@
                                       shortDesc="#{bindings.Indication.hints.tooltip}"
                                       id="it3" contentStyle="width:150px;"
                                       autoSubmit="true"
-                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND'}">
+                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}">
                             <f:validator binding="#{bindings.Indication.validator}"/>
                         </af:inputText>
                         <af:selectOneChoice label="#{ecrsviewcontrollerBundle.MARKETED}"
                                             id="soc8"
                                             value="#{bindings.IsMarketedFlag.inputValue}"
                                             required="false"
-                                            readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND'}">
+                                            readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}">
                             <af:selectItem label="Yes" value="Y" id="si9"/>
                             <af:selectItem label="No" value="N" id="si10"/>
                         </af:selectOneChoice>
-                        <af:selectOneChoice value="#{bindings.BslName.inputValue}"
-                                            label="#{ecrsviewcontrollerBundle.BSL}"
-                                            required="true"
-                                            shortDesc="#{bindings.BslName.hints.tooltip}"
-                                            id="soc3"
-                                            contentStyle="width:170px;">
-                            <f:selectItems value="#{bindings.BslName.items}"
-                                           id="si3"/>
-                        </af:selectOneChoice>
+                        <af:switcher id="s8" defaultFacet="nonBSL"
+                                     facetName="#{pageFlowScope.manageCRSBean.bslFacetName}">
+                            <f:facet name="BSL">
+                                <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.BSL}"
+                                                         id="plam3">
+                                    <af:outputText value="#{pageFlowScope.manageCRSBean.userName}"
+                                                   id="ot4"/>
+                                </af:panelLabelAndMessage>
+                            </f:facet>
+                            <f:facet name="nonBSL">
+                                <af:selectOneChoice value="#{bindings.BslName.inputValue}"
+                                                    label="#{ecrsviewcontrollerBundle.BSL}"
+                                                    required="true"
+                                                    shortDesc="#{bindings.BslName.hints.tooltip}"
+                                                    id="soc3"
+                                                    contentStyle="width:170px;">
+                                    <f:selectItems value="#{bindings.BslName.items}"
+                                                   id="si3"/>
+                                </af:selectOneChoice>
+                            </f:facet>
+                        </af:switcher>
                         <af:selectManyChoice label="Designee" id="smc2"
                                              contentStyle="width:150px !important;"
-                                             value="#{pageFlowScope.manageCRSBean.selDesigneeList}">
+                                             value="#{pageFlowScope.manageCRSBean.selDesigneeList}"
+                                             readOnly="#{pageFlowScope.flowType eq 'S'}">
                             <f:selectItems value="#{pageFlowScope.manageCRSBean.designeeList}" id="si11"/>
                         </af:selectManyChoice>
                         <af:selectOneChoice value="#{bindings.TaslName.inputValue}"
@@ -115,7 +130,8 @@
                                             required="true"
                                             shortDesc="#{bindings.TaslName.hints.tooltip}"
                                             id="soc5"
-                                            contentStyle="width:170px;">
+                                            contentStyle="width:170px;"
+                                            readOnly="#{pageFlowScope.flowType eq 'S'}">
                             <f:selectItems value="#{bindings.TaslName.items}"
                                            id="si5"/>
                         </af:selectOneChoice>
@@ -124,7 +140,8 @@
                                             required="true"
                                             shortDesc="#{bindings.MedicalLeadName.hints.tooltip}"
                                             id="soc6"
-                                            contentStyle="width:170px;">
+                                            contentStyle="width:170px;"
+                                            readOnly="#{pageFlowScope.flowType eq 'S'}">
                             <f:selectItems value="#{bindings.MedicalLeadName.items}"
                                            id="si6"/>
                         </af:selectOneChoice>
@@ -140,6 +157,7 @@
                                             id="soc7" value="#{bindings.ReleaseStatusFlag.inputValue}" readOnly="true">
                             <af:selectItem label="Pending" id="si8" value="P"/>
                         </af:selectOneChoice>
+                        
                     </af:panelFormLayout>
                     <af:panelGroupLayout id="pgl7" layout="horizontal" valign="top" rendered="false">
                         <af:panelGroupLayout id="pgl4" layout="vertical"/>
@@ -161,7 +179,8 @@
             <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}" id="pb2"
                          contentStyle="height:100px;">
                 <f:facet name="toolbar">
-                    <af:panelGroupLayout id="pgl2">
+                    <af:panelGroupLayout id="pgl2"
+                                         visible="#{pageFlowScope.flowType ne 'S'}">
                         <af:commandButton text="#{ecrsviewcontrollerBundle.DEMOTE_TO_DRAFT}"
                                           id="cb1"
                                           disabled="#{bindings.StateId.inputValue eq 1}"/>

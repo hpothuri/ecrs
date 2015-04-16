@@ -48,7 +48,7 @@ public class ManageCRSBean implements Serializable {
     private List<SelectItem> designeeList;
     private List<String> selDesigneeList;
     private String selectedCrsName;
-    private RichPopup successPopupBinding;
+    private transient RichPopup successPopupBinding;
     private RichPopup riskDefPopup;
     private RichTable riskDefTable;
     private RichPopup successPopup;
@@ -56,18 +56,30 @@ public class ManageCRSBean implements Serializable {
     public ManageCRSBean() {
         super();
         getUserRole();
+        getCrsFlowType();
     }
     
     private String flowType;
     private boolean inboxDisable;
     private String loggedInUserRole;
+    private String bslFacetName;
+    private String relStatusForAnonymous;
+    private String userName;
+    
     /**
+     * Set the flowType to bean variable and initailize the bsl facet name with 
+     * appropriate value.
      */
     public void getCrsFlowType() {
         // Add event code here...
         if (ADFUtils.evaluateEL("#{pageFlowScope.flowType}") != null) {
             flowType =
                     (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
+            if (ViewConstants.FLOW_TYPE_SEARCH.equals(flowType) ||
+                ModelConstants.USER_IN_ROLE_BSL.equals(loggedInUserRole))
+                setBslFacetName("BSL");
+            else
+                setBslFacetName("nonBSL");
         }
     }
 
@@ -127,10 +139,16 @@ public class ManageCRSBean implements Serializable {
         }
     }
 
+    /**
+     * @param designeeList
+     */
     public void setDesigneeList(List<SelectItem> designeeList) {
         this.designeeList = designeeList;
     }
 
+    /**
+     * @return
+     */
     public List<SelectItem> getDesigneeList() {
         if(designeeList == null){
             designeeList = new ArrayList<SelectItem>();
@@ -147,10 +165,16 @@ public class ManageCRSBean implements Serializable {
         return designeeList;
     }
 
+    /**
+     * @param selDesigneeList
+     */
     public void setSelDesigneeList(List<String> selDesigneeList) {
         this.selDesigneeList = selDesigneeList;
     }
 
+    /**
+     * @return
+     */
     public List<String> getSelDesigneeList() {
         return selDesigneeList;
     }
@@ -161,6 +185,11 @@ public class ManageCRSBean implements Serializable {
      */
     public void onClickSearch(ActionEvent actionEvent) {
         // TODO get user name
+        //set release staus to binding
+        if ("anonymous".equals(userName)) {
+            ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}",
+                           getRelStatusForAnonymous());
+        }
         DCBindingContainer bc = ADFUtils.getDCBindingContainer();
         OperationBinding ob = bc.getOperationBinding("filterCRSContent");
         ob.getParamsMap().put("userInRole", loggedInUserRole);
@@ -217,12 +246,18 @@ public class ManageCRSBean implements Serializable {
         this.selectedCrsName = selectedCrsName;
     }
 
+    /**
+     * @return
+     */
     public String getSelectedCrsName() {
         return selectedCrsName;
     }
     
     /**********************************************************************************************************************/
 
+    /**
+     * @return
+     */
     public String onClickNext() {
         String crsName = (String)ADFUtils.evaluateEL("#{bindings.CrsName.inputValue}");
         Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
@@ -298,15 +333,26 @@ public class ManageCRSBean implements Serializable {
                 ADFUtils.setEL("#{bindings.GenericName.inputValue}", null);
                 ADFUtils.setEL("#{bindings.Indication.inputValue}", null);
                 //TODO make this enable when isMarketedFlag null
-                //  ADFUtils.setEL("#{bindings.IsMarketedFlag.inputValue}", null);
+                ADFUtils.setEL("#{bindings.IsMarketedFlag.inputValue}", "N");
             }
+            //set logged in user name to bsl binding
+            if (ViewConstants.FLOW_TYPE_CREATE.equals(flowType) &&
+                ModelConstants.USER_IN_ROLE_BSL.equals(loggedInUserRole))
+                ADFUtils.setEL("#{bindings.BslName.inputValue}",
+                               getUserName());
         }
     }
 
+    /**
+     * @param successPopupBinding
+     */
     public void setSuccessPopupBinding(RichPopup successPopupBinding) {
         this.successPopupBinding = successPopupBinding;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getSuccessPopupBinding() {
         return successPopupBinding;
     }
@@ -316,10 +362,12 @@ public class ManageCRSBean implements Serializable {
      */
     private void getUserRole() {
         if (ADFUtils.evaluateEL("#{sessionBean.userRole}") != null) {
-            loggedInUserRole = (String)ADFUtils.evaluateEL("#{sessionBean.userRole}");
-        } else
-            ADFUtils.showFacesMessage("Role not found for the logged in user,Please contact Administrator.",
-                                      FacesMessage.SEVERITY_ERROR);
+            loggedInUserRole =
+                    (String)ADFUtils.evaluateEL("#{sessionBean.userRole}");
+        }
+        if (ADFUtils.evaluateEL("#{securityContext.userName}") != null) {
+            setUserName((String)ADFUtils.evaluateEL("#{securityContext.userName}"));
+        }
     }
 
     public void addRiskDefinition(ActionEvent actionEvent) {
@@ -398,5 +446,47 @@ public class ManageCRSBean implements Serializable {
         if (oper.getErrors().size() > 0) 
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
         ADFUtils.addPartialTarget(riskDefTable);
+    }
+
+    /**
+     * @param bslFacetName
+     */
+    public void setBslFacetName(String bslFacetName) {
+        this.bslFacetName = bslFacetName;
+    }
+
+    /**
+     * @return
+     */
+    public String getBslFacetName() {
+        return bslFacetName;
+    }
+
+    /**
+     * @param relStatusForAnonymous
+     */
+    public void setRelStatusForAnonymous(String relStatusForAnonymous) {
+        this.relStatusForAnonymous = relStatusForAnonymous;
+    }
+
+    /**
+     * @return
+     */
+    public String getRelStatusForAnonymous() {
+        return relStatusForAnonymous;
+    }
+
+    /**
+     * @param userName
+     */
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    /**
+     * @return
+     */
+    public String getUserName() {
+        return userName;
     }
 }
