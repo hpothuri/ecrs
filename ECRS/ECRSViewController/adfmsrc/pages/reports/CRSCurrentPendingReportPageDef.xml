@@ -8,9 +8,6 @@
     <iterator Binds="CRSCurrentPendingCRSReport" RangeSize="25"
               DataControl="ECRSAppModuleDataControl"
               id="CRSCurrentPendingCRSReportIterator"/>
-    <searchRegion Binds="CRSCurrentPendingCRSReportIterator" Criteria=""
-                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
-                  id="CRSCurrentPendingCRSReportQuery"/>
   </executables>
   <bindings>
     <tree IterBinding="CRSCurrentPendingCRSReportIterator"
