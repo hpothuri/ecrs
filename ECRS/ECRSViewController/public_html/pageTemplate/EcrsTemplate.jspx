@@ -50,20 +50,26 @@
                 </af:panelGroupLayout>
                 <af:panelGroupLayout id="pgl1" layout="scroll">
                     <af:menuBar id="mb1">
-                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CREATE}" id="cmi1" action="create" immediate="true"/>
-                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.UPDATE}" id="cmi2" action="update" immediate="true"/>
+                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CREATE}" id="cmi1" action="create" immediate="true"
+                                            inlineStyle=" font-weight: bold;     padding-right: 10px;"/>
+                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.UPDATE}" id="cmi2" action="update" immediate="true"
+                         inlineStyle=" font-weight: bold;     padding-right: 10px;"/>
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.BROWSER__SEARCH}" id="cmi3" immediate="true"
-                                            action="browseSearch"/>
-                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.REPORTS}" id="cmi4" immediate="true"/>
-                        <af:menu text="#{ecrsviewcontrollerBundle.ADMINISTRATION}" id="pt_m1">
+                                            action="browseSearch"  inlineStyle=" font-weight: bold;     padding-right: 10px;"/>
+                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.REPORTS}" id="cmi4" immediate="true"
+                         inlineStyle=" font-weight: bold;     padding-right: 10px;"/>
+                        <af:menu text="#{ecrsviewcontrollerBundle.ADMINISTRATION}" id="pt_m1"
+                                 inlineStyle="font-weight: bold;     padding-right: 10px;">
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.COMPOUNDS}" id="pt_gmi1"
-                                                action="compound" immediate="true"/>
-                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.STATES}" id="pt_gmi2" action="states" immediate="true"/>
+                                                action="compound" immediate="true" inlineStyle="font-weight: bold;"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.STATES}" id="pt_gmi2" action="states" immediate="true"
+                                                inlineStyle="font-weight: bold;"/>
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="pt_gmi3"
-                                                action="riskPurpose" immediate="true"/>
-                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.ROLES}" id="pt_gmi4" action="roles" immediate="true"/>
+                                                action="riskPurpose" immediate="true" inlineStyle="font-weight: bold;"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.ROLES}" id="pt_gmi4" action="roles" immediate="true"
+                                                inlineStyle="font-weight: bold;"/>
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.USER_ROLES}" id="pt_gmi5"
-                                                action="userRoles" immediate="true"/>
+                                                action="userRoles" immediate="true" inlineStyle="font-weight: bold;"/>
                         </af:menu>
                     </af:menuBar>
                     <af:separator id="s1"/>

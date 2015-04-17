@@ -162,6 +162,9 @@
     <extension>amf</extension>
     <mime-type>application/x-amf</mime-type>
   </mime-mapping>
+  <welcome-file-list>
+    <welcome-file>/index.html</welcome-file>
+  </welcome-file-list>
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>adfAuthentication</web-resource-name>
