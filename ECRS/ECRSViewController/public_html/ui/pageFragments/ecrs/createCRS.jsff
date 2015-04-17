@@ -66,7 +66,8 @@
                                       maximumLength="#{bindings.TradeName.hints.precision}"
                                       shortDesc="#{bindings.TradeName.hints.tooltip}"
                                       id="it1" contentStyle="width:150px;"
-                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}">
+                                      readOnly="#{(not empty bindings.CrsName.inputValue &amp;&amp; bindings.CrsName.inputValue eq 'ROUTINE') ||  bindings.CompoundCode.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}"
+                                      autoSubmit="true">
                             <f:validator binding="#{bindings.TradeName.validator}"/>
                         </af:inputText>
                         <af:inputText value="#{bindings.GenericName.inputValue}"
@@ -76,7 +77,8 @@
                                       maximumLength="#{bindings.GenericName.hints.precision}"
                                       shortDesc="#{bindings.GenericName.hints.tooltip}"
                                       id="it2" contentStyle="width:150px;"
-                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}">
+                                      readOnly="#{(not empty bindings.CrsName.inputValue &amp;&amp; bindings.CrsName.inputValue eq 'ROUTINE') ||  bindings.CompoundCode.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}"
+                                      autoSubmit="true">
                             <f:validator binding="#{bindings.GenericName.validator}"/>
                         </af:inputText>
                         <af:inputText value="#{bindings.Indication.inputValue}"
@@ -87,7 +89,7 @@
                                       shortDesc="#{bindings.Indication.hints.tooltip}"
                                       id="it3" contentStyle="width:150px;"
                                       autoSubmit="true"
-                                      readOnly="#{bindings.CompoundType.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}">
+                                      readOnly="#{(not empty bindings.CrsName.inputValue &amp;&amp; bindings.CrsName.inputValue eq 'ROUTINE') ||  bindings.CompoundCode.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}">
                             <f:validator binding="#{bindings.Indication.validator}"/>
                         </af:inputText>
                         <af:selectOneChoice label="#{ecrsviewcontrollerBundle.MARKETED}"
@@ -113,7 +115,8 @@
                                                     required="true"
                                                     shortDesc="#{bindings.BslName.hints.tooltip}"
                                                     id="soc3"
-                                                    contentStyle="width:170px;">
+                                                    contentStyle="width:170px;"
+                                                    autoSubmit="true">
                                     <f:selectItems value="#{bindings.BslName.items}"
                                                    id="si3"/>
                                 </af:selectOneChoice>
@@ -122,7 +125,8 @@
                         <af:selectManyChoice label="Designee" id="smc2"
                                              contentStyle="width:150px !important;"
                                              value="#{pageFlowScope.manageCRSBean.selDesigneeList}"
-                                             readOnly="#{pageFlowScope.flowType eq 'S'}">
+                                             readOnly="#{pageFlowScope.flowType eq 'S'}"
+                                             autoSubmit="true">
                             <f:selectItems value="#{pageFlowScope.manageCRSBean.designeeList}" id="si11"/>
                         </af:selectManyChoice>
                         <af:selectOneChoice value="#{bindings.TaslName.inputValue}"
@@ -131,7 +135,8 @@
                                             shortDesc="#{bindings.TaslName.hints.tooltip}"
                                             id="soc5"
                                             contentStyle="width:170px;"
-                                            readOnly="#{pageFlowScope.flowType eq 'S'}">
+                                            readOnly="#{pageFlowScope.flowType eq 'S'}"
+                                            autoSubmit="true">
                             <f:selectItems value="#{bindings.TaslName.items}"
                                            id="si5"/>
                         </af:selectOneChoice>
@@ -141,7 +146,8 @@
                                             shortDesc="#{bindings.MedicalLeadName.hints.tooltip}"
                                             id="soc6"
                                             contentStyle="width:170px;"
-                                            readOnly="#{pageFlowScope.flowType eq 'S'}">
+                                            readOnly="#{pageFlowScope.flowType eq 'S'}"
+                                            autoSubmit="true">
                             <f:selectItems value="#{bindings.MedicalLeadName.items}"
                                            id="si6"/>
                         </af:selectOneChoice>
@@ -198,7 +204,7 @@
                 <af:commandButton text="#{ecrsviewcontrollerBundle.BACK}"
                                   id="cb5"
                                   action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}"
-                                  visible="#{pageFlowScope.flowType eq 'U'}"/>
+                                  visible="#{pageFlowScope.flowType eq 'U' || pageFlowScope.flowType eq 'S'}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}"
                                   id="cb6"
                                   action="#{pageFlowScope.manageCRSBean.onClickNext}"/>
