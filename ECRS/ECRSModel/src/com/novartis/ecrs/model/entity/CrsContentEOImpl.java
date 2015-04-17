@@ -189,6 +189,26 @@ public class CrsContentEOImpl extends EntityImpl {
             }
         }
         ,
+        ReviewApproveRequiredFlag {
+            public Object get(CrsContentEOImpl obj) {
+                return obj.getReviewApproveRequiredFlag();
+            }
+
+            public void put(CrsContentEOImpl obj, Object value) {
+                obj.setReviewApproveRequiredFlag((String)value);
+            }
+        }
+        ,
+        UiVersionNumber {
+            public Object get(CrsContentEOImpl obj) {
+                return obj.getUiVersionNumber();
+            }
+
+            public void put(CrsContentEOImpl obj, Object value) {
+                obj.setUiVersionNumber((Integer)value);
+            }
+        }
+        ,
         CrsStateEO {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getCrsStateEO();
@@ -247,6 +267,7 @@ public class CrsContentEOImpl extends EntityImpl {
         }
     }
 
+
     public static final int CRSID = AttributesEnum.CrsId.index();
     public static final int CRSNAME = AttributesEnum.CrsName.index();
     public static final int STATEID = AttributesEnum.StateId.index();
@@ -264,6 +285,8 @@ public class CrsContentEOImpl extends EntityImpl {
     public static final int MEDICALLEADNAME = AttributesEnum.MedicalLeadName.index();
     public static final int MEDICALLEADREJECTCOMMENT = AttributesEnum.MedicalLeadRejectComment.index();
     public static final int CRSEFFECTIVEDT = AttributesEnum.CrsEffectiveDt.index();
+    public static final int REVIEWAPPROVEREQUIREDFLAG = AttributesEnum.ReviewApproveRequiredFlag.index();
+    public static final int UIVERSIONNUMBER = AttributesEnum.UiVersionNumber.index();
     public static final int CRSSTATEEO = AttributesEnum.CrsStateEO.index();
     public static final int CRSCOMPOUNDEO = AttributesEnum.CrsCompoundEO.index();
     public static final int CRSRISKRELATIONSEO = AttributesEnum.CrsRiskRelationsEO.index();
@@ -273,6 +296,7 @@ public class CrsContentEOImpl extends EntityImpl {
      */
     public CrsContentEOImpl() {
     }
+
 
     /**
      * @return the definition object for this instance class.
@@ -551,6 +575,38 @@ public class CrsContentEOImpl extends EntityImpl {
      */
     public void setCrsEffectiveDt(Timestamp value) {
         setAttributeInternal(CRSEFFECTIVEDT, value);
+    }
+
+    /**
+     * Gets the attribute value for ReviewApproveRequiredFlag, using the alias name ReviewApproveRequiredFlag.
+     * @return the value of ReviewApproveRequiredFlag
+     */
+    public String getReviewApproveRequiredFlag() {
+        return (String)getAttributeInternal(REVIEWAPPROVEREQUIREDFLAG);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ReviewApproveRequiredFlag.
+     * @param value value to set the ReviewApproveRequiredFlag
+     */
+    public void setReviewApproveRequiredFlag(String value) {
+        setAttributeInternal(REVIEWAPPROVEREQUIREDFLAG, value);
+    }
+
+    /**
+     * Gets the attribute value for UiVersionNumber, using the alias name UiVersionNumber.
+     * @return the value of UiVersionNumber
+     */
+    public Integer getUiVersionNumber() {
+        return (Integer)getAttributeInternal(UIVERSIONNUMBER);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for UiVersionNumber.
+     * @param value value to set the UiVersionNumber
+     */
+    public void setUiVersionNumber(Integer value) {
+        setAttributeInternal(UIVERSIONNUMBER, value);
     }
 
     /**

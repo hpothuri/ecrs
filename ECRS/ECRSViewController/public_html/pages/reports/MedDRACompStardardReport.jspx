@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="ecrsviewcontrollerBundle"
+           value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="MedDRACompStardardReport.jspx" id="d1">
+            <af:messages id="m1"/>
+            <af:form id="f1">
+                <af:pageTemplate viewId="/pageTemplate/EcrsTemplate.jspx"
+                                 id="pt1">
+                    <f:facet name="content">
+                        <af:panelHeader text="#{ecrsviewcontrollerBundle.MEDDRA_COMPONENT_STARDARDIZATI}" id="ph1"
+                                        inlineStyle="padding:5px;" size="1">
+                            <f:facet name="context"/>
+                            <f:facet name="menuBar"/>
+                            <f:facet name="toolbar"/>
+                            <f:facet name="legend"/>
+                            <f:facet name="info"/>
+                            <af:panelGroupLayout id="pgl2" layout="horizontal"
+                                                 halign="center"
+                                                 inlineStyle="width:400px;">
+                                <af:table value="#{bindings.MedDRAStandardReport.collectionModel}"
+                                          var="row"
+                                          rows="#{bindings.MedDRAStandardReport.rangeSize}"
+                                          emptyText="#{bindings.MedDRAStandardReport.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          fetchSize="#{bindings.MedDRAStandardReport.rangeSize}"
+                                          rowBandingInterval="0"
+                                          filterModel="#{bindings.MedDRAStandardReportQuery.queryDescriptor}"
+                                          queryListener="#{bindings.MedDRAStandardReportQuery.processQuery}"
+                                          filterVisible="true" varStatus="vs"
+                                          id="t1" inlineStyle="width:400px;"
+                                          columnStretching="column:c1">
+                                    <af:column sortProperty="#{bindings.MedDRAStandardReport.hints.DefinitionType.name}"
+                                               filterable="true" sortable="true"
+                                               headerText="#{bindings.MedDRAStandardReport.hints.DefinitionType.label}"
+                                               id="c1" width="104">
+                                        <af:outputText value="#{row.DefinitionType}"
+                                                       shortDesc="#{bindings.MedDRAStandardReport.hints.DefinitionType.tooltip}"
+                                                       id="ot1"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.MedDRAStandardReport.hints.PercentOfUse.name}"
+                                               filterable="true" sortable="true"
+                                               headerText="#{bindings.MedDRAStandardReport.hints.PercentOfUse.label}"
+                                               id="c2" width="106">
+                                        <af:outputText value="#{row.PercentOfUse}"
+                                                       shortDesc="#{bindings.MedDRAStandardReport.hints.PercentOfUse.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                </af:table>
+                            </af:panelGroupLayout>
+                        </af:panelHeader>
+                    </f:facet>
+                </af:pageTemplate>
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

@@ -54,6 +54,14 @@
     </DesignTime>
   </Containee>
   <Containee
+    Name="report"
+    PackageName="com.novartis.ecrs.model.view.report"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_VO" Value="true"/>
+    </DesignTime>
+  </Containee>
+  <Containee
     Name="trans"
     PackageName="com.novartis.ecrs.model.view.trans"
     ObjectType="JboPackage">

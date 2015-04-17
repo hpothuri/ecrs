@@ -361,6 +361,31 @@
                 <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
                 <actions>view</actions>
               </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.reports.AdminDashBoardReportPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.reports.CRSCurrentPendingReportPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.reports.MedDRAComponentsReportPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.reports.MedDRACompStardardReportPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.reports.RiskDefinitionsSafetyTopicReportPageDef</name>
+                <actions>view</actions>
+              </permission>
             </permissions>
           </grant>
         </jazn-policy>

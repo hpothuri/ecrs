@@ -51,6 +51,16 @@
           usageId="com_novartis_ecrs_view_AddRiskDefinitionsPageDef"/>
     <page path="/pages/BrowseSearch.jspx"
           usageId="com_novartis_ecrs_view_BrowseSearchPageDef"/>
+    <page path="/pages/reports/MedDRAComponentsReport.jspx"
+          usageId="com_novartis_ecrs_view_MedDRAComponentsReportPageDef"/>
+    <page path="/pages/reports/MedDRACompStardardReport.jspx"
+          usageId="com_novartis_ecrs_view_MedDRACompStardardReportPageDef"/>
+    <page path="/pages/reports/RiskDefinitionsSafetyTopicReport.jspx"
+          usageId="com_novartis_ecrs_view_RiskDefinitionsSafetyTopicReportPageDef"/>
+    <page path="/pages/reports/CRSCurrentPendingReport.jspx"
+          usageId="com_novartis_ecrs_view_CRSCurrentPendingReportPageDef"/>
+    <page path="/pages/reports/AdminDashBoardReport.jspx"
+          usageId="com_novartis_ecrs_view_AdminDashBoardReportPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -91,6 +101,16 @@
     <page id="com_novartis_ecrs_view_AddRiskDefinitionsPageDef" path="ui.pageFragments.ecrs.AddRiskDefinitionsPageDef"/>
     <page id="com_novartis_ecrs_view_BrowseSearchPageDef"
           path="pages.BrowseSearchPageDef"/>
+    <page id="com_novartis_ecrs_view_MedDRAComponentsReportPageDef"
+          path="pages.reports.MedDRAComponentsReportPageDef"/>
+    <page id="com_novartis_ecrs_view_MedDRACompStardardReportPageDef"
+          path="pages.reports.MedDRACompStardardReportPageDef"/>
+    <page id="com_novartis_ecrs_view_RiskDefinitionsSafetyTopicReportPageDef"
+          path="pages.reports.RiskDefinitionsSafetyTopicReportPageDef"/>
+    <page id="com_novartis_ecrs_view_CRSCurrentPendingReportPageDef"
+          path="pages.reports.CRSCurrentPendingReportPageDef"/>
+    <page id="com_novartis_ecrs_view_AdminDashBoardReportPageDef"
+          path="pages.reports.AdminDashBoardReportPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

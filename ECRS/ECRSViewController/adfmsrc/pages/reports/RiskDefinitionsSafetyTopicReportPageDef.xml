@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.2.64.36"
+                id="RiskDefinitionsSafetyTopicReportPageDef"
+                Package="pages.reports">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="RiskDefSafetyTopicReport" RangeSize="25"
+              DataControl="ECRSAppModuleDataControl"
+              id="RiskDefSafetyTopicReportIterator"/>
+    <searchRegion Binds="RiskDefSafetyTopicReportIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="RiskDefSafetyTopicReportQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="RiskDefSafetyTopicReportIterator"
+          id="RiskDefSafetyTopicReport">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.report.RiskDefinitionsSafetyTopicReport"
+                      Name="RiskDefSafetyTopicReport0">
+        <AttrNames>
+          <Item Value="CrsName"/>
+          <Item Value="SafetyTopicOfInterest"/>
+          <Item Value="MeddraTermCount"/>
+          <Item Value="SmqCount"/>
+          <Item Value="NmqCount"/>
+          <Item Value="CmqCount"/>
+          <Item Value="AdrCount"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

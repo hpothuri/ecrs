@@ -57,6 +57,27 @@
   <ViewUsage
     Name="CrsRiskDefinitionsVO"
     ViewObjectName="com.novartis.ecrs.model.view.CrsRiskDefinitionsVO"/>
+  <ViewUsage
+    Name="CRSCurrentPendingCRSReport"
+    ViewObjectName="com.novartis.ecrs.model.view.report.CRSCurrentAndPendingCRSReport"/>
+  <ViewUsage
+    Name="MedDRAComponentsReport"
+    ViewObjectName="com.novartis.ecrs.model.view.report.MedDRAComponentsReport"/>
+  <ViewUsage
+    Name="MedDRAStandardReport"
+    ViewObjectName="com.novartis.ecrs.model.view.report.MedDRAStandardReport"/>
+  <ViewUsage
+    Name="NumberOfCompoundCrsReport"
+    ViewObjectName="com.novartis.ecrs.model.view.report.NumberOfCompoundCrsReport"/>
+  <ViewUsage
+    Name="RiskDefSafetyTopicReport"
+    ViewObjectName="com.novartis.ecrs.model.view.report.RiskDefinitionsSafetyTopicReport"/>
+  <ViewUsage
+    Name="TotalNumOfADRsReport"
+    ViewObjectName="com.novartis.ecrs.model.view.report.TotalNumOfADRsReport"/>
+  <ViewUsage
+    Name="TotalNumOfSafetyTopicsReport"
+    ViewObjectName="com.novartis.ecrs.model.view.report.TotalNumOfSafetyTopicsReport"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

@@ -281,4 +281,60 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         riskVO.setWhereClause("CRS_ID = "+crsId);
         riskVO.executeQuery();
     }
+
+    /**
+     * Container's getter for CRSCurrentAndPendingCRSReport1.
+     * @return CRSCurrentAndPendingCRSReport1
+     */
+    public ViewObjectImpl getCRSCurrentPendingCRSReport() {
+        return (ViewObjectImpl)findViewObject("CRSCurrentPendingCRSReport");
+    }
+
+    /**
+     * Container's getter for MedDRAComponentsReport1.
+     * @return MedDRAComponentsReport1
+     */
+    public ViewObjectImpl getMedDRAComponentsReport() {
+        return (ViewObjectImpl)findViewObject("MedDRAComponentsReport");
+    }
+
+    /**
+     * Container's getter for MedDRAStandardReport1.
+     * @return MedDRAStandardReport1
+     */
+    public ViewObjectImpl getMedDRAStandardReport() {
+        return (ViewObjectImpl)findViewObject("MedDRAStandardReport");
+    }
+
+    /**
+     * Container's getter for NumberOfCompoundCrsReport1.
+     * @return NumberOfCompoundCrsReport1
+     */
+    public ViewObjectImpl getNumberOfCompoundCrsReport() {
+        return (ViewObjectImpl)findViewObject("NumberOfCompoundCrsReport");
+    }
+
+    /**
+     * Container's getter for RiskDefinitionsSafetyTopicReport1.
+     * @return RiskDefinitionsSafetyTopicReport1
+     */
+    public ViewObjectImpl getRiskDefSafetyTopicReport() {
+        return (ViewObjectImpl)findViewObject("RiskDefSafetyTopicReport");
+    }
+
+    /**
+     * Container's getter for TotalNumOfADRsReport1.
+     * @return TotalNumOfADRsReport1
+     */
+    public ViewObjectImpl getTotalNumOfADRsReport() {
+        return (ViewObjectImpl)findViewObject("TotalNumOfADRsReport");
+    }
+
+    /**
+     * Container's getter for TotalNumOfSafetyTopicsReport1.
+     * @return TotalNumOfSafetyTopicsReport1
+     */
+    public ViewObjectImpl getTotalNumOfSafetyTopicsReport() {
+        return (ViewObjectImpl)findViewObject("TotalNumOfSafetyTopicsReport");
+    }
 }

@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="ecrsviewcontrollerBundle"
+           value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="AdminDashBoardReport.jspx" id="d1">
+            <af:messages id="m1"/>
+            <af:form id="f1">
+                <af:pageTemplate viewId="/pageTemplate/EcrsTemplate.jspx"
+                                 id="pt1">
+                    <f:facet name="content">
+                        <af:panelGroupLayout id="pgl2">
+                            <af:panelHeader text="#{ecrsviewcontrollerBundle.ADMIN_DASHBOARD_REPORT}" id="ph4"
+                                            size="0" inlineStyle="padding:5px;">
+                                <f:facet name="context"/>
+                                <f:facet name="menuBar"/>
+                                <f:facet name="toolbar"/>
+                                <f:facet name="legend"/>
+                                <f:facet name="info"/>
+                                <af:panelGroupLayout id="pgl3"
+                                                     layout="vertical"
+                                                     halign="center">
+                                    <af:panelHeader text="#{ecrsviewcontrollerBundle.NUMBER_OF_COMPOUND_CRSS}"
+                                                    id="ph1" size="1"
+                                                    inlineStyle="padding:5px;">
+                                        <f:facet name="context"/>
+                                        <f:facet name="menuBar"/>
+                                        <f:facet name="toolbar"/>
+                                        <f:facet name="legend"/>
+                                        <f:facet name="info"/>
+                                        <af:table value="#{bindings.NumberOfCompoundCrsReport.collectionModel}"
+                                                  var="row"
+                                                  rows="#{bindings.NumberOfCompoundCrsReport.rangeSize}"
+                                                  emptyText="#{bindings.NumberOfCompoundCrsReport.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  fetchSize="#{bindings.NumberOfCompoundCrsReport.rangeSize}"
+                                                  rowBandingInterval="0"
+                                                  id="t1"
+                                                  contentDelivery="immediate"
+                                                  autoHeightRows="2"
+                                                  inlineStyle="width:400px;"
+                                                  columnStretching="column:c1"
+                                                  styleClass="tableNoColumnHeaders">
+                                            <af:column sortProperty="#{bindings.NumberOfCompoundCrsReport.hints.Totalnumberofcrss.name}"
+                                                       sortable="false"
+                                                       headerText="#{bindings.NumberOfCompoundCrsReport.hints.Totalnumberofcrss.label}"
+                                                       id="c1">
+                                                <af:outputText value="#{row.Totalnumberofcrss}"
+                                                               shortDesc="#{bindings.NumberOfCompoundCrsReport.hints.Totalnumberofcrss.tooltip}"
+                                                               id="ot1"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.NumberOfCompoundCrsReport.hints.Count1.name}"
+                                                       sortable="false"
+                                                       headerText="#{bindings.NumberOfCompoundCrsReport.hints.Count1.label}"
+                                                       id="c2">
+                                                <af:outputText value="#{row.Count1}"
+                                                               shortDesc="#{bindings.NumberOfCompoundCrsReport.hints.Count1.tooltip}"
+                                                               id="ot2"/>
+                                            </af:column>
+                                        </af:table>
+                                    </af:panelHeader>
+                                    <af:panelHeader text="#{ecrsviewcontrollerBundle.NUMBER_OF_SAFTEY_TOPICS_INDEPE}"
+                                                    id="ph2" size="1"
+                                                    inlineStyle="padding:5px;">
+                                        <f:facet name="context"/>
+                                        <f:facet name="menuBar"/>
+                                        <f:facet name="toolbar"/>
+                                        <f:facet name="legend"/>
+                                        <f:facet name="info"/>
+                                        <af:table value="#{bindings.TotalNumOfSafetyTopicsReport.collectionModel}"
+                                                  var="row"
+                                                  rows="#{bindings.TotalNumOfSafetyTopicsReport.rangeSize}"
+                                                  emptyText="#{bindings.TotalNumOfSafetyTopicsReport.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  fetchSize="#{bindings.TotalNumOfSafetyTopicsReport.rangeSize}"
+                                                  rowBandingInterval="0" id="t2"
+                                                  autoHeightRows="3"
+                                                  contentDelivery="immediate"
+                                                  inlineStyle="width:400px;"
+                                                  columnStretching="column:c3"
+                                                  styleClass="tableNoColumnHeaders">
+                                            <af:column sortProperty="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalnumberofsafetytopics.name}"
+                                                       sortable="false"
+                                                       headerText="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalnumberofsafetytopics.label}"
+                                                       id="c3">
+                                                <af:outputText value="#{row.Totalnumberofsafetytopics}"
+                                                               shortDesc="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalnumberofsafetytopics.tooltip}"
+                                                               id="ot3"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalsafetytopics.name}"
+                                                       sortable="false"
+                                                       headerText="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalsafetytopics.label}"
+                                                       id="c4">
+                                                <af:outputText value="#{row.Totalsafetytopics}"
+                                                               shortDesc="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalsafetytopics.tooltip}"
+                                                               id="ot4"/>
+                                            </af:column>
+                                        </af:table>
+                                    </af:panelHeader>
+                                    <af:panelHeader text="#{ecrsviewcontrollerBundle.NUMBER_OF_ADRS_CDSS}"
+                                                    id="ph3" size="1"
+                                                    inlineStyle="padding:5px;">
+                                        <f:facet name="context"/>
+                                        <f:facet name="menuBar"/>
+                                        <f:facet name="toolbar"/>
+                                        <f:facet name="legend"/>
+                                        <f:facet name="info"/>
+                                        <af:table value="#{bindings.TotalNumOfADRsReport.collectionModel}"
+                                                  var="row"
+                                                  rows="#{bindings.TotalNumOfADRsReport.rangeSize}"
+                                                  emptyText="#{bindings.TotalNumOfADRsReport.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  fetchSize="#{bindings.TotalNumOfADRsReport.rangeSize}"
+                                                  rowBandingInterval="0"
+                                                  id="t3"
+                                                  inlineStyle="width:400px;"
+                                                  columnStretching="column:c5"
+                                                  autoHeightRows="2"
+                                                  contentDelivery="immediate"
+                                                  styleClass="tableNoColumnHeaders">
+                                            <af:column sortProperty="#{bindings.TotalNumOfADRsReport.hints.Totalnumberadrs.name}"
+                                                       sortable="false"
+                                                       headerText="#{bindings.TotalNumOfADRsReport.hints.Totalnumberadrs.label}"
+                                                       id="c5">
+                                                <af:outputText value="#{row.Totalnumberadrs}"
+                                                               shortDesc="#{bindings.TotalNumOfADRsReport.hints.Totalnumberadrs.tooltip}"
+                                                               id="ot5"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.TotalNumOfADRsReport.hints.Totalnumofadrs.name}"
+                                                       sortable="false"
+                                                       headerText="#{bindings.TotalNumOfADRsReport.hints.Totalnumofadrs.label}"
+                                                       id="c6">
+                                                <af:outputText value="#{row.Totalnumofadrs}"
+                                                               shortDesc="#{bindings.TotalNumOfADRsReport.hints.Totalnumofadrs.tooltip}"
+                                                               id="ot6"/>
+                                            </af:column>
+                                        </af:table>
+                                    </af:panelHeader>
+                                    <f:facet name="separator">
+                                        <af:spacer width="10" height="10"
+                                                   id="s2"/>
+                                    </f:facet>
+                                </af:panelGroupLayout>
+                            </af:panelHeader>
+                        </af:panelGroupLayout>
+                    </f:facet>
+                </af:pageTemplate>
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

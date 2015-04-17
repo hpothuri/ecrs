@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.2.64.36" id="MedDRACompStardardReportPageDef"
+                Package="pages.reports">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="MedDRAStandardReport" RangeSize="25"
+              DataControl="ECRSAppModuleDataControl"
+              id="MedDRAStandardReportIterator"/>
+    <searchRegion Binds="MedDRAStandardReportIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="MedDRAStandardReportQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="MedDRAStandardReportIterator" id="MedDRAStandardReport">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.report.MedDRAStandardReport"
+                      Name="MedDRAStandardReport0">
+        <AttrNames>
+          <Item Value="DefinitionType"/>
+          <Item Value="PercentOfUse"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

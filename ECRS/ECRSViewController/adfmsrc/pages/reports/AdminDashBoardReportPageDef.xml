@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.2.64.36" id="AdminDashBoardReportPageDef"
+                Package="pages.reports">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="NumberOfCompoundCrsReport" RangeSize="25"
+              DataControl="ECRSAppModuleDataControl"
+              id="NumberOfCompoundCrsReportIterator"/>
+    <iterator Binds="TotalNumOfSafetyTopicsReport" RangeSize="25"
+              DataControl="ECRSAppModuleDataControl"
+              id="TotalNumOfSafetyTopicsReportIterator"/>
+    <iterator Binds="TotalNumOfADRsReport" RangeSize="25"
+              DataControl="ECRSAppModuleDataControl"
+              id="TotalNumOfADRsReportIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="NumberOfCompoundCrsReportIterator"
+          id="NumberOfCompoundCrsReport">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.report.NumberOfCompoundCrsReport"
+                      Name="NumberOfCompoundCrsReport0">
+        <AttrNames>
+          <Item Value="Totalnumberofcrss"/>
+          <Item Value="Count1"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="TotalNumOfSafetyTopicsReportIterator"
+          id="TotalNumOfSafetyTopicsReport">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.report.TotalNumOfSafetyTopicsReport"
+                      Name="TotalNumOfSafetyTopicsReport0">
+        <AttrNames>
+          <Item Value="Totalnumberofsafetytopics"/>
+          <Item Value="Totalsafetytopics"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="TotalNumOfADRsReportIterator" id="TotalNumOfADRsReport">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.report.TotalNumOfADRsReport"
+                      Name="TotalNumOfADRsReport0">
+        <AttrNames>
+          <Item Value="Totalnumberadrs"/>
+          <Item Value="Totalnumofadrs"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

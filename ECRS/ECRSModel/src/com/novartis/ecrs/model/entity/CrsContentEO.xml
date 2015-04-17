@@ -220,6 +220,30 @@
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
     TableName="CRS.CRS_CONTENT"/>
+  <Attribute
+    Name="ReviewApproveRequiredFlag"
+    IsNotNull="true"
+    Precision="1"
+    ColumnName="REVIEW_APPROVE_REQUIRED_FLAG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS.CRS_CONTENT">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UiVersionNumber"
+    Precision="5"
+    Scale="0"
+    ColumnName="UI_VERSION_NUMBER"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="CRS.CRS_CONTENT"
+    HistoryColumn="VersionHistory"
+    ChangeIndicator="true"/>
   <AccessorAttribute
     Name="CrsStateEO"
     Association="com.novartis.ecrs.model.entity.assoc.CrsContentIdxStateFkAssoc"
@@ -252,6 +276,16 @@
       <Item Value="com.novartis.ecrs.model.entity.CrsContentEO.CompoundId"/>
       <Item Value="com.novartis.ecrs.model.entity.CrsContentEO.Indication"/>
     </AttrArray>
+  </Key>
+  <Key
+    Name="CrsContentChkAppr">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_CONTENT_CHK_APPR"/>
+      <Attr Name="_checkCondition"
+        Value="REVIEW_APPROVE_REQUIRED_FLAG IN ('Y', 'N')"/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
   </Key>
   <Key
     Name="CrsContentChkMrktflg">
