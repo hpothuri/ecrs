@@ -29,7 +29,8 @@
                                       filterModel="#{bindings.RiskDefSafetyTopicReportQuery.queryDescriptor}"
                                       queryListener="#{bindings.RiskDefSafetyTopicReportQuery.processQuery}"
                                       filterVisible="true" varStatus="vs"
-                                      id="t1">
+                                      id="t1" columnStretching="column:c1"
+                                      styleClass="AFStretchWidth">
                                 <af:column sortProperty="#{bindings.RiskDefSafetyTopicReport.hints.CrsName.name}"
                                            filterable="true" sortable="true"
                                            headerText="#{bindings.RiskDefSafetyTopicReport.hints.CrsName.label}"

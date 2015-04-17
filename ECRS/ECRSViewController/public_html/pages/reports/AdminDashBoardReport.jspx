@@ -15,7 +15,7 @@
                     <f:facet name="content">
                         <af:panelGroupLayout id="pgl2">
                             <af:panelHeader text="#{ecrsviewcontrollerBundle.ADMIN_DASHBOARD_REPORT}" id="ph4"
-                                            size="0" inlineStyle="padding:5px;">
+                                            size="1" inlineStyle="padding:5px;">
                                 <f:facet name="context"/>
                                 <f:facet name="menuBar"/>
                                 <f:facet name="toolbar"/>

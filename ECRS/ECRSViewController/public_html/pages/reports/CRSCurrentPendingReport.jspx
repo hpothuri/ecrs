@@ -13,49 +13,53 @@
                 <af:pageTemplate viewId="/pageTemplate/EcrsTemplate.jspx"
                                  id="pt1">
                     <f:facet name="content">
-                        <af:panelHeader text="#{ecrsviewcontrollerBundle.CURRENT_AND_PENDING_CRS_REPORT}" id="ph1" size="0"
-                                        inlineStyle="padding:3px;">
+                        <af:panelHeader text="#{ecrsviewcontrollerBundle.CURRENT_AND_PENDING_CRS_REPORT}" id="ph1"
+                                        size="1"
+                                        inlineStyle="padding:5px;">
                             <f:facet name="context"/>
                             <f:facet name="menuBar"/>
                             <f:facet name="toolbar"/>
                             <f:facet name="legend"/>
                             <f:facet name="info"/>
-                            <af:table value="#{bindings.CRSCurrentPendingCRSReport.collectionModel}"
-                                      var="row"
-                                      rows="#{bindings.CRSCurrentPendingCRSReport.rangeSize}"
-                                      emptyText="#{bindings.CRSCurrentPendingCRSReport.viewable ? 'No data to display.' : 'Access Denied.'}"
-                                      fetchSize="#{bindings.CRSCurrentPendingCRSReport.rangeSize}"
-                                      rowBandingInterval="0"
-                                      filterModel="#{bindings.CRSCurrentPendingCRSReportQuery.queryDescriptor}"
-                                      queryListener="#{bindings.CRSCurrentPendingCRSReportQuery.processQuery}"
-                                      filterVisible="true" varStatus="vs"
-                                      id="t1" columnStretching="column:c1"
-                                      styleClass="AFStretchWidth">
-                                <af:column sortProperty="#{bindings.CRSCurrentPendingCRSReport.hints.CrsName.name}"
-                                           filterable="true" sortable="true"
-                                           headerText="#{bindings.CRSCurrentPendingCRSReport.hints.CrsName.label}"
-                                           id="c1">
-                                    <af:outputText value="#{row.CrsName}"
-                                                   shortDesc="#{bindings.CRSCurrentPendingCRSReport.hints.CrsName.tooltip}"
-                                                   id="ot1"/>
-                                </af:column>
-                                <af:column sortProperty="#{bindings.CRSCurrentPendingCRSReport.hints.CrsState.name}"
-                                           filterable="true" sortable="true"
-                                           headerText="#{bindings.CRSCurrentPendingCRSReport.hints.CrsState.label}"
-                                           id="c2">
-                                    <af:outputText value="#{row.CrsState}"
-                                                   shortDesc="#{bindings.CRSCurrentPendingCRSReport.hints.CrsState.tooltip}"
-                                                   id="ot2"/>
-                                </af:column>
-                                <af:column sortProperty="#{bindings.CRSCurrentPendingCRSReport.hints.MeddraVers.name}"
-                                           filterable="true" sortable="true"
-                                           headerText="#{bindings.CRSCurrentPendingCRSReport.hints.MeddraVers.label}"
-                                           id="c3" width="150">
-                                    <af:outputText value="#{row.MeddraVers}"
-                                                   shortDesc="#{bindings.CRSCurrentPendingCRSReport.hints.MeddraVers.tooltip}"
-                                                   id="ot3"/>
-                                </af:column>
-                            </af:table>
+                            <af:panelGroupLayout id="pgl2" layout="horizontal"
+                                                 halign="center">
+                                <af:table value="#{bindings.CRSCurrentPendingCRSReport.collectionModel}"
+                                          var="row"
+                                          rows="#{bindings.CRSCurrentPendingCRSReport.rangeSize}"
+                                          emptyText="#{bindings.CRSCurrentPendingCRSReport.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          fetchSize="#{bindings.CRSCurrentPendingCRSReport.rangeSize}"
+                                          rowBandingInterval="0"
+                                          filterModel="#{bindings.CRSCurrentPendingCRSReportQuery.queryDescriptor}"
+                                          queryListener="#{bindings.CRSCurrentPendingCRSReportQuery.processQuery}"
+                                          filterVisible="true" varStatus="vs"
+                                          id="t1" columnStretching="column:c1"
+                                          inlineStyle="width:500px;">
+                                    <af:column sortProperty="#{bindings.CRSCurrentPendingCRSReport.hints.CrsName.name}"
+                                               filterable="true" sortable="true"
+                                               headerText="#{bindings.CRSCurrentPendingCRSReport.hints.CrsName.label}"
+                                               id="c1">
+                                        <af:outputText value="#{row.CrsName}"
+                                                       shortDesc="#{bindings.CRSCurrentPendingCRSReport.hints.CrsName.tooltip}"
+                                                       id="ot1"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.CRSCurrentPendingCRSReport.hints.CrsState.name}"
+                                               filterable="true" sortable="true"
+                                               headerText="#{bindings.CRSCurrentPendingCRSReport.hints.CrsState.label}"
+                                               id="c2">
+                                        <af:outputText value="#{row.CrsState}"
+                                                       shortDesc="#{bindings.CRSCurrentPendingCRSReport.hints.CrsState.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.CRSCurrentPendingCRSReport.hints.MeddraVers.name}"
+                                               filterable="true" sortable="true"
+                                               headerText="#{bindings.CRSCurrentPendingCRSReport.hints.MeddraVers.label}"
+                                               id="c3" width="150">
+                                        <af:outputText value="#{row.MeddraVers}"
+                                                       shortDesc="#{bindings.CRSCurrentPendingCRSReport.hints.MeddraVers.tooltip}"
+                                                       id="ot3"/>
+                                    </af:column>
+                                </af:table>
+                            </af:panelGroupLayout>
                         </af:panelHeader>
                     </f:facet>
                 </af:pageTemplate>
