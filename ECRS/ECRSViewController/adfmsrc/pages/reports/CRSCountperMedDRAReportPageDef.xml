@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="CRSCountperMedDRAReportPageDef"
+                Package="pages.reports">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="CRSCountPerMeddraReportVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="CRSCountPerMeddraReportVOIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="CRSCountPerMeddraReportVOIterator" id="CRSCountPerMeddraReportVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.report.CRSCountPerMeddraReportVO"
+                      Name="CRSCountPerMeddraReportVO0">
+        <AttrNames>
+          <Item Value="MeddraTerm"/>
+          <Item Value="MeddraCompDefn"/>
+          <Item Value="NumberOfCrs"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>
