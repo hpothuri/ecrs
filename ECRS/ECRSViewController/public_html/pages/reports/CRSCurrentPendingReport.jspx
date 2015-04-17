@@ -29,13 +29,10 @@
                                           emptyText="#{bindings.CRSCurrentPendingCRSReport.viewable ? 'No data to display.' : 'Access Denied.'}"
                                           fetchSize="#{bindings.CRSCurrentPendingCRSReport.rangeSize}"
                                           rowBandingInterval="0"
-                                          filterModel="#{bindings.CRSCurrentPendingCRSReportQuery.queryDescriptor}"
-                                          queryListener="#{bindings.CRSCurrentPendingCRSReportQuery.processQuery}"
-                                          filterVisible="true" varStatus="vs"
                                           id="t1" columnStretching="column:c1"
                                           inlineStyle="width:500px;">
                                     <af:column sortProperty="#{bindings.CRSCurrentPendingCRSReport.hints.CrsName.name}"
-                                               filterable="true" sortable="true"
+                                               sortable="false"
                                                headerText="#{bindings.CRSCurrentPendingCRSReport.hints.CrsName.label}"
                                                id="c1">
                                         <af:outputText value="#{row.CrsName}"
@@ -43,7 +40,7 @@
                                                        id="ot1"/>
                                     </af:column>
                                     <af:column sortProperty="#{bindings.CRSCurrentPendingCRSReport.hints.CrsState.name}"
-                                               filterable="true" sortable="true"
+                                               sortable="false"
                                                headerText="#{bindings.CRSCurrentPendingCRSReport.hints.CrsState.label}"
                                                id="c2">
                                         <af:outputText value="#{row.CrsState}"
@@ -51,7 +48,7 @@
                                                        id="ot2"/>
                                     </af:column>
                                     <af:column sortProperty="#{bindings.CRSCurrentPendingCRSReport.hints.MeddraVers.name}"
-                                               filterable="true" sortable="true"
+                                               sortable="false"
                                                headerText="#{bindings.CRSCurrentPendingCRSReport.hints.MeddraVers.label}"
                                                id="c3" width="150">
                                         <af:outputText value="#{row.MeddraVers}"
