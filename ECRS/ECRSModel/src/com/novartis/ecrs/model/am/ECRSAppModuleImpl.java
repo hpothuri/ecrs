@@ -210,13 +210,15 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
        // crsContentVO.setNestedSelectForFullSql(false);
         //System.out.println("----->"+whereClause);
        // System.out.println("--->>>"+ crsContentVO.getWhereClause());
-        crsContentVO.setWhereClause(null);
-        crsContentVO.applyViewCriteria(null);
-        crsContentVO.executeQuery();
+//        crsContentVO.setWhereClause(null);
+//        crsContentVO.applyViewCriteria(null);
+//        crsContentVO.executeQuery();
         //Apply whereClause to crsContentVO
         crsContentVO.setWhereClause(whereClause);
        // System.out.println("----->"+crsContentVO.getQuery());
         crsContentVO.executeQuery(); 
+        crsContentVO.setWhereClause(null);
+        crsContentVO.applyViewCriteria(null);
     }
 
     /**
@@ -276,6 +278,12 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         return (ViewLinkImpl)findViewLink("CrsRiskRelationToRiskDefintionLink1");
     }
     
+    /**
+     *
+     * @param crsId -- ID of the CRS that is being created or updated
+     * 
+     * Info : Metdod to show the risk definitions (if any) for the selected CRS on load of risk definitions page.
+     */
     public void initRiskRelation(Long crsId){
         ViewObject riskVO = this.getCrsRiskVO();
         riskVO.setWhereClause("CRS_ID = "+crsId);
@@ -336,5 +344,99 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getTotalNumOfSafetyTopicsReport() {
         return (ViewObjectImpl)findViewObject("TotalNumOfSafetyTopicsReport");
+    }
+    
+    /**
+     *
+     * @param crsId -- ID of the CRS to which the routine crs needs to be copied
+     * 
+     * Info : Method to copy the ROUTINE CRS risk definitons to the newly created CRS.
+     */
+    public void copyRoutineDefinition(Long crsId){
+        ViewObject relationVO = this.getCrsRiskRelationVO();
+        ViewObject definitionVO = this.getCrsRiskDefinitionsVO();
+        ViewObjectImpl crsContentVO = this.getCrsContentVO();
+        crsContentVO.setWhereClause("CRS_NAME = 'ROUTINE'");
+        crsContentVO.executeQuery(); 
+        crsContentVO.setWhereClause(null);
+        crsContentVO.applyViewCriteria(null);
+        if(crsContentVO.getEstimatedRowCount() > 0){
+            Row crsRow = crsContentVO.first();
+            Long srcCrsId = (Long)crsRow.getAttribute("CrsId");
+            ViewObject crsRiskVO = this.getCrsRiskVO();
+            crsRiskVO.setWhereClause("CRS_ID = "+srcCrsId);
+            crsRiskVO.setSortBy("CrsRiskId asc");
+            crsRiskVO.executeQuery();
+            Long crsRiskId = null;
+            Long newCrsRiskId = null;
+            if(crsRiskVO.getEstimatedRowCount() > 0){
+                RowSetIterator rs = crsRiskVO.createRowSetIterator(null);
+                while(rs.hasNext()){
+                    Row row = rs.next();
+                    if(crsRiskId == null || crsRiskId != (Long)row.getAttribute("CrsRiskId")){
+                        crsRiskId = (Long)row.getAttribute("CrsRiskId");
+                        Row relationRow = relationVO.createRow();
+                        relationRow.setAttribute("CrsId", crsId);
+                        relationRow.setAttribute("DataDomain", row.getAttribute("DataDomain"));
+                        relationRow.setAttribute("DatabaseId", row.getAttribute("DatabaseId"));
+                        relationRow.setAttribute("RiskPurposeCdFlag", row.getAttribute("RiskPurposeCdFlag"));
+                        relationRow.setAttribute("RiskPurposeDsFlag", row.getAttribute("RiskPurposeDsFlag"));
+                        relationRow.setAttribute("RiskPurposeErFlag", row.getAttribute("RiskPurposeErFlag"));
+                        relationRow.setAttribute("RiskPurposeIbFlag", row.getAttribute("RiskPurposeIbFlag"));
+                        relationRow.setAttribute("RiskPurposeMiFlag", row.getAttribute("RiskPurposeMiFlag"));
+                        relationRow.setAttribute("RiskPurposeOsFlag", row.getAttribute("RiskPurposeOsFlag"));
+                        relationRow.setAttribute("RiskPurposePsFlag", row.getAttribute("RiskPurposePsFlag"));
+                        relationRow.setAttribute("RiskPurposeRmFlag", row.getAttribute("RiskPurposeRmFlag"));
+                        relationRow.setAttribute("RiskPurposeSpFlag", row.getAttribute("RiskPurposeSpFlag"));
+                        relationRow.setAttribute("SafetyTopicOfInterest", row.getAttribute("SafetyTopicOfInterest"));
+                        relationRow.setAttribute("SocDictContentEntryTs", row.getAttribute("SocDictContentEntryTs"));
+                        relationRow.setAttribute("SocDictContentId", row.getAttribute("SocDictContentId"));
+                        relationRow.setAttribute("SocTerm", row.getAttribute("SocTerm"));
+                        relationVO.insertRow(relationRow);
+                        Row definitionRow = definitionVO.createRow();
+                        newCrsRiskId = (Long)relationRow.getAttribute("CrsRiskId");
+                        definitionRow.setAttribute("CrsRiskId", newCrsRiskId);
+                        definitionRow.setAttribute("MeddraQualifier", row.getAttribute("MeddraQualifier"));
+                        definitionRow.setAttribute("MeddraCode", row.getAttribute("MeddraCode"));
+                        definitionRow.setAttribute("MeddraLevel", row.getAttribute("MeddraLevel"));
+                        definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
+                        definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
+                        definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
+                        definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
+                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
+                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
+                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
+                        definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
+                        definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
+                        definitionVO.insertRow(definitionRow);
+                    } else { 
+                        Row definitionRow = definitionVO.createRow();
+                        definitionRow.setAttribute("CrsRiskId", newCrsRiskId);
+                        definitionRow.setAttribute("MeddraQualifier", row.getAttribute("MeddraQualifier"));
+                        definitionRow.setAttribute("MeddraCode", row.getAttribute("MeddraCode"));
+                        definitionRow.setAttribute("MeddraLevel", row.getAttribute("MeddraLevel"));
+                        definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
+                        definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
+                        definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
+                        definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
+                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
+                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
+                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
+                        definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
+                        definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
+                        definitionVO.insertRow(definitionRow); 
+                    }
+                }
+            }
+            this.getDBTransaction().commit();
+        }
+    }
+
+    /**
+     * Container's getter for CRSCountPerMeddraReportVO.
+     * @return CRSCountPerMeddraReportVO
+     */
+    public ViewObjectImpl getCRSCountPerMeddraReportVO() {
+        return (ViewObjectImpl)findViewObject("CRSCountPerMeddraReportVO");
     }
 }

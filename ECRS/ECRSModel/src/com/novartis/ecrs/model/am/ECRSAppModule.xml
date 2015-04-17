@@ -78,6 +78,9 @@
   <ViewUsage
     Name="TotalNumOfSafetyTopicsReport"
     ViewObjectName="com.novartis.ecrs.model.view.report.TotalNumOfSafetyTopicsReport"/>
+  <ViewUsage
+    Name="CRSCountPerMeddraReportVO"
+    ViewObjectName="com.novartis.ecrs.model.view.report.CRSCountPerMeddraReportVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

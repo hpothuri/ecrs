@@ -13,6 +13,7 @@
       <managed-bean-class>com.novartis.ecrs.ui.bean.ManageCRSBean</managed-bean-class>
       <managed-bean-scope>pageFlow</managed-bean-scope>
     </managed-bean>
+    <exception-handler>exceptionHandler</exception-handler>
     <view id="serach">
       <page>/ui/pageFragments/ecrs/searchCRS.jsff</page>
       <train-stop>
@@ -51,6 +52,9 @@
         <fixed-outcome>toSearch</fixed-outcome>
       </outcome>
     </method-call>
+    <view id="exceptionHandler">
+      <page>/ui/pageFragments/exception/exceptionHandler.jsff</page>
+    </view>
     <train/>
     <control-flow-rule id="__5">
       <from-activity-id>crsFlowRouter</from-activity-id>

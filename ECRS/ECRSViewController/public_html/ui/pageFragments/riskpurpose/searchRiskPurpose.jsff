@@ -4,7 +4,7 @@
   <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
   <af:panelGroupLayout id="pgl1" layout="scroll">
     <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="t1"/>
-    <af:panelHeader text="#{ecrsviewcontrollerBundle.SEARCH}" id="ph1">
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.SEARCH_RISK_PURPOSE}" id="ph1" size="1" inlineStyle="padding:5px;">
       <f:facet name="context"/>
       <f:facet name="menuBar"/>
       <f:facet name="toolbar"/>
@@ -34,41 +34,40 @@
           </f:facet>
         </af:panelLabelAndMessage>
       </af:panelFormLayout>
+      <af:spacer width="10" height="10" id="s1"/>
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="t3">
+            <af:commandImageLink id="cil1" action="#{pageFlowScope.riskPurposeBean.createRiskPurpose}"
+                                 icon="/images/Create.png"/>
+          </af:toolbar>
+        </f:facet>
+        <f:facet name="statusbar"/>
+        <af:table value="#{bindings.CrsRiskPurposesVO.collectionModel}" var="row"
+                  rows="#{bindings.CrsRiskPurposesVO.rangeSize}"
+                  emptyText="#{bindings.CrsRiskPurposesVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.CrsRiskPurposesVO.rangeSize}" rowBandingInterval="0"
+                  selectedRowKeys="#{bindings.CrsRiskPurposesVO.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.CrsRiskPurposesVO.collectionModel.makeCurrent}" rowSelection="single"
+                  id="t2" styleClass="AFStretchWidth" columnStretching="last">
+          <af:column sortProperty="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeId.name}" sortable="true"
+                     headerText="#{ecrsviewcontrollerBundle.RISK_PURPOSE_ID}" id="c1">
+            <af:commandLink shortDesc="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeId.tooltip}" id="ot1"
+                            text="#{row.RiskPurposeId}" action="#{pageFlowScope.riskPurposeBean.editRiskPurpose}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeCode.name}" sortable="true"
+                     headerText="#{ecrsviewcontrollerBundle.RISK_PURPOSE_CODE}" id="c2">
+            <af:outputText value="#{row.RiskPurposeCode}"
+                           shortDesc="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeCode.tooltip}" id="ot2"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeDesc.name}" sortable="true"
+                     headerText="#{ecrsviewcontrollerBundle.RISK_PURPOSE_DESCRIPTION}" id="c3">
+            <af:outputText value="#{row.RiskPurposeDesc}"
+                           shortDesc="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeDesc.tooltip}" id="ot3"/>
+          </af:column>
+        </af:table>
+      </af:panelCollection>
     </af:panelHeader>
-    <af:spacer width="10" height="10" id="s1"/>
-    <af:panelCollection id="pc1" styleClass="AFStretchWidth">
-      <f:facet name="menus"/>
-      <f:facet name="toolbar">
-        <af:toolbar id="t3">
-          <af:commandImageLink id="cil1"
-                               action="#{pageFlowScope.riskPurposeBean.createRiskPurpose}" icon="/images/Create.png"/>
-        </af:toolbar>
-      </f:facet>
-      <f:facet name="statusbar"/>
-      <af:table value="#{bindings.CrsRiskPurposesVO.collectionModel}" var="row"
-                rows="#{bindings.CrsRiskPurposesVO.rangeSize}"
-                emptyText="#{bindings.CrsRiskPurposesVO.viewable ? 'No data to display.' : 'Access Denied.'}"
-                fetchSize="#{bindings.CrsRiskPurposesVO.rangeSize}" rowBandingInterval="0"
-                selectedRowKeys="#{bindings.CrsRiskPurposesVO.collectionModel.selectedRow}"
-                selectionListener="#{bindings.CrsRiskPurposesVO.collectionModel.makeCurrent}" rowSelection="single"
-                id="t2" styleClass="AFStretchWidth" columnStretching="last">
-        <af:column sortProperty="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeId.name}" sortable="true"
-                   headerText="#{ecrsviewcontrollerBundle.RISK_PURPOSE_ID}" id="c1">
-          <af:commandLink shortDesc="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeId.tooltip}" id="ot1"
-                          text="#{row.RiskPurposeId}" action="#{pageFlowScope.riskPurposeBean.editRiskPurpose}">
-          </af:commandLink>
-        </af:column>
-        <af:column sortProperty="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeCode.name}" sortable="true"
-                   headerText="#{ecrsviewcontrollerBundle.RISK_PURPOSE_CODE}" id="c2">
-          <af:outputText value="#{row.RiskPurposeCode}"
-                         shortDesc="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeCode.tooltip}" id="ot2"/>
-        </af:column>
-        <af:column sortProperty="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeDesc.name}" sortable="true"
-                   headerText="#{ecrsviewcontrollerBundle.RISK_PURPOSE_DESCRIPTION}" id="c3">
-          <af:outputText value="#{row.RiskPurposeDesc}"
-                         shortDesc="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeDesc.tooltip}" id="ot3"/>
-        </af:column>
-      </af:table>
-    </af:panelCollection>
   </af:panelGroupLayout>
 </jsp:root>

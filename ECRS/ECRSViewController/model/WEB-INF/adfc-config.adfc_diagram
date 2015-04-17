@@ -34,7 +34,7 @@
       <property
          name="fromOutcome">userRoles</property>
       <property
-         name="sdm:polyPoints">R50,505.43546,150.44824,710.6904,163.44824,L50</property>
+         name="sdm:polyPoints">R55,506.8579,153.94824,710.6904,163.44824,L50</property>
    </ControlFlowCase>
    <View
       id="View5">
@@ -59,7 +59,7 @@
       <property
          name="fromOutcome">states</property>
       <property
-         name="sdm:polyPoints">R61,504.0,157.44824,708.6924,338.44824,L50</property>
+         name="sdm:polyPoints">R77,504.0,167.94824,708.6924,338.44824,L50</property>
    </ControlFlowCase>
    <View
       id="View7">
@@ -84,7 +84,7 @@
       <property
          name="fromOutcome">roles</property>
       <property
-         name="sdm:polyPoints">B50,468.0,192.94824,501.02246,345.44824,T50</property>
+         name="sdm:polyPoints">B57,471.5,194.71286,501.02246,345.44824,T50</property>
    </ControlFlowCase>
    <View
       id="View9">
@@ -109,7 +109,7 @@
       <property
          name="fromOutcome">riskPurpose</property>
       <property
-         name="sdm:polyPoints">L61,432.0,157.44824,286.6963,277.44824,T50</property>
+         name="sdm:polyPoints">L66,432.0,160.94824,286.6963,277.44824,T50</property>
    </ControlFlowCase>
    <View
       id="View11">
@@ -134,7 +134,7 @@
       <property
          name="fromOutcome">compound</property>
       <property
-         name="sdm:polyPoints">L50,430.40414,150.44824,247.03516,186.44824,R50</property>
+         name="sdm:polyPoints">L45,428.5118,146.94824,247.03516,186.44824,R50</property>
    </ControlFlowCase>
    <View
       id="View13">
@@ -159,7 +159,7 @@
       <property
          name="fromOutcome">update</property>
       <property
-         name="sdm:polyPoints">R39,504.0,143.44824,674.6787,39.448242,B50</property>
+         name="sdm:polyPoints">R23,504.0,132.94824,674.6787,39.448242,B50</property>
    </ControlFlowCase>
    <View
       id="View15">
@@ -184,7 +184,7 @@
       <property
          name="fromOutcome">create</property>
       <property
-         name="sdm:polyPoints">L39,432.0,143.44824,290.5,60.448242,B50</property>
+         name="sdm:polyPoints">L34,432.0,139.94824,290.5,60.448242,B50</property>
    </ControlFlowCase>
    <View
       id="View17">
@@ -234,6 +234,181 @@
       <property
          name="fromOutcome">browseSearch</property>
       <property
-         name="sdm:polyPoints">R45,505.74863,146.94824,778.0176,15.74707,L50</property>
+         name="sdm:polyPoints">R34,505.65204,139.94824,778.0176,15.74707,L50</property>
+   </ControlFlowCase>
+   <View
+      id="View21">
+      <property
+         name="activityId">AdminDashBoardReport</property>
+      <property
+         name="page">/pages/reports/AdminDashBoardReport.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>AdminDashBoardReport&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">493.79883</property>
+      <property
+         name="x">720.041</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase22"
+      from="WildcardControlFlowRule2"
+      to="View21">
+      <property
+         name="fromOutcome">adminDashBoard</property>
+      <property
+         name="sdm:polyPoints">B71,478.5,192.94824,720.041,439.44824,T50</property>
+   </ControlFlowCase>
+   <View
+      id="View23">
+      <property
+         name="activityId">CRSCountperMedDRAReport</property>
+      <property
+         name="page">/pages/reports/CRSCountperMedDRAReport.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>CRSCountperMedDRAReport&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">534.7988</property>
+      <property
+         name="x">384.69922</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase24"
+      from="WildcardControlFlowRule2"
+      to="View23">
+      <property
+         name="fromOutcome">crsCountper</property>
+      <property
+         name="sdm:polyPoints">B43,464.5,194.32184,384.69922,480.44824,T50</property>
+   </ControlFlowCase>
+   <View
+      id="View25">
+      <property
+         name="activityId">CRSCurrentPendingReport</property>
+      <property
+         name="page">/pages/reports/CRSCurrentPendingReport.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>CRSCurrentPendingReport&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">513.7988</property>
+      <property
+         name="x">240.70312</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase26"
+      from="WildcardControlFlowRule2"
+      to="View25">
+      <property
+         name="fromOutcome">crsCurrentPending</property>
+      <property
+         name="sdm:polyPoints">B29,457.5,192.94824,281.70312,513.44824,R50</property>
+   </ControlFlowCase>
+   <View
+      id="View27">
+      <property
+         name="activityId">MedDRAComponentsReport</property>
+      <property
+         name="page">/pages/reports/MedDRAComponentsReport.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>MedDRAComponentsReport&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">372.79883</property>
+      <property
+         name="x">149.36816</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase28"
+      from="WildcardControlFlowRule2"
+      to="View27">
+      <property
+         name="fromOutcome">meddraComponents</property>
+      <property
+         name="sdm:polyPoints">L55,429.82574,153.94824,149.36816,318.44824,T50</property>
+   </ControlFlowCase>
+   <View
+      id="View29">
+      <property
+         name="activityId">MedDRACompStardardReport</property>
+      <property
+         name="page">/pages/reports/MedDRACompStardardReport.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>MedDRACompStardardReport&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">373.79883</property>
+      <property
+         name="x">1014.3662</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase30"
+      from="WildcardControlFlowRule2"
+      to="View29">
+      <property
+         name="fromOutcome">meddraCompStandard</property>
+      <property
+         name="sdm:polyPoints">R66,506.02213,160.94824,973.3662,373.44824,L50</property>
+   </ControlFlowCase>
+   <View
+      id="View33">
+      <property
+         name="activityId">RiskDefinitionsSafetyTopicReport</property>
+      <property
+         name="page">/pages/reports/RiskDefinitionsSafetyTopicReport.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>RiskDefinitionsSafetyTopicReport&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">153.79883</property>
+      <property
+         name="x">1122.3701</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase34"
+      from="WildcardControlFlowRule2"
+      to="View33">
+      <property
+         name="fromOutcome">riskDefSafety</property>
+      <property
+         name="sdm:polyPoints">R45,506.958,146.94824,1081.3701,153.44824,L50</property>
+   </ControlFlowCase>
+   <View
+      id="View34">
+      <property
+         name="activityId">RetiredNMQsCMQsReport</property>
+      <property
+         name="page">/pages/reports/RetiredNMQsCMQsReport.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>RetiredNMQsCMQsReport&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">116.79883</property>
+      <property
+         name="x">115.34668</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase35"
+      from="WildcardControlFlowRule2"
+      to="View34">
+      <property
+         name="fromOutcome">retiredNmq</property>
+      <property
+         name="sdm:polyPoints">L39,430.94855,143.44824,156.34668,116.44824,R50</property>
    </ControlFlowCase>
 </SDM>

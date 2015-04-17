@@ -46,7 +46,6 @@
                                                   styleClass="tableNoColumnHeaders">
                                             <af:column sortProperty="#{bindings.NumberOfCompoundCrsReport.hints.Totalnumberofcrss.name}"
                                                        sortable="false"
-                                                       headerText="#{bindings.NumberOfCompoundCrsReport.hints.Totalnumberofcrss.label}"
                                                        id="c1">
                                                 <af:outputText value="#{row.Totalnumberofcrss}"
                                                                shortDesc="#{bindings.NumberOfCompoundCrsReport.hints.Totalnumberofcrss.tooltip}"
@@ -54,7 +53,6 @@
                                             </af:column>
                                             <af:column sortProperty="#{bindings.NumberOfCompoundCrsReport.hints.Count1.name}"
                                                        sortable="false"
-                                                       headerText="#{bindings.NumberOfCompoundCrsReport.hints.Count1.label}"
                                                        id="c2">
                                                 <af:outputText value="#{row.Count1}"
                                                                shortDesc="#{bindings.NumberOfCompoundCrsReport.hints.Count1.tooltip}"
@@ -83,7 +81,6 @@
                                                   styleClass="tableNoColumnHeaders">
                                             <af:column sortProperty="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalnumberofsafetytopics.name}"
                                                        sortable="false"
-                                                       headerText="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalnumberofsafetytopics.label}"
                                                        id="c3">
                                                 <af:outputText value="#{row.Totalnumberofsafetytopics}"
                                                                shortDesc="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalnumberofsafetytopics.tooltip}"
@@ -91,7 +88,6 @@
                                             </af:column>
                                             <af:column sortProperty="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalsafetytopics.name}"
                                                        sortable="false"
-                                                       headerText="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalsafetytopics.label}"
                                                        id="c4">
                                                 <af:outputText value="#{row.Totalsafetytopics}"
                                                                shortDesc="#{bindings.TotalNumOfSafetyTopicsReport.hints.Totalsafetytopics.tooltip}"
@@ -121,7 +117,6 @@
                                                   styleClass="tableNoColumnHeaders">
                                             <af:column sortProperty="#{bindings.TotalNumOfADRsReport.hints.Totalnumberadrs.name}"
                                                        sortable="false"
-                                                       headerText="#{bindings.TotalNumOfADRsReport.hints.Totalnumberadrs.label}"
                                                        id="c5">
                                                 <af:outputText value="#{row.Totalnumberadrs}"
                                                                shortDesc="#{bindings.TotalNumOfADRsReport.hints.Totalnumberadrs.tooltip}"
@@ -129,7 +124,6 @@
                                             </af:column>
                                             <af:column sortProperty="#{bindings.TotalNumOfADRsReport.hints.Totalnumofadrs.name}"
                                                        sortable="false"
-                                                       headerText="#{bindings.TotalNumOfADRsReport.hints.Totalnumofadrs.label}"
                                                        id="c6">
                                                 <af:outputText value="#{row.Totalnumofadrs}"
                                                                shortDesc="#{bindings.TotalNumOfADRsReport.hints.Totalnumofadrs.tooltip}"

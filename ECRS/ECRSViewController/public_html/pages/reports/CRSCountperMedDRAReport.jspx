@@ -1,14 +1,50 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
           xmlns:f="http://java.sun.com/jsf/core"
-          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <f:view>
         <af:document title="CRSCountperMedDRAReport.jspx" id="d1">
+            <af:messages id="m1"/>
             <af:form id="f1">
                 <af:pageTemplate viewId="/pageTemplate/EcrsTemplate.jspx"
                                  id="pt1">
-                    <f:facet name="content"/>
+                    <f:facet name="content">
+                        <af:panelHeader text="#{ecrsviewcontrollerBundle.CRS_COUNT_PER_MEDDRA_COMPONE_0}" id="ph1" size="1" inlineStyle="padding:5px;">
+                            <f:facet name="context"/>
+                            <f:facet name="menuBar"/>
+                            <f:facet name="toolbar"/>
+                            <f:facet name="legend"/>
+                            <f:facet name="info"/>
+                            <af:table value="#{bindings.CRSCountPerMeddraReportVO.collectionModel}" var="row"
+                                      rows="#{bindings.CRSCountPerMeddraReportVO.rangeSize}"
+                                      emptyText="#{bindings.CRSCountPerMeddraReportVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                      fetchSize="#{bindings.CRSCountPerMeddraReportVO.rangeSize}" rowBandingInterval="0"
+                                      id="t1">
+                                <af:column sortProperty="#{bindings.CRSCountPerMeddraReportVO.hints.MeddraTerm.name}"
+                                           sortable="true" headerText="#{ecrsviewcontrollerBundle.MEDDRA_COMPONENT}"
+                                           id="c1">
+                                    <af:outputText value="#{row.MeddraTerm}"
+                                                   shortDesc="#{bindings.CRSCountPerMeddraReportVO.hints.MeddraTerm.tooltip}"
+                                                   id="ot1"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.CRSCountPerMeddraReportVO.hints.MeddraCompDefn.name}"
+                                           sortable="true" headerText="#{ecrsviewcontrollerBundle.LEVEL}" id="c2">
+                                    <af:outputText value="#{row.MeddraCompDefn}"
+                                                   shortDesc="#{bindings.CRSCountPerMeddraReportVO.hints.MeddraCompDefn.tooltip}"
+                                                   id="ot2"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.CRSCountPerMeddraReportVO.hints.NumberOfCrs.name}"
+                                           sortable="true" headerText="#{ecrsviewcontrollerBundle.NUMBER_OF_CRSS}"
+                                           id="c3">
+                                    <af:outputText value="#{row.NumberOfCrs}"
+                                                   shortDesc="#{bindings.CRSCountPerMeddraReportVO.hints.NumberOfCrs.tooltip}"
+                                                   id="ot3"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelHeader>
+                    </f:facet>
                 </af:pageTemplate>
             </af:form>
         </af:document>

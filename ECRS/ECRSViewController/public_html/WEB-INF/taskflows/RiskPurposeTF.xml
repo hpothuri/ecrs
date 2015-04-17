@@ -7,6 +7,7 @@
       <managed-bean-class>com.novartis.ecrs.ui.bean.RiskPurposeBean</managed-bean-class>
       <managed-bean-scope>pageFlow</managed-bean-scope>
     </managed-bean>
+    <exception-handler>exceptionHandler</exception-handler>
     <view id="searchRiskPurpose">
       <page>/ui/pageFragments/riskpurpose/searchRiskPurpose.jsff</page>
       <train-stop>
@@ -25,6 +26,9 @@
         <fixed-outcome>CreateInsert</fixed-outcome>
       </outcome>
     </method-call>
+    <view id="exceptionHandler">
+      <page>/ui/pageFragments/exception/exceptionHandler.jsff</page>
+    </view>
     <train/>
     <control-flow-rule id="__1">
       <from-activity-id>CreateInsert</from-activity-id>

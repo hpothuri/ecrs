@@ -27,6 +27,27 @@
   <view id="BrowseSearch">
     <page>/pages/BrowseSearch.jspx</page>
   </view>
+  <view id="AdminDashBoardReport">
+    <page>/pages/reports/AdminDashBoardReport.jspx</page>
+  </view>
+  <view id="CRSCountperMedDRAReport">
+    <page>/pages/reports/CRSCountperMedDRAReport.jspx</page>
+  </view>
+  <view id="CRSCurrentPendingReport">
+    <page>/pages/reports/CRSCurrentPendingReport.jspx</page>
+  </view>
+  <view id="MedDRAComponentsReport">
+    <page>/pages/reports/MedDRAComponentsReport.jspx</page>
+  </view>
+  <view id="MedDRACompStardardReport">
+    <page>/pages/reports/MedDRACompStardardReport.jspx</page>
+  </view>
+  <view id="RiskDefinitionsSafetyTopicReport">
+    <page>/pages/reports/RiskDefinitionsSafetyTopicReport.jspx</page>
+  </view>
+  <view id="RetiredNMQsCMQsReport">
+    <page>/pages/reports/RetiredNMQsCMQsReport.jspx</page>
+  </view>
   <control-flow-rule id="__2">
     <from-activity-id>*</from-activity-id>
     <control-flow-case id="__3">
@@ -64,6 +85,34 @@
     <control-flow-case id="__11">
       <from-outcome>browseSearch</from-outcome>
       <to-activity-id>BrowseSearch</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__12">
+      <from-outcome>adminDashBoard</from-outcome>
+      <to-activity-id>AdminDashBoardReport</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__13">
+      <from-outcome>crsCountper</from-outcome>
+      <to-activity-id>CRSCountperMedDRAReport</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__14">
+      <from-outcome>crsCurrentPending</from-outcome>
+      <to-activity-id>CRSCurrentPendingReport</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__15">
+      <from-outcome>meddraComponents</from-outcome>
+      <to-activity-id>MedDRAComponentsReport</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__16">
+      <from-outcome>meddraCompStandard</from-outcome>
+      <to-activity-id>MedDRACompStardardReport</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__18">
+      <from-outcome>riskDefSafety</from-outcome>
+      <to-activity-id>RiskDefinitionsSafetyTopicReport</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__17">
+      <from-outcome>retiredNmq</from-outcome>
+      <to-activity-id>RetiredNMQsCMQsReport</to-activity-id>
     </control-flow-case>
   </control-flow-rule>
   <managed-bean id="__1">

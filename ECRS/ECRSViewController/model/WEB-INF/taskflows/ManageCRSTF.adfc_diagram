@@ -108,7 +108,7 @@
       <property
          name="fromOutcome">toCreate</property>
       <property
-         name="sdm:polyPoints">R54,261.0,321.44824,496.0,419.1953,L50</property>
+         name="sdm:polyPoints">R50,261.0,317.94824,496.0,419.1953,L50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -156,4 +156,23 @@
       <property
          name="sdm:polyPoints">R50,405.0,148.19531,488.0,146.5459,L50</property>
    </ControlFlowCase>
+   <View
+      id="View16">
+      <property
+         name="activityId">exceptionHandler</property>
+      <property
+         name="page">/ui/pageFragments/exception/exceptionHandler.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>exceptionHandler&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="trainStop">false</property>
+      <property
+         name="exceptionHandler">true</property>
+      <property
+         name="y">425.79883</property>
+      <property
+         name="x">836.77637</property>
+      <property
+         name="pageFragment">true</property>
+   </View>
 </SDM>

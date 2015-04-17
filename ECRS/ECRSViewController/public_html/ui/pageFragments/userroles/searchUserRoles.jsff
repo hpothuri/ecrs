@@ -4,7 +4,7 @@
   <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
   <af:panelGroupLayout id="pgl1" layout="scroll">
     <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="t1"/>
-    <af:panelHeader text="#{ecrsviewcontrollerBundle.SEARCH}" id="ph1">
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.SEARCH_USER_ROLES}" id="ph1" size="1" inlineStyle="padding:5px;">
       <f:facet name="context"/>
       <f:facet name="menuBar"/>
       <f:facet name="toolbar"/>

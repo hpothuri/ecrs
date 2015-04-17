@@ -75,4 +75,23 @@
       <property
          name="sdm:polyPoints">R50,220.01465,182.79883,340.0,185.24707,L50</property>
    </ControlFlowCase>
+   <View
+      id="View7">
+      <property
+         name="activityId">exceptionHandler</property>
+      <property
+         name="page">/ui/pageFragments/exception/exceptionHandler.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>exceptionHandler&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="trainStop">false</property>
+      <property
+         name="exceptionHandler">true</property>
+      <property
+         name="y">391.79883</property>
+      <property
+         name="x">543.77637</property>
+      <property
+         name="pageFragment">true</property>
+   </View>
 </SDM>

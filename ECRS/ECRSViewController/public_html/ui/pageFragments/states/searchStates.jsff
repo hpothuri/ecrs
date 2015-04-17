@@ -4,7 +4,7 @@
   <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
   <af:panelGroupLayout id="pgl1" layout="scroll">
     <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="t1"/>
-    <af:panelHeader text="Search" id="ph1">
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.SEARCH_STATES}" id="ph1" size="1" inlineStyle="padding:5px;">
       <f:facet name="context"/>
       <f:facet name="menuBar"/>
       <f:facet name="toolbar"/>
@@ -32,38 +32,38 @@
           </f:facet>
         </af:panelLabelAndMessage>
       </af:panelFormLayout>
+      <af:spacer width="10" height="10" id="s1"/>
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="t3">
+            <af:commandImageLink id="cil1" action="#{pageFlowScope.stateBean.createState}" icon="/images/Create.png"/>
+          </af:toolbar>
+        </f:facet>
+        <f:facet name="statusbar"/>
+        <af:table value="#{bindings.CrsStateVO.collectionModel}" var="row" rows="#{bindings.CrsStateVO.rangeSize}"
+                  emptyText="#{bindings.CrsStateVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.CrsStateVO.rangeSize}" rowBandingInterval="0"
+                  selectedRowKeys="#{bindings.CrsStateVO.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.CrsStateVO.collectionModel.makeCurrent}" rowSelection="single" id="t2"
+                  width="AFStretchWidth" columnStretching="last">
+          <af:column sortProperty="#{bindings.CrsStateVO.hints.StateId.name}" sortable="true"
+                     headerText="#{ecrsviewcontrollerBundle.STATE_ID}" id="c1">
+            <af:commandLink shortDesc="#{bindings.CrsStateVO.hints.StateId.tooltip}" id="ot1" text="#{row.StateId}"
+                            action="#{pageFlowScope.stateBean.editState}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.CrsStateVO.hints.StateName.name}" sortable="true"
+                     headerText="#{ecrsviewcontrollerBundle.STATE_NAME}" id="c2">
+            <af:outputText value="#{row.StateName}" shortDesc="#{bindings.CrsStateVO.hints.StateName.tooltip}"
+                           id="ot2"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.CrsStateVO.hints.StateDesc.name}" sortable="true"
+                     headerText="#{ecrsviewcontrollerBundle.STATE_DESCRIPTION}" id="c3">
+            <af:outputText value="#{row.StateDesc}" shortDesc="#{bindings.CrsStateVO.hints.StateDesc.tooltip}"
+                           id="ot3"/>
+          </af:column>
+        </af:table>
+      </af:panelCollection>
     </af:panelHeader>
-    <af:spacer width="10" height="10" id="s1"/>
-    <af:panelCollection id="pc1" styleClass="AFStretchWidth">
-      <f:facet name="menus"/>
-      <f:facet name="toolbar">
-        <af:toolbar id="t3">
-          <af:commandImageLink id="cil1"
-                               action="#{pageFlowScope.stateBean.createState}" icon="/images/Create.png"/>
-        </af:toolbar>
-      </f:facet>
-      <f:facet name="statusbar"/>
-      <af:table value="#{bindings.CrsStateVO.collectionModel}" var="row" rows="#{bindings.CrsStateVO.rangeSize}"
-                emptyText="#{bindings.CrsStateVO.viewable ? 'No data to display.' : 'Access Denied.'}"
-                fetchSize="#{bindings.CrsStateVO.rangeSize}" rowBandingInterval="0"
-                selectedRowKeys="#{bindings.CrsStateVO.collectionModel.selectedRow}"
-                selectionListener="#{bindings.CrsStateVO.collectionModel.makeCurrent}" rowSelection="single" id="t2"
-                width="AFStretchWidth" columnStretching="last">
-        <af:column sortProperty="#{bindings.CrsStateVO.hints.StateId.name}" sortable="true"
-                   headerText="#{ecrsviewcontrollerBundle.STATE_ID}" id="c1">
-          <af:commandLink shortDesc="#{bindings.CrsStateVO.hints.StateId.tooltip}" id="ot1" text="#{row.StateId}"
-                          action="#{pageFlowScope.stateBean.editState}">
-          </af:commandLink>
-        </af:column>
-        <af:column sortProperty="#{bindings.CrsStateVO.hints.StateName.name}" sortable="true"
-                   headerText="#{ecrsviewcontrollerBundle.STATE_NAME}" id="c2">
-          <af:outputText value="#{row.StateName}" shortDesc="#{bindings.CrsStateVO.hints.StateName.tooltip}" id="ot2"/>
-        </af:column>
-        <af:column sortProperty="#{bindings.CrsStateVO.hints.StateDesc.name}" sortable="true"
-                   headerText="#{ecrsviewcontrollerBundle.STATE_DESCRIPTION}" id="c3">
-          <af:outputText value="#{row.StateDesc}" shortDesc="#{bindings.CrsStateVO.hints.StateDesc.tooltip}" id="ot3"/>
-        </af:column>
-      </af:table>
-    </af:panelCollection>
   </af:panelGroupLayout>
 </jsp:root>

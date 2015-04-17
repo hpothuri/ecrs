@@ -191,7 +191,7 @@
               <af:spacer width="10" height="10" id="s1"/>
             </f:facet>
           </af:panelGroupLayout>
-          <af:panelFormLayout id="pfl2" maxColumns="2" rows="3" labelWidth="150" inlineStyle="white-space: nowrap;">
+          <af:panelFormLayout id="pfl2" maxColumns="2" rows="2" inlineStyle="white-space: nowrap;">
             <af:inputText value="#{bindings.SafetyTopicOfInterest.inputValue}"
                           label="#{bindings.SafetyTopicOfInterest.hints.label}"
                           required="#{bindings.SafetyTopicOfInterest.hints.mandatory}"
@@ -201,11 +201,6 @@
                           contentStyle="width:200px;" autoSubmit="true">
               <f:validator binding="#{bindings.SafetyTopicOfInterest.validator}"/>
             </af:inputText>
-            <af:selectOneChoice label="#{bindings.DataDomain.hints.label}" id="soc1"
-                                value="#{bindings.DataDomain.inputValue}" autoSubmit="true">
-              <af:selectItem label="MedDRA" value="MEDDRA" id="si1"/>
-              <af:selectItem label="Other" value="OTHER" id="si2"/>
-            </af:selectOneChoice>
             <af:inputText value="#{bindings.DatabaseId.inputValue}" label="#{bindings.DatabaseId.hints.label}"
                           required="#{bindings.DatabaseId.hints.mandatory}"
                           columns="#{bindings.DatabaseId.hints.displayWidth}"
@@ -214,53 +209,56 @@
               <f:validator binding="#{bindings.DatabaseId.validator}"/>
               <af:convertNumber groupingUsed="false" pattern="#{bindings.DatabaseId.format}"/>
             </af:inputText>
-            <af:panelGroupLayout id="pgl3" layout="horizontal">
-              <af:selectBooleanCheckbox value="#{bindings.RiskPurposeSpFlag.inputValue}"
-                                        label="#{bindings.RiskPurposeSpFlag.label}"
-                                        shortDesc="#{bindings.RiskPurposeSpFlag.hints.tooltip}" id="sbc10"
-                                        autoSubmit="true"/>
-              <af:selectBooleanCheckbox value="#{bindings.RiskPurposeDsFlag.inputValue}"
-                                        label="#{bindings.RiskPurposeDsFlag.label}"
-                                        shortDesc="#{bindings.RiskPurposeDsFlag.hints.tooltip}" id="sbc11"
-                                        autoSubmit="true"/>
-              <af:selectBooleanCheckbox value="#{bindings.RiskPurposeRmFlag.inputValue}"
-                                        label="#{bindings.RiskPurposeRmFlag.label}"
-                                        shortDesc="#{bindings.RiskPurposeRmFlag.hints.tooltip}" id="sbc12"
-                                        autoSubmit="true"/>
-              <af:selectBooleanCheckbox value="#{bindings.RiskPurposePsFlag.inputValue}"
-                                        label="#{bindings.RiskPurposePsFlag.label}"
-                                        shortDesc="#{bindings.RiskPurposePsFlag.hints.tooltip}" id="sbc13"
-                                        autoSubmit="true"/>
-              <af:selectBooleanCheckbox value="#{bindings.RiskPurposeIbFlag.inputValue}"
-                                        label="#{bindings.RiskPurposeIbFlag.label}"
-                                        shortDesc="#{bindings.RiskPurposeIbFlag.hints.tooltip}" id="sbc14"
-                                        autoSubmit="true"/>
-              <af:selectBooleanCheckbox value="#{bindings.RiskPurposeCdFlag.inputValue}"
-                                        label="#{bindings.RiskPurposeCdFlag.label}"
-                                        shortDesc="#{bindings.RiskPurposeCdFlag.hints.tooltip}" id="sbc15"
-                                        autoSubmit="true"/>
-              <af:selectBooleanCheckbox value="#{bindings.RiskPurposeOsFlag.inputValue}"
-                                        label="#{bindings.RiskPurposeOsFlag.label}"
-                                        shortDesc="#{bindings.RiskPurposeOsFlag.hints.tooltip}" id="sbc16"
-                                        autoSubmit="true"/>
-              <af:selectBooleanCheckbox value="#{bindings.RiskPurposeMiFlag.inputValue}"
-                                        label="#{bindings.RiskPurposeMiFlag.label}"
-                                        shortDesc="#{bindings.RiskPurposeMiFlag.hints.tooltip}" id="sbc17"
-                                        autoSubmit="true"/>
-              <af:selectBooleanCheckbox value="#{bindings.RiskPurposeErFlag.inputValue}"
-                                        label="#{bindings.RiskPurposeErFlag.label}"
-                                        shortDesc="#{bindings.RiskPurposeErFlag.hints.tooltip}" id="sbc18"
-                                        autoSubmit="true"/>
-            </af:panelGroupLayout>
+            <af:selectOneChoice label="#{bindings.DataDomain.hints.label}" id="soc1"
+                                value="#{bindings.DataDomain.inputValue}" autoSubmit="true">
+              <af:selectItem label="MedDRA" value="MEDDRA" id="si1"/>
+              <af:selectItem label="Other" value="OTHER" id="si2"/>
+            </af:selectOneChoice>
             <af:inputText value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.hints.label}"
-                          required="#{bindings.RiskPurposeCdFlag.inputValue}"
                           columns="#{bindings.SocTerm.hints.displayWidth}"
                           maximumLength="#{bindings.SocTerm.hints.precision}"
                           shortDesc="#{bindings.SocTerm.hints.tooltip}" id="it4" contentStyle="width:200px;"
-                          autoSubmit="true" disabled="#{!bindings.RiskPurposeCdFlag.inputValue}"
-                          partialTriggers="sbc15">
+                          autoSubmit="true" required="true">
               <f:validator binding="#{bindings.SocTerm.validator}"/>
             </af:inputText>
+          </af:panelFormLayout>
+          <af:panelFormLayout id="pfl1" maxColumns="9" rows="1" labelAlignment="top">
+            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeSpFlag.inputValue}"
+                                      label="#{bindings.RiskPurposeSpFlag.label}"
+                                      shortDesc="#{bindings.RiskPurposeSpFlag.hints.tooltip}" id="sbc10"
+                                      autoSubmit="true"/>
+            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeDsFlag.inputValue}"
+                                      label="#{bindings.RiskPurposeDsFlag.label}"
+                                      shortDesc="#{bindings.RiskPurposeDsFlag.hints.tooltip}" id="sbc11"
+                                      autoSubmit="true"/>
+            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeRmFlag.inputValue}"
+                                      label="#{bindings.RiskPurposeRmFlag.label}"
+                                      shortDesc="#{bindings.RiskPurposeRmFlag.hints.tooltip}" id="sbc12"
+                                      autoSubmit="true"/>
+            <af:selectBooleanCheckbox value="#{bindings.RiskPurposePsFlag.inputValue}"
+                                      label="#{bindings.RiskPurposePsFlag.label}"
+                                      shortDesc="#{bindings.RiskPurposePsFlag.hints.tooltip}" id="sbc13"
+                                      autoSubmit="true"/>
+            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeIbFlag.inputValue}"
+                                      label="#{bindings.RiskPurposeIbFlag.label}"
+                                      shortDesc="#{bindings.RiskPurposeIbFlag.hints.tooltip}" id="sbc14"
+                                      autoSubmit="true"/>
+            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeCdFlag.inputValue}"
+                                      label="#{bindings.RiskPurposeCdFlag.label}"
+                                      shortDesc="#{bindings.RiskPurposeCdFlag.hints.tooltip}" id="sbc15"
+                                      autoSubmit="true"/>
+            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeOsFlag.inputValue}"
+                                      label="#{bindings.RiskPurposeOsFlag.label}"
+                                      shortDesc="#{bindings.RiskPurposeOsFlag.hints.tooltip}" id="sbc16"
+                                      autoSubmit="true"/>
+            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeMiFlag.inputValue}"
+                                      label="#{bindings.RiskPurposeMiFlag.label}"
+                                      shortDesc="#{bindings.RiskPurposeMiFlag.hints.tooltip}" id="sbc17"
+                                      autoSubmit="true"/>
+            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeErFlag.inputValue}"
+                                      label="#{bindings.RiskPurposeErFlag.label}"
+                                      shortDesc="#{bindings.RiskPurposeErFlag.hints.tooltip}" id="sbc18"
+                                      autoSubmit="true"/>
           </af:panelFormLayout>
           <af:panelFormLayout id="pfl3">
             <af:inputText value="#{bindings.NonMeddraComponentComment.inputValue}"
