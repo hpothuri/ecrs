@@ -163,7 +163,10 @@
                                             id="soc7" value="#{bindings.ReleaseStatusFlag.inputValue}" readOnly="true">
                             <af:selectItem label="Pending" id="si8" value="P"/>
                         </af:selectOneChoice>
-                        
+                        <af:selectBooleanCheckbox label="#{ecrsviewcontrollerBundle.REVIEW__APPROVAL_REQUIRED}"
+                                                  id="sbc1"
+                                                  value="#{bindings.ReviewApproveRequiredFlag1.inputValue}"
+                                                  autoSubmit="true"/>
                     </af:panelFormLayout>
                     <af:panelGroupLayout id="pgl7" layout="horizontal" valign="top" rendered="false">
                         <af:panelGroupLayout id="pgl4" layout="vertical"/>
