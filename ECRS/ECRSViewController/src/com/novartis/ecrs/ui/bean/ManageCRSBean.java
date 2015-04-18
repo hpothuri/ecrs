@@ -23,6 +23,7 @@ import javax.faces.model.SelectItem;
 
 import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.model.binding.DCIteratorBinding;
+import oracle.adf.share.ADFContext;
 import oracle.adf.view.rich.component.rich.RichPopup;
 
 import oracle.adf.view.rich.component.rich.RichDialog;
@@ -30,6 +31,9 @@ import oracle.adf.view.rich.component.rich.RichPopup;
 
 import oracle.adf.view.rich.component.rich.data.RichTable;
 
+import oracle.adf.view.rich.component.rich.input.RichInputText;
+import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
+import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
 import oracle.adf.view.rich.context.AdfFacesContext;
 import oracle.adf.view.rich.datatransfer.DataFlavor;
 import oracle.adf.view.rich.datatransfer.Transferable;
@@ -55,16 +59,25 @@ public class ManageCRSBean implements Serializable {
     private List<String> selDesigneeList;
     private String selectedCrsName;
     private transient RichPopup successPopupBinding;
-    private RichPopup riskDefPopup;
-    private RichTable riskDefTable;
-    private RichPopup successPopup;
+    private transient RichPopup riskDefPopup;
+    private transient RichTable riskDefTable;
+    private transient RichPopup successPopup;
     private List<String> selDatabases;
     private List<SelectItem> databaseList;
     private List<String> selRiskPurposes;
+    private transient RichPopup reviewSubmitPopup;
+    private transient RichSelectOneChoice crsStateSOC;
+    private transient RichSelectOneChoice crsStatusSOC;
+    private transient RichPopup crsApprovePopup;
+    private transient RichPanelBox workflowPanelBox;
+    private RichPopup crsRejectPopup;
+    private RichInputText taslCommentsInputText;
+    private RichInputText mlCommentsInputText;
     private String dictionary;
     private String level;
     private String term;
     private RichPopup hierPopup;
+
 
     public ManageCRSBean() {
         super();
@@ -89,7 +102,7 @@ public class ManageCRSBean implements Serializable {
             flowType =
                     (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
             if (ViewConstants.FLOW_TYPE_SEARCH.equals(flowType) ||
-                ModelConstants.USER_IN_ROLE_BSL.equals(loggedInUserRole))
+                ModelConstants.ROLE_BSL.equals(loggedInUserRole))
                 setBslFacetName("BSL");
             else
                 setBslFacetName("nonBSL");
@@ -129,8 +142,10 @@ public class ManageCRSBean implements Serializable {
         oper.execute();
         if (oper.getErrors().size() > 0) 
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
-         else
+        else{
             ADFUtils.showPopup(getSuccessPopupBinding());
+            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+        }
     }
 
     /**
@@ -146,7 +161,7 @@ public class ManageCRSBean implements Serializable {
 
         if (iter != null && iter.getCurrentRow() != null){
             CrsContentVORowImpl row = (CrsContentVORowImpl)iter.getCurrentRow();
-            row.setStateId(1);
+            row.setStateId(ModelConstants.STATE_DRAFT);
             row.setReleaseStatusFlag("P");
             row.setCrsEffectiveDt(ADFUtils.getJBOTimeStamp());
         }
@@ -293,7 +308,7 @@ public class ManageCRSBean implements Serializable {
             if (vce.getNewValue() != null &&
                 !vce.getNewValue().equals(vce.getOldValue()) &&
                 (Boolean)vce.getNewValue()) {
-                if (!ModelConstants.USER_IN_ROLE_BSL.equals(loggedInUserRole)) {
+                if (!ModelConstants.ROLE_BSL.equals(loggedInUserRole)) {
                     setInboxDisable(Boolean.TRUE);
                 }
             } else
@@ -350,7 +365,7 @@ public class ManageCRSBean implements Serializable {
             }
             //set logged in user name to bsl binding
             if (ViewConstants.FLOW_TYPE_CREATE.equals(flowType) &&
-                ModelConstants.USER_IN_ROLE_BSL.equals(loggedInUserRole))
+                ModelConstants.ROLE_BSL.equals(loggedInUserRole))
                 ADFUtils.setEL("#{bindings.BslName.inputValue}",
                                getUserName());
         }
@@ -577,6 +592,163 @@ public class ManageCRSBean implements Serializable {
 
     public List<String> getSelRiskPurposes() {
         return selRiskPurposes;
+    }
+
+    public void onClickReview(ActionEvent actionEvent) {
+        // Add event code here...
+        ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_REVIEW);
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0) 
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        else{
+            ADFUtils.showPopup(getReviewSubmitPopup());
+            ADFUtils.addPartialTarget(getCrsStateSOC());
+        }
+    }
+
+    public void setReviewSubmitPopup(RichPopup reviewSubmitPopup) {
+        this.reviewSubmitPopup = reviewSubmitPopup;
+    }
+
+    public RichPopup getReviewSubmitPopup() {
+        return reviewSubmitPopup;
+    }
+
+    public void setCrsStateSOC(RichSelectOneChoice crsStateSOC) {
+        this.crsStateSOC = crsStateSOC;
+    }
+
+    public RichSelectOneChoice getCrsStateSOC() {
+        return crsStateSOC;
+    }
+
+    public void setCrsStatusSOC(RichSelectOneChoice crsStatusSOC) {
+        this.crsStatusSOC = crsStatusSOC;
+    }
+
+    public RichSelectOneChoice getCrsStatusSOC() {
+        return crsStatusSOC;
+    }
+
+    public void onClickApprove(ActionEvent actionEvent) {
+        // Add event code here...
+
+        if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_MQM)) {
+            ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_REVIEWED);
+        }
+
+        else if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_TASL)) {
+            ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_MLAPPROVE);
+        }
+
+        else if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_ML)) {
+            ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_APPROVED);
+        }
+        
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0) 
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        else{
+            ADFUtils.showPopup(getCrsApprovePopup());
+            ADFUtils.addPartialTarget(getCrsStateSOC());
+            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+        }
+    }
+
+
+    public void setCrsApprovePopup(RichPopup crsApprovePopup) {
+        this.crsApprovePopup = crsApprovePopup;
+    }
+
+    public RichPopup getCrsApprovePopup() {
+        return crsApprovePopup;
+    }
+
+    public void setWorkflowPanelBox(RichPanelBox workflowPanelBox) {
+        this.workflowPanelBox = workflowPanelBox;
+    }
+
+    public RichPanelBox getWorkflowPanelBox() {
+        return workflowPanelBox;
+    }
+
+    public void onClickSubmitForTASL(ActionEvent actionEvent) {
+        // Add event code here...
+        if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_BSL)) {
+            
+            ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_TASLAPPROVE);
+            
+            OperationBinding oper = ADFUtils.findOperation("Commit");
+            oper.execute();
+            if (oper.getErrors().size() > 0)
+                ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
+                                          FacesMessage.SEVERITY_ERROR);
+            else {
+                ADFUtils.showPopup(getCrsApprovePopup());
+                ADFUtils.addPartialTarget(getCrsStateSOC());
+                ADFUtils.addPartialTarget(getWorkflowPanelBox());
+            }
+        }
+    }
+
+    public void onClickReject(ActionEvent actionEvent) {
+        // Add event code here...
+        if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_TASL)) {
+            String taslComments = (String)ADFUtils.evaluateEL("#{bindings.TaslRejectComment.inputValue}");
+            if (taslComments==null || (taslComments != null && "".equals(taslComments.trim()))){
+                ADFUtils.showFacesMessage("Please enter your comments for rejection and click on Reject.",
+                                          FacesMessage.SEVERITY_ERROR, getTaslCommentsInputText());                
+                return;
+            }
+        }
+
+        if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_ML)) {
+            String mlComments = (String)ADFUtils.evaluateEL("#{bindings.MedicalLeadRejectComment.inputValue}");
+            if (mlComments==null || (mlComments != null && "".equals(mlComments.trim()))){
+                ADFUtils.showFacesMessage("Please enter your comments for rejection and click on Reject.",
+                                          FacesMessage.SEVERITY_ERROR, getMlCommentsInputText());
+            return;
+            }
+        }
+
+        ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_DRAFT);
+
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0)
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        else {
+            ADFUtils.showPopup(getCrsApprovePopup());
+            ADFUtils.addPartialTarget(getCrsStateSOC());
+            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+        }
+
+    }
+
+    public void setCrsRejectPopup(RichPopup crsRejectPopup) {
+        this.crsRejectPopup = crsRejectPopup;
+    }
+
+    public RichPopup getCrsRejectPopup() {
+        return crsRejectPopup;
+    }
+
+    public void setTaslCommentsInputText(RichInputText taslCommentsInputText) {
+        this.taslCommentsInputText = taslCommentsInputText;
+    }
+
+    public RichInputText getTaslCommentsInputText() {
+        return taslCommentsInputText;
+    }
+
+    public void setMlCommentsInputText(RichInputText mlCommentsInputText) {
+        this.mlCommentsInputText = mlCommentsInputText;
+    }
+
+    public RichInputText getMlCommentsInputText() {
+        return mlCommentsInputText;
     }
 
     public void setDictionary(String dictionary) {

@@ -110,6 +110,11 @@
         <Item Value="MedicalLeadRejectComment"/>
       </AttrNames>
     </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="EntityState">
+      <AttrNames>
+        <Item Value="EntityState"/>
+      </AttrNames>
+    </attributeValues>
     <attributeValues IterBinding="CrsContentVOIterator"
                      id="ReviewApproveRequiredFlag">
       <AttrNames>

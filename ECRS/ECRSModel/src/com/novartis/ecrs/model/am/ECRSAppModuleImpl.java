@@ -161,13 +161,13 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             whereClause +=
                     "STATE_ID =" + row.getState() + " AND ";
         else if(isInboxDisable){
-            if(ModelConstants.USER_IN_ROLE_MQM.equals(userInRole))
+            if(ModelConstants.ROLE_MQM.equals(userInRole))
                 whereClause +=
                         "STATE_ID IN (2,3) AND ";
-            if(ModelConstants.USER_IN_ROLE_TASL.equals(userInRole))
+            if(ModelConstants.ROLE_TASL.equals(userInRole))
                 whereClause +=
                         "STATE_ID = 4 AND ";
-            if(ModelConstants.USER_IN_ROLE_ML.equals(userInRole))
+            if(ModelConstants.ROLE_ML.equals(userInRole))
                 whereClause +=
                         "STATE_ID = 5 AND ";
         }
