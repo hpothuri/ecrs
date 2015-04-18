@@ -95,5 +95,20 @@
                   MethodName="initRiskRelation" IsViewObjectMethod="false">
       <NamedData NDName="crsId" NDType="java.lang.Long"/>
     </methodAction>
+    <attributeValues IterBinding="CrsContentVOIterator" id="MqmComment">
+      <AttrNames>
+        <Item Value="MqmComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="TaslRejectComment">
+      <AttrNames>
+        <Item Value="TaslRejectComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="MedicalLeadRejectComment">
+      <AttrNames>
+        <Item Value="MedicalLeadRejectComment"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

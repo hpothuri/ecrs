@@ -199,6 +199,34 @@
                         </f:facet>
                     </af:panelGroupLayout>
                 </f:facet>
+                <af:panelFormLayout id="pfl2" styleClass="AFStretchWidth" rows="3" maxColumns="1" fieldWidth="10"
+                                    labelWidth="90">
+                    <af:inputText value="#{bindings.MqmComment.inputValue}"
+                                  required="#{bindings.MqmComment.hints.mandatory}"
+                                  columns="#{bindings.MqmComment.hints.displayWidth}"
+                                  maximumLength="#{bindings.MqmComment.hints.precision}"
+                                  shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it7"
+                                  styleClass="AFStretchWidth" contentStyle="width:100%;"
+                                  label="#{ecrsviewcontrollerBundle.MQM_COMMENT}" rows="3">
+                        <f:validator binding="#{bindings.MqmComment.validator}"/>
+                    </af:inputText>
+                    <af:inputText value="#{bindings.TaslRejectComment.inputValue}"
+                                  required="#{bindings.TaslRejectComment.hints.mandatory}"
+                                  columns="#{bindings.TaslRejectComment.hints.displayWidth}"
+                                  maximumLength="#{bindings.TaslRejectComment.hints.precision}"
+                                  shortDesc="#{bindings.TaslRejectComment.hints.tooltip}" id="it8"
+                                  label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}" rows="3">
+                        <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
+                    </af:inputText>
+                    <af:inputText value="#{bindings.MedicalLeadRejectComment.inputValue}"
+                                  required="#{bindings.MedicalLeadRejectComment.hints.mandatory}"
+                                  columns="#{bindings.MedicalLeadRejectComment.hints.displayWidth}"
+                                  maximumLength="#{bindings.MedicalLeadRejectComment.hints.precision}"
+                                  shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}" id="it9"
+                                  label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}" rows="3">
+                        <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
+                    </af:inputText>
+                </af:panelFormLayout>
             </af:panelBox>
             <af:panelGroupLayout id="pgl6" layout="horizontal">
                 <af:commandButton text="#{ecrsviewcontrollerBundle.BACK}"
