@@ -19,13 +19,22 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
     }
 
 
+    public void copyRoutineDefinition(Long crsId) {
+        Object _ret = this.riInvokeExportedMethod(this,"copyRoutineDefinition",new String [] {"java.lang.Long"},new Object[] {crsId});
+        return;
+    }
+
+    public List fetchDatabases() {
+        Object _ret = this.riInvokeExportedMethod(this,"fetchDatabases",null,null);
+        return (List)_ret;
+    }
+
     public List fetchDesignees() {
         Object _ret = this.riInvokeExportedMethod(this,"fetchDesignees",null,null);
         return (List)_ret;
     }
 
-    public void filterCRSContent(String userInRole, String userName,
-                                 boolean isInboxDisable) {
+    public void filterCRSContent(String userInRole, String userName, boolean isInboxDisable) {
         Object _ret =
             this.riInvokeExportedMethod(this,"filterCRSContent",new String [] {"java.lang.String","java.lang.String","boolean"},new Object[] {userInRole, userName, new Boolean(isInboxDisable)});
         return;

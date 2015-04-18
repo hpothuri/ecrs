@@ -21,7 +21,7 @@
                                       rows="#{bindings.CRSCountPerMeddraReportVO.rangeSize}"
                                       emptyText="#{bindings.CRSCountPerMeddraReportVO.viewable ? 'No data to display.' : 'Access Denied.'}"
                                       fetchSize="#{bindings.CRSCountPerMeddraReportVO.rangeSize}" rowBandingInterval="0"
-                                      id="t1">
+                                      id="t1" styleClass="AFStretchWidth" columnStretching="column:c1">
                                 <af:column sortProperty="#{bindings.CRSCountPerMeddraReportVO.hints.MeddraTerm.name}"
                                            sortable="true" headerText="#{ecrsviewcontrollerBundle.MEDDRA_COMPONENT}"
                                            id="c1">

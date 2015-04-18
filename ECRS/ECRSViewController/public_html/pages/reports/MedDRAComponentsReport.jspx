@@ -30,10 +30,9 @@
                                               rowBandingInterval="0"
                                               filterModel="#{bindings.MedDRAComponentsReportQuery.queryDescriptor}"
                                               queryListener="#{bindings.MedDRAComponentsReportQuery.processQuery}"
-                                              filterVisible="true"
                                               varStatus="vs" id="t1"
                                               columnStretching="column:c6"
-                                              styleClass="AFStretchWidth">
+                                              styleClass="AFStretchWidth" columnBandingInterval="0">
                                         <af:column sortProperty="#{bindings.MedDRAComponentsReport.hints.MeddraTerm.name}"
                                                    filterable="true"
                                                    sortable="true"

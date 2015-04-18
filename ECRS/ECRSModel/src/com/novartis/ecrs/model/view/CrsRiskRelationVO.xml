@@ -8,22 +8,15 @@
   SelectList="CrsRiskRelationsEO.CRS_ID, 
        CrsRiskRelationsEO.CRS_RISK_ID, 
        CrsRiskRelationsEO.DATA_DOMAIN, 
-       CrsRiskRelationsEO.DATABASE_ID, 
        CrsRiskRelationsEO.MQM_COMMENT, 
        CrsRiskRelationsEO.NON_MEDDRA_COMPONENT_COMMENT, 
-       CrsRiskRelationsEO.RISK_PURPOSE_CD_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_DS_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_ER_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_IB_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_MI_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_OS_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_PS_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_RM_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_SP_FLAG, 
        CrsRiskRelationsEO.SAFETY_TOPIC_OF_INTEREST, 
        CrsRiskRelationsEO.SOC_DICT_CONTENT_ENTRY_TS, 
        CrsRiskRelationsEO.SOC_DICT_CONTENT_ID, 
-       CrsRiskRelationsEO.SOC_TERM"
+       CrsRiskRelationsEO.SOC_TERM, 
+       CrsRiskRelationsEO.UI_VERSION_NUMBER, 
+       CrsRiskRelationsEO.DATABASE_LIST, 
+       CrsRiskRelationsEO.RISK_PURPOSE_LIST"
   FromList="CRS_RISK_RELATIONS CrsRiskRelationsEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -282,6 +275,28 @@
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
+  <ViewAttribute
+    Name="UiVersionNumber"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="UiVersionNumber"
+    EntityUsage="CrsRiskRelationsEO"
+    AliasName="UI_VERSION_NUMBER"/>
+  <ViewAttribute
+    Name="DatabaseList"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="DatabaseList"
+    EntityUsage="CrsRiskRelationsEO"
+    AliasName="DATABASE_LIST"/>
+  <ViewAttribute
+    Name="RiskPurposeList"
+    IsUnique="true"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RiskPurposeList"
+    EntityUsage="CrsRiskRelationsEO"
+    AliasName="RISK_PURPOSE_LIST"/>
   <ViewLinkAccessor
     Name="CrsRiskDefinitionsVO"
     ViewLink="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

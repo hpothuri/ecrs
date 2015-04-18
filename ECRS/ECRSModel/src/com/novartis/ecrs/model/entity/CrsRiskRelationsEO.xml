@@ -44,135 +44,126 @@
   </Attribute>
   <Attribute
     Name="RiskPurposeSpFlag"
-    IsUnique="true"
-    IsNotNull="true"
     Precision="1"
-    ColumnName="RISK_PURPOSE_SP_FLAG"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="VARCHAR"
     Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS"
-    DefaultValue="N">
+    ColumnType="$none$"
+    DefaultValue="N"
+    IsQueriable="false"
+    IsPersistent="false">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
   </Attribute>
   <Attribute
     Name="RiskPurposeDsFlag"
-    IsUnique="true"
-    IsNotNull="true"
     Precision="1"
-    ColumnName="RISK_PURPOSE_DS_FLAG"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="VARCHAR"
     Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS"
-    DefaultValue="N">
+    ColumnType="$none$"
+    DefaultValue="N"
+    IsQueriable="false"
+    IsPersistent="false">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
   </Attribute>
   <Attribute
     Name="RiskPurposeRmFlag"
-    IsUnique="true"
-    IsNotNull="true"
     Precision="1"
-    ColumnName="RISK_PURPOSE_RM_FLAG"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="VARCHAR"
     Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS"
-    DefaultValue="N">
+    ColumnType="$none$"
+    DefaultValue="N"
+    IsQueriable="false"
+    IsPersistent="false">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
   </Attribute>
   <Attribute
     Name="RiskPurposePsFlag"
-    IsUnique="true"
-    IsNotNull="true"
     Precision="1"
-    ColumnName="RISK_PURPOSE_PS_FLAG"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="VARCHAR"
     Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS"
-    DefaultValue="N">
+    ColumnType="$none$"
+    DefaultValue="N"
+    IsQueriable="false"
+    IsPersistent="false">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
   </Attribute>
   <Attribute
     Name="RiskPurposeCdFlag"
-    IsUnique="true"
-    IsNotNull="true"
     Precision="1"
-    ColumnName="RISK_PURPOSE_CD_FLAG"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="VARCHAR"
     Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS"
-    DefaultValue="N">
+    ColumnType="$none$"
+    DefaultValue="N"
+    IsQueriable="false"
+    IsPersistent="false">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
   </Attribute>
   <Attribute
     Name="RiskPurposeIbFlag"
-    IsUnique="true"
-    IsNotNull="true"
     Precision="1"
-    ColumnName="RISK_PURPOSE_IB_FLAG"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="VARCHAR"
     Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS"
-    DefaultValue="N">
+    ColumnType="$none$"
+    DefaultValue="N"
+    IsQueriable="false"
+    IsPersistent="false">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
   </Attribute>
   <Attribute
     Name="RiskPurposeOsFlag"
-    IsUnique="true"
-    IsNotNull="true"
     Precision="1"
-    ColumnName="RISK_PURPOSE_OS_FLAG"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="VARCHAR"
     Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS"
-    DefaultValue="N">
+    ColumnType="$none$"
+    DefaultValue="N"
+    IsQueriable="false"
+    IsPersistent="false">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
   </Attribute>
   <Attribute
     Name="RiskPurposeMiFlag"
-    IsUnique="true"
-    IsNotNull="true"
     Precision="1"
-    ColumnName="RISK_PURPOSE_MI_FLAG"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="VARCHAR"
     Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS"
-    DefaultValue="N">
+    ColumnType="$none$"
+    DefaultValue="N"
+    IsQueriable="false"
+    IsPersistent="false">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
   </Attribute>
   <Attribute
     Name="RiskPurposeErFlag"
-    IsUnique="true"
-    IsNotNull="true"
     Precision="1"
-    ColumnName="RISK_PURPOSE_ER_FLAG"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="VARCHAR"
     Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS"
-    DefaultValue="N">
+    ColumnType="$none$"
+    DefaultValue="N"
+    IsQueriable="false"
+    IsPersistent="false">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
@@ -189,14 +180,14 @@
     TableName="CRS_RISK_RELATIONS"/>
   <Attribute
     Name="DatabaseId"
-    IsNotNull="true"
     Precision="5"
     Scale="0"
-    ColumnName="DATABASE_ID"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="NUMERIC"
     Type="java.lang.Integer"
-    ColumnType="NUMBER"
-    TableName="CRS_RISK_RELATIONS"/>
+    ColumnType="$none$"
+    IsQueriable="false"
+    IsPersistent="false"/>
   <Attribute
     Name="DataDomain"
     IsNotNull="true"
@@ -262,6 +253,43 @@
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
     TableName="CRS_RISK_RELATIONS"/>
+  <Attribute
+    Name="RiskPurposeList"
+    IsUnique="true"
+    IsNotNull="true"
+    Precision="40"
+    ColumnName="RISK_PURPOSE_LIST"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_RELATIONS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="DatabaseList"
+    IsNotNull="true"
+    Precision="40"
+    ColumnName="DATABASE_LIST"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_RELATIONS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UiVersionNumber"
+    Precision="5"
+    Scale="0"
+    ColumnName="UI_VERSION_NUMBER"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="CRS_RISK_RELATIONS"
+    HistoryColumn="VersionHistory"/>
   <AccessorAttribute
     Name="CrsContentEO"
     Association="com.novartis.ecrs.model.entity.assoc.CrsRiskRelationsIdxCrsFkAssoc"
@@ -269,6 +297,15 @@
     AssociationOtherEnd="com.novartis.ecrs.model.entity.assoc.CrsRiskRelationsIdxCrsFkAssoc.CrsRiskRelationsEO"
     Type="com.novartis.ecrs.model.entity.CrsContentEOImpl"
     IsUpdateable="true"/>
+  <Key
+    Name="CrsRiskRelationsChkDom">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_CHK_DOM"/>
+      <Attr Name="_checkCondition" Value="DATA_DOMAIN IN ('MEDDRA', 'OTHER')"/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
   <Key
     Name="CrsRiskRelationsIdxIdPk"
     PrimaryKey="true">
@@ -287,15 +324,6 @@
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.SafetyTopicOfInterest"/>
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.RiskPurposeSpFlag"/>
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.RiskPurposeDsFlag"/>
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.RiskPurposeRmFlag"/>
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.RiskPurposePsFlag"/>
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.RiskPurposeCdFlag"/>
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.RiskPurposeIbFlag"/>
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.RiskPurposeOsFlag"/>
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.RiskPurposeMiFlag"/>
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.RiskPurposeErFlag"/>
     </AttrArray>
   </Key>
   <Key
@@ -307,17 +335,6 @@
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.CrsId"/>
-    </AttrArray>
-  </Key>
-  <Key
-    Name="CrsRiskRelationsIdxDbFk">
-    <DesignTime>
-      <Attr Name="_referencedKey" Value="CRS_DATABASES_IDX_PK"/>
-      <Attr Name="_isForeign" Value="true"/>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_IDX_DB_FK"/>
-    </DesignTime>
-    <AttrArray Name="Attributes">
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.DatabaseId"/>
     </AttrArray>
   </Key>
 </Entity>

@@ -18,70 +18,82 @@
         ResId="com.novartis.ecrs.model.view.CrsRiskVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
-  <SQLQuery><![CDATA[SELECT CrsRiskRelationsEO.CRS_ID, 
-       CrsRiskRelationsEO.CRS_RISK_ID, 
-       CrsRiskRelationsEO.DATA_DOMAIN, 
-       CrsRiskRelationsEO.DATABASE_ID, 
-       CrsRiskRelationsEO.MQM_COMMENT, 
-       CrsRiskRelationsEO.NON_MEDDRA_COMPONENT_COMMENT, 
-       CrsRiskRelationsEO.RISK_PURPOSE_CD_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_DS_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_ER_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_IB_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_MI_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_OS_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_PS_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_RM_FLAG, 
-       CrsRiskRelationsEO.RISK_PURPOSE_SP_FLAG, 
-       CrsRiskRelationsEO.SAFETY_TOPIC_OF_INTEREST, 
-       CrsRiskRelationsEO.SOC_DICT_CONTENT_ENTRY_TS, 
-       CrsRiskRelationsEO.SOC_DICT_CONTENT_ID, 
-       CrsRiskRelationsEO.SOC_TERM, 
-       CrsRiskDefinitionsEO.CRS_RISK_DEFN_ID, 
-       CrsRiskDefinitionsEO.CRS_RISK_ID AS CRS_RISK_ID1, 
-       CrsRiskDefinitionsEO.MEDDRA_CODE, 
-       CrsRiskDefinitionsEO.MEDDRA_LEVEL, 
-       CrsRiskDefinitionsEO.MEDDRA_QUALIFIER, 
-       CrsRiskDefinitionsEO.MEDDRA_TERM, 
-       CrsRiskDefinitionsEO.MEDDRA_VERSION, 
-       CrsRiskDefinitionsEO.MEDDRA_VERSION_DATE, 
-       CrsRiskDefinitionsEO.SEARCH_CRITERIA_DETAILS, 
-       CrsRiskDefinitionsEO.TMS_DICT_CONTENT_ENTRY_TS, 
-       CrsRiskDefinitionsEO.TMS_DICT_CONTENT_ID, 
-       CrsRiskDefinitionsEO.TMS_END_TS, 
-       CrsRiskDefinitionsEO.TMS_UPDATE_FLAG, 
-       CrsRiskDefinitionsEO.TMS_UPDATE_FLAG_DT
-FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefinitionsEO WHERE CrsRiskRelationsEO.CRS_RISK_ID = CrsRiskDefinitionsEO.CRS_RISK_ID(+)]]></SQLQuery>
-  <EntityUsage
-    Name="CrsRiskRelationsEO"
-    Entity="com.novartis.ecrs.model.entity.CrsRiskRelationsEO"/>
-  <EntityUsage
-    Name="CrsRiskDefinitionsEO"
-    Entity="com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO"
-    SourceUsage="com.novartis.ecrs.model.view.CrsRiskVO.CrsRiskRelationsEO"
-    Reference="true"
-    DeleteParticipant="false"/>
+  <SQLQuery><![CDATA[SELECT CRS_ID,
+CRS_RISK_ID,
+DATA_DOMAIN,
+DATABASE_LIST,
+MQM_COMMENT,
+NON_MEDDRA_COMPONENT_COMMENT,
+RISK_PURPOSE_CD_FLAG, 
+RISK_PURPOSE_DS_FLAG, 
+RISK_PURPOSE_ER_FLAG, 
+RISK_PURPOSE_IB_FLAG, 
+RISK_PURPOSE_MI_FLAG, 
+RISK_PURPOSE_OS_FLAG, 
+RISK_PURPOSE_PS_FLAG, 
+RISK_PURPOSE_RM_FLAG, 
+RISK_PURPOSE_SP_FLAG,
+SAFETY_TOPIC_OF_INTEREST, 
+SOC_DICT_CONTENT_ENTRY_TS, 
+SOC_DICT_CONTENT_ID, 
+SOC_TERM, 
+CRS_RISK_DEFN_ID,
+MEDDRA_CODE, 
+MEDDRA_LEVEL, 
+MEDDRA_QUALIFIER, 
+MEDDRA_TERM, 
+MEDDRA_VERSION, 
+MEDDRA_VERSION_DATE, 
+SEARCH_CRITERIA_DETAILS, 
+TMS_DICT_CONTENT_ENTRY_TS, 
+TMS_DICT_CONTENT_ID, 
+TMS_END_TS, 
+TMS_UPDATE_FLAG, 
+TMS_UPDATE_FLAG_DT,
+DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'CD,') || DECODE(RISK_PURPOSE_DS_FLAG, 'Y', 'DS,') ||
+DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'ER,') || DECODE(RISK_PURPOSE_DS_FLAG, 'Y', 'IB,') ||
+DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'MI,') || DECODE(RISK_PURPOSE_DS_FLAG, 'Y', 'OS,') ||
+DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'PS,') || DECODE(RISK_PURPOSE_DS_FLAG, 'Y', 'RM,') ||
+DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'SP,') AS RISK_PURPOSE_LIST
+FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
   <ViewAttribute
     Name="CrsId"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="CrsId"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="CRS_ID"/>
+    Precision="10"
+    Scale="0"
+    Type="java.lang.Long"
+    ColumnType="NUMBER"
+    AliasName="CRS_ID"
+    Expression="CRS_ID"
+    SQLType="NUMERIC"/>
   <ViewAttribute
     Name="CrsRiskId"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="CrsRiskId"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="CRS_RISK_ID"/>
+    Precision="10"
+    Scale="0"
+    Type="java.lang.Long"
+    ColumnType="NUMBER"
+    AliasName="CRS_RISK_ID"
+    Expression="CRS_RISK_ID"
+    SQLType="NUMERIC"/>
   <ViewAttribute
     Name="DataDomain"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="DataDomain"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="DATA_DOMAIN">
+    Precision="30"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="DATA_DOMAIN"
+    Expression="DATA_DOMAIN"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -90,25 +102,40 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
     </Properties>
   </ViewAttribute>
   <ViewAttribute
-    Name="DatabaseId"
-    IsNotNull="true"
+    Name="DatabaseList"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="DatabaseId"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="DATABASE_ID">
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="DATABASE_LIST"
+    Expression="DATABASE_LIST"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
-          ResId="com.novartis.ecrs.model.view.CrsRiskVO.DatabaseId_LABEL"/>
+          ResId="com.novartis.ecrs.model.view.CrsRiskVO.DatabaseList_LABEL"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="MqmComment"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="MqmComment"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="MQM_COMMENT">
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MQM_COMMENT"
+    Expression="MQM_COMMENT"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -118,19 +145,33 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="NonMeddraComponentComment"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="NonMeddraComponentComment"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="NON_MEDDRA_COMPONENT_COMMENT"/>
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="NON_MEDDRA_COMPONENT_COMMENT"
+    Expression="NON_MEDDRA_COMPONENT_COMMENT"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </ViewAttribute>
   <ViewAttribute
     Name="RiskPurposeCdFlag"
-    IsUnique="true"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="RiskPurposeCdFlag"
-    EntityUsage="CrsRiskRelationsEO"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
     AliasName="RISK_PURPOSE_CD_FLAG"
-    DefaultValue="N">
+    Expression="RISK_PURPOSE_CD_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -140,13 +181,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="RiskPurposeDsFlag"
-    IsUnique="true"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="RiskPurposeDsFlag"
-    EntityUsage="CrsRiskRelationsEO"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
     AliasName="RISK_PURPOSE_DS_FLAG"
-    DefaultValue="N">
+    Expression="RISK_PURPOSE_DS_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -156,13 +202,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="RiskPurposeErFlag"
-    IsUnique="true"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="RiskPurposeErFlag"
-    EntityUsage="CrsRiskRelationsEO"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
     AliasName="RISK_PURPOSE_ER_FLAG"
-    DefaultValue="N">
+    Expression="RISK_PURPOSE_ER_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -172,13 +223,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="RiskPurposeIbFlag"
-    IsUnique="true"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="RiskPurposeIbFlag"
-    EntityUsage="CrsRiskRelationsEO"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
     AliasName="RISK_PURPOSE_IB_FLAG"
-    DefaultValue="N">
+    Expression="RISK_PURPOSE_IB_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -188,13 +244,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="RiskPurposeMiFlag"
-    IsUnique="true"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="RiskPurposeMiFlag"
-    EntityUsage="CrsRiskRelationsEO"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
     AliasName="RISK_PURPOSE_MI_FLAG"
-    DefaultValue="N">
+    Expression="RISK_PURPOSE_MI_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -204,13 +265,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="RiskPurposeOsFlag"
-    IsUnique="true"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="RiskPurposeOsFlag"
-    EntityUsage="CrsRiskRelationsEO"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
     AliasName="RISK_PURPOSE_OS_FLAG"
-    DefaultValue="N">
+    Expression="RISK_PURPOSE_OS_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -220,13 +286,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="RiskPurposePsFlag"
-    IsUnique="true"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="RiskPurposePsFlag"
-    EntityUsage="CrsRiskRelationsEO"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
     AliasName="RISK_PURPOSE_PS_FLAG"
-    DefaultValue="N">
+    Expression="RISK_PURPOSE_PS_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -236,13 +307,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="RiskPurposeRmFlag"
-    IsUnique="true"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="RiskPurposeRmFlag"
-    EntityUsage="CrsRiskRelationsEO"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
     AliasName="RISK_PURPOSE_RM_FLAG"
-    DefaultValue="N">
+    Expression="RISK_PURPOSE_RM_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -252,13 +328,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="RiskPurposeSpFlag"
-    IsUnique="true"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="RiskPurposeSpFlag"
-    EntityUsage="CrsRiskRelationsEO"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
     AliasName="RISK_PURPOSE_SP_FLAG"
-    DefaultValue="N">
+    Expression="RISK_PURPOSE_SP_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -268,12 +349,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="SafetyTopicOfInterest"
-    IsUnique="true"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="SafetyTopicOfInterest"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="SAFETY_TOPIC_OF_INTEREST">
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="SAFETY_TOPIC_OF_INTEREST"
+    Expression="SAFETY_TOPIC_OF_INTEREST"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -283,22 +370,40 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="SocDictContentEntryTs"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="SocDictContentEntryTs"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="SOC_DICT_CONTENT_ENTRY_TS"/>
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="SOC_DICT_CONTENT_ENTRY_TS"
+    Expression="SOC_DICT_CONTENT_ENTRY_TS"
+    SQLType="DATE"/>
   <ViewAttribute
     Name="SocDictContentId"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="SocDictContentId"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="SOC_DICT_CONTENT_ID"/>
+    Precision="10"
+    Scale="0"
+    Type="java.lang.Long"
+    ColumnType="NUMBER"
+    AliasName="SOC_DICT_CONTENT_ID"
+    Expression="SOC_DICT_CONTENT_ID"
+    SQLType="NUMERIC"/>
   <ViewAttribute
     Name="SocTerm"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="SocTerm"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="SOC_TERM">
+    Precision="300"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="SOC_TERM"
+    Expression="SOC_TERM"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="300"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -308,25 +413,30 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="CrsRiskDefnId"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="CrsRiskDefnId"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="CRS_RISK_DEFN_ID"/>
-  <ViewAttribute
-    Name="CrsRiskId1"
-    IsNotNull="true"
-    PrecisionRule="true"
-    EntityAttrName="CrsRiskId"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="CRS_RISK_ID1"/>
+    Precision="10"
+    Scale="0"
+    Type="java.lang.Long"
+    ColumnType="NUMBER"
+    AliasName="CRS_RISK_DEFN_ID"
+    Expression="CRS_RISK_DEFN_ID"
+    SQLType="NUMERIC"/>
   <ViewAttribute
     Name="MeddraCode"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="MeddraCode"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="MEDDRA_CODE">
+    Precision="30"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_CODE"
+    Expression="MEDDRA_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -336,11 +446,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="MeddraLevel"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="MeddraLevel"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="MEDDRA_LEVEL">
+    Precision="5"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_LEVEL"
+    Expression="MEDDRA_LEVEL"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="5"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -350,10 +467,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="MeddraQualifier"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="MeddraQualifier"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="MEDDRA_QUALIFIER">
+    Precision="15"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_QUALIFIER"
+    Expression="MEDDRA_QUALIFIER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -363,11 +488,18 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="MeddraTerm"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="MeddraTerm"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="MEDDRA_TERM">
+    Precision="300"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_TERM"
+    Expression="MEDDRA_TERM"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="300"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -377,25 +509,43 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="MeddraVersion"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="MeddraVersion"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="MEDDRA_VERSION"/>
+    Precision="15"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_VERSION"
+    Expression="MEDDRA_VERSION"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
+  </ViewAttribute>
   <ViewAttribute
     Name="MeddraVersionDate"
-    IsNotNull="true"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="MeddraVersionDate"
-    EntityUsage="CrsRiskDefinitionsEO"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
     AliasName="MEDDRA_VERSION_DATE"
-    IsUpdateable="false"/>
+    Expression="MEDDRA_VERSION_DATE"
+    SQLType="DATE"/>
   <ViewAttribute
     Name="SearchCriteriaDetails"
+    IsUpdateable="false"
+    IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="SearchCriteriaDetails"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="SEARCH_CRITERIA_DETAILS">
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="SEARCH_CRITERIA_DETAILS"
+    Expression="SEARCH_CRITERIA_DETAILS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -405,52 +555,82 @@ FROM CRS_RISK_RELATIONS CrsRiskRelationsEO, CRS_RISK_DEFINITIONS CrsRiskDefiniti
   </ViewAttribute>
   <ViewAttribute
     Name="TmsDictContentEntryTs"
-    IsNotNull="true"
-    PrecisionRule="true"
-    EntityAttrName="TmsDictContentEntryTs"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="TMS_DICT_CONTENT_ENTRY_TS"
-    IsUpdateable="false"/>
-  <ViewAttribute
-    Name="TmsDictContentId"
-    IsNotNull="true"
-    PrecisionRule="true"
-    EntityAttrName="TmsDictContentId"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="TMS_DICT_CONTENT_ID"/>
-  <ViewAttribute
-    Name="TmsEndTs"
-    IsNotNull="true"
-    PrecisionRule="true"
-    EntityAttrName="TmsEndTs"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="TMS_END_TS"
-    IsUpdateable="false"/>
-  <ViewAttribute
-    Name="TmsUpdateFlag"
-    IsNotNull="true"
-    PrecisionRule="true"
-    EntityAttrName="TmsUpdateFlag"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="TMS_UPDATE_FLAG"/>
-  <ViewAttribute
-    Name="TmsUpdateFlagDt"
-    IsNotNull="true"
-    PrecisionRule="true"
-    EntityAttrName="TmsUpdateFlagDt"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="TMS_UPDATE_FLAG_DT"
-    IsUpdateable="false"/>
-  <ViewAttribute
-    Name="CrsQualifier"
-    IsQueriable="false"
+    IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    EntityAttrName="CrsQualifier"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName='"Synchronize:Fix_SQL"'/>
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="TMS_DICT_CONTENT_ENTRY_TS"
+    Expression="TMS_DICT_CONTENT_ENTRY_TS"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="TmsDictContentId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="10"
+    Scale="0"
+    Type="java.lang.Long"
+    ColumnType="NUMBER"
+    AliasName="TMS_DICT_CONTENT_ID"
+    Expression="TMS_DICT_CONTENT_ID"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="TmsEndTs"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="TMS_END_TS"
+    Expression="TMS_END_TS"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="TmsUpdateFlag"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TMS_UPDATE_FLAG"
+    Expression="TMS_UPDATE_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TmsUpdateFlagDt"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="TMS_UPDATE_FLAG_DT"
+    Expression="TMS_UPDATE_FLAG_DT"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="RiskPurposeList"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="27"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="RISK_PURPOSE_LIST"
+    Expression="RISK_PURPOSE_LIST"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="27"/>
+    </DesignTime>
+  </ViewAttribute>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>
   </ResourceBundle>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="CrsRiskId"/>
+    <Item Value="CrsRiskDefnId"/>
+  </AttrArray>
 </ViewObject>

@@ -30,10 +30,9 @@
                                           fetchSize="#{bindings.MedDRAStandardReport.rangeSize}"
                                           rowBandingInterval="0"
                                           filterModel="#{bindings.MedDRAStandardReportQuery.queryDescriptor}"
-                                          queryListener="#{bindings.MedDRAStandardReportQuery.processQuery}"
-                                          filterVisible="true" varStatus="vs"
+                                          queryListener="#{bindings.MedDRAStandardReportQuery.processQuery}" varStatus="vs"
                                           id="t1" inlineStyle="width:400px;"
-                                          columnStretching="column:c1">
+                                          columnStretching="column:c1" columnBandingInterval="0">
                                     <af:column sortProperty="#{bindings.MedDRAStandardReport.hints.DefinitionType.name}"
                                                filterable="true" sortable="true"
                                                headerText="#{bindings.MedDRAStandardReport.hints.DefinitionType.label}"

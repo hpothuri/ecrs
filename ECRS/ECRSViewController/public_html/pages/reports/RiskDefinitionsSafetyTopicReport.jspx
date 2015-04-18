@@ -27,8 +27,7 @@
                                       fetchSize="#{bindings.RiskDefSafetyTopicReport.rangeSize}"
                                       rowBandingInterval="0"
                                       filterModel="#{bindings.RiskDefSafetyTopicReportQuery.queryDescriptor}"
-                                      queryListener="#{bindings.RiskDefSafetyTopicReportQuery.processQuery}"
-                                      filterVisible="true" varStatus="vs"
+                                      queryListener="#{bindings.RiskDefSafetyTopicReportQuery.processQuery}" varStatus="vs"
                                       id="t1" columnStretching="column:c1"
                                       styleClass="AFStretchWidth">
                                 <af:column sortProperty="#{bindings.RiskDefSafetyTopicReport.hints.CrsName.name}"

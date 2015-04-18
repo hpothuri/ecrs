@@ -52,6 +52,9 @@ public class ManageCRSBean implements Serializable {
     private RichPopup riskDefPopup;
     private RichTable riskDefTable;
     private RichPopup successPopup;
+    private List<String> selDatabases;
+    private List<SelectItem> databaseList;
+    private List<String> selRiskPurposes;
 
     public ManageCRSBean() {
         super();
@@ -422,6 +425,24 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void saveRiskDefs(ActionEvent actionEvent) {
+        if(selDatabases != null && selDatabases.size() > 0){
+            String databases = "";
+            for(String db : selDatabases){
+                databases = databases + "," + db;
+            }
+            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}", databases.substring(1));
+        } else
+            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}",null);
+        
+        if(selRiskPurposes != null && selRiskPurposes.size() > 0){
+            String riskPurposes = "";
+            for(String riskPurpose : selRiskPurposes){
+                riskPurposes = riskPurposes + "," + riskPurpose;
+            }
+            ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}", riskPurposes.substring(1));
+        } else
+            ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}",null);
+        
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0) 
@@ -488,5 +509,41 @@ public class ManageCRSBean implements Serializable {
      */
     public String getUserName() {
         return userName;
+    }
+
+    public void setSelDatabases(List<String> selDatabases) {
+        this.selDatabases = selDatabases;
+    }
+
+    public List<String> getSelDatabases() {
+        return selDatabases;
+    }
+
+    public void setDatabaseList(List<SelectItem> databaseList) {
+        this.databaseList = databaseList;
+    }
+
+    public List<SelectItem> getDatabaseList() {
+        if(databaseList == null){
+            databaseList = new ArrayList<SelectItem>();
+            DCBindingContainer bc = ADFUtils.getDCBindingContainer();
+            OperationBinding ob = bc.getOperationBinding("fetchDatabases");
+            List<String> databases = (List<String>)ob.execute();
+            if(databases != null && databases.size() > 0){
+                for(String database : databases){
+                    SelectItem item = new SelectItem(database, database);
+                    databaseList.add(item);
+                }
+            }
+        }
+        return databaseList;
+    }
+
+    public void setSelRiskPurposes(List<String> selRiskPurposes) {
+        this.selRiskPurposes = selRiskPurposes;
+    }
+
+    public List<String> getSelRiskPurposes() {
+        return selRiskPurposes;
     }
 }

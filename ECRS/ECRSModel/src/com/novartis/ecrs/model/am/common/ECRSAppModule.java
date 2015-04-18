@@ -14,4 +14,8 @@ public interface ECRSAppModule extends ApplicationModule {
                           boolean isInboxDisable);
 
     void initRiskRelation(Long crsId);
+
+    void copyRoutineDefinition(Long crsId);
+
+    List fetchDatabases();
 }

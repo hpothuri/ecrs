@@ -6,7 +6,7 @@
   <af:panelGroupLayout id="pg32" layout="scroll" halign="start">
         <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
                   id="t1"/>
-    <af:panelHeader text="#{ecrsviewcontrollerBundle.RELATIONS}" id="ph1" styleClass="AFStretchWidth">
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.RELATIONS}" id="ph1" styleClass="AFStretchWidth" size="1">
       <f:facet name="context"/>
       <f:facet name="menuBar"/>
       <f:facet name="toolbar"/>
@@ -35,72 +35,72 @@
               <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeSpFlag.name}" filterable="true"
                          sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeSpFlag.label}" id="c2"
                          width="20">
-                <af:selectBooleanCheckbox value="#{row.bindings.RiskPurposeSpFlag.inputValue}"
-                                          label="#{row.bindings.RiskPurposeSpFlag.label}"
+                <af:selectBooleanCheckbox value="#{bindings.RiskPurposeSpFlag.inputValue}"
+                                          label="#{bindings.RiskPurposeSpFlag.label}"
                                           shortDesc="#{bindings.CrsRiskVO.hints.RiskPurposeSpFlag.tooltip}" id="sbc19"
                                           disabled="true"/>
               </af:column>
               <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeDsFlag.name}" filterable="true"
                          sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeDsFlag.label}" id="c3"
                          width="20">
-                <af:selectBooleanCheckbox value="#{row.bindings.RiskPurposeDsFlag.inputValue}"
-                                          label="#{row.bindings.RiskPurposeDsFlag.label}"
+                <af:selectBooleanCheckbox value="#{bindings.RiskPurposeDsFlag.inputValue}"
+                                          label="#{bindings.RiskPurposeDsFlag.label}"
                                           shortDesc="#{bindings.CrsRiskVO.hints.RiskPurposeDsFlag.tooltip}" id="sbc1"
                                           disabled="true"/>
               </af:column>
               <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeRmFlag.name}" filterable="true"
                          sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeRmFlag.label}" id="c4"
                          width="20">
-                <af:selectBooleanCheckbox value="#{row.bindings.RiskPurposeRmFlag.inputValue}"
-                                          label="#{row.bindings.RiskPurposeRmFlag.label}"
+                <af:selectBooleanCheckbox value="#{bindings.RiskPurposeRmFlag.inputValue}"
+                                          label="#{bindings.RiskPurposeRmFlag.label}"
                                           shortDesc="#{bindings.CrsRiskVO.hints.RiskPurposeRmFlag.tooltip}" id="sbc2"
                                           disabled="true"/>
               </af:column>
               <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposePsFlag.name}" filterable="true"
                          sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposePsFlag.label}" id="c5"
                          width="20">
-                <af:selectBooleanCheckbox value="#{row.bindings.RiskPurposePsFlag.inputValue}"
-                                          label="#{row.bindings.RiskPurposePsFlag.label}"
+                <af:selectBooleanCheckbox value="#{bindings.RiskPurposePsFlag.inputValue}"
+                                          label="#{bindings.RiskPurposePsFlag.label}"
                                           shortDesc="#{bindings.CrsRiskVO.hints.RiskPurposePsFlag.tooltip}" id="sbc3"
                                           disabled="true"/>
               </af:column>
               <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeIbFlag.name}" filterable="true"
                          sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeIbFlag.label}" id="c6"
                          width="20">
-                <af:selectBooleanCheckbox value="#{row.bindings.RiskPurposeIbFlag.inputValue}"
-                                          label="#{row.bindings.RiskPurposeIbFlag.label}"
+                <af:selectBooleanCheckbox value="#{bindings.RiskPurposeIbFlag.inputValue}"
+                                          label="#{bindings.RiskPurposeIbFlag.label}"
                                           shortDesc="#{bindings.CrsRiskVO.hints.RiskPurposeIbFlag.tooltip}" id="sbc4"
                                           disabled="true"/>
               </af:column>
               <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeCdFlag.name}" filterable="true"
                          sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeCdFlag.label}" id="c7"
                          width="20">
-                <af:selectBooleanCheckbox value="#{row.bindings.RiskPurposeCdFlag.inputValue}"
-                                          label="#{row.bindings.RiskPurposeCdFlag.label}"
+                <af:selectBooleanCheckbox value="#{bindings.RiskPurposeCdFlag.inputValue}"
+                                          label="#{bindings.RiskPurposeCdFlag.label}"
                                           shortDesc="#{bindings.CrsRiskVO.hints.RiskPurposeCdFlag.tooltip}" id="sbc5"
                                           disabled="true"/>
               </af:column>
               <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeOsFlag.name}" filterable="true"
                          sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeOsFlag.label}" id="c8"
                          width="20">
-                <af:selectBooleanCheckbox value="#{row.bindings.RiskPurposeOsFlag.inputValue}"
-                                          label="#{row.bindings.RiskPurposeOsFlag.label}"
+                <af:selectBooleanCheckbox value="#{bindings.RiskPurposeOsFlag.inputValue}"
+                                          label="#{bindings.RiskPurposeOsFlag.label}"
                                           shortDesc="#{bindings.CrsRiskVO.hints.RiskPurposeOsFlag.tooltip}" id="sbc6"
                                           disabled="true"/>
               </af:column>
               <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeMiFlag.name}" filterable="true"
                          sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeMiFlag.label}" id="c9"
                          width="20">
-                <af:selectBooleanCheckbox value="#{row.bindings.RiskPurposeMiFlag.inputValue}"
-                                          label="#{row.bindings.RiskPurposeMiFlag.label}"
+                <af:selectBooleanCheckbox value="#{bindings.RiskPurposeMiFlag.inputValue}"
+                                          label="#{bindings.RiskPurposeMiFlag.label}"
                                           shortDesc="#{bindings.CrsRiskVO.hints.RiskPurposeMiFlag.tooltip}" id="sbc7"
                                           disabled="true"/>
               </af:column>
               <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeErFlag.name}" filterable="true"
                          sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeErFlag.label}" id="c10"
                          width="20">
-                <af:selectBooleanCheckbox value="#{row.bindings.RiskPurposeErFlag.inputValue}"
-                                          label="#{row.bindings.RiskPurposeErFlag.label}"
+                <af:selectBooleanCheckbox value="#{bindings.RiskPurposeErFlag.inputValue}"
+                                          label="#{bindings.RiskPurposeErFlag.label}"
                                           shortDesc="#{bindings.CrsRiskVO.hints.RiskPurposeErFlag.tooltip}" id="sbc8"
                                           disabled="true"/>
               </af:column>
@@ -109,12 +109,10 @@
                        headerText="#{ecrsviewcontrollerBundle.SOC_AS_ASSIGNED_TO_THE_ADR}" id="c11">
               <af:outputText value="#{row.SocTerm}" shortDesc="#{bindings.CrsRiskVO.hints.SocTerm.tooltip}" id="ot11"/>
             </af:column>
-            <af:column sortProperty="#{bindings.CrsRiskVO.hints.DatabaseId.name}" filterable="true" sortable="true"
-                       headerText="#{bindings.CrsRiskVO.hints.DatabaseId.label}" id="c12">
-              <af:outputText value="#{row.DatabaseId}" shortDesc="#{bindings.CrsRiskVO.hints.DatabaseId.tooltip}"
-                             id="ot12">
-                <af:convertNumber groupingUsed="false" pattern="#{bindings.CrsRiskVO.hints.DatabaseId.format}"/>
-              </af:outputText>
+            <af:column sortProperty="#{bindings.CrsRiskVO.hints.DatabaseList.name}" filterable="true" sortable="true"
+                       headerText="#{ecrsviewcontrollerBundle.DATABASE}" id="c12">
+              <af:outputText value="#{row.DatabaseList}"
+                             id="ot12"/>
             </af:column>
             <af:column sortProperty="#{bindings.CrsRiskVO.hints.DataDomain.name}" filterable="true" sortable="true"
                        headerText="#{bindings.CrsRiskVO.hints.DataDomain.label}" id="c13">
@@ -201,14 +199,10 @@
                           contentStyle="width:200px;" autoSubmit="true">
               <f:validator binding="#{bindings.SafetyTopicOfInterest.validator}"/>
             </af:inputText>
-            <af:inputText value="#{bindings.DatabaseId.inputValue}" label="#{bindings.DatabaseId.hints.label}"
-                          required="#{bindings.DatabaseId.hints.mandatory}"
-                          columns="#{bindings.DatabaseId.hints.displayWidth}"
-                          maximumLength="#{bindings.DatabaseId.hints.precision}"
-                          shortDesc="#{bindings.DatabaseId.hints.tooltip}" id="it2" autoSubmit="true">
-              <f:validator binding="#{bindings.DatabaseId.validator}"/>
-              <af:convertNumber groupingUsed="false" pattern="#{bindings.DatabaseId.format}"/>
-            </af:inputText>
+            <af:selectManyChoice label="#{ecrsviewcontrollerBundle.DATABASE}" id="smc1"
+                                 value="#{pageFlowScope.manageCRSBean.selDatabases}">
+              <f:selectItems value="#{pageFlowScope.manageCRSBean.databaseList}" id="si3"/>
+            </af:selectManyChoice>
             <af:selectOneChoice label="#{bindings.DataDomain.hints.label}" id="soc1"
                                 value="#{bindings.DataDomain.inputValue}" autoSubmit="true">
               <af:selectItem label="MedDRA" value="MEDDRA" id="si1"/>
@@ -221,44 +215,18 @@
                           autoSubmit="true" required="true">
               <f:validator binding="#{bindings.SocTerm.validator}"/>
             </af:inputText>
-          </af:panelFormLayout>
-          <af:panelFormLayout id="pfl1" maxColumns="9" rows="1" labelAlignment="top">
-            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeSpFlag.inputValue}"
-                                      label="#{bindings.RiskPurposeSpFlag.label}"
-                                      shortDesc="#{bindings.RiskPurposeSpFlag.hints.tooltip}" id="sbc10"
-                                      autoSubmit="true"/>
-            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeDsFlag.inputValue}"
-                                      label="#{bindings.RiskPurposeDsFlag.label}"
-                                      shortDesc="#{bindings.RiskPurposeDsFlag.hints.tooltip}" id="sbc11"
-                                      autoSubmit="true"/>
-            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeRmFlag.inputValue}"
-                                      label="#{bindings.RiskPurposeRmFlag.label}"
-                                      shortDesc="#{bindings.RiskPurposeRmFlag.hints.tooltip}" id="sbc12"
-                                      autoSubmit="true"/>
-            <af:selectBooleanCheckbox value="#{bindings.RiskPurposePsFlag.inputValue}"
-                                      label="#{bindings.RiskPurposePsFlag.label}"
-                                      shortDesc="#{bindings.RiskPurposePsFlag.hints.tooltip}" id="sbc13"
-                                      autoSubmit="true"/>
-            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeIbFlag.inputValue}"
-                                      label="#{bindings.RiskPurposeIbFlag.label}"
-                                      shortDesc="#{bindings.RiskPurposeIbFlag.hints.tooltip}" id="sbc14"
-                                      autoSubmit="true"/>
-            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeCdFlag.inputValue}"
-                                      label="#{bindings.RiskPurposeCdFlag.label}"
-                                      shortDesc="#{bindings.RiskPurposeCdFlag.hints.tooltip}" id="sbc15"
-                                      autoSubmit="true"/>
-            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeOsFlag.inputValue}"
-                                      label="#{bindings.RiskPurposeOsFlag.label}"
-                                      shortDesc="#{bindings.RiskPurposeOsFlag.hints.tooltip}" id="sbc16"
-                                      autoSubmit="true"/>
-            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeMiFlag.inputValue}"
-                                      label="#{bindings.RiskPurposeMiFlag.label}"
-                                      shortDesc="#{bindings.RiskPurposeMiFlag.hints.tooltip}" id="sbc17"
-                                      autoSubmit="true"/>
-            <af:selectBooleanCheckbox value="#{bindings.RiskPurposeErFlag.inputValue}"
-                                      label="#{bindings.RiskPurposeErFlag.label}"
-                                      shortDesc="#{bindings.RiskPurposeErFlag.hints.tooltip}" id="sbc18"
-                                      autoSubmit="true"/>
+            <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc2"
+                                 value="#{pageFlowScope.manageCRSBean.selRiskPurposes}">
+              <af:selectItem label="SP" id="si4" value="SP"/>
+              <af:selectItem label="DS" id="si5" value="DS"/>
+              <af:selectItem label="RM" id="si6" value="RM"/>
+              <af:selectItem label="PS" id="si7" value="PS"/>
+              <af:selectItem label="CD" id="si8" value="CD"/>
+              <af:selectItem label="IB" id="si9" value="IB"/>
+              <af:selectItem label="OS" id="si10" value="OS"/>
+              <af:selectItem label="MI" id="si11" value="MI"/>
+              <af:selectItem label="ER" id="si12" value="ER"/>
+            </af:selectManyChoice>
           </af:panelFormLayout>
           <af:panelFormLayout id="pfl3">
             <af:inputText value="#{bindings.NonMeddraComponentComment.inputValue}"

@@ -208,6 +208,36 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
             }
         }
         ,
+        RiskPurposeList {
+            public Object get(CrsRiskRelationsEOImpl obj) {
+                return obj.getRiskPurposeList();
+            }
+
+            public void put(CrsRiskRelationsEOImpl obj, Object value) {
+                obj.setRiskPurposeList((String)value);
+            }
+        }
+        ,
+        DatabaseList {
+            public Object get(CrsRiskRelationsEOImpl obj) {
+                return obj.getDatabaseList();
+            }
+
+            public void put(CrsRiskRelationsEOImpl obj, Object value) {
+                obj.setDatabaseList((String)value);
+            }
+        }
+        ,
+        UiVersionNumber {
+            public Object get(CrsRiskRelationsEOImpl obj) {
+                return obj.getUiVersionNumber();
+            }
+
+            public void put(CrsRiskRelationsEOImpl obj, Object value) {
+                obj.setUiVersionNumber((Integer)value);
+            }
+        }
+        ,
         CrsContentEO {
             public Object get(CrsRiskRelationsEOImpl obj) {
                 return obj.getCrsContentEO();
@@ -244,6 +274,7 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
             return vals;
         }
     }
+
     public static final int CRSRISKID = AttributesEnum.CrsRiskId.index();
     public static final int SAFETYTOPICOFINTEREST = AttributesEnum.SafetyTopicOfInterest.index();
     public static final int RISKPURPOSESPFLAG = AttributesEnum.RiskPurposeSpFlag.index();
@@ -263,12 +294,22 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
     public static final int SOCTERM = AttributesEnum.SocTerm.index();
     public static final int SOCDICTCONTENTID = AttributesEnum.SocDictContentId.index();
     public static final int SOCDICTCONTENTENTRYTS = AttributesEnum.SocDictContentEntryTs.index();
+    public static final int RISKPURPOSELIST = AttributesEnum.RiskPurposeList.index();
+    public static final int DATABASELIST = AttributesEnum.DatabaseList.index();
+    public static final int UIVERSIONNUMBER = AttributesEnum.UiVersionNumber.index();
     public static final int CRSCONTENTEO = AttributesEnum.CrsContentEO.index();
 
     /**
      * This is the default constructor (do not remove).
      */
     public CrsRiskRelationsEOImpl() {
+    }
+
+    /**
+     * @return the definition object for this instance class.
+     */
+    public static synchronized EntityDefImpl getDefinitionObject() {
+        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsRiskRelationsEO");
     }
 
     /**
@@ -576,6 +617,54 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
     }
 
     /**
+     * Gets the attribute value for RiskPurposeList, using the alias name RiskPurposeList.
+     * @return the value of RiskPurposeList
+     */
+    public String getRiskPurposeList() {
+        return (String)getAttributeInternal(RISKPURPOSELIST);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for RiskPurposeList.
+     * @param value value to set the RiskPurposeList
+     */
+    public void setRiskPurposeList(String value) {
+        setAttributeInternal(RISKPURPOSELIST, value);
+    }
+
+    /**
+     * Gets the attribute value for DatabaseList, using the alias name DatabaseList.
+     * @return the value of DatabaseList
+     */
+    public String getDatabaseList() {
+        return (String)getAttributeInternal(DATABASELIST);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for DatabaseList.
+     * @param value value to set the DatabaseList
+     */
+    public void setDatabaseList(String value) {
+        setAttributeInternal(DATABASELIST, value);
+    }
+
+    /**
+     * Gets the attribute value for UiVersionNumber, using the alias name UiVersionNumber.
+     * @return the value of UiVersionNumber
+     */
+    public Integer getUiVersionNumber() {
+        return (Integer)getAttributeInternal(UIVERSIONNUMBER);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for UiVersionNumber.
+     * @param value value to set the UiVersionNumber
+     */
+    public void setUiVersionNumber(Integer value) {
+        setAttributeInternal(UIVERSIONNUMBER, value);
+    }
+
+    /**
      * getAttrInvokeAccessor: generated method. Do not modify.
      * @param index the index identifying the attribute
      * @param attrDef the attribute
@@ -629,10 +718,5 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
         return new Key(new Object[]{crsRiskId});
     }
 
-    /**
-     * @return the definition object for this instance class.
-     */
-    public static synchronized EntityDefImpl getDefinitionObject() {
-        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsRiskRelationsEO");
-    }
+
 }

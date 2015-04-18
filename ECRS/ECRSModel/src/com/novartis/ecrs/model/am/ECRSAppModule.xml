@@ -81,6 +81,9 @@
   <ViewUsage
     Name="CRSCountPerMeddraReportVO"
     ViewObjectName="com.novartis.ecrs.model.view.report.CRSCountPerMeddraReportVO"/>
+  <ViewUsage
+    Name="CrsDatabasesLOVVO"
+    ViewObjectName="com.novartis.ecrs.model.lov.CrsDatabasesLOVVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"
@@ -117,6 +120,21 @@
       <Parameter
         Name="crsId"
         Type="java.lang.Long"/>
+    </Method>
+    <Method
+      Name="copyRoutineDefinition"
+      MethodName="copyRoutineDefinition">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="crsId"
+        Type="java.lang.Long"/>
+    </Method>
+    <Method
+      Name="fetchDatabases"
+      MethodName="fetchDatabases">
+      <Return
+        Type="java.util.List"/>
     </Method>
   </ClientInterface>
 </AppModule>

@@ -83,4 +83,7 @@ GROUP BY meddra_term,
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>
   </ResourceBundle>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="MeddraTerm"/>
+  </AttrArray>
 </ViewObject>

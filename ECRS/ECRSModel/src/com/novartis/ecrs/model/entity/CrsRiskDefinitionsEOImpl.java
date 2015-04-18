@@ -94,7 +94,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setMeddraVersionDate((Timestamp)value);
+                obj.setAttributeInternal(index(), value);
             }
         }
         ,
@@ -124,7 +124,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setTmsDictContentEntryTs((Timestamp)value);
+                obj.setAttributeInternal(index(), value);
             }
         }
         ,
@@ -134,7 +134,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setTmsEndTs((Timestamp)value);
+                obj.setAttributeInternal(index(), value);
             }
         }
         ,
@@ -154,7 +154,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setTmsUpdateFlagDt((Timestamp)value);
+                obj.setAttributeInternal(index(), value);
             }
         }
         ,
@@ -165,6 +165,16 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
                 obj.setMeddraQualifier((String)value);
+            }
+        }
+        ,
+        UiVersionNumber {
+            public Object get(CrsRiskDefinitionsEOImpl obj) {
+                return obj.getUiVersionNumber();
+            }
+
+            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
+                obj.setUiVersionNumber((Integer)value);
             }
         }
         ;
@@ -194,6 +204,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             return vals;
         }
     }
+
     public static final int CRSRISKDEFNID = AttributesEnum.CrsRiskDefnId.index();
     public static final int CRSRISKID = AttributesEnum.CrsRiskId.index();
     public static final int CRSQUALIFIER = AttributesEnum.CrsQualifier.index();
@@ -209,11 +220,19 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
     public static final int TMSUPDATEFLAG = AttributesEnum.TmsUpdateFlag.index();
     public static final int TMSUPDATEFLAGDT = AttributesEnum.TmsUpdateFlagDt.index();
     public static final int MEDDRAQUALIFIER = AttributesEnum.MeddraQualifier.index();
+    public static final int UIVERSIONNUMBER = AttributesEnum.UiVersionNumber.index();
 
     /**
      * This is the default constructor (do not remove).
      */
     public CrsRiskDefinitionsEOImpl() {
+    }
+
+    /**
+     * @return the definition object for this instance class.
+     */
+    public static synchronized EntityDefImpl getDefinitionObject() {
+        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO");
     }
 
     /**
@@ -336,13 +355,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(MEDDRAVERSIONDATE);
     }
 
-    /**
-     * Sets <code>value</code> as the attribute value for MeddraVersionDate.
-     * @param value value to set the MeddraVersionDate
-     */
-    public void setMeddraVersionDate(Timestamp value) {
-        setAttributeInternal(MEDDRAVERSIONDATE, value);
-    }
 
     /**
      * Gets the attribute value for SearchCriteriaDetails, using the alias name SearchCriteriaDetails.
@@ -384,13 +396,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(TMSDICTCONTENTENTRYTS);
     }
 
-    /**
-     * Sets <code>value</code> as the attribute value for TmsDictContentEntryTs.
-     * @param value value to set the TmsDictContentEntryTs
-     */
-    public void setTmsDictContentEntryTs(Timestamp value) {
-        setAttributeInternal(TMSDICTCONTENTENTRYTS, value);
-    }
 
     /**
      * Gets the attribute value for TmsEndTs, using the alias name TmsEndTs.
@@ -400,13 +405,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(TMSENDTS);
     }
 
-    /**
-     * Sets <code>value</code> as the attribute value for TmsEndTs.
-     * @param value value to set the TmsEndTs
-     */
-    public void setTmsEndTs(Timestamp value) {
-        setAttributeInternal(TMSENDTS, value);
-    }
 
     /**
      * Gets the attribute value for TmsUpdateFlag, using the alias name TmsUpdateFlag.
@@ -432,13 +430,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(TMSUPDATEFLAGDT);
     }
 
-    /**
-     * Sets <code>value</code> as the attribute value for TmsUpdateFlagDt.
-     * @param value value to set the TmsUpdateFlagDt
-     */
-    public void setTmsUpdateFlagDt(Timestamp value) {
-        setAttributeInternal(TMSUPDATEFLAGDT, value);
-    }
 
     /**
      * Gets the attribute value for MeddraQualifier, using the alias name MeddraQualifier.
@@ -454,6 +445,22 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
      */
     public void setMeddraQualifier(String value) {
         setAttributeInternal(MEDDRAQUALIFIER, value);
+    }
+
+    /**
+     * Gets the attribute value for UiVersionNumber, using the alias name UiVersionNumber.
+     * @return the value of UiVersionNumber
+     */
+    public Integer getUiVersionNumber() {
+        return (Integer)getAttributeInternal(UIVERSIONNUMBER);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for UiVersionNumber.
+     * @param value value to set the UiVersionNumber
+     */
+    public void setUiVersionNumber(Integer value) {
+        setAttributeInternal(UIVERSIONNUMBER, value);
     }
 
     /**
@@ -496,10 +503,5 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return new Key(new Object[]{crsRiskDefnId});
     }
 
-    /**
-     * @return the definition object for this instance class.
-     */
-    public static synchronized EntityDefImpl getDefinitionObject() {
-        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO");
-    }
+
 }

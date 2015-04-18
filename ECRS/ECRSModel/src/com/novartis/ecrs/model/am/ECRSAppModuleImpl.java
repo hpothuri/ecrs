@@ -66,6 +66,21 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         }
         return designeeList;
     }
+    
+    public List fetchDatabases(){
+        List<String> databaseList = new ArrayList<String>();
+        ViewObject databaseVO = this.getCrsDatabasesLOVVO();
+        databaseVO.executeQuery();
+        if(databaseVO.getEstimatedRowCount() > 0){
+            RowSetIterator rs = databaseVO.createRowSetIterator(null);
+            while(rs.hasNext()){
+                Row row = rs.next();
+                databaseList.add((String)row.getAttribute("DatabaseName"));
+            }
+            rs.closeRowSetIterator();
+        }
+        return databaseList;
+    }
 
     /**
      * Container's getter for CompoundTransientVO.
@@ -378,16 +393,12 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         Row relationRow = relationVO.createRow();
                         relationRow.setAttribute("CrsId", crsId);
                         relationRow.setAttribute("DataDomain", row.getAttribute("DataDomain"));
-                        relationRow.setAttribute("DatabaseId", row.getAttribute("DatabaseId"));
-                        relationRow.setAttribute("RiskPurposeCdFlag", row.getAttribute("RiskPurposeCdFlag"));
-                        relationRow.setAttribute("RiskPurposeDsFlag", row.getAttribute("RiskPurposeDsFlag"));
-                        relationRow.setAttribute("RiskPurposeErFlag", row.getAttribute("RiskPurposeErFlag"));
-                        relationRow.setAttribute("RiskPurposeIbFlag", row.getAttribute("RiskPurposeIbFlag"));
-                        relationRow.setAttribute("RiskPurposeMiFlag", row.getAttribute("RiskPurposeMiFlag"));
-                        relationRow.setAttribute("RiskPurposeOsFlag", row.getAttribute("RiskPurposeOsFlag"));
-                        relationRow.setAttribute("RiskPurposePsFlag", row.getAttribute("RiskPurposePsFlag"));
-                        relationRow.setAttribute("RiskPurposeRmFlag", row.getAttribute("RiskPurposeRmFlag"));
-                        relationRow.setAttribute("RiskPurposeSpFlag", row.getAttribute("RiskPurposeSpFlag"));
+                        relationRow.setAttribute("DatabaseList", row.getAttribute("DatabaseList"));
+                        String riskPurposeList = (String)row.getAttribute("RiskPurposeList");
+                        if(riskPurposeList != null && riskPurposeList.endsWith(",")){
+                            riskPurposeList = riskPurposeList.substring(0,riskPurposeList.length()-1);
+                        }
+                        relationRow.setAttribute("RiskPurposeList", riskPurposeList);
                         relationRow.setAttribute("SafetyTopicOfInterest", row.getAttribute("SafetyTopicOfInterest"));
                         relationRow.setAttribute("SocDictContentEntryTs", row.getAttribute("SocDictContentEntryTs"));
                         relationRow.setAttribute("SocDictContentId", row.getAttribute("SocDictContentId"));
@@ -438,5 +449,13 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getCRSCountPerMeddraReportVO() {
         return (ViewObjectImpl)findViewObject("CRSCountPerMeddraReportVO");
+    }
+
+    /**
+     * Container's getter for CrsDatabasesLOVVO.
+     * @return CrsDatabasesLOVVO
+     */
+    public ViewObjectImpl getCrsDatabasesLOVVO() {
+        return (ViewObjectImpl)findViewObject("CrsDatabasesLOVVO");
     }
 }

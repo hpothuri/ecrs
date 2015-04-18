@@ -190,11 +190,21 @@
       <Attr Name="_DisplaySize" Value="15"/>
     </DesignTime>
   </Attribute>
+  <Attribute
+    Name="UiVersionNumber"
+    Precision="5"
+    Scale="0"
+    ColumnName="UI_VERSION_NUMBER"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="CRS_RISK_DEFINITIONS"
+    HistoryColumn="VersionHistory"/>
   <Key
     Name="CrsRiskDefnChkQual">
     <DesignTime>
       <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_CHK_QUAL"/>
-      <Attr Name="_checkCondition" Value="TMS_UPDATE_FLAG IN ('BROAD', 'NARROW', 'CHILD NARROW')"/>
+      <Attr Name="_checkCondition" Value="MEDDRA_QUALIFIER IN ('BROAD', 'NARROW', 'CHILD NARROW')"/>
       <Attr Name="_isCheck" Value="true"/>
     </DesignTime>
     <AttrArray Name="Attributes"/>
@@ -223,17 +233,7 @@
     <DesignTime>
       <Attr Name="_isForeign" Value="true"/>
       <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_IDX_RISKID_FK"/>
-    </DesignTime>
-    <AttrArray Name="Attributes">
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO.CrsRiskId"/>
-    </AttrArray>
-  </Key>
-  <Key
-    Name="fk_CrsRiskDefinitionsEO">
-    <DesignTime>
       <Attr Name="_referencedKey" Value="CRS_RISK_RELATIONS_IDX_ID_PK"/>
-      <Attr Name="_isForeign" Value="true"/>
-      <Attr Name="_DBObjectName" Value="FK_CRS_RISK_DEFINITIONS_EO"/>
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO.CrsRiskId"/>
