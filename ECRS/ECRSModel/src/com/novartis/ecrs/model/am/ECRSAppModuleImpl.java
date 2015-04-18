@@ -458,4 +458,12 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public ViewObjectImpl getCrsDatabasesLOVVO() {
         return (ViewObjectImpl)findViewObject("CrsDatabasesLOVVO");
     }
+
+    /**
+     * Container's getter for HierarchySearchVO.
+     * @return HierarchySearchVO
+     */
+    public ViewObjectImpl getHierarchySearchVO() {
+        return (ViewObjectImpl)findViewObject("HierarchySearchVO");
+    }
 }

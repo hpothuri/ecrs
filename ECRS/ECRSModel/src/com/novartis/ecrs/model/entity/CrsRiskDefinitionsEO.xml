@@ -200,6 +200,32 @@
     ColumnType="NUMBER"
     TableName="CRS_RISK_DEFINITIONS"
     HistoryColumn="VersionHistory"/>
+  <Attribute
+    Name="MeddraDict"
+    IsNotNull="true"
+    Precision="10"
+    ColumnName="MEDDRA_DICT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="MeddraExtension"
+    IsNotNull="true"
+    Precision="5"
+    ColumnName="MEDDRA_EXTENSION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="5"/>
+    </DesignTime>
+  </Attribute>
   <Key
     Name="CrsRiskDefnChkQual">
     <DesignTime>

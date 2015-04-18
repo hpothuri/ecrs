@@ -18,7 +18,9 @@
        CrsRiskDefinitionsEO.TMS_DICT_CONTENT_ID, 
        CrsRiskDefinitionsEO.TMS_END_TS, 
        CrsRiskDefinitionsEO.TMS_UPDATE_FLAG, 
-       CrsRiskDefinitionsEO.TMS_UPDATE_FLAG_DT"
+       CrsRiskDefinitionsEO.TMS_UPDATE_FLAG_DT, 
+       CrsRiskDefinitionsEO.MEDDRA_DICT, 
+       CrsRiskDefinitionsEO.MEDDRA_EXTENSION"
   FromList="CRS_RISK_DEFINITIONS CrsRiskDefinitionsEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -33,14 +35,6 @@
   <EntityUsage
     Name="CrsRiskDefinitionsEO"
     Entity="com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO"/>
-  <ViewAttribute
-    Name="CrsQualifier"
-    IsSelected="false"
-    IsQueriable="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    EntityAttrName="CrsQualifier"
-    EntityUsage="CrsRiskDefinitionsEO"/>
   <ViewAttribute
     Name="CrsRiskDefnId"
     IsNotNull="true"
@@ -123,7 +117,8 @@
     PrecisionRule="true"
     EntityAttrName="MeddraVersionDate"
     EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="MEDDRA_VERSION_DATE"/>
+    AliasName="MEDDRA_VERSION_DATE"
+    IsUpdateable="false"/>
   <ViewAttribute
     Name="SearchCriteriaDetails"
     PrecisionRule="true"
@@ -143,7 +138,8 @@
     PrecisionRule="true"
     EntityAttrName="TmsDictContentEntryTs"
     EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="TMS_DICT_CONTENT_ENTRY_TS"/>
+    AliasName="TMS_DICT_CONTENT_ENTRY_TS"
+    IsUpdateable="false"/>
   <ViewAttribute
     Name="TmsDictContentId"
     IsNotNull="true"
@@ -157,7 +153,8 @@
     PrecisionRule="true"
     EntityAttrName="TmsEndTs"
     EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="TMS_END_TS"/>
+    AliasName="TMS_END_TS"
+    IsUpdateable="false"/>
   <ViewAttribute
     Name="TmsUpdateFlag"
     IsNotNull="true"
@@ -171,7 +168,24 @@
     PrecisionRule="true"
     EntityAttrName="TmsUpdateFlagDt"
     EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="TMS_UPDATE_FLAG_DT"/>
+    AliasName="TMS_UPDATE_FLAG_DT"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="MeddraDict"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="MeddraDict"
+    EntityUsage="CrsRiskDefinitionsEO"
+    AliasName="MEDDRA_DICT"
+    DefaultValue="MEDDRA"/>
+  <ViewAttribute
+    Name="MeddraExtension"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="MeddraExtension"
+    EntityUsage="CrsRiskDefinitionsEO"
+    AliasName="MEDDRA_EXTENSION"
+    DefaultValue="EXT"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>

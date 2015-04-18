@@ -174,7 +174,27 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setUiVersionNumber((Integer)value);
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ,
+        MeddraDict {
+            public Object get(CrsRiskDefinitionsEOImpl obj) {
+                return obj.getMeddraDict();
+            }
+
+            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
+                obj.setMeddraDict((String)value);
+            }
+        }
+        ,
+        MeddraExtension {
+            public Object get(CrsRiskDefinitionsEOImpl obj) {
+                return obj.getMeddraExtension();
+            }
+
+            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
+                obj.setMeddraExtension((String)value);
             }
         }
         ;
@@ -205,6 +225,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         }
     }
 
+
     public static final int CRSRISKDEFNID = AttributesEnum.CrsRiskDefnId.index();
     public static final int CRSRISKID = AttributesEnum.CrsRiskId.index();
     public static final int CRSQUALIFIER = AttributesEnum.CrsQualifier.index();
@@ -221,12 +242,15 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
     public static final int TMSUPDATEFLAGDT = AttributesEnum.TmsUpdateFlagDt.index();
     public static final int MEDDRAQUALIFIER = AttributesEnum.MeddraQualifier.index();
     public static final int UIVERSIONNUMBER = AttributesEnum.UiVersionNumber.index();
+    public static final int MEDDRADICT = AttributesEnum.MeddraDict.index();
+    public static final int MEDDRAEXTENSION = AttributesEnum.MeddraExtension.index();
 
     /**
      * This is the default constructor (do not remove).
      */
     public CrsRiskDefinitionsEOImpl() {
     }
+
 
     /**
      * @return the definition object for this instance class.
@@ -455,12 +479,37 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return (Integer)getAttributeInternal(UIVERSIONNUMBER);
     }
 
+
     /**
-     * Sets <code>value</code> as the attribute value for UiVersionNumber.
-     * @param value value to set the UiVersionNumber
+     * Gets the attribute value for MeddraDict, using the alias name MeddraDict.
+     * @return the value of MeddraDict
      */
-    public void setUiVersionNumber(Integer value) {
-        setAttributeInternal(UIVERSIONNUMBER, value);
+    public String getMeddraDict() {
+        return (String)getAttributeInternal(MEDDRADICT);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for MeddraDict.
+     * @param value value to set the MeddraDict
+     */
+    public void setMeddraDict(String value) {
+        setAttributeInternal(MEDDRADICT, value);
+    }
+
+    /**
+     * Gets the attribute value for MeddraExtension, using the alias name MeddraExtension.
+     * @return the value of MeddraExtension
+     */
+    public String getMeddraExtension() {
+        return (String)getAttributeInternal(MEDDRAEXTENSION);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for MeddraExtension.
+     * @param value value to set the MeddraExtension
+     */
+    public void setMeddraExtension(String value) {
+        setAttributeInternal(MEDDRAEXTENSION, value);
     }
 
     /**

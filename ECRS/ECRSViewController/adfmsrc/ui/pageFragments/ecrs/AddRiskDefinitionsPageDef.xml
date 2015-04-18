@@ -11,6 +11,8 @@
               id="CrsRiskRelationVOIterator"/>
     <iterator Binds="CrsRiskDefinitionsVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
               id="CrsRiskDefinitionsVOIterator"/>
+    <iterator Binds="HierarchySearchVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="HierarchySearchVOIterator"/>
   </executables>
   <bindings>
     <tree IterBinding="CrsRiskVOIterator" id="CrsRiskVO">
@@ -205,5 +207,15 @@
         <Item Value="N"/>
       </ValueList>
     </button>
+    <tree IterBinding="HierarchySearchVOIterator" id="HierarchySearchVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.HierarchySearchVO" Name="HierarchySearchVO0">
+        <AttrNames>
+          <Item Value="Mqterm"/>
+          <Item Value="Mqcode"/>
+          <Item Value="Mqlevel"/>
+          <Item Value="Mqcrtev"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
   </bindings>
 </pageDefinition>

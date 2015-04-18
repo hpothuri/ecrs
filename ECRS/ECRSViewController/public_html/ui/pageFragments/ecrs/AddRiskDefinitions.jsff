@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:f="http://java.sun.com/jsf/core"
-          xmlns:c="http://java.sun.com/jsp/jstl/core">
+          xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html">
   <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
   <af:panelGroupLayout id="pg32" layout="scroll" halign="start">
         <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
@@ -199,7 +199,7 @@
               <f:validator binding="#{bindings.SafetyTopicOfInterest.validator}"/>
             </af:inputText>
             <af:selectManyChoice label="#{ecrsviewcontrollerBundle.DATABASE}" id="smc1"
-                                 value="#{pageFlowScope.manageCRSBean.selDatabases}">
+                                 value="#{pageFlowScope.manageCRSBean.selDatabases}" autoSubmit="true">
               <f:selectItems value="#{pageFlowScope.manageCRSBean.databaseList}" id="si3"/>
             </af:selectManyChoice>
             <af:selectOneChoice label="#{bindings.DataDomain.hints.label}" id="soc1"
@@ -215,7 +215,7 @@
               <f:validator binding="#{bindings.SocTerm.validator}"/>
             </af:inputText>
             <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc2"
-                                 value="#{pageFlowScope.manageCRSBean.selRiskPurposes}">
+                                 value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true">
               <af:selectItem label="SP" id="si4" value="SP"/>
               <af:selectItem label="DS" id="si5" value="DS"/>
               <af:selectItem label="RM" id="si6" value="RM"/>
@@ -257,7 +257,8 @@
                       selectedRowKeys="#{bindings.CrsRiskDefinitionsVO.collectionModel.selectedRow}"
                       selectionListener="#{bindings.CrsRiskDefinitionsVO.collectionModel.makeCurrent}"
                       rowSelection="multiple" id="t4" styleClass="AFStretchWidth" partialTriggers="::cb7"
-                      binding="#{pageFlowScope.manageCRSBean.riskDefTable}" contentDelivery="immediate">
+                      binding="#{pageFlowScope.manageCRSBean.riskDefTable}" contentDelivery="immediate"
+                      columnStretching="column:c19">
               <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO.hints.MeddraTerm.name}" sortable="false"
                          headerText="#{bindings.CrsRiskDefinitionsVO.hints.MeddraTerm.label}" id="c19">
                 <af:inputText value="#{row.bindings.MeddraTerm.inputValue}"
@@ -322,6 +323,8 @@
                 <af:commandImageLink id="cil2" icon="/images/delete.png"
                                      actionListener="#{bindings.DeleteRiskDefinition.execute}"/>
               </af:column>
+              <af:collectionDropTarget dropListener="#{pageFlowScope.manageCRSBean.dragDropListener}" actions="COPY"
+                                       modelName="copyRows"/>
             </af:table>
             <f:facet name="secondaryToolbar">
               <af:toolbar id="t5">
@@ -332,7 +335,8 @@
                 <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb5" icon="/images/filesave.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.saveRiskDefs}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" id="cb6"
-                                  icon="/images/hierarchy.gif"/>
+                                  icon="/images/hierarchy.gif" partialSubmit="true"
+                                  actionListener="#{pageFlowScope.manageCRSBean.onClickHierarchySearch}"/>
               </af:toolbar>
             </f:facet>
           </af:panelCollection>
@@ -344,6 +348,65 @@
       <af:dialog id="d2" title="#{ecrsviewcontrollerBundle.INFO}" type="ok">
         <f:facet name="buttonBar"/>
         <af:outputText id="ot5" value="#{ecrsviewcontrollerBundle.SAVED_SUCCESSFULLY}"/>
+      </af:dialog>
+    </af:popup>
+    <af:popup childCreation="deferred" autoCancel="disabled" id="p3" contentDelivery="lazyUncached"
+              binding="#{pageFlowScope.manageCRSBean.hierPopup}">
+      <af:dialog id="d3" title="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" modal="false">
+        <f:facet name="buttonBar"/>
+        <af:panelFormLayout id="pfl1" rows="2" maxColumns="2">
+          <af:selectOneChoice label="#{ecrsviewcontrollerBundle.DICTIONARY}" id="soc2"
+                              value="#{pageFlowScope.manageCRSBean.dictionary}" autoSubmit="true">
+            <af:selectItem label="MedDRA" value="BASE" id="si13"/>
+            <af:selectItem label="Filter" value="FILTER" id="si14"/>
+            <af:selectItem label="NMatSmq" value="NMATSMQ" id="si15"/>
+          </af:selectOneChoice>
+          <af:selectOneChoice label="#{ecrsviewcontrollerBundle.LEVEL}" id="soc3"
+                              value="#{pageFlowScope.manageCRSBean.level}" autoSubmit="true">
+            <af:selectItem label="SMQ 1" value="MQ1" id="si16" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
+            <af:selectItem label="SMQ 2" value="MQ2" id="si48" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
+            <af:selectItem label="SMQ 3" value="MQ3" id="si43" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
+            <af:selectItem label="SMQ 4" value="MQ4" id="si44" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
+            <af:selectItem label="SMQ 5" value="MQ5" id="si45" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
+            <af:selectItem label="Custom 1" value="NMQ1" id="si46" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
+            <af:selectItem label="Custom 2" value="NMQ2" id="si49" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
+            <af:selectItem label="Custom 3" value="NMQ3" id="si47" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
+            <af:selectItem label="Custom 4" value="NMQ4" id="si52" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
+            <af:selectItem label="Custom 5" value="NMQ5" id="si50" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
+            <af:selectItem label="SOC" value="SOC" id="si51"
+                           disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'BASE'}"/>
+            <af:selectItem label="HLGT" value="HLGT" id="si53" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'BASE'}"/>
+            <af:selectItem label="HLT" value="HLT" id="si54" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'BASE'}"/>
+            <af:selectItem label="PT" value="PT" id="si55" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'BASE'}"/>
+          </af:selectOneChoice>
+          <af:inputText label="#{ecrsviewcontrollerBundle.TERM}" id="it2" value="#{pageFlowScope.manageCRSBean.term}"
+                        autoSubmit="true"/>
+          <af:commandButton text="#{ecrsviewcontrollerBundle.SEARCH}" id="cb10" partialSubmit="true"
+                            actionListener="#{pageFlowScope.manageCRSBean.searchHierarchy}"/>
+        </af:panelFormLayout>
+        <af:spacer width="10" height="10" id="s2"/>
+        <af:table value="#{bindings.HierarchySearchVO.collectionModel}" var="row"
+                  rows="#{bindings.HierarchySearchVO.rangeSize}"
+                  emptyText="#{bindings.HierarchySearchVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.HierarchySearchVO.rangeSize}" rowBandingInterval="0"
+                  selectedRowKeys="#{bindings.HierarchySearchVO.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.HierarchySearchVO.collectionModel.makeCurrent}" rowSelection="multiple"
+                  id="t6" styleClass="AFStretchWidth" columnStretching="column:c30">
+          <af:column sortProperty="#{bindings.HierarchySearchVO.hints.Mqterm.name}" sortable="false"
+                     headerText="#{ecrsviewcontrollerBundle.TERM}" id="c30">
+            <af:outputText value="#{row.Mqterm}" shortDesc="#{bindings.HierarchySearchVO.hints.Mqterm.tooltip}"
+                           id="ot6"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.HierarchySearchVO.hints.Mqcode.name}" sortable="false"
+                     headerText="#{ecrsviewcontrollerBundle.CONTENT_CODE}" id="c31" width="150">
+            <af:outputText value="#{row.Mqcode}" shortDesc="#{bindings.HierarchySearchVO.hints.Mqcode.tooltip}"
+                           id="ot7"/>
+          </af:column>
+          <af:column id="c32" width="20">
+            <af:commandButton id="cb9"/>
+          </af:column>
+          <af:dragSource actions="COPY" defaultAction="COPY" discriminant="copyRows"/>
+        </af:table>
       </af:dialog>
     </af:popup>
   </af:panelGroupLayout>

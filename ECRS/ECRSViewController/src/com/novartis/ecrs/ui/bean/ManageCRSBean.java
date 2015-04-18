@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import java.util.Map;
@@ -29,6 +30,11 @@ import oracle.adf.view.rich.component.rich.RichPopup;
 
 import oracle.adf.view.rich.component.rich.data.RichTable;
 
+import oracle.adf.view.rich.context.AdfFacesContext;
+import oracle.adf.view.rich.datatransfer.DataFlavor;
+import oracle.adf.view.rich.datatransfer.Transferable;
+import oracle.adf.view.rich.dnd.DnDAction;
+import oracle.adf.view.rich.event.DropEvent;
 import oracle.adf.view.rich.event.PopupCanceledEvent;
 
 import oracle.binding.OperationBinding;
@@ -55,6 +61,10 @@ public class ManageCRSBean implements Serializable {
     private List<String> selDatabases;
     private List<SelectItem> databaseList;
     private List<String> selRiskPurposes;
+    private String dictionary;
+    private String level;
+    private String term;
+    private RichPopup hierPopup;
 
     public ManageCRSBean() {
         super();
@@ -396,6 +406,28 @@ public class ManageCRSBean implements Serializable {
     public void editRiskDefinition(ActionEvent actionEvent) {
         ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
         Long riskId = (Long)ADFUtils.evaluateEL("#{row.CrsRiskId}");
+        String databaseList = (String)ADFUtils.evaluateEL("#{row.DatabaseList}");
+        List<String> dbList = new ArrayList<String>();
+        if(databaseList != null){
+            String split[] = databaseList.split(",");
+            for(String db : split){
+                dbList.add(db);
+            }
+        }
+        setSelDatabases(dbList);
+        String riskPurposeList = (String)ADFUtils.evaluateEL("#{row.RiskPurposeList}");
+        List<String> rpList = new ArrayList<String>();
+        if(riskPurposeList != null){
+            if(riskPurposeList.endsWith(",")){
+                riskPurposeList = riskPurposeList.substring(0, riskPurposeList.length()-1);
+            }
+            String split[] = riskPurposeList.split(",");
+            for(String rp : split){
+                rpList.add(rp);
+            }
+        }
+        setSelRiskPurposes(rpList);
+        
         Map params = new HashMap<String, Object>();
         params.put("rowKey", riskId);
         try {
@@ -545,5 +577,133 @@ public class ManageCRSBean implements Serializable {
 
     public List<String> getSelRiskPurposes() {
         return selRiskPurposes;
+    }
+
+    public void setDictionary(String dictionary) {
+        this.dictionary = dictionary;
+    }
+
+    public String getDictionary() {
+        return dictionary;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public void searchHierarchy(ActionEvent actionEvent) {
+        DCIteratorBinding iter = ADFUtils.findIterator("HierarchySearchVOIterator");
+        ViewObject hierVO = iter.getViewObject();
+        hierVO.setNamedWhereClauseParam("pTerm", term != null ? term : null);
+        hierVO.setNamedWhereClauseParam("pLevel", level != null ? level : null);
+        hierVO.setNamedWhereClauseParam("pDict", dictionary != null ? dictionary : null);
+        hierVO.executeQuery();
+    }
+
+    public void onClickHierarchySearch(ActionEvent actionEvent) {
+        DCIteratorBinding iter = ADFUtils.findIterator("HierarchySearchVOIterator");
+        ViewObject hierVO = iter.getViewObject();
+        hierVO.executeEmptyRowSet();
+        ADFUtils.showPopup(hierPopup);
+    }
+
+    public void setHierPopup(RichPopup hierPopup) {
+        this.hierPopup = hierPopup;
+    }
+
+    public RichPopup getHierPopup() {
+        return hierPopup;
+    }
+
+    public DnDAction dragDropListener(DropEvent dropEvent) {
+        
+        DCIteratorBinding riskDefIter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
+        ViewObject riskDefVO = riskDefIter.getViewObject();
+        
+        RichTable dragTable = (RichTable)dropEvent.getDragComponent();
+        RichTable dropTable = (RichTable)dropEvent.getDropComponent();
+        String dragNodeVO = null;
+        Transferable t = dropEvent.getTransferable();
+        DataFlavor<RowKeySet> df = DataFlavor.getDataFlavor(RowKeySet.class, "copyRows");
+        RowKeySet rks = t.getData(df);
+        Iterator iter = rks.iterator();
+        
+        Object dragCurrentRowKey = dragTable.getRowKey();
+        Row dragRow = null;
+        while (iter.hasNext()) {
+            List key = (List)iter.next();
+            dragTable.setRowKey(key);
+            JUCtrlHierNodeBinding rowBinding = (JUCtrlHierNodeBinding)dragTable.getRowData();
+            dragRow = rowBinding.getRow();
+            dragNodeVO = dragRow.getStructureDef().getDefName();
+            if (!("HierarchySearchVO".equalsIgnoreCase(dragNodeVO))) {
+                FacesMessage msg =
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Drag and Drop a row from the Hierachy Search Results.");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                return DnDAction.NONE;
+            }
+            else{
+                String term = (String)dragRow.getAttribute("Mqterm");
+                String code = (String)dragRow.getAttribute("Mqcode");
+                String level = (String)dragRow.getAttribute("Mqlevel");
+                String qual = (String)dragRow.getAttribute("Mqcrtev");
+                Row riskDefRow = riskDefVO.createRow();
+                riskDefRow.setAttribute("MeddraCode", code);
+                riskDefRow.setAttribute("MeddraLevel", level);
+                riskDefRow.setAttribute("MeddraTerm", term);
+                if(qual != null && qual.contains("Y_BROAD"))
+                    riskDefRow.setAttribute("MeddraQualifier", "BROAD");
+                else if(qual != null && qual.contains("Y_NARROW"))
+                    riskDefRow.setAttribute("MeddraQualifier", "NARROW");
+                else
+                    riskDefRow.setAttribute("MeddraQualifier", "CHILD NARROW");
+//                meddra_qualifier IN ('BROAD','NARROW','CHILD NARROW')
+                riskDefVO.insertRow(riskDefRow);
+            }
+        }
+        Object currentRowKey = dropTable.getRowKey();
+        List dropRowKey = (List)dropEvent.getDropSite();
+        if (dropRowKey == null) {
+            return DnDAction.NONE;
+        }
+//        dropTable.setRowKey(dropRowKey);
+//        JUCtrlHierNodeBinding dropNode = (JUCtrlHierNodeBinding)dropTable.getRowData();
+//        Row dropRow = dropNode.getRow();
+//        String dropNodeVO = dropRow.getStructureDef().getDefName();
+//        if ("CrsRiskDefinitionsVO".equalsIgnoreCase(dropNodeVO)) {
+//            Long deptId = (Long)dropRow.getAttribute("DepartmentId");
+//            Long oldDeptId = (Long)dragRow.getAttribute("DepartmentId");
+//            if (oldDeptId != deptId) {
+//                dragRow.setAttribute("DepartmentId", deptId);
+//                executeOperation("Commit");
+//            } else {
+//                FacesMessage msg =
+//                    new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Drop an employee on to a different department, he is already from this department.");
+//                FacesContext.getCurrentInstance().addMessage(null, msg);
+//                return DnDAction.NONE;
+//            }
+//        } else {
+//            FacesMessage msg =
+//                new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Drop an employee on to a department to move from department to department.");
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+//            return DnDAction.NONE;
+//        }
+        dropTable.setRowKey(currentRowKey);
+        dragTable.setRowKey(dragCurrentRowKey);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+        return DnDAction.COPY;
     }
 }
