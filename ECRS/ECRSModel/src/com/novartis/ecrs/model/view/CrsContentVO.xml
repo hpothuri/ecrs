@@ -199,6 +199,8 @@
        CrsContentEO.MEDICAL_LEAD_NAME, 
        CrsContentEO.MEDICAL_LEAD_REJECT_COMMENT, 
        CrsContentEO.CRS_EFFECTIVE_DT,
+       CrsContentEO.REVIEW_APPROVE_REQUIRED_FLAG,
+       CrsContentEO.UI_VERSION_NUMBER,
        CrsCompoundEO.COMPOUND_TYPE as CRS_COMPOUND_TYPE
 FROM CRS.CRS_CONTENT CrsContentEO, CRS.CRS_COMPOUNDS CrsCompoundEO
 WHERE CrsContentEO.COMPOUND_ID(+) = CrsCompoundEO.COMPOUND_ID]]></SQLQuery>
@@ -402,6 +404,21 @@ WHERE CrsContentEO.COMPOUND_ID(+) = CrsCompoundEO.COMPOUND_ID]]></SQLQuery>
     EntityAttrName="CrsEffectiveDt"
     EntityUsage="CrsContentEO"
     AliasName="CRS_EFFECTIVE_DT"/>
+  <ViewAttribute
+    Name="ReviewApproveRequiredFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ReviewApproveRequiredFlag"
+    EntityUsage="CrsContentEO"
+    AliasName="REVIEW_APPROVE_REQUIRED_FLAG">
+    <TransientExpression><![CDATA['N']]></TransientExpression>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UiVersionNumber"
+    PrecisionRule="true"
+    EntityAttrName="UiVersionNumber"
+    EntityUsage="CrsContentEO"
+    AliasName="UI_VERSION_NUMBER"/>
   <ViewAttribute
     Name="CrsCompoundType"
     IsUpdateable="false"

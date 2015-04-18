@@ -194,6 +194,26 @@ public class CrsContentVORowImpl extends ViewRowImpl {
             }
         }
         ,
+        ReviewApproveRequiredFlag {
+            public Object get(CrsContentVORowImpl obj) {
+                return obj.getReviewApproveRequiredFlag();
+            }
+
+            public void put(CrsContentVORowImpl obj, Object value) {
+                obj.setReviewApproveRequiredFlag((String)value);
+            }
+        }
+        ,
+        UiVersionNumber {
+            public Object get(CrsContentVORowImpl obj) {
+                return obj.getUiVersionNumber();
+            }
+
+            public void put(CrsContentVORowImpl obj, Object value) {
+                obj.setUiVersionNumber((Integer)value);
+            }
+        }
+        ,
         CrsCompoundType {
             public Object get(CrsContentVORowImpl obj) {
                 return obj.getCrsCompoundType();
@@ -329,6 +349,8 @@ public class CrsContentVORowImpl extends ViewRowImpl {
     public static final int MEDICALLEADNAME = AttributesEnum.MedicalLeadName.index();
     public static final int MEDICALLEADREJECTCOMMENT = AttributesEnum.MedicalLeadRejectComment.index();
     public static final int CRSEFFECTIVEDT = AttributesEnum.CrsEffectiveDt.index();
+    public static final int REVIEWAPPROVEREQUIREDFLAG = AttributesEnum.ReviewApproveRequiredFlag.index();
+    public static final int UIVERSIONNUMBER = AttributesEnum.UiVersionNumber.index();
     public static final int CRSCOMPOUNDTYPE = AttributesEnum.CrsCompoundType.index();
     public static final int COMPOUNDTYPE = AttributesEnum.CompoundType.index();
     public static final int COMPOUNDCODE = AttributesEnum.CompoundCode.index();
@@ -686,6 +708,39 @@ public class CrsContentVORowImpl extends ViewRowImpl {
     public void setCompoundCode(String value) {
         setAttributeInternal(COMPOUNDCODE, value);
     }
+
+    /**
+     * Gets the attribute value for UI_VERSION_NUMBER using the alias name UiVersionNumber.
+     * @return the UI_VERSION_NUMBER
+     */
+    public Integer getUiVersionNumber() {
+        return (Integer) getAttributeInternal(UIVERSIONNUMBER);
+    }
+
+    /**
+     * Sets <code>value</code> as attribute value for UI_VERSION_NUMBER using the alias name UiVersionNumber.
+     * @param value value to set the UI_VERSION_NUMBER
+     */
+    public void setUiVersionNumber(Integer value) {
+        setAttributeInternal(UIVERSIONNUMBER, value);
+    }
+
+    /**
+     * Gets the attribute value for REVIEW_APPROVE_REQUIRED_FLAG using the alias name ReviewApproveRequiredFlag.
+     * @return the REVIEW_APPROVE_REQUIRED_FLAG
+     */
+    public String getReviewApproveRequiredFlag() {
+        return (String) getAttributeInternal(REVIEWAPPROVEREQUIREDFLAG);
+    }
+
+    /**
+     * Sets <code>value</code> as attribute value for REVIEW_APPROVE_REQUIRED_FLAG using the alias name ReviewApproveRequiredFlag.
+     * @param value value to set the REVIEW_APPROVE_REQUIRED_FLAG
+     */
+    public void setReviewApproveRequiredFlag(String value) {
+        setAttributeInternal(REVIEWAPPROVEREQUIREDFLAG, value);
+    }
+
 
     /**
      * Gets the view accessor <code>RowSet</code> CrsCompoundVA.
