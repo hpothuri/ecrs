@@ -182,28 +182,31 @@
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
-  <SQLQuery><![CDATA[SELECT CrsContentEO.CRS_ID, 
-       CrsContentEO.CRS_NAME, 
-       CrsContentEO.STATE_ID, 
-       CrsContentEO.COMPOUND_ID, 
-       CrsContentEO.GENERIC_NAME, 
-       CrsContentEO.TRADE_NAME, 
-       CrsContentEO.INDICATION, 
-       CrsContentEO.IS_MARKETED_FLAG, 
-       CrsContentEO.RELEASE_STATUS_FLAG, 
-       CrsContentEO.BSL_NAME, 
-       CrsContentEO.DESIGNEE, 
-       CrsContentEO.MQM_COMMENT, 
-       CrsContentEO.TASL_NAME, 
-       CrsContentEO.TASL_REJECT_COMMENT, 
-       CrsContentEO.MEDICAL_LEAD_NAME, 
-       CrsContentEO.MEDICAL_LEAD_REJECT_COMMENT, 
-       CrsContentEO.CRS_EFFECTIVE_DT,
-       CrsContentEO.REVIEW_APPROVE_REQUIRED_FLAG,
-       CrsContentEO.UI_VERSION_NUMBER,
-       CrsCompoundEO.COMPOUND_TYPE as CRS_COMPOUND_TYPE
-FROM CRS.CRS_CONTENT CrsContentEO, CRS.CRS_COMPOUNDS CrsCompoundEO
-WHERE CrsContentEO.COMPOUND_ID(+) = CrsCompoundEO.COMPOUND_ID]]></SQLQuery>
+  <SQLQuery><![CDATA[SELECT 
+    CrsContentEO.CRS_ID, 
+    CrsContentEO.CRS_NAME, 
+    CrsContentEO.STATE_ID, 
+    CrsContentEO.COMPOUND_ID, 
+    CrsContentEO.GENERIC_NAME, 
+    CrsContentEO.TRADE_NAME, 
+    CrsContentEO.INDICATION, 
+    CrsContentEO.IS_MARKETED_FLAG, 
+    CrsContentEO.RELEASE_STATUS_FLAG, 
+    CrsContentEO.BSL_NAME, 
+    CrsContentEO.DESIGNEE, 
+    CrsContentEO.MQM_COMMENT, 
+    CrsContentEO.TASL_NAME, 
+    CrsContentEO.TASL_REJECT_COMMENT, 
+    CrsContentEO.MEDICAL_LEAD_NAME, 
+    CrsContentEO.MEDICAL_LEAD_REJECT_COMMENT, 
+    CrsContentEO.CRS_EFFECTIVE_DT, 
+    CrsContentEO.REVIEW_APPROVE_REQUIRED_FLAG, 
+    CrsContentEO.UI_VERSION_NUMBER, 
+    CrsCompoundEO.COMPOUND_TYPE AS CRS_COMPOUND_TYPE, 
+    CrsCompoundEO.COMPOUND_CODE AS CRS_COMPOUND_CODE 
+FROM CRS_CONTENT CrsContentEO,CRS_COMPOUNDS CrsCompoundEO 
+WHERE 
+    CrsContentEO.COMPOUND_ID(+) = CrsCompoundEO.COMPOUND_ID]]></SQLQuery>
   <EntityUsage
     Name="CrsContentEO"
     Entity="com.novartis.ecrs.model.entity.CrsContentEO"/>
@@ -437,6 +440,21 @@ WHERE CrsContentEO.COMPOUND_ID(+) = CrsCompoundEO.COMPOUND_ID]]></SQLQuery>
       <Item
         Value="CompoundId"/>
     </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CrsCompoundCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="15"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CRS_COMPOUND_CODE"
+    Expression="CRS_COMPOUND_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
   </ViewAttribute>
   <ViewAttribute
     Name="CompoundType"

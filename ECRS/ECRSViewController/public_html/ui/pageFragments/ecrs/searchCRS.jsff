@@ -146,8 +146,7 @@
           <af:selectBooleanCheckbox
                                     label="#{ecrsviewcontrollerBundle.INBOX}" id="sbc1"
                                     valueChangeListener="#{pageFlowScope.manageCRSBean.onSelectInbox}"
-                                    autoSubmit="true"
-                                    rendered="#{pageFlowScope.manageCRSBean.loggedInUserRole ne 'BSL'}"/>
+                                    autoSubmit="true"/>
           <af:commandButton text="#{ecrsviewcontrollerBundle.SEARCH}" id="cb1"
                             actionListener="#{pageFlowScope.manageCRSBean.onClickSearch}"/>
           <f:facet name="separator">

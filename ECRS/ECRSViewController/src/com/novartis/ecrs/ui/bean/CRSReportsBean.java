@@ -2,6 +2,7 @@ package com.novartis.ecrs.ui.bean;
 
 
 import com.novartis.ecrs.ui.utility.ADFUtils;
+import com.novartis.ecrs.ui.utility.ExcelExportUtils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,9 +20,6 @@ import oracle.jbo.Row;
 import oracle.security.crypto.util.InvalidFormatException;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -57,7 +55,7 @@ public class CRSReportsBean {
             org.apache.poi.ss.usermodel.Row row = sheet.createRow(count);
             Cell cell = row.createCell((short)2);
             cell.setCellValue("Admin Dashboard Report");
-            setHeaderCellStyle(sheet, count, cell.getColumnIndex(),true);
+            ExcelExportUtils.setHeaderCellStyle(sheet, count, cell.getColumnIndex(), true);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
 
@@ -65,7 +63,7 @@ public class CRSReportsBean {
             org.apache.poi.ss.usermodel.Row row1 = sheet.createRow(count);
             Cell cell1 = row1.createCell((short)2);
             cell1.setCellValue("Number of Compound CRSs");
-            setHeaderCellStyle(sheet, count, cell1.getColumnIndex(),false);
+            ExcelExportUtils.setHeaderCellStyle(sheet, count, cell1.getColumnIndex(), false);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
             DCIteratorBinding compCrsIter =
@@ -89,7 +87,7 @@ public class CRSReportsBean {
             org.apache.poi.ss.usermodel.Row row2 = sheet.createRow(count);
             Cell cell2 = row2.createCell((short)2);
             cell2.setCellValue("Number of saftey topics (independent of CRSs)");
-            setHeaderCellStyle(sheet, count, cell2.getColumnIndex(),false);
+            ExcelExportUtils.setHeaderCellStyle(sheet, count, cell2.getColumnIndex(), false);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
             DCIteratorBinding safetyTopicIter =
@@ -110,7 +108,7 @@ public class CRSReportsBean {
             org.apache.poi.ss.usermodel.Row row3 = sheet.createRow(count);
             Cell cell3 = row3.createCell((short)2);
             cell3.setCellValue("Number of ADRs (CDSs)");
-            setHeaderCellStyle(sheet, count, cell3.getColumnIndex(),false);
+            ExcelExportUtils.setHeaderCellStyle(sheet, count, cell3.getColumnIndex(), false);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
             DCIteratorBinding adrIter =
@@ -176,27 +174,44 @@ public class CRSReportsBean {
         return input;
     }
 
+    /**
+     * @param facesContext
+     * @param outputStream
+     * @throws IOException
+     */
+    public void downloadRiskDefReport(FacesContext facesContext,
+                                      OutputStream outputStream) throws IOException {
+        // Add event code here...
+        //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
+        Workbook workbook = null;
+        InputStream excelInputStream = getExcelInpStream();
+        try {
+            //create sheet
+            //            org.apache.poi.ss.usermodel.Row row = null;
+            //            Cell cell = null;
+            workbook = WorkbookFactory.create(excelInputStream);
 
-    private static void setHeaderCellStyle(Sheet sheet, int rowIndex,
-                                           int cellIndex,
-                                           boolean isAdminTitle) {
-        org.apache.poi.ss.usermodel.Row row = sheet.getRow((short)rowIndex);
-        Workbook wb = sheet.getWorkbook();
-        Font font = wb.createFont();
-        font.setColor(Font.BOLDWEIGHT_BOLD);
-        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
-        CellStyle cellStyle = wb.createCellStyle();
-        cellStyle.setFont(font);
-        Cell cell = row.getCell((short)cellIndex);
-        if (isAdminTitle)
-            cellStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
-        else
-            cellStyle.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
-        cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-        cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
-        cellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-        cell.setCellStyle(cellStyle);
+            int count = 8;
+            workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
+            Sheet sheet = workbook.getSheetAt(0);
+            //write header - Admin Dashboard Report
+            org.apache.poi.ss.usermodel.Row row = sheet.createRow(count);
+            
+            
+
+
+        } catch (InvalidFormatException invalidFormatException) {
+            invalidFormatException.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            workbook.write(outputStream);
+            excelInputStream.close();
+            outputStream.close();
+        }
+
     }
-
 
 }

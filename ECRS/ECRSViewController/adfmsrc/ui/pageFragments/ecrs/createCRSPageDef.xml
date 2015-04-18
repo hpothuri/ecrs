@@ -85,11 +85,6 @@
         <Item Value="CrsCompoundType"/>
       </AttrNames>
     </attributeValues>
-    <attributeValues IterBinding="CrsContentVOIterator" id="CompoundCode">
-      <AttrNames>
-        <Item Value="CompoundCode"/>
-      </AttrNames>
-    </attributeValues>
     <methodAction id="initRiskRelation" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
                   DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="initRiskRelation" IsViewObjectMethod="false">
@@ -131,5 +126,15 @@
         <Item Value="N"/>
       </ValueList>
     </button>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CrsCompoundCode">
+      <AttrNames>
+        <Item Value="CrsCompoundCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CompoundCode">
+      <AttrNames>
+        <Item Value="CompoundCode"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

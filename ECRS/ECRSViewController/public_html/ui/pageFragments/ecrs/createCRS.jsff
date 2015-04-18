@@ -67,7 +67,7 @@
                                       maximumLength="#{bindings.TradeName.hints.precision}"
                                       shortDesc="#{bindings.TradeName.hints.tooltip}"
                                       id="it1" contentStyle="width:150px;"
-                                      readOnly="#{(not empty bindings.CrsName.inputValue &amp;&amp; bindings.CrsName.inputValue eq 'ROUTINE') ||  bindings.CompoundCode.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}"
+                                      readOnly="#{bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND'  || bindings.CompoundType.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}"
                                       autoSubmit="true">
                             <f:validator binding="#{bindings.TradeName.validator}"/>
                         </af:inputText>
@@ -78,7 +78,7 @@
                                       maximumLength="#{bindings.GenericName.hints.precision}"
                                       shortDesc="#{bindings.GenericName.hints.tooltip}"
                                       id="it2" contentStyle="width:150px;"
-                                      readOnly="#{(not empty bindings.CrsName.inputValue &amp;&amp; bindings.CrsName.inputValue eq 'ROUTINE') ||  bindings.CompoundCode.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}"
+                                      readOnly="#{bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND'  || bindings.CompoundType.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}"
                                       autoSubmit="true">
                             <f:validator binding="#{bindings.GenericName.validator}"/>
                         </af:inputText>
@@ -90,7 +90,8 @@
                                       shortDesc="#{bindings.Indication.hints.tooltip}"
                                       id="it3" contentStyle="width:150px;"
                                       autoSubmit="true"
-                                      readOnly="#{(not empty bindings.CrsName.inputValue &amp;&amp; bindings.CrsName.inputValue eq 'ROUTINE') ||  bindings.CompoundCode.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}">
+                                      readOnly="#{bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND'  || bindings.CompoundType.inputValue eq 'NON-COMPOUND' || pageFlowScope.flowType eq 'S'}"
+                                      valueChangeListener="#{pageFlowScope.manageCRSBean.onChangeIndication}">
                             <f:validator binding="#{bindings.Indication.validator}"/>
                         </af:inputText>
                         <af:selectOneChoice label="#{ecrsviewcontrollerBundle.MARKETED}"

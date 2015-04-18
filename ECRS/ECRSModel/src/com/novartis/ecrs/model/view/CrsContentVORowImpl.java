@@ -225,6 +225,16 @@ public class CrsContentVORowImpl extends ViewRowImpl {
             }
         }
         ,
+        CrsCompoundCode {
+            public Object get(CrsContentVORowImpl obj) {
+                return obj.getCrsCompoundCode();
+            }
+
+            public void put(CrsContentVORowImpl obj, Object value) {
+                obj.setCrsCompoundCode((String)value);
+            }
+        }
+        ,
         CompoundType {
             public Object get(CrsContentVORowImpl obj) {
                 return obj.getCompoundType();
@@ -363,6 +373,7 @@ public class CrsContentVORowImpl extends ViewRowImpl {
     public static final int REVIEWAPPROVEREQUIREDFLAG = AttributesEnum.ReviewApproveRequiredFlag.index();
     public static final int UIVERSIONNUMBER = AttributesEnum.UiVersionNumber.index();
     public static final int CRSCOMPOUNDTYPE = AttributesEnum.CrsCompoundType.index();
+    public static final int CRSCOMPOUNDCODE = AttributesEnum.CrsCompoundCode.index();
     public static final int COMPOUNDTYPE = AttributesEnum.CompoundType.index();
     public static final int COMPOUNDCODE = AttributesEnum.CompoundCode.index();
     public static final int ENTITYSTATE = AttributesEnum.EntityState.index();
@@ -417,12 +428,8 @@ public class CrsContentVORowImpl extends ViewRowImpl {
      * @return the CRS_NAME
      */
     public String getCrsName() {
-        if (getCompoundCode() != null && getIndication() != null)
-            setAttributeInternal(CRSNAME,
-                                 getCompoundCode() + " " + getIndication());
-        else if (getCompoundCode() != null)
-            setAttributeInternal(CRSNAME, getCompoundCode());
-        return (String) getAttributeInternal(CRSNAME);
+        
+        return (String)getAttributeInternal(CRSNAME);
     }
 
     /**
@@ -430,7 +437,7 @@ public class CrsContentVORowImpl extends ViewRowImpl {
      * @param value value to set the CRS_NAME
      */
     public void setCrsName(String value) {
-        //setAttributeInternal(CRSNAME, value);
+        setAttributeInternal(CRSNAME, value);
     }
 
     /**
@@ -687,6 +694,22 @@ public class CrsContentVORowImpl extends ViewRowImpl {
      */
     public void setCrsCompoundType(String value) {
         setAttributeInternal(CRSCOMPOUNDTYPE, value);
+    }
+
+    /**
+     * Gets the attribute value for the calculated attribute CrsCompoundCode.
+     * @return the CrsCompoundCode
+     */
+    public String getCrsCompoundCode() {
+        return (String) getAttributeInternal(CRSCOMPOUNDCODE);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for the calculated attribute CrsCompoundCode.
+     * @param value value to set the  CrsCompoundCode
+     */
+    public void setCrsCompoundCode(String value) {
+        setAttributeInternal(CRSCOMPOUNDCODE, value);
     }
 
     /**

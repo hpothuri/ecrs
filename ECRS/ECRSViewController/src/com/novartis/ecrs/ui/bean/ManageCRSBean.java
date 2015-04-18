@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
@@ -25,12 +24,7 @@ import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.adf.share.ADFContext;
 import oracle.adf.view.rich.component.rich.RichPopup;
-
-import oracle.adf.view.rich.component.rich.RichDialog;
-import oracle.adf.view.rich.component.rich.RichPopup;
-
 import oracle.adf.view.rich.component.rich.data.RichTable;
-
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
@@ -308,9 +302,9 @@ public class ManageCRSBean implements Serializable {
             if (vce.getNewValue() != null &&
                 !vce.getNewValue().equals(vce.getOldValue()) &&
                 (Boolean)vce.getNewValue()) {
-                if (!ModelConstants.ROLE_BSL.equals(loggedInUserRole)) {
+                //if (!ModelConstants.ROLE_BSL.equals(loggedInUserRole)) {
                     setInboxDisable(Boolean.TRUE);
-                }
+               // }
             } else
                 setInboxDisable(Boolean.FALSE);
 

@@ -158,18 +158,17 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     " AND ";
         //if user role is MQM - set state = 2 and 3 , TASL  - SET State = 4 , ML - set state = 5
         if (row.getState() != null)
-            whereClause +=
-                    "STATE_ID =" + row.getState() + " AND ";
-        else if(isInboxDisable){
-            if(ModelConstants.ROLE_MQM.equals(userInRole))
-                whereClause +=
-                        "STATE_ID IN (2,3) AND ";
-            if(ModelConstants.ROLE_TASL.equals(userInRole))
-                whereClause +=
-                        "STATE_ID = 4 AND ";
-            if(ModelConstants.ROLE_ML.equals(userInRole))
-                whereClause +=
-                        "STATE_ID = 5 AND ";
+            whereClause += "STATE_ID =" + row.getState() + " AND ";
+        else if (isInboxDisable) {
+            if (ModelConstants.ROLE_MQM.equals(userInRole))
+                whereClause += "STATE_ID IN (2,3) AND ";
+            if (ModelConstants.ROLE_TASL.equals(userInRole))
+                whereClause += "STATE_ID = 4 AND ";
+            if (ModelConstants.ROLE_ML.equals(userInRole))
+                whereClause += "STATE_ID = 5 AND ";
+            whereClause += "STATE_ID =" + row.getState() + " AND ";
+            if (ModelConstants.ROLE_BSL.equals(userInRole))
+                whereClause += "STATE_ID NOT IN (2,4,5)  AND ";
         }
             
         if (row.getGenericName() != null)
@@ -191,10 +190,6 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     "' AND ";
         if (row.getDesignee() != null)
             whereClause += "DESIGNEE LIKE '%" + row.getDesignee() + "%' AND ";
-//        else {
-//            TODO if BSL set user role 
-//            whereClause += "DESIGNEE LIKE '%" + userName + "%' AND ";
-//        }
 
         if (row.getCrsTasl() != null)
             whereClause +=
@@ -203,9 +198,11 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             whereClause +=
                     "MEDICAL_LEAD_NAME ='" + row.getCrsMedicalLead() +
                     "' AND ";
-        if (row.getCrsBsl() != null)
-            whereClause +=
-                    "BSL_NAME = '" + row.getCrsBsl() + "' AND ";
+        
+        if (ModelConstants.ROLE_BSL.equals(userInRole)) {
+                whereClause += "BSL_NAME = '" + userName + "' AND ";
+        } else if (row.getCrsBsl() != null)
+            whereClause += "BSL_NAME = '" + row.getCrsBsl() + "' AND ";
         
         if (row.getCrsName() != null)
             whereClause +=
