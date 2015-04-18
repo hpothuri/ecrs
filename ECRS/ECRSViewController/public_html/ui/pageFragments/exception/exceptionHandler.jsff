@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
-  <af:outputText value="The Feature is currently unavailable. Please contact Help Desk." id="ot1"
-                 inlineStyle="color:Red; font-size:large;"/>
+  <af:panelGroupLayout id="pgl1" layout="horizontal" inlineStyle="padding:5px;">
+    <af:outputText value="The Feature is currently unavailable. Please contact Help Desk." id="ot1"
+                   inlineStyle="color:Red; font-size:large;"/>
+  </af:panelGroupLayout>
 </jsp:root>
