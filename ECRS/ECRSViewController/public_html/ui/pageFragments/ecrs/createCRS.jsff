@@ -5,7 +5,7 @@
           xmlns:c="http://java.sun.com/jsp/jstl/core">
     <c:set var="ecrsviewcontrollerBundle"
            value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
-    <af:panelHeader text="#{ecrsviewcontrollerBundle.CREATE}" id="ph1" size="1" inlineStyle="padding:5px;">
+    <af:panelHeader text="#{pageFlowScope.flowType eq 'S' ? ecrsviewcontrollerBundle.BROWSER__SEARCH : (pageFlowScope.flowType eq 'C' ? ecrsviewcontrollerBundle.CREATE : ecrsviewcontrollerBundle.UPDATE)}" id="ph1" size="1" inlineStyle="padding:5px;">
         <f:facet name="context"/>
         <f:facet name="menuBar"/>
         <f:facet name="toolbar"/>
@@ -16,7 +16,7 @@
                       id="t1"/>
         </af:panelGroupLayout>
         <af:panelGroupLayout id="pgl5" layout="vertical">
-            <af:panelBox text="#{ecrsviewcontrollerBundle.DETAILS}" id="pb1">
+            <af:panelBox text="#{pageFlowScope.flowType eq 'S' ? ecrsviewcontrollerBundle.DETAILS : ecrsviewcontrollerBundle.ADD_DETAILS} #{pageFlowScope.flowType eq 'U' ? ecrsviewcontrollerBundle.COLON : ''} #{pageFlowScope.flowType eq 'U' ? bindings.CrsName.inputValue  : ''}" id="pb1">
                 <f:facet name="toolbar">
                     <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}"
                                       id="cb4"
@@ -185,8 +185,7 @@
                                   value="#{bindings.CrsId.inputValue &lt; 0 ? '' : bindings.CrsId.inputValue}"/>
                 </af:panelFormLayout>
             </af:panelBox>
-            <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}" id="pb2"
-                         contentStyle="height:100px;">
+            <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}" id="pb2">
                 <f:facet name="toolbar">
                     <af:panelGroupLayout id="pgl2"
                                          visible="#{pageFlowScope.flowType ne 'S'}">
@@ -202,31 +201,33 @@
                         </f:facet>
                     </af:panelGroupLayout>
                 </f:facet>
-                <af:panelFormLayout id="pfl2" styleClass="AFStretchWidth" rows="3" maxColumns="1" fieldWidth="10"
-                                    labelWidth="90">
+                <af:panelFormLayout id="pfl2" styleClass="AFStretchWidth" rows="3" maxColumns="1"
+                                    labelWidth="150">
                     <af:inputText value="#{bindings.MqmComment.inputValue}"
                                   required="#{bindings.MqmComment.hints.mandatory}"
-                                  columns="#{bindings.MqmComment.hints.displayWidth}"
+                                  columns="100"
                                   maximumLength="#{bindings.MqmComment.hints.precision}"
                                   shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it7"
-                                  styleClass="AFStretchWidth" contentStyle="width:100%;"
+                                  styleClass="AFStretchWidth"
                                   label="#{ecrsviewcontrollerBundle.MQM_COMMENT}" rows="3">
                         <f:validator binding="#{bindings.MqmComment.validator}"/>
                     </af:inputText>
                     <af:inputText value="#{bindings.TaslRejectComment.inputValue}"
                                   required="#{bindings.TaslRejectComment.hints.mandatory}"
-                                  columns="#{bindings.TaslRejectComment.hints.displayWidth}"
+                                  columns="100"
                                   maximumLength="#{bindings.TaslRejectComment.hints.precision}"
                                   shortDesc="#{bindings.TaslRejectComment.hints.tooltip}" id="it8"
-                                  label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}" rows="3">
+                                  label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}" rows="3"
+                                  styleClass="AFStretchWidth">
                         <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
                     </af:inputText>
                     <af:inputText value="#{bindings.MedicalLeadRejectComment.inputValue}"
                                   required="#{bindings.MedicalLeadRejectComment.hints.mandatory}"
-                                  columns="#{bindings.MedicalLeadRejectComment.hints.displayWidth}"
+                                  columns="100"
                                   maximumLength="#{bindings.MedicalLeadRejectComment.hints.precision}"
                                   shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}" id="it9"
-                                  label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}" rows="3">
+                                  label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}" rows="3"
+                                  styleClass="AFStretchWidth">
                         <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
                     </af:inputText>
                 </af:panelFormLayout>

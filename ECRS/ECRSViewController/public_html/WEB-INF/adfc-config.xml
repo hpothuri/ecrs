@@ -120,4 +120,9 @@
     <managed-bean-class>com.novartis.ecrs.view.beans.SessionBean</managed-bean-class>
     <managed-bean-scope>session</managed-bean-scope>
   </managed-bean>
+  <managed-bean id="__19">
+    <managed-bean-name>reportsBean</managed-bean-name>
+    <managed-bean-class>com.novartis.ecrs.ui.bean.CRSReportsBean</managed-bean-class>
+    <managed-bean-scope>pageFlow</managed-bean-scope>
+  </managed-bean>
 </adfc-config>

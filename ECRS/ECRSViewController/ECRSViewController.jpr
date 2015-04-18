@@ -140,6 +140,10 @@
                         <hash>
                            <value n="type" v="7"/>
                         </hash>
+                        <hash>
+                           <url n="location" path="public_html/exceltemplate/"/>
+                           <value n="type" v="1"/>
+                        </hash>
                      </list>
                      <value n="displayName" v="WEB-INF/classes"/>
                      <hash n="filters">
@@ -316,7 +320,128 @@
             <value n="id" v="BC4J Oracle Domains"/>
             <value n="isJDK" v="false"/>
          </hash>
+         <hash>
+            <value n="id" v="Poi-ooxml-schemas-3.8-20120326.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Poi-3.8-20120326.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Dom4j-1.6.1.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Xmlbeans-2.3.0.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Commons-logging-1.1.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Stax-api-1.0.1.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Junit-3.8.1.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Poi-ooxml-3.8-20120326.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Log4j-1.2.13.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
       </list>
+      <hash n="internalDefinitions">
+         <list n="libraryDefinitions">
+            <hash>
+               <list n="classPath">
+                  <url path="../lib/poi-3.8/poi-ooxml-schemas-3.8-20120326.jar" jar-entry=""/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Poi-ooxml-schemas-3.8-20120326.jar"/>
+               <value n="id" v="Poi-ooxml-schemas-3.8-20120326.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../lib/poi-3.8/poi-3.8-20120326.jar" jar-entry=""/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Poi-3.8-20120326.jar"/>
+               <value n="id" v="Poi-3.8-20120326.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../lib/poi-3.8/dom4j-1.6.1.jar" jar-entry=""/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Dom4j-1.6.1.jar"/>
+               <value n="id" v="Dom4j-1.6.1.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../lib/poi-3.8/xmlbeans-2.3.0.jar" jar-entry=""/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Xmlbeans-2.3.0.jar"/>
+               <value n="id" v="Xmlbeans-2.3.0.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../lib/poi-3.8/commons-logging-1.1.jar" jar-entry=""/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Commons-logging-1.1.jar"/>
+               <value n="id" v="Commons-logging-1.1.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../lib/poi-3.8/stax-api-1.0.1.jar" jar-entry=""/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Stax-api-1.0.1.jar"/>
+               <value n="id" v="Stax-api-1.0.1.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../lib/poi-3.8/junit-3.8.1.jar" jar-entry=""/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Junit-3.8.1.jar"/>
+               <value n="id" v="Junit-3.8.1.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../lib/poi-3.8/poi-ooxml-3.8-20120326.jar" jar-entry=""/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Poi-ooxml-3.8-20120326.jar"/>
+               <value n="id" v="Poi-ooxml-3.8-20120326.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../lib/poi-3.8/log4j-1.2.13.jar" jar-entry=""/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Log4j-1.2.13.jar"/>
+               <value n="id" v="Log4j-1.2.13.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+         </list>
+      </hash>
       <list n="libraryReferences">
          <hash>
             <value n="id" v="JSP Runtime"/>
@@ -438,6 +563,42 @@
             <value n="id" v="BC4J Oracle Domains"/>
             <value n="isJDK" v="false"/>
          </hash>
+         <hash>
+            <value n="id" v="Poi-ooxml-schemas-3.8-20120326.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Poi-3.8-20120326.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Dom4j-1.6.1.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Xmlbeans-2.3.0.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Commons-logging-1.1.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Stax-api-1.0.1.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Junit-3.8.1.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Poi-ooxml-3.8-20120326.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Log4j-1.2.13.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
       </list>
    </hash>
    <hash n="oracle.jdevimpl.config.JProjectPaths">
@@ -555,6 +716,23 @@
             <value n="URI" v="http://xmlns.oracle.com/dss/adf/faces"/>
             <value n="version" v="11"/>
          </hash>
+      </list>
+   </hash>
+   <hash n="oracle.jdevimpl.webapp.jsp.JspVeProjectSettings">
+      <list n="filters">
+         <string v="trinidad"/>
+      </list>
+      <list n="servlet_listeners">
+         <string v="com.sun.faces.config.ConfigureListener"/>
+      </list>
+      <list n="servlet_listeners_unselected">
+         <string v="oracle.adf.mbean.share.connection.ADFConnectionLifeCycleCallBack"/>
+         <string v="oracle.adf.mbean.share.config.ADFConfigLifeCycleCallBack"/>
+         <string v="oracle.bc4j.mbean.BC4JConfigLifeCycleCallBack"/>
+      </list>
+      <list n="servlets">
+         <string v="Faces Servlet"/>
+         <string v="resources"/>
       </list>
    </hash>
    <hash n="oracle.jdevimpl.webapp.jsp.libraries.model.ProjectTagLibraries">

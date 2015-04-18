@@ -5,7 +5,7 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
   <c:set var="ecrsviewcontrollerBundle"
          value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
-  <af:panelHeader text="#{ecrsviewcontrollerBundle.SEARCH}" id="ph1" size="1"
+  <af:panelHeader text="#{pageFlowScope.flowType eq 'S' ? ecrsviewcontrollerBundle.BROWSER__SEARCH : (pageFlowScope.flowType eq 'C' ? ecrsviewcontrollerBundle.CREATE : ecrsviewcontrollerBundle.UPDATE)}" id="ph1" size="1"
                   inlineStyle="padding:5px;">
     <af:panelGroupLayout id="pg22" layout="horizontal" halign="start">
       <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
@@ -163,7 +163,7 @@
                 selectionListener="#{pageFlowScope.manageCRSBean.searchTableSelectionListener}"
                 rowSelection="single" id="t2" styleClass="AFStretchWidth"
                 columnStretching="column:c9" contentDelivery="immediate"
-                autoHeightRows="-1">
+                autoHeightRows="10">
         <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsName.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.CRS_NAME}"
