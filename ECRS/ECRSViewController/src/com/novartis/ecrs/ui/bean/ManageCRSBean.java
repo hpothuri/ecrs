@@ -32,6 +32,7 @@ import oracle.adf.view.rich.context.AdfFacesContext;
 import oracle.adf.view.rich.datatransfer.DataFlavor;
 import oracle.adf.view.rich.datatransfer.Transferable;
 import oracle.adf.view.rich.dnd.DnDAction;
+import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.event.DropEvent;
 import oracle.adf.view.rich.event.PopupCanceledEvent;
 
@@ -64,13 +65,17 @@ public class ManageCRSBean implements Serializable {
     private transient RichSelectOneChoice crsStatusSOC;
     private transient RichPopup crsApprovePopup;
     private transient RichPanelBox workflowPanelBox;
-    private RichPopup crsRejectPopup;
-    private RichInputText taslCommentsInputText;
-    private RichInputText mlCommentsInputText;
+    private transient RichPopup crsRejectPopup;
+    private transient RichInputText taslCommentsInputText;
+    private transient RichInputText mlCommentsInputText;
     private String dictionary;
     private String level;
     private String term;
-    private RichPopup hierPopup;
+    private transient RichPopup hierPopup;
+    private boolean crsFieldsUpdatable;
+    private transient RichPopup crsRetirePopup;
+    private transient RichPopup crsReactivatePopup;
+    private transient RichPopup crsReviewedPopup;
 
 
     public ManageCRSBean() {
@@ -82,7 +87,7 @@ public class ManageCRSBean implements Serializable {
     private String flowType;
     private boolean inboxDisable;
     private String loggedInUserRole;
-    private String bslFacetName;
+ //   private String bslFacetName;
     private String relStatusForAnonymous;
     private String userName;
     
@@ -95,11 +100,11 @@ public class ManageCRSBean implements Serializable {
         if (ADFUtils.evaluateEL("#{pageFlowScope.flowType}") != null) {
             flowType =
                     (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
-            if (ViewConstants.FLOW_TYPE_SEARCH.equals(flowType) ||
-                ModelConstants.ROLE_BSL.equals(loggedInUserRole))
-                setBslFacetName("BSL");
-            else
-                setBslFacetName("nonBSL");
+//            if (ViewConstants.FLOW_TYPE_SEARCH.equals(flowType) ||
+//                ModelConstants.ROLE_BSL.equals(loggedInUserRole))
+//                setBslFacetName("BSL");
+//            else
+//                setBslFacetName("nonBSL");
         }
     }
 
@@ -510,19 +515,19 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.addPartialTarget(riskDefTable);
     }
 
-    /**
-     * @param bslFacetName
-     */
-    public void setBslFacetName(String bslFacetName) {
-        this.bslFacetName = bslFacetName;
-    }
-
-    /**
-     * @return
-     */
-    public String getBslFacetName() {
-        return bslFacetName;
-    }
+//    /**
+//     * @param bslFacetName
+//     */
+//    public void setBslFacetName(String bslFacetName) {
+//        this.bslFacetName = bslFacetName;
+//    }
+//
+//    /**
+//     * @return
+//     */
+//    public String getBslFacetName() {
+//        return bslFacetName;
+//    }
 
     /**
      * @param relStatusForAnonymous
@@ -588,19 +593,6 @@ public class ManageCRSBean implements Serializable {
         return selRiskPurposes;
     }
 
-    public void onClickReview(ActionEvent actionEvent) {
-        // Add event code here...
-        ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_REVIEW);
-        OperationBinding oper = ADFUtils.findOperation("Commit");
-        oper.execute();
-        if (oper.getErrors().size() > 0) 
-            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
-        else{
-            ADFUtils.showPopup(getReviewSubmitPopup());
-            ADFUtils.addPartialTarget(getCrsStateSOC());
-        }
-    }
-
     public void setReviewSubmitPopup(RichPopup reviewSubmitPopup) {
         this.reviewSubmitPopup = reviewSubmitPopup;
     }
@@ -624,22 +616,28 @@ public class ManageCRSBean implements Serializable {
     public RichSelectOneChoice getCrsStatusSOC() {
         return crsStatusSOC;
     }
+    
+    public void onClickReview(ActionEvent actionEvent) {
+        // Add event code here...
+        ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_REVIEW);
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0) 
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        else{
+            ADFUtils.showPopup(getReviewSubmitPopup());
+            ADFUtils.addPartialTarget(getCrsStateSOC());
+        }
+    }
 
     public void onClickApprove(ActionEvent actionEvent) {
         // Add event code here...
 
-        if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_MQM)) {
-            ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_REVIEWED);
-        }
+        if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_TASL)) 
+            ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_MLAPPROVE);  
+        else if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_ML)) 
+            ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_APPROVED);        
 
-        else if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_TASL)) {
-            ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_MLAPPROVE);
-        }
-
-        else if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_ML)) {
-            ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_APPROVED);
-        }
-        
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0) 
@@ -719,6 +717,67 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.addPartialTarget(getWorkflowPanelBox());
         }
 
+    }
+    
+    public void onClickDemoteToDraft(ActionEvent actionEvent) {
+        // Add event code here...
+        ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_DRAFT);
+
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0)
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        else {
+            ADFUtils.showPopup(getCrsApprovePopup());
+            ADFUtils.addPartialTarget(getCrsStateSOC());
+            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+        }
+    }
+    
+    public void onClickReviewed(ActionEvent actionEvent) {
+        // Add event code here...
+        ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_REVIEWED);
+
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0)
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        else {
+            ADFUtils.showPopup(getCrsReviewedPopup());
+            ADFUtils.addPartialTarget(getCrsStateSOC());
+            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+        }
+    }
+    
+    public void onClickRetire(ActionEvent actionEvent) {
+        // Add event code here...
+        ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_RETIRED);
+
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0)
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        else {
+            ADFUtils.showPopup(getCrsRetirePopup());
+            ADFUtils.addPartialTarget(getCrsStateSOC());
+            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+        }
+        
+    }
+
+    public void onClickReactivate(ActionEvent actionEvent) {
+        // Add event code here....
+        ADFUtils.setEL("#{bindings.StateId.inputValue}", ModelConstants.STATE_ACTIVATED);
+
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0)
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        else {
+            ADFUtils.showPopup(getCrsReactivatePopup());
+            ADFUtils.addPartialTarget(getCrsStateSOC());
+            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+        }
     }
 
     public void setCrsRejectPopup(RichPopup crsRejectPopup) {
@@ -871,5 +930,88 @@ public class ManageCRSBean implements Serializable {
         AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
         AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
         return DnDAction.COPY;
+    }
+
+
+    public void setCrsFieldsUpdatable(boolean crsFieldsUpdatable) {
+        this.crsFieldsUpdatable = crsFieldsUpdatable;
+    }
+
+    public boolean isCrsFieldsUpdatable() {
+        
+        boolean isCrsFieldsUpdatable = false;
+        String crsState = (String)ADFUtils.evaluateEL("#{bindings.StateId.inputValue}");
+        String crsStatus = (String)ADFUtils.evaluateEL("#{bindings.ReleaseStatusFlag.inputValue}");
+        
+        // SEARCH FLOW - always read only
+        if(ViewConstants.FLOW_TYPE_SEARCH.equals(getFlowType())){
+            isCrsFieldsUpdatable = false;
+            return isCrsFieldsUpdatable;
+        }
+            
+        //  BSL LOGIN
+        if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_BSL)) {
+
+            if (ModelConstants.STATUS_PENDING.equals(crsStatus)) {
+
+
+            } else if (ModelConstants.STATUS_CURRENT.equals(crsStatus)) {
+                
+                if(ModelConstants.STATE_DRAFT.equals(crsState) ||
+                    ModelConstants.STATE_REVIEWED.equals(crsState) ||
+                    ModelConstants.STATE_APPROVED.equals(crsState) ||
+                    ModelConstants.STATE_PUBLISHED.equals(crsState) )
+                    isCrsFieldsUpdatable = true;                                
+            }
+        }
+        
+        // ADMIN LOGIN - admin can update any CRS in any state
+       else if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_CRSADMIN))
+            isCrsFieldsUpdatable = true; 
+        
+        
+        return crsFieldsUpdatable;
+    }
+
+    public void processDeleteDialog(DialogEvent dialogEvent) {
+        // Add event code here...
+        if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())){
+            
+            // remove risk relations and risk defs
+            
+            //remove crs content
+            ADFUtils.findIterator("CrsContentVOIterator").getCurrentRow().remove();
+            
+            //commit
+            
+            //navigate back to home page
+            
+            
+        }
+    }
+
+
+    public void setCrsRetirePopup(RichPopup crsRetirePopup) {
+        this.crsRetirePopup = crsRetirePopup;
+    }
+
+    public RichPopup getCrsRetirePopup() {
+        return crsRetirePopup;
+    }
+
+    public void setCrsReactivatePopup(RichPopup crsReactivatePopup) {
+        this.crsReactivatePopup = crsReactivatePopup;
+    }
+
+    public RichPopup getCrsReactivatePopup() {
+        return crsReactivatePopup;
+    }
+
+    public void setCrsReviewedPopup(RichPopup crsReviewedPopup) {
+        this.crsReviewedPopup = crsReviewedPopup;
+    }
+
+    public RichPopup getCrsReviewedPopup() {
+        return crsReviewedPopup;
     }
 }
