@@ -4,18 +4,21 @@ package com.novartis.ecrs.ui.bean;
 import com.novartis.ecrs.ui.utility.ADFUtils;
 import com.novartis.ecrs.ui.utility.ExcelExportUtils;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import javax.faces.application.FacesMessage;
+import java.util.LinkedHashMap;
+import java.util.ResourceBundle;
+
 import javax.faces.context.FacesContext;
 
 import oracle.adf.model.binding.DCIteratorBinding;
 
+import oracle.javatools.resourcebundle.BundleFactory;
+
 import oracle.jbo.Row;
+import oracle.jbo.RowSetIterator;
 
 import oracle.security.crypto.util.InvalidFormatException;
 
@@ -41,7 +44,7 @@ public class CRSReportsBean {
         // Add event code here...
         //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
         Workbook workbook = null;
-        InputStream excelInputStream = getExcelInpStream();
+        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
         try {
             //create sheet
             //            org.apache.poi.ss.usermodel.Row row = null;
@@ -51,11 +54,13 @@ public class CRSReportsBean {
             int count = 8;
             workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
             Sheet sheet = workbook.getSheetAt(0);
+
             //write header - Admin Dashboard Report
             org.apache.poi.ss.usermodel.Row row = sheet.createRow(count);
             Cell cell = row.createCell((short)2);
             cell.setCellValue("Admin Dashboard Report");
-            ExcelExportUtils.setHeaderCellStyle(sheet, count, cell.getColumnIndex(), true);
+            ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                                cell.getColumnIndex(), true);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
 
@@ -63,7 +68,8 @@ public class CRSReportsBean {
             org.apache.poi.ss.usermodel.Row row1 = sheet.createRow(count);
             Cell cell1 = row1.createCell((short)2);
             cell1.setCellValue("Number of Compound CRSs");
-            ExcelExportUtils.setHeaderCellStyle(sheet, count, cell1.getColumnIndex(), false);
+            ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                                cell1.getColumnIndex(), false);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
             DCIteratorBinding compCrsIter =
@@ -87,7 +93,8 @@ public class CRSReportsBean {
             org.apache.poi.ss.usermodel.Row row2 = sheet.createRow(count);
             Cell cell2 = row2.createCell((short)2);
             cell2.setCellValue("Number of saftey topics (independent of CRSs)");
-            ExcelExportUtils.setHeaderCellStyle(sheet, count, cell2.getColumnIndex(), false);
+            ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                                cell2.getColumnIndex(), false);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
             DCIteratorBinding safetyTopicIter =
@@ -98,6 +105,8 @@ public class CRSReportsBean {
                     sheet.getRow(count).getCell(2).setCellValue(rw.getAttribute("Totalnumberofsafetytopics") ==
                                                                 null ? "" :
                                                                 rw.getAttribute("Totalnumberofsafetytopics").toString());
+                    sheet.setColumnWidth(sheet.getRow(count).getCell(2).getColumnIndex(),
+                                         12000);
                     sheet.getRow(count).getCell(3).setCellValue(rw.getAttribute("Totalsafetytopics") ==
                                                                 null ? "" :
                                                                 rw.getAttribute("Totalsafetytopics").toString());
@@ -108,7 +117,8 @@ public class CRSReportsBean {
             org.apache.poi.ss.usermodel.Row row3 = sheet.createRow(count);
             Cell cell3 = row3.createCell((short)2);
             cell3.setCellValue("Number of ADRs (CDSs)");
-            ExcelExportUtils.setHeaderCellStyle(sheet, count, cell3.getColumnIndex(), false);
+            ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                                cell3.getColumnIndex(), false);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
             DCIteratorBinding adrIter =
@@ -142,36 +152,57 @@ public class CRSReportsBean {
     }
 
     /**
-     * @return InputStream
+     * @param facesContext
+     * @param outputStream
+     * @throws IOException
      */
-    private InputStream getExcelInpStream() {
-        InputStream inputStreamOfExcel =
-            // this.getClass().getClassLoader().getResourceAsStream("EcrsReports.xls");
-            loadResourceAsStream("E:\\Ecrs_WS\\ecrs\\trunk\\ECRS\\ECRSViewController\\public_html\\exceltemplate\\EcrsReports.xls");
-        return inputStreamOfExcel;
-    }
-
-    /**
-     * This method to upload the file from local.
-     * @param resourceName
-     * @return
-     */
-    public InputStream loadResourceAsStream(final String resourceName) {
-        //_logger.info("Start of CRSReportsBean:loadResourceAsStream()");
-        InputStream input = null;
+    public void downloadCountPerMedDRAReport(FacesContext facesContext,
+                                             OutputStream outputStream) throws IOException {
+        // Add event code here...
+        //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
+        Workbook workbook = null;
+        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
         try {
-            input = new FileInputStream(resourceName);
-        } catch (FileNotFoundException e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                                                         new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                                                          null,
-                                                                          "File not found in the provided location"));
-            //  _logger.log(_logger.ERROR, "Exception occured in ManageDealsBean loadResourceAsStream() method", e);
+            //create sheet
+            DCIteratorBinding iter =
+                ADFUtils.findIterator("CRSCountPerMeddraReportVOIterator");
+            RowSetIterator rowSet = null;
+            int rowStartIndex = 8;
+            int cellStartIndex = 0;
+            String emptyValReplace = null;
+            String dateCellFormat = "M/dd/yyyy";
+            if (iter != null) {
+                iter.setRangeSize(-1);
+                rowSet = iter.getRowSetIterator();
+            }
+            workbook = WorkbookFactory.create(excelInputStream);
+            LinkedHashMap columnMap = new LinkedHashMap();
+            ResourceBundle rsBundle =
+                BundleFactory.getBundle("com.novartis.ecrs.model.ECRSModelBundle");
+            //Here Key will be ViewObject Attribute
+            columnMap.put("MeddraTerm",
+                          rsBundle.getString("MEDDRA_COMPONENT"));
+            columnMap.put("MeddraCompDefn", rsBundle.getString("LEVEL"));
+            columnMap.put("NumberOfCrs", rsBundle.getString("NUMBER_OF_CRSS"));
+
+            workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
+            Sheet sheet = workbook.getSheetAt(0);
+            ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
+                                             cellStartIndex, columnMap, null,
+                                             dateCellFormat, emptyValReplace);
+
+        } catch (InvalidFormatException invalidFormatException) {
+            invalidFormatException.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
-            //  _logger.severe("Exception message ManageDealsBean loadResourceAsStream()-->"+e.getMessage());
+        } finally {
+            workbook.write(outputStream);
+            excelInputStream.close();
+            outputStream.close();
         }
-        // _logger.info("End of CRSReportsBean:loadResourceAsStream()");
-        return input;
+
     }
 
     /**
@@ -179,25 +210,186 @@ public class CRSReportsBean {
      * @param outputStream
      * @throws IOException
      */
-    public void downloadRiskDefReport(FacesContext facesContext,
-                                      OutputStream outputStream) throws IOException {
+    public void downloadCurrPendingCRSReport(FacesContext facesContext,
+                                             OutputStream outputStream) throws IOException {
         // Add event code here...
         //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
         Workbook workbook = null;
-        InputStream excelInputStream = getExcelInpStream();
+        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
         try {
             //create sheet
-            //            org.apache.poi.ss.usermodel.Row row = null;
-            //            Cell cell = null;
+            DCIteratorBinding iter =
+                ADFUtils.findIterator("CRSCurrentPendingCRSReportIterator");
+            RowSetIterator rowSet = null;
+            int rowStartIndex = 8;
+            int cellStartIndex = 0;
+            String emptyValReplace = null;
+            String dateCellFormat = "M/dd/yyyy";
+            if (iter != null) {
+                iter.setRangeSize(-1);
+                rowSet = iter.getRowSetIterator();
+            }
+            workbook = WorkbookFactory.create(excelInputStream);
+            LinkedHashMap columnMap = new LinkedHashMap();
+            ResourceBundle rsBundle =
+                BundleFactory.getBundle("com.novartis.ecrs.model.ECRSModelBundle");
+            //Here Key will be ViewObject Attribute
+            columnMap.put("CrsName", rsBundle.getString("CRS_NAME"));
+            columnMap.put("CrsState", rsBundle.getString("CRS_STATUS"));
+            columnMap.put("MeddraVers", rsBundle.getString("MEDDRA_VERS"));
+            workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
+                                             cellStartIndex, columnMap, null,
+                                             dateCellFormat, emptyValReplace);
+
+        } catch (InvalidFormatException invalidFormatException) {
+            invalidFormatException.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            workbook.write(outputStream);
+            excelInputStream.close();
+            outputStream.close();
+        }
+
+    }
+
+    /**
+     * @param facesContext
+     * @param outputStream
+     * @throws IOException
+     */
+    public void downloadMedDRACompReport(FacesContext facesContext,
+                                         OutputStream outputStream) throws IOException {
+        // Add event code here...
+        //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
+        Workbook workbook = null;
+        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        try {
+            //create sheet
+            DCIteratorBinding iter =
+                ADFUtils.findIterator("MedDRAComponentsReportIterator");
+            RowSetIterator rowSet = null;
+            int rowStartIndex = 8;
+            int cellStartIndex = 0;
+            String emptyValReplace = null;
+            String dateCellFormat = "M/dd/yyyy";
+            if (iter != null) {
+                iter.setRangeSize(-1);
+                rowSet = iter.getRowSetIterator();
+            }
+            workbook = WorkbookFactory.create(excelInputStream);
+            LinkedHashMap columnMap = new LinkedHashMap();
+            ResourceBundle rsBundle =
+                BundleFactory.getBundle("com.novartis.ecrs.model.ECRSModelBundle");
+            //Here Key will be ViewObject Attribute
+            columnMap.put("MeddraTerm", rsBundle.getString("DEFINITIONS"));
+            columnMap.put("MeddraLevel", rsBundle.getString("LEVEL"));
+            columnMap.put("SafetyTopicOfInterest",
+                          rsBundle.getString("SAFETY_TOPIC"));
+            columnMap.put("CrsName", rsBundle.getString("CRS_NAME"));
+            columnMap.put("RiskPurposeList", rsBundle.getString("PURPOSE"));
+            columnMap.put("SocTerm", rsBundle.getString("MQ_GROUP_OR_SOC"));
+            workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
+                                             cellStartIndex, columnMap, null,
+                                             dateCellFormat, emptyValReplace);
+
+        } catch (InvalidFormatException invalidFormatException) {
+            invalidFormatException.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            workbook.write(outputStream);
+            excelInputStream.close();
+            outputStream.close();
+        }
+
+    }
+
+    /**
+     * @param facesContext
+     * @param outputStream
+     * @throws IOException
+     */
+    public void downloadMedDRACompStandardReport(FacesContext facesContext,
+                                                 OutputStream outputStream) throws IOException {
+        // Add event code here...
+        //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
+        Workbook workbook = null;
+        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        try {
+            //create sheet
+            DCIteratorBinding iter =
+                ADFUtils.findIterator("MedDRAStandardReportIterator");
+            RowSetIterator rowSet = null;
+            int rowStartIndex = 8;
+            int cellStartIndex = 0;
+            String emptyValReplace = null;
+            String dateCellFormat = "M/dd/yyyy";
+            if (iter != null) {
+                iter.setRangeSize(-1);
+                rowSet = iter.getRowSetIterator();
+            }
+            workbook = WorkbookFactory.create(excelInputStream);
+            LinkedHashMap columnMap = new LinkedHashMap();
+            ResourceBundle rsBundle =
+                BundleFactory.getBundle("com.novartis.ecrs.model.ECRSModelBundle");
+            //Here Key will be ViewObject Attribute
+            columnMap.put("DefinitionType",
+                          rsBundle.getString("DEFINITIONS_TYPE"));
+            columnMap.put("PercentOfUse", rsBundle.getString("_OF_USE"));
+
+            workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
+                                             cellStartIndex, columnMap, null,
+                                             dateCellFormat, emptyValReplace);
+
+        } catch (InvalidFormatException invalidFormatException) {
+            invalidFormatException.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            workbook.write(outputStream);
+            excelInputStream.close();
+            outputStream.close();
+        }
+
+    }
+
+    /**
+     * @param facesContext
+     * @param outputStream
+     * @throws IOException
+     */
+    public void downloadRetiredNMQsReport(FacesContext facesContext,
+                                          OutputStream outputStream) throws IOException {
+        // Add event code here...
+        //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
+        Workbook workbook = null;
+        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        try {
+            //create sheet
+            ADFUtils.findIterator("");
             workbook = WorkbookFactory.create(excelInputStream);
 
             int count = 8;
             workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
             Sheet sheet = workbook.getSheetAt(0);
-            //write header - Admin Dashboard Report
-            org.apache.poi.ss.usermodel.Row row = sheet.createRow(count);
-            
-            
+
+            // ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex, cellStartIndex, columnMap, tableHeader, dateCellFormat, emptyValReplace)
 
 
         } catch (InvalidFormatException invalidFormatException) {
@@ -214,4 +406,59 @@ public class CRSReportsBean {
 
     }
 
+    /**
+     * @param facesContext
+     * @param outputStream
+     * @throws IOException
+     */
+    public void downloadRiskDefSafetyTopicReport(FacesContext facesContext,
+                                                 OutputStream outputStream) throws IOException {
+        // Add event code here...
+        //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
+        Workbook workbook = null;
+        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        try {
+            //create sheet
+            DCIteratorBinding iter =
+                ADFUtils.findIterator("RiskDefSafetyTopicReportIterator");
+            RowSetIterator rowSet = null;
+            int rowStartIndex = 8;
+            int cellStartIndex = 0;
+            String emptyValReplace = null;
+            String dateCellFormat = "M/dd/yyyy";
+            if (iter != null) {
+                iter.setRangeSize(-1);
+                rowSet = iter.getRowSetIterator();
+            }
+            workbook = WorkbookFactory.create(excelInputStream);
+            LinkedHashMap columnMap = new LinkedHashMap();
+            ResourceBundle rsBundle =
+                BundleFactory.getBundle("com.novartis.ecrs.model.ECRSModelBundle");
+            //Here Key will be ViewObject Attribute
+            columnMap.put("CrsName", rsBundle.getString("CRS_NAME"));
+            columnMap.put("SafetyTopicOfInterest",
+                          rsBundle.getString("SAFETY_TOPIC"));
+            columnMap.put("MeddraTermCount", rsBundle.getString("MEDDRA_TERM"));
+            columnMap.put("SmqCount", rsBundle.getString("SMQ"));
+            columnMap.put("NmqCount", rsBundle.getString("NMQ"));
+            columnMap.put("CmqCount", rsBundle.getString("CMQ"));
+            columnMap.put("AdrCount", rsBundle.getString("ADR_CDS"));
+            workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
+                                             cellStartIndex, columnMap, null,
+                                             dateCellFormat, emptyValReplace);
+        } catch (InvalidFormatException invalidFormatException) {
+            invalidFormatException.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            workbook.write(outputStream);
+            excelInputStream.close();
+            outputStream.close();
+        }
+    }
 }

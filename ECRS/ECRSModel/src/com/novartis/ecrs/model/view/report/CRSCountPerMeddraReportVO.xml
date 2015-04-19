@@ -53,6 +53,12 @@ GROUP BY meddra_term,
     <DesignTime>
       <Attr Name="_DisplaySize" Value="300"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="MEDDRA_COMPONENT"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="MeddraCompDefn"
@@ -68,6 +74,12 @@ GROUP BY meddra_term,
     <DesignTime>
       <Attr Name="_DisplaySize" Value="3"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.novartis.ecrs.model.view.CrsRiskVO.MeddraLevel_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="NumberOfCrs"
@@ -78,12 +90,19 @@ GROUP BY meddra_term,
     ColumnType="NUMBER"
     AliasName="NUMBER_OF_CRS"
     Expression="NUMBER_OF_CRS"
-    SQLType="NUMERIC"/>
+    SQLType="NUMERIC">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="NUMBER_OF_CRSS"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="MeddraTerm"/>
+  </AttrArray>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>
   </ResourceBundle>
-  <AttrArray Name="KeyAttributes">
-    <Item Value="MeddraTerm"/>
-  </AttrArray>
 </ViewObject>

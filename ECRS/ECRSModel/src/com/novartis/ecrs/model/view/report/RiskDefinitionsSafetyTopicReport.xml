@@ -103,7 +103,7 @@
     <Properties>
       <SchemaBasedProperties>
         <LABEL
-          ResId="com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.MeddraTerm_LABEL"/>
+          ResId="MEDDRA_TERM"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
