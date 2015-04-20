@@ -129,13 +129,13 @@ public class SessionBean {
         } catch (AccountLockedException ale) {
 //            accessLogger.info("ACCOUNT LOCKED: " + un);
             FacesMessage msg =
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Account locked", "This account is locked.  Please contact NMAT support to reset your password.");
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Account locked", "This account is locked.  Please contact eCRS support to reset your password.");
             ctx.addMessage(null, msg);
             return null;
         } catch (AccountExpiredException aee) {
 //            accessLogger.info("PASSWORD EXPIRED: " + un);
             FacesMessage msg =
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Account locked", "This password has expired.  Please contact NMAT support to reset your password.");
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Account locked", "This password has expired.  Please contact eCRS support to reset your password.");
             ctx.addMessage(null, msg);
             return null;
         } catch (LoginException le) {
