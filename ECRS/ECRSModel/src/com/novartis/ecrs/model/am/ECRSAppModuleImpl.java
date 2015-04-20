@@ -409,13 +409,13 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         definitionRow.setAttribute("MeddraLevel", row.getAttribute("MeddraLevel"));
                         definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
                         definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
-                        definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
+//                        definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
                         definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
-                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
-                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
-                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
-                        definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
-                        definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
+//                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
+//                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
+//                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
+//                        definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
+//                        definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
                         definitionVO.insertRow(definitionRow);
                     } else { 
                         Row definitionRow = definitionVO.createRow();
@@ -425,13 +425,13 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         definitionRow.setAttribute("MeddraLevel", row.getAttribute("MeddraLevel"));
                         definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
                         definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
-                        definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
+//                        definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
                         definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
-                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
-                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
-                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
-                        definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
-                        definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
+//                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
+//                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
+//                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
+//                        definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
+//                        definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
                         definitionVO.insertRow(definitionRow); 
                     }
                 }
