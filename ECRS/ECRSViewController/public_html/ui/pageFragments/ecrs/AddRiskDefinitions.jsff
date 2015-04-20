@@ -6,7 +6,7 @@
   <af:panelGroupLayout id="pg32" layout="scroll" halign="start">
         <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
                   id="t1"/>
-    <af:panelHeader text="#{ecrsviewcontrollerBundle.RELATIONS}" id="ph1" styleClass="AFStretchWidth" size="1">
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.RELATIONS} : #{pageFlowScope.crsName}" id="ph1" styleClass="AFStretchWidth" size="1">
       <f:facet name="context"/>
       <f:facet name="menuBar"/>
       <f:facet name="toolbar"/>
