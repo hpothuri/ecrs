@@ -24,9 +24,11 @@
                                              filename="AddRiskDefinitionsReport.xls"
                                              method="#{pageFlowScope.manageCRSBean.exportRiskDefinitions}"/>
             </af:commandButton>
-            <af:commandButton text="#{ecrsviewcontrollerBundle.COPY_RISK_DEFINTION}" id="cb2" icon="/images/copy.png"/>
+            <af:commandButton text="#{ecrsviewcontrollerBundle.COPY_RISK_DEFINTION}" id="cb2" icon="/images/copy.png"
+                              rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
             <af:commandButton text="#{ecrsviewcontrollerBundle.ADD_RISK_DEFINITION}" id="cb1" icon="/images/Create.png"
-                              actionListener="#{pageFlowScope.manageCRSBean.addRiskDefinition}" partialSubmit="true"/>
+                              actionListener="#{pageFlowScope.manageCRSBean.addRiskDefinition}" partialSubmit="true"
+                              rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
           </af:toolbar>
         </f:facet>
         <af:table value="#{bindings.CrsRiskVO.collectionModel}" var="row" rows="#{bindings.CrsRiskVO.rangeSize}"
@@ -199,25 +201,30 @@
                           columns="#{bindings.SafetyTopicOfInterest.hints.displayWidth}"
                           maximumLength="#{bindings.SafetyTopicOfInterest.hints.precision}"
                           shortDesc="#{bindings.SafetyTopicOfInterest.hints.tooltip}" id="it1"
-                          contentStyle="width:200px;" autoSubmit="true">
+                          contentStyle="width:200px;" autoSubmit="true"
+                          readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
               <f:validator binding="#{bindings.SafetyTopicOfInterest.validator}"/>
             </af:inputText>
             <af:selectManyChoice label="#{ecrsviewcontrollerBundle.DATABASE}" id="smc1"
-                                 value="#{pageFlowScope.manageCRSBean.selDatabases}" autoSubmit="true">
+                                 value="#{pageFlowScope.manageCRSBean.selDatabases}" autoSubmit="true"
+                                 readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
               <f:selectItems value="#{pageFlowScope.manageCRSBean.databaseList}" id="si3"/>
             </af:selectManyChoice>
             <af:selectOneChoice label="#{bindings.DataDomain.hints.label}" id="soc1"
-                                value="#{bindings.DataDomain.inputValue}" autoSubmit="true">
+                                value="#{bindings.DataDomain.inputValue}" autoSubmit="true"
+                                readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
               <af:selectItem label="MedDRA" value="MEDDRA" id="si1"/>
               <af:selectItem label="Other" value="OTHER" id="si2"/>
             </af:selectOneChoice>
             <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
                                 shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc4" required="true"
-                                autoSubmit="true" contentStyle="width:200px;">
+                                autoSubmit="true" contentStyle="width:200px;"
+                                readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
               <f:selectItems value="#{bindings.SocTerm.items}" id="si17"/>
             </af:selectOneChoice>
             <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc2"
-                                 value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true">
+                                 value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true"
+                                 readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
               <af:selectItem label="SP" id="si4" value="SP"/>
               <af:selectItem label="DS" id="si5" value="DS"/>
               <af:selectItem label="RM" id="si6" value="RM"/>
@@ -236,7 +243,8 @@
                           columns="#{bindings.NonMeddraComponentComment.hints.displayWidth}"
                           maximumLength="#{bindings.NonMeddraComponentComment.hints.precision}"
                           shortDesc="#{bindings.NonMeddraComponentComment.hints.tooltip}" id="it6"
-                          contentStyle="width:500px;" rows="3">
+                          contentStyle="width:500px;" rows="3"
+                          disabled="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
               <f:validator binding="#{bindings.NonMeddraComponentComment.validator}"/>
             </af:inputText>
             <af:inputText value="#{bindings.MqmComment.inputValue}" label="#{bindings.MqmComment.hints.label}"
@@ -244,7 +252,7 @@
                           columns="#{bindings.MqmComment.hints.displayWidth}"
                           maximumLength="#{bindings.MqmComment.hints.precision}"
                           shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it5" rows="3"
-                          contentStyle="width:500px;">
+                          contentStyle="width:500px;" disabled="#{!securityContext.userInRole['MQM']}">
               <f:validator binding="#{bindings.MqmComment.validator}"/>
             </af:inputText>
           </af:panelFormLayout>
@@ -322,7 +330,7 @@
                   <f:validator binding="#{row.bindings.SearchCriteriaDetails.validator}"/>
                 </af:inputText>
               </af:column>
-              <af:column id="c29" width="20">
+              <af:column id="c29" width="20" rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
                 <f:facet name="header">
                   <af:image source="/images/delete.png" id="i2"/>
                 </f:facet>
@@ -337,12 +345,15 @@
                 <af:commandButton text="#{ecrsviewcontrollerBundle.ADD}" id="cb7" icon="/images/Create.png"
                                   actionListener="#{bindings.CreateRiskDefinition.execute}" visible="false"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SELECTED}" id="cb4" icon="/images/delete.png"
-                                  actionListener="#{pageFlowScope.manageCRSBean.deleteRiskDefinitions}"/>
+                                  actionListener="#{pageFlowScope.manageCRSBean.deleteRiskDefinitions}"
+                                  rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb5" icon="/images/filesave.png"
-                                  actionListener="#{pageFlowScope.manageCRSBean.saveRiskDefs}"/>
+                                  actionListener="#{pageFlowScope.manageCRSBean.saveRiskDefs}"
+                                  rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" id="cb6"
                                   icon="/images/hierarchy.gif" partialSubmit="true"
-                                  actionListener="#{pageFlowScope.manageCRSBean.onClickHierarchySearch}"/>
+                                  actionListener="#{pageFlowScope.manageCRSBean.onClickHierarchySearch}"
+                                  rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
               </af:toolbar>
             </f:facet>
           </af:panelCollection>
