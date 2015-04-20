@@ -179,7 +179,7 @@ public class ManageCRSBean implements Serializable {
         if (iter != null && iter.getCurrentRow() != null){
             CrsContentVORowImpl row = (CrsContentVORowImpl)iter.getCurrentRow();
             row.setStateId(ModelConstants.STATE_DRAFT);
-            row.setReleaseStatusFlag("P");
+            row.setReleaseStatusFlag(ModelConstants.STATUS_PENDING);
             row.setCrsEffectiveDt(ADFUtils.getJBOTimeStamp());
         }
     }
