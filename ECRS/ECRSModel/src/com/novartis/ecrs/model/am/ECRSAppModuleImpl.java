@@ -166,7 +166,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 whereClause += "STATE_ID = 4 AND ";
             if (ModelConstants.ROLE_ML.equals(userInRole))
                 whereClause += "STATE_ID = 5 AND ";
-            whereClause += "STATE_ID =" + row.getState() + " AND ";
+//            whereClause += "STATE_ID =" + row.getState() + " AND ";
             if (ModelConstants.ROLE_BSL.equals(userInRole))
                 whereClause += "STATE_ID NOT IN (2,4,5)  AND ";
         }
