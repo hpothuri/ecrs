@@ -406,6 +406,8 @@ public class ManageCRSBean implements Serializable {
         relationVO.insertRow(relationRow);
         relationVO.setCurrentRow(relationRow);
         ADFUtils.setPageFlowScopeValue("popupMode", "Add");
+        setSelDatabases(null);
+        setSelRiskPurposes(null);
         ADFUtils.showPopup(riskDefPopup);
     }
 
@@ -841,6 +843,9 @@ public class ManageCRSBean implements Serializable {
         DCIteratorBinding iter = ADFUtils.findIterator("HierarchySearchVOIterator");
         ViewObject hierVO = iter.getViewObject();
         hierVO.executeEmptyRowSet();
+        setTerm(null);
+        setLevel(null);
+        setDictionary(null);
         ADFUtils.showPopup(hierPopup);
     }
 
@@ -898,11 +903,11 @@ public class ManageCRSBean implements Serializable {
                 riskDefVO.insertRow(riskDefRow);
             }
         }
-        Object currentRowKey = dropTable.getRowKey();
-        List dropRowKey = (List)dropEvent.getDropSite();
-        if (dropRowKey == null) {
-            return DnDAction.NONE;
-        }
+//        Object currentRowKey = dropTable.getRowKey();
+//        List dropRowKey = (List)dropEvent.getDropSite();
+//        if (dropRowKey == null) {
+//            return DnDAction.NONE;
+//        }
 //        dropTable.setRowKey(dropRowKey);
 //        JUCtrlHierNodeBinding dropNode = (JUCtrlHierNodeBinding)dropTable.getRowData();
 //        Row dropRow = dropNode.getRow();
@@ -925,7 +930,7 @@ public class ManageCRSBean implements Serializable {
 //            FacesContext.getCurrentInstance().addMessage(null, msg);
 //            return DnDAction.NONE;
 //        }
-        dropTable.setRowKey(currentRowKey);
+//        dropTable.setRowKey(currentRowKey);
         dragTable.setRowKey(dragCurrentRowKey);
         AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
         AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
@@ -940,7 +945,7 @@ public class ManageCRSBean implements Serializable {
     public boolean isCrsFieldsUpdatable() {
         
         boolean isCrsFieldsUpdatable = false;
-        String crsState = (String)ADFUtils.evaluateEL("#{bindings.StateId.inputValue}");
+        Integer crsState = (Integer)ADFUtils.evaluateEL("#{bindings.StateId.inputValue}");
         String crsStatus = (String)ADFUtils.evaluateEL("#{bindings.ReleaseStatusFlag.inputValue}");
         
         // SEARCH FLOW - always read only

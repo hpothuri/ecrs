@@ -28,6 +28,27 @@
         ResId="com.novartis.ecrs.model.view.CrsRiskRelationVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <ViewAccessor
+    Name="SocLOVO"
+    ViewObjectName="com.novartis.ecrs.model.lov.SocLOVO"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_SocTerm"
+    ListVOName="SocLOVO"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="SocTerm"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Term"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Term"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
   <EntityUsage
     Name="CrsRiskRelationsEO"
     Entity="com.novartis.ecrs.model.entity.CrsRiskRelationsEO"/>
@@ -117,11 +138,14 @@
     PrecisionRule="true"
     EntityAttrName="SocTerm"
     EntityUsage="CrsRiskRelationsEO"
-    AliasName="SOC_TERM">
+    AliasName="SOC_TERM"
+    LOVName="LOV_SocTerm">
     <Properties>
       <SchemaBasedProperties>
         <LABEL
           ResId="com.novartis.ecrs.model.view.CrsRiskRelationVO.SocTerm_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

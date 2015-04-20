@@ -64,11 +64,6 @@
         <Item Value="DataDomain"/>
       </AttrNames>
     </attributeValues>
-    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="SocTerm">
-      <AttrNames>
-        <Item Value="SocTerm"/>
-      </AttrNames>
-    </attributeValues>
     <attributeValues IterBinding="CrsRiskRelationVOIterator" id="MqmComment">
       <AttrNames>
         <Item Value="MqmComment"/>
@@ -217,5 +212,7 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
+    <list IterBinding="CrsRiskRelationVOIterator" StaticList="false" Uses="LOV_SocTerm" id="SocTerm"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
   </bindings>
 </pageDefinition>

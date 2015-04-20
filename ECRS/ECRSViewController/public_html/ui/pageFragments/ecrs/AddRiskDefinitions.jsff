@@ -207,13 +207,11 @@
               <af:selectItem label="MedDRA" value="MEDDRA" id="si1"/>
               <af:selectItem label="Other" value="OTHER" id="si2"/>
             </af:selectOneChoice>
-            <af:inputText value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.hints.label}"
-                          columns="#{bindings.SocTerm.hints.displayWidth}"
-                          maximumLength="#{bindings.SocTerm.hints.precision}"
-                          shortDesc="#{bindings.SocTerm.hints.tooltip}" id="it4" contentStyle="width:200px;"
-                          autoSubmit="true" required="true">
-              <f:validator binding="#{bindings.SocTerm.validator}"/>
-            </af:inputText>
+            <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
+                                shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc4" required="true"
+                                autoSubmit="true" contentStyle="width:200px;">
+              <f:selectItems value="#{bindings.SocTerm.items}" id="si17"/>
+            </af:selectOneChoice>
             <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc2"
                                  value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true">
               <af:selectItem label="SP" id="si4" value="SP"/>
@@ -266,7 +264,8 @@
                               required="#{bindings.CrsRiskDefinitionsVO.hints.MeddraTerm.mandatory}"
                               columns="#{bindings.CrsRiskDefinitionsVO.hints.MeddraTerm.displayWidth}"
                               maximumLength="#{bindings.CrsRiskDefinitionsVO.hints.MeddraTerm.precision}"
-                              shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraTerm.tooltip}" id="it16">
+                              shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraTerm.tooltip}" id="it16"
+                              readOnly="true">
                   <f:validator binding="#{row.bindings.MeddraTerm.validator}"/>
                 </af:inputText>
               </af:column>
@@ -277,7 +276,8 @@
                               required="#{bindings.CrsRiskDefinitionsVO.hints.MeddraLevel.mandatory}"
                               columns="#{bindings.CrsRiskDefinitionsVO.hints.MeddraLevel.displayWidth}"
                               maximumLength="#{bindings.CrsRiskDefinitionsVO.hints.MeddraLevel.precision}"
-                              shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraLevel.tooltip}" id="it17">
+                              shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraLevel.tooltip}" id="it17"
+                              readOnly="true">
                   <f:validator binding="#{row.bindings.MeddraLevel.validator}"/>
                 </af:inputText>
               </af:column>
@@ -288,7 +288,8 @@
                               required="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.mandatory}"
                               columns="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.displayWidth}"
                               maximumLength="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.precision}"
-                              shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.tooltip}" id="it18">
+                              shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.tooltip}" id="it18"
+                              readOnly="true">
                   <f:validator binding="#{row.bindings.MeddraQualifier.validator}"/>
                 </af:inputText>
               </af:column>
@@ -299,7 +300,8 @@
                               required="#{bindings.CrsRiskDefinitionsVO.hints.MeddraCode.mandatory}"
                               columns="#{bindings.CrsRiskDefinitionsVO.hints.MeddraCode.displayWidth}"
                               maximumLength="#{bindings.CrsRiskDefinitionsVO.hints.MeddraCode.precision}"
-                              shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraCode.tooltip}" id="it19">
+                              shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraCode.tooltip}" id="it19"
+                              readOnly="true">
                   <f:validator binding="#{row.bindings.MeddraCode.validator}"/>
                 </af:inputText>
               </af:column>
@@ -312,7 +314,7 @@
                               columns="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.displayWidth}"
                               maximumLength="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.precision}"
                               shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.tooltip}"
-                              id="it20">
+                              id="it20" readOnly="true">
                   <f:validator binding="#{row.bindings.SearchCriteriaDetails.validator}"/>
                 </af:inputText>
               </af:column>
@@ -329,7 +331,7 @@
             <f:facet name="secondaryToolbar">
               <af:toolbar id="t5">
                 <af:commandButton text="#{ecrsviewcontrollerBundle.ADD}" id="cb7" icon="/images/Create.png"
-                                  actionListener="#{bindings.CreateRiskDefinition.execute}"/>
+                                  actionListener="#{bindings.CreateRiskDefinition.execute}" visible="false"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SELECTED}" id="cb4" icon="/images/delete.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.deleteRiskDefinitions}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb5" icon="/images/filesave.png"
@@ -345,7 +347,7 @@
     </af:popup>
     <af:popup childCreation="deferred" autoCancel="disabled" id="p2"
               binding="#{pageFlowScope.manageCRSBean.successPopup}">
-      <af:dialog id="d2" title="#{ecrsviewcontrollerBundle.INFO}" type="ok">
+      <af:dialog id="d2" title="#{ecrsviewcontrollerBundle.INFO}" type="ok" titleIconSource="/images/info_icon.png">
         <f:facet name="buttonBar"/>
         <af:outputText id="ot5" value="#{ecrsviewcontrollerBundle.SAVED_SUCCESSFULLY}"/>
       </af:dialog>
