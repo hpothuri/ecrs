@@ -52,7 +52,7 @@
                     <af:menuBar id="mb1">
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CREATE}" id="cmi1" action="create" immediate="true"
                                             inlineStyle=" font-weight: bold;     padding-right: 10px;"
-                                            visible="#{securityContext.authenticated}"/>
+                                            visible="#{securityContext.userInRole['BSL'] || securityContext.userInRole['CRSADMIN']}"/>
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.UPDATE}" id="cmi2" action="update" immediate="true"
                          inlineStyle=" font-weight: bold;     padding-right: 10px;"
                                             visible="#{securityContext.authenticated}"/>
