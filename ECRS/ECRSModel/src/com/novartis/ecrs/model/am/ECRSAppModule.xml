@@ -139,5 +139,11 @@
       <Return
         Type="java.util.List"/>
     </Method>
+    <Method
+      Name="deleteCrs"
+      MethodName="deleteCrs">
+      <Return
+        Type="void"/>
+    </Method>
   </ClientInterface>
 </AppModule>

@@ -18,4 +18,6 @@ public interface ECRSAppModule extends ApplicationModule {
     void copyRoutineDefinition(Long crsId);
 
     List fetchDatabases();
+
+    void deleteCrs();
 }

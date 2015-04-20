@@ -463,4 +463,40 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public ViewObjectImpl getHierarchySearchVO() {
         return (ViewObjectImpl)findViewObject("HierarchySearchVO");
     }
+    
+    /**
+     * 
+     * Info : Method to delete the current CRS, which internally deletes risk relations and risk definitions attached to it.
+     */
+    public void deleteCrs(){
+        ViewObject crsContentVO = this.getCrsContentVO();
+        ViewObject relationVO = this.getCrsRiskRelationVO();
+        ViewObject definitionVO = this.getCrsRiskDefinitionsVO();
+        Row crsRow = crsContentVO.getCurrentRow();
+        if(crsRow != null){
+            Long crsId = (Long)crsRow.getAttribute("CrsId");
+            relationVO.setWhereClause("CRS_ID = "+crsId);
+            relationVO.executeQuery();
+            if(relationVO.getEstimatedRowCount() > 0){
+                RowSetIterator relationRs = relationVO.createRowSetIterator(null);
+                while(relationRs.hasNext()){
+                    Row relationRow = relationRs.next();
+                    relationVO.setCurrentRow(relationRow);
+//                    Long riskId = (Long)relationRow.getAttribute("CrsRiskId");
+//                    definitionVO.setWhereClause("CRS_RISK_ID = "+riskId);
+//                    definitionVO.executeQuery();
+                    if(definitionVO.getEstimatedRowCount() > 0){
+                        RowSetIterator definitionRs = definitionVO.createRowSetIterator(null);
+                        while(definitionRs.hasNext()){
+                            Row definitionRow = definitionRs.next();
+                            definitionRow.remove();
+                        }
+                    }
+                    relationRow.remove();
+                }
+            }
+            crsRow.remove();
+            this.getDBTransaction().commit();
+        }
+    }
 }

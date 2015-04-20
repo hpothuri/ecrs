@@ -24,6 +24,11 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return;
     }
 
+    public void deleteCrs() {
+        Object _ret = this.riInvokeExportedMethod(this,"deleteCrs",null,null);
+        return;
+    }
+
     public List fetchDatabases() {
         Object _ret = this.riInvokeExportedMethod(this,"fetchDatabases",null,null);
         return (List)_ret;
