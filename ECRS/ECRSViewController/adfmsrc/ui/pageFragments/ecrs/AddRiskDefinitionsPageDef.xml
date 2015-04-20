@@ -209,6 +209,7 @@
           <Item Value="Mqcode"/>
           <Item Value="Mqlevel"/>
           <Item Value="Mqcrtev"/>
+          <Item Value="DictNm"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

@@ -174,7 +174,7 @@
     <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
               binding="#{pageFlowScope.manageCRSBean.riskDefPopup}" contentDelivery="lazyUncached"
               popupCanceledListener="#{pageFlowScope.manageCRSBean.onCloseRiskPopup}">
-      <af:dialog id="d1" title="#{pageFlowScope.popupMode} Risk Definition" contentWidth="800">
+      <af:dialog id="d1" title="#{pageFlowScope.popupMode} Risk Definition" contentWidth="800" type="cancel">
         <f:facet name="buttonBar"/>
         <af:panelGroupLayout id="pgl2" layout="scroll">
           <af:panelGroupLayout id="pgl1" layout="horizontal">
@@ -354,32 +354,32 @@
     </af:popup>
     <af:popup childCreation="deferred" autoCancel="disabled" id="p3" contentDelivery="lazyUncached"
               binding="#{pageFlowScope.manageCRSBean.hierPopup}">
-      <af:dialog id="d3" title="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" modal="false">
+      <af:dialog id="d3" title="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" modal="false" type="cancel">
         <f:facet name="buttonBar"/>
         <af:panelFormLayout id="pfl1" rows="2" maxColumns="2">
           <af:selectOneChoice label="#{ecrsviewcontrollerBundle.DICTIONARY}" id="soc2"
                               value="#{pageFlowScope.manageCRSBean.dictionary}" autoSubmit="true">
-            <af:selectItem label="MedDRA" value="BASE" id="si13"/>
-            <af:selectItem label="Filter" value="FILTER" id="si14"/>
-            <af:selectItem label="NMatSmq" value="NMATSMQ" id="si15"/>
+            <af:selectItem label="MedDRA" value="NMATMED" id="si13"/>
+            <af:selectItem label="Filter" value="NMATSMQ" id="si14"/>
           </af:selectOneChoice>
           <af:selectOneChoice label="#{ecrsviewcontrollerBundle.LEVEL}" id="soc3"
-                              value="#{pageFlowScope.manageCRSBean.level}" autoSubmit="true">
-            <af:selectItem label="SMQ 1" value="MQ1" id="si16" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
-            <af:selectItem label="SMQ 2" value="MQ2" id="si48" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
-            <af:selectItem label="SMQ 3" value="MQ3" id="si43" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
-            <af:selectItem label="SMQ 4" value="MQ4" id="si44" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
-            <af:selectItem label="SMQ 5" value="MQ5" id="si45" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
-            <af:selectItem label="Custom 1" value="NMQ1" id="si46" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
-            <af:selectItem label="Custom 2" value="NMQ2" id="si49" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
-            <af:selectItem label="Custom 3" value="NMQ3" id="si47" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
-            <af:selectItem label="Custom 4" value="NMQ4" id="si52" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
-            <af:selectItem label="Custom 5" value="NMQ5" id="si50" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'BASE'}"/>
+                              value="#{pageFlowScope.manageCRSBean.level}" autoSubmit="true" partialTriggers="soc2">
+            <af:selectItem label="SMQ 1" value="MQ1" id="si16"
+                           disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
+            <af:selectItem label="SMQ 2" value="MQ2" id="si48" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
+            <af:selectItem label="SMQ 3" value="MQ3" id="si43" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
+            <af:selectItem label="SMQ 4" value="MQ4" id="si44" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
+            <af:selectItem label="SMQ 5" value="MQ5" id="si45" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
+            <af:selectItem label="Custom 1" value="NMQ1" id="si46" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
+            <af:selectItem label="Custom 2" value="NMQ2" id="si49" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
+            <af:selectItem label="Custom 3" value="NMQ3" id="si47" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
+            <af:selectItem label="Custom 4" value="NMQ4" id="si52" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
+            <af:selectItem label="Custom 5" value="NMQ5" id="si50" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
             <af:selectItem label="SOC" value="SOC" id="si51"
-                           disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'BASE'}"/>
-            <af:selectItem label="HLGT" value="HLGT" id="si53" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'BASE'}"/>
-            <af:selectItem label="HLT" value="HLT" id="si54" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'BASE'}"/>
-            <af:selectItem label="PT" value="PT" id="si55" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'BASE'}"/>
+                           disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'NMATMED'}"/>
+            <af:selectItem label="HLGT" value="HLGT" id="si53" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'NMATMED'}"/>
+            <af:selectItem label="HLT" value="HLT" id="si54" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'NMATMED'}"/>
+            <af:selectItem label="PT" value="PT" id="si55" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'NMATMED'}"/>
           </af:selectOneChoice>
           <af:inputText label="#{ecrsviewcontrollerBundle.TERM}" id="it2" value="#{pageFlowScope.manageCRSBean.term}"
                         autoSubmit="true"/>
@@ -409,6 +409,13 @@
           </af:column>
           <af:dragSource actions="COPY" defaultAction="COPY" discriminant="copyRows"/>
         </af:table>
+      </af:dialog>
+    </af:popup>
+    <af:popup childCreation="deferred" autoCancel="disabled" id="p4"
+              binding="#{pageFlowScope.manageCRSBean.meddraError}">
+      <af:dialog id="d4" title="#{ecrsviewcontrollerBundle.ERROR}" titleIconSource="/images/delete.png" type="ok">
+        <f:facet name="buttonBar"/>
+        <af:outputText value="#{ecrsviewcontrollerBundle.ONLY_ONE_MEDDRA_ROW_CAN_BE_ADD}" id="ot8"/>
       </af:dialog>
     </af:popup>
   </af:panelGroupLayout>

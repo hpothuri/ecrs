@@ -76,6 +76,7 @@ public class ManageCRSBean implements Serializable {
     private transient RichPopup crsRetirePopup;
     private transient RichPopup crsReactivatePopup;
     private transient RichPopup crsReviewedPopup;
+    private RichPopup meddraError;
 
 
     public ManageCRSBean() {
@@ -889,10 +890,35 @@ public class ManageCRSBean implements Serializable {
                 String code = (String)dragRow.getAttribute("Mqcode");
                 String level = (String)dragRow.getAttribute("Mqlevel");
                 String qual = (String)dragRow.getAttribute("Mqcrtev");
+                String dict = (String)dragRow.getAttribute("DictNm");
+
+                if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
+                    Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
+                    if (rows.length > 0) {
+                        ADFUtils.showPopup(meddraError);
+                        dragTable.setRowKey(dragCurrentRowKey);
+                        AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                        AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                        return DnDAction.NONE;
+                    }
+                }
+                
                 Row riskDefRow = riskDefVO.createRow();
                 riskDefRow.setAttribute("MeddraCode", code);
                 riskDefRow.setAttribute("MeddraLevel", level);
                 riskDefRow.setAttribute("MeddraTerm", term);
+                riskDefRow.setAttribute("MeddraDict", dict);
+                
+                if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
+                    if (term != null && term.contains("NMQ"))
+                        riskDefRow.setAttribute("MeddraExtension", "NMQ");
+                    else if (term != null && term.contains("CMQ"))
+                        riskDefRow.setAttribute("MeddraExtension", "CMQ");
+                    else if (term != null && term.contains("SMQ"))
+                        riskDefRow.setAttribute("MeddraExtension", "SMQ");
+                } else
+                    riskDefRow.setAttribute("MeddraExtension", level);
+                
                 if(qual != null && qual.contains("Y_BROAD"))
                     riskDefRow.setAttribute("MeddraQualifier", "BROAD");
                 else if(qual != null && qual.contains("Y_NARROW"))
@@ -903,34 +929,6 @@ public class ManageCRSBean implements Serializable {
                 riskDefVO.insertRow(riskDefRow);
             }
         }
-//        Object currentRowKey = dropTable.getRowKey();
-//        List dropRowKey = (List)dropEvent.getDropSite();
-//        if (dropRowKey == null) {
-//            return DnDAction.NONE;
-//        }
-//        dropTable.setRowKey(dropRowKey);
-//        JUCtrlHierNodeBinding dropNode = (JUCtrlHierNodeBinding)dropTable.getRowData();
-//        Row dropRow = dropNode.getRow();
-//        String dropNodeVO = dropRow.getStructureDef().getDefName();
-//        if ("CrsRiskDefinitionsVO".equalsIgnoreCase(dropNodeVO)) {
-//            Long deptId = (Long)dropRow.getAttribute("DepartmentId");
-//            Long oldDeptId = (Long)dragRow.getAttribute("DepartmentId");
-//            if (oldDeptId != deptId) {
-//                dragRow.setAttribute("DepartmentId", deptId);
-//                executeOperation("Commit");
-//            } else {
-//                FacesMessage msg =
-//                    new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Drop an employee on to a different department, he is already from this department.");
-//                FacesContext.getCurrentInstance().addMessage(null, msg);
-//                return DnDAction.NONE;
-//            }
-//        } else {
-//            FacesMessage msg =
-//                new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Drop an employee on to a department to move from department to department.");
-//            FacesContext.getCurrentInstance().addMessage(null, msg);
-//            return DnDAction.NONE;
-//        }
-//        dropTable.setRowKey(currentRowKey);
         dragTable.setRowKey(dragCurrentRowKey);
         AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
         AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
@@ -1018,5 +1016,13 @@ public class ManageCRSBean implements Serializable {
 
     public RichPopup getCrsReviewedPopup() {
         return crsReviewedPopup;
+    }
+
+    public void setMeddraError(RichPopup meddraError) {
+        this.meddraError = meddraError;
+    }
+
+    public RichPopup getMeddraError() {
+        return meddraError;
     }
 }

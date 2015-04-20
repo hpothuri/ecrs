@@ -176,16 +176,14 @@
     PrecisionRule="true"
     EntityAttrName="MeddraDict"
     EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="MEDDRA_DICT"
-    DefaultValue="MEDDRA"/>
+    AliasName="MEDDRA_DICT"/>
   <ViewAttribute
     Name="MeddraExtension"
     IsNotNull="true"
     PrecisionRule="true"
     EntityAttrName="MeddraExtension"
     EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="MEDDRA_EXTENSION"
-    DefaultValue="EXT"/>
+    AliasName="MEDDRA_EXTENSION"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>
