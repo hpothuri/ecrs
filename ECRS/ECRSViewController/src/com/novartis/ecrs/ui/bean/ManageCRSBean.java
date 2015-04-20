@@ -94,7 +94,9 @@ public class ManageCRSBean implements Serializable {
     private RichPopup delConfPopupBinding;
     private RichPopup crsPublishPopupBinding;
     private RichPopup crsDemoteDraftPopupBinding;
-
+    private List<SelectItem> filterItems;
+    private List<SelectItem> meddraItems;
+    private List<SelectItem> levelItems;
 
     public ManageCRSBean() {
         super();
@@ -157,11 +159,26 @@ public class ManageCRSBean implements Serializable {
 
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
-        if (oper.getErrors().size() > 0) 
+        if (oper.getErrors().size() > 0)
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
-        else{
-            ADFUtils.showPopup(getSuccessPopupBinding());
-            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+        else {
+//            String flowType = (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
+//            if (flowType != null && "U".equalsIgnoreCase(flowType)) {
+//                Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
+//                OperationBinding copyOper = ADFUtils.findOperation("copyRoutineDefinition");
+//                copyOper.getParamsMap().put("crsId", crsId);
+//                copyOper.execute();
+//                if (copyOper.getErrors().size() > 0)
+//                    ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
+//                                              FacesMessage.SEVERITY_ERROR);
+//                else {
+//                    ADFUtils.showPopup(getSuccessPopupBinding());
+//                    ADFUtils.addPartialTarget(getWorkflowPanelBox());
+//                }
+//            } else {
+                ADFUtils.showPopup(getSuccessPopupBinding());
+                ADFUtils.addPartialTarget(getWorkflowPanelBox());
+//            }
         }
     }
 
@@ -995,19 +1012,13 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void processDeleteDialog(DialogEvent dialogEvent) {
-        // Add event code here...
         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())){
-            
-            // remove risk relations and risk defs
-            
-            //remove crs content
-            ADFUtils.findIterator("CrsContentVOIterator").getCurrentRow().remove();
-            
-            //commit
-            
-            //navigate back to home page
-            
-            
+            OperationBinding oper = ADFUtils.findOperation("deleteCrs");
+            oper.execute();
+            if (oper.getErrors().size() > 0)
+                ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+            else
+                ADFUtils.navigateToControlFlowCase("home");            
         }
     }
 
@@ -1189,5 +1200,73 @@ public class ManageCRSBean implements Serializable {
 
     public RichPopup getCrsDemoteDraftPopupBinding() {
         return crsDemoteDraftPopupBinding;
+    }
+
+    public void setFilterItems(List<SelectItem> filterItems) {
+        this.filterItems = filterItems;
+    }
+
+    public List<SelectItem> getFilterItems() {
+        if(filterItems == null){
+            filterItems = new ArrayList<SelectItem>();
+            SelectItem item1 = new SelectItem("MQ1", "SMQ 1");
+            SelectItem item2 = new SelectItem("MQ2", "SMQ 2");
+            SelectItem item3 = new SelectItem("MQ3", "SMQ 3");
+            SelectItem item4 = new SelectItem("MQ4", "SMQ 4");
+            SelectItem item5 = new SelectItem("MQ5", "SMQ 5");
+            SelectItem item6 = new SelectItem("NMQ1", "Custom 1");
+            SelectItem item7 = new SelectItem("NMQ2", "Custom 2");
+            SelectItem item8 = new SelectItem("NMQ3", "Custom 3");
+            SelectItem item9 = new SelectItem("NMQ4", "Custom 4");
+            SelectItem item10 = new SelectItem("NMQ5", "Custom 5");
+            filterItems.add(item1);
+            filterItems.add(item2);
+            filterItems.add(item3);
+            filterItems.add(item4);
+            filterItems.add(item5);
+            filterItems.add(item6);
+            filterItems.add(item7);
+            filterItems.add(item8);
+            filterItems.add(item9);
+            filterItems.add(item10);
+        }
+        return filterItems;
+    }
+
+    public void setMeddraItems(List<SelectItem> meddraItems) {
+        this.meddraItems = meddraItems;
+    }
+
+    public List<SelectItem> getMeddraItems() {
+        if(meddraItems == null){
+            meddraItems = new ArrayList<SelectItem>();
+            SelectItem item1 = new SelectItem("SOC", "SOC");
+            SelectItem item2 = new SelectItem("HLGT", "HLGT");
+            SelectItem item3 = new SelectItem("HLT", "HLT");
+            SelectItem item4 = new SelectItem("PT", "PT");
+            meddraItems.add(item1);
+            meddraItems.add(item2);
+            meddraItems.add(item3);
+            meddraItems.add(item4);
+        }
+        return meddraItems;
+    }
+
+    public void dictionaryVC(ValueChangeEvent valueChangeEvent) {
+        if(valueChangeEvent.getNewValue() != null && valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue()){
+            if("NMATMED".equalsIgnoreCase((String)valueChangeEvent.getNewValue())){
+                setLevelItems(getMeddraItems());
+            }else{
+                setLevelItems(getFilterItems());
+            }
+        }
+    }
+
+    public void setLevelItems(List<SelectItem> levelItems) {
+        this.levelItems = levelItems;
+    }
+
+    public List<SelectItem> getLevelItems() {
+        return levelItems;
     }
 }

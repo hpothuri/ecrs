@@ -362,28 +362,14 @@
         <f:facet name="buttonBar"/>
         <af:panelFormLayout id="pfl1" rows="2" maxColumns="2">
           <af:selectOneChoice label="#{ecrsviewcontrollerBundle.DICTIONARY}" id="soc2"
-                              value="#{pageFlowScope.manageCRSBean.dictionary}" autoSubmit="true">
+                              value="#{pageFlowScope.manageCRSBean.dictionary}" autoSubmit="true"
+                              valueChangeListener="#{pageFlowScope.manageCRSBean.dictionaryVC}">
             <af:selectItem label="MedDRA" value="NMATMED" id="si13"/>
             <af:selectItem label="Filter" value="NMATSMQ" id="si14"/>
           </af:selectOneChoice>
           <af:selectOneChoice label="#{ecrsviewcontrollerBundle.LEVEL}" id="soc3"
                               value="#{pageFlowScope.manageCRSBean.level}" autoSubmit="true" partialTriggers="soc2">
-            <af:selectItem label="SMQ 1" value="MQ1" id="si16"
-                           disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
-            <af:selectItem label="SMQ 2" value="MQ2" id="si48" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
-            <af:selectItem label="SMQ 3" value="MQ3" id="si43" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
-            <af:selectItem label="SMQ 4" value="MQ4" id="si44" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
-            <af:selectItem label="SMQ 5" value="MQ5" id="si45" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
-            <af:selectItem label="Custom 1" value="NMQ1" id="si46" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
-            <af:selectItem label="Custom 2" value="NMQ2" id="si49" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
-            <af:selectItem label="Custom 3" value="NMQ3" id="si47" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
-            <af:selectItem label="Custom 4" value="NMQ4" id="si52" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
-            <af:selectItem label="Custom 5" value="NMQ5" id="si50" disabled="#{pageFlowScope.manageCRSBean.dictionary eq 'NMATMED'}"/>
-            <af:selectItem label="SOC" value="SOC" id="si51"
-                           disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'NMATMED'}"/>
-            <af:selectItem label="HLGT" value="HLGT" id="si53" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'NMATMED'}"/>
-            <af:selectItem label="HLT" value="HLT" id="si54" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'NMATMED'}"/>
-            <af:selectItem label="PT" value="PT" id="si55" disabled="#{pageFlowScope.manageCRSBean.dictionary ne 'NMATMED'}"/>
+            <f:selectItems id="si15" value="#{pageFlowScope.manageCRSBean.levelItems}"/>
           </af:selectOneChoice>
           <af:inputText label="#{ecrsviewcontrollerBundle.TERM}" id="it2" value="#{pageFlowScope.manageCRSBean.term}"
                         autoSubmit="true"/>

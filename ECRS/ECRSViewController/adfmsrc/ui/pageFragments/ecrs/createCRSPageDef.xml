@@ -142,5 +142,8 @@
                   ReturnName="data.ECRSAppModuleDataControl.methodResults.copyRoutineDefinition_ECRSAppModuleDataControl_dataProvider_copyRoutineDefinition_result">
       <NamedData NDName="crsId" NDType="java.lang.Long"/>
     </methodAction>
+    <methodAction id="deleteCrs" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="deleteCrs" IsViewObjectMethod="false"/>
   </bindings>
 </pageDefinition>

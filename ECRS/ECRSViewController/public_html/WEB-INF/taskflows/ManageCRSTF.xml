@@ -55,6 +55,9 @@
     <view id="exceptionHandler">
       <page>/ui/pageFragments/exception/exceptionHandler.jsff</page>
     </view>
+    <parent-action id="home">
+      <parent-outcome>home</parent-outcome>
+    </parent-action>
     <train/>
     <control-flow-rule id="__5">
       <from-activity-id>crsFlowRouter</from-activity-id>
@@ -79,6 +82,13 @@
       <control-flow-case id="__9">
         <from-outcome>toSearch</from-outcome>
         <to-activity-id>serach</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__11">
+      <from-activity-id>create</from-activity-id>
+      <control-flow-case id="__12">
+        <from-outcome>home</from-outcome>
+        <to-activity-id>home</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>
