@@ -19,7 +19,11 @@
         <f:facet name="afterToolbar"/>
         <f:facet name="secondaryToolbar">
           <af:toolbar id="t3">
-            <af:commandButton text="#{ecrsviewcontrollerBundle.EXPORT}" id="cb3" icon="/images/excel_icon.gif"/>
+            <af:commandButton text="#{ecrsviewcontrollerBundle.EXPORT}" id="cb3" icon="/images/excel_icon.gif">
+              <af:fileDownloadActionListener contentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                             filename="AddRiskDefinitionsReport.xls"
+                                             method="#{pageFlowScope.manageCRSBean.exportRiskDefinitions}"/>
+            </af:commandButton>
             <af:commandButton text="#{ecrsviewcontrollerBundle.COPY_RISK_DEFINTION}" id="cb2" icon="/images/copy.png"/>
             <af:commandButton text="#{ecrsviewcontrollerBundle.ADD_RISK_DEFINITION}" id="cb1" icon="/images/Create.png"
                               actionListener="#{pageFlowScope.manageCRSBean.addRiskDefinition}" partialSubmit="true"/>

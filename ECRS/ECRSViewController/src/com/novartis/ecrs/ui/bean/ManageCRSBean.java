@@ -5,14 +5,20 @@ import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.CrsContentVORowImpl;
 import com.novartis.ecrs.ui.constants.ViewConstants;
 import com.novartis.ecrs.ui.utility.ADFUtils;
+import com.novartis.ecrs.ui.utility.ExcelExportUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -38,13 +44,21 @@ import oracle.adf.view.rich.event.PopupCanceledEvent;
 
 import oracle.binding.OperationBinding;
 
+import oracle.javatools.resourcebundle.BundleFactory;
+
 import oracle.jbo.Row;
+import oracle.jbo.RowSetIterator;
 import oracle.jbo.ViewObject;
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
+
+import oracle.security.crypto.util.InvalidFormatException;
 
 import org.apache.myfaces.trinidad.event.SelectionEvent;
 import org.apache.myfaces.trinidad.model.CollectionModel;
 import org.apache.myfaces.trinidad.model.RowKeySet;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 
 public class ManageCRSBean implements Serializable {
@@ -77,6 +91,9 @@ public class ManageCRSBean implements Serializable {
     private transient RichPopup crsReactivatePopup;
     private transient RichPopup crsReviewedPopup;
     private RichPopup meddraError;
+    private RichPopup delConfPopupBinding;
+    private RichPopup crsPublishPopupBinding;
+    private RichPopup crsDemoteDraftPopupBinding;
 
 
     public ManageCRSBean() {
@@ -221,7 +238,7 @@ public class ManageCRSBean implements Serializable {
         DCBindingContainer bc = ADFUtils.getDCBindingContainer();
         OperationBinding ob = bc.getOperationBinding("filterCRSContent");
         ob.getParamsMap().put("userInRole", loggedInUserRole);
-        ob.getParamsMap().put("userName", "");
+        ob.getParamsMap().put("userName", getUserName());
         ob.getParamsMap().put("isInboxDisable", isInboxDisable());
         ob.execute();
         if (ob.getErrors().size() > 0)
@@ -731,7 +748,7 @@ public class ManageCRSBean implements Serializable {
         if (oper.getErrors().size() > 0)
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
         else {
-            ADFUtils.showPopup(getCrsApprovePopup());
+            ADFUtils.showPopup(getCrsDemoteDraftPopupBinding());
             ADFUtils.addPartialTarget(getCrsStateSOC());
             ADFUtils.addPartialTarget(getWorkflowPanelBox());
         }
@@ -955,10 +972,10 @@ public class ManageCRSBean implements Serializable {
         //  BSL LOGIN
         if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_BSL)) {
 
-            if (ModelConstants.STATUS_PENDING.equals(crsStatus)) {
+            if (ModelConstants.STATUS_CURRENT.equals(crsStatus)) {
 
 
-            } else if (ModelConstants.STATUS_CURRENT.equals(crsStatus)) {
+            } else if (ModelConstants.STATUS_PENDING.equals(crsStatus)) {
                 
                 if(ModelConstants.STATE_DRAFT.equals(crsState) ||
                     ModelConstants.STATE_REVIEWED.equals(crsState) ||
@@ -970,8 +987,9 @@ public class ManageCRSBean implements Serializable {
         
         // ADMIN LOGIN - admin can update any CRS in any state
        else if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_CRSADMIN))
-            isCrsFieldsUpdatable = true; 
+            isCrsFieldsUpdatable = true;
         
+        crsFieldsUpdatable = isCrsFieldsUpdatable;
         
         return crsFieldsUpdatable;
     }
@@ -1024,5 +1042,152 @@ public class ManageCRSBean implements Serializable {
 
     public RichPopup getMeddraError() {
         return meddraError;
+    }
+
+    /**
+     * @param vce
+     */
+    public void onChangeIndication(ValueChangeEvent vce) {
+        if (vce != null) {
+            vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            if (vce.getNewValue() != null &&
+                !vce.getNewValue().equals(vce.getOldValue())) {
+                String crsCompCode =
+                    (String)ADFUtils.evaluateEL("#{bindings.CrsCompoundCode.inputValue}");
+                String compCode =
+                    (String)ADFUtils.evaluateEL("#{bindings.CompoundCode.inputValue}");
+                String indication =
+                    (String)ADFUtils.evaluateEL("#{bindings.Indication.inputValue}");
+                if (indication != null) {
+                    ADFUtils.setEL("#{bindings.CrsName.inputValue}",
+                                   (compCode != null ? compCode :
+                                    crsCompCode) + " " + indication);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param facesContext
+     * @param outputStream
+     * @throws IOException
+     */
+    public void exportRiskDefinitions(FacesContext facesContext,
+                                      OutputStream outputStream) throws IOException {
+        // Add event code here...
+        //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
+        Workbook workbook = null;
+        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        try {
+            //create sheet
+            DCIteratorBinding iter =
+                ADFUtils.findIterator("CrsRiskVOIterator");
+            RowSetIterator rowSet = null;
+            int rowStartIndex = 8;
+            int cellStartIndex = 0;
+            String emptyValReplace = null;
+            String dateCellFormat = "M/dd/yyyy";
+            if (iter != null) {
+                iter.setRangeSize(-1);
+                rowSet = iter.getRowSetIterator();
+            }
+            workbook = WorkbookFactory.create(excelInputStream);
+            LinkedHashMap columnMap = new LinkedHashMap();
+            ResourceBundle rsBundle =
+                BundleFactory.getBundle("com.novartis.ecrs.model.ECRSModelBundle");
+            //Here Key will be ViewObject Attribute
+            columnMap.put("SafetyTopicOfInterest",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.SafetyTopicOfInterest_LABEL"));
+            columnMap.put("RiskPurposeSpFlag",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.RiskPurposeSpFlag_LABEL"));
+            columnMap.put("RiskPurposeDsFlag",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.RiskPurposeDsFlag_LABEL"));
+            columnMap.put("RiskPurposeRmFlag",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.RiskPurposeRmFlag_LABEL"));
+            columnMap.put("RiskPurposePsFlag",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.RiskPurposePsFlag_LABEL"));
+            columnMap.put("RiskPurposeIbFlag",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.RiskPurposeIbFlag_LABEL"));
+            columnMap.put("RiskPurposeCdFlag",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.RiskPurposeCdFlag_LABEL"));
+            columnMap.put("RiskPurposeOsFlag",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.RiskPurposeOsFlag_LABEL"));
+            columnMap.put("RiskPurposeMiFlag",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.RiskPurposeMiFlag_LABEL"));
+            columnMap.put("RiskPurposeErFlag",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.RiskPurposeErFlag_LABEL"));
+            columnMap.put("SocTerm",
+                          rsBundle.getString("SOC_AS_ASSIGNED_TO_THE_ADR"));
+            columnMap.put("DatabaseList",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.DatabaseId_LABEL"));
+            columnMap.put("DataDomain",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.DataDomain_LABEL"));
+            columnMap.put("MeddraTerm", rsBundle.getString("MEDDRA_TERM"));
+            columnMap.put("MeddraLevel", rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.MeddraLevel_LABEL"));
+            columnMap.put("MeddraQualifier",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.MeddraQualifier_LABEL"));
+            columnMap.put("SearchCriteriaDetails",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.SearchCriteriaDetails_LABEL"));
+            columnMap.put("MqmComment", rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.MqmComment_LABEL"));
+
+            workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
+            Sheet sheet = workbook.getSheetAt(0);
+            ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
+                                             cellStartIndex, columnMap, null,
+                                             dateCellFormat, emptyValReplace);
+        } catch (InvalidFormatException invalidFormatException) {
+            invalidFormatException.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            workbook.write(outputStream);
+            excelInputStream.close();
+            outputStream.close();
+        }
+    }
+
+    public void onClickPublished(ActionEvent actionEvent) {
+        // Add event code here...
+        if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_BSL) ||
+            ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_CRSADMIN))
+            ADFUtils.setEL("#{bindings.StateId.inputValue}",
+                           ModelConstants.STATE_PUBLISHED);
+
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0)
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
+                                      FacesMessage.SEVERITY_ERROR);
+        else {
+            ADFUtils.showPopup(getCrsPublishPopupBinding());
+            ADFUtils.addPartialTarget(getCrsStateSOC());
+            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+        }
+    }
+
+    public void setDelConfPopupBinding(RichPopup delConfPopupBinding) {
+        this.delConfPopupBinding = delConfPopupBinding;
+    }
+
+    public RichPopup getDelConfPopupBinding() {
+        return delConfPopupBinding;
+    }
+
+    public void setCrsPublishPopupBinding(RichPopup publishPopupBinding) {
+        this.crsPublishPopupBinding = publishPopupBinding;
+    }
+
+    public RichPopup getCrsPublishPopupBinding() {
+        return crsPublishPopupBinding;
+    }
+
+    public void setCrsDemoteDraftPopupBinding(RichPopup crsDemoteDraftPopupBinding) {
+        this.crsDemoteDraftPopupBinding = crsDemoteDraftPopupBinding;
+    }
+
+    public RichPopup getCrsDemoteDraftPopupBinding() {
+        return crsDemoteDraftPopupBinding;
     }
 }
