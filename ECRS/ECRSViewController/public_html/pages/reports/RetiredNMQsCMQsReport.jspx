@@ -31,6 +31,10 @@
                             </f:facet>
                             <f:facet name="legend"/>
                             <f:facet name="info"/>
+                            <af:panelGroupLayout id="pgl3" layout="vertical">
+                                <af:spacer width="10" height="10" id="s2"/>
+                                <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb2" action="home"/>
+                            </af:panelGroupLayout>
                         </af:panelHeader>
                     </f:facet>
                 </af:pageTemplate>

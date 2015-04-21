@@ -147,6 +147,7 @@
                                     </f:facet>
                                 </af:panelGroupLayout>
                             </af:panelHeader>
+                            <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb2" action="home"/>
                         </af:panelGroupLayout>
                     </f:facet>
                 </af:pageTemplate>
