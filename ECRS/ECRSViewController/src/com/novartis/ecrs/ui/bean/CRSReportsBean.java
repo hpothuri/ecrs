@@ -34,6 +34,8 @@ public class CRSReportsBean {
         super();
     }
 
+    ExcelExportUtils excelUtils = new ExcelExportUtils();
+    
     /**
      * @param facesContext
      * @param outputStream
@@ -44,7 +46,7 @@ public class CRSReportsBean {
         // Add event code here...
         //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
         Workbook workbook = null;
-        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        InputStream excelInputStream = getExcelInpStream();
         try {
             //create sheet
             //            org.apache.poi.ss.usermodel.Row row = null;
@@ -135,7 +137,8 @@ public class CRSReportsBean {
                     count++;
                 }
             }
-
+            //write image to sheet
+            ExcelExportUtils.writeImageTOExcel(sheet,getImageInpStream());
         } catch (InvalidFormatException invalidFormatException) {
             invalidFormatException.printStackTrace();
         } catch (IOException ioe) {
@@ -161,7 +164,7 @@ public class CRSReportsBean {
         // Add event code here...
         //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
         Workbook workbook = null;
-        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        InputStream excelInputStream = getExcelInpStream();
         try {
             //create sheet
             DCIteratorBinding iter =
@@ -189,8 +192,9 @@ public class CRSReportsBean {
             Sheet sheet = workbook.getSheetAt(0);
             ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
                                              cellStartIndex, columnMap, null,
-                                             dateCellFormat, emptyValReplace);
-
+                                             dateCellFormat, emptyValReplace,getImageInpStream());
+            //write image to sheet
+            //ExcelExportUtils.writeImageTOExcel(sheet,getImageInpStream());
         } catch (InvalidFormatException invalidFormatException) {
             invalidFormatException.printStackTrace();
         } catch (IOException ioe) {
@@ -215,7 +219,7 @@ public class CRSReportsBean {
         // Add event code here...
         //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
         Workbook workbook = null;
-        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        InputStream excelInputStream = getExcelInpStream();
         try {
             //create sheet
             DCIteratorBinding iter =
@@ -242,8 +246,9 @@ public class CRSReportsBean {
 
             ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
                                              cellStartIndex, columnMap, null,
-                                             dateCellFormat, emptyValReplace);
-
+                                             dateCellFormat, emptyValReplace,getImageInpStream());
+            //write image to sheet
+            //ExcelExportUtils.writeImageTOExcel(sheet,getImageInpStream());
         } catch (InvalidFormatException invalidFormatException) {
             invalidFormatException.printStackTrace();
         } catch (IOException ioe) {
@@ -268,7 +273,7 @@ public class CRSReportsBean {
         // Add event code here...
         //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
         Workbook workbook = null;
-        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        InputStream excelInputStream = getExcelInpStream();
         try {
             //create sheet
             DCIteratorBinding iter =
@@ -299,8 +304,9 @@ public class CRSReportsBean {
 
             ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
                                              cellStartIndex, columnMap, null,
-                                             dateCellFormat, emptyValReplace);
-
+                                             dateCellFormat, emptyValReplace,getImageInpStream());
+            //write image to sheet
+            //ExcelExportUtils.writeImageTOExcel(sheet,getImageInpStream());
         } catch (InvalidFormatException invalidFormatException) {
             invalidFormatException.printStackTrace();
         } catch (IOException ioe) {
@@ -325,7 +331,7 @@ public class CRSReportsBean {
         // Add event code here...
         //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
         Workbook workbook = null;
-        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        InputStream excelInputStream = getExcelInpStream();
         try {
             //create sheet
             DCIteratorBinding iter =
@@ -353,8 +359,9 @@ public class CRSReportsBean {
 
             ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
                                              cellStartIndex, columnMap, null,
-                                             dateCellFormat, emptyValReplace);
-
+                                             dateCellFormat, emptyValReplace,getImageInpStream());
+            //write image to sheet
+            //ExcelExportUtils.writeImageTOExcel(sheet,getImageInpStream());
         } catch (InvalidFormatException invalidFormatException) {
             invalidFormatException.printStackTrace();
         } catch (IOException ioe) {
@@ -379,7 +386,7 @@ public class CRSReportsBean {
         // Add event code here...
         //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
         Workbook workbook = null;
-        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        InputStream excelInputStream = getExcelInpStream();
         try {
             //create sheet
             ADFUtils.findIterator("");
@@ -391,7 +398,8 @@ public class CRSReportsBean {
 
             // ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex, cellStartIndex, columnMap, tableHeader, dateCellFormat, emptyValReplace)
 
-
+            //write image to sheet
+            //ExcelExportUtils.writeImageTOExcel(sheet,getImageInpStream());
         } catch (InvalidFormatException invalidFormatException) {
             invalidFormatException.printStackTrace();
         } catch (IOException ioe) {
@@ -416,7 +424,7 @@ public class CRSReportsBean {
         // Add event code here...
         //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
         Workbook workbook = null;
-        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        InputStream excelInputStream = getExcelInpStream();
         try {
             //create sheet
             DCIteratorBinding iter =
@@ -445,10 +453,12 @@ public class CRSReportsBean {
             columnMap.put("AdrCount", rsBundle.getString("ADR_CDS"));
             workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
             Sheet sheet = workbook.getSheetAt(0);
-
+            
             ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
                                              cellStartIndex, columnMap, null,
-                                             dateCellFormat, emptyValReplace);
+                                             dateCellFormat, emptyValReplace,getImageInpStream());
+            //write image to sheet
+            //ExcelExportUtils.writeImageTOExcel(sheet,getImageInpStream());
         } catch (InvalidFormatException invalidFormatException) {
             invalidFormatException.printStackTrace();
         } catch (IOException ioe) {
@@ -460,5 +470,19 @@ public class CRSReportsBean {
             excelInputStream.close();
             outputStream.close();
         }
+    }
+    
+    /**
+     * @return InputStream
+     */
+    public InputStream getExcelInpStream() {
+        return excelUtils.getExcelInpStream();
+    }
+    
+    /**
+     * @return InputStream
+     */
+    public InputStream getImageInpStream() {
+        return excelUtils.getImageInpStream();
     }
 }

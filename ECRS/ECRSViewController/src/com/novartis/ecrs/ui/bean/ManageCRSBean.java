@@ -1039,7 +1039,9 @@ public class ManageCRSBean implements Serializable {
         // Add event code here...
         //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
         Workbook workbook = null;
-        InputStream excelInputStream = ExcelExportUtils.getExcelInpStream();
+        ExcelExportUtils excUtils = new ExcelExportUtils();
+        InputStream excelInputStream = excUtils.getExcelInpStream();
+        InputStream imageInputStream = excUtils.getImageInpStream();
         try {
             //create sheet
             DCIteratorBinding iter =
@@ -1096,7 +1098,9 @@ public class ManageCRSBean implements Serializable {
             Sheet sheet = workbook.getSheetAt(0);
             ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
                                              cellStartIndex, columnMap, null,
-                                             dateCellFormat, emptyValReplace);
+                                             dateCellFormat, emptyValReplace,imageInputStream);
+            //write image to sheet
+            //ExcelExportUtils.writeImageTOExcel(sheet,imageInputStream);
         } catch (InvalidFormatException invalidFormatException) {
             invalidFormatException.printStackTrace();
         } catch (IOException ioe) {

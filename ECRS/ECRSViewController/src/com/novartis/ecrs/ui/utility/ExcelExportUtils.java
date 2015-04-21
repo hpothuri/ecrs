@@ -2,6 +2,7 @@ package com.novartis.ecrs.ui.utility;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.text.SimpleDateFormat;
@@ -19,11 +20,16 @@ import oracle.jbo.RowSetIterator;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.util.IOUtils;
 
 
 public class ExcelExportUtils {
@@ -31,7 +37,6 @@ public class ExcelExportUtils {
         super();
     }
     
-
     public static void setHeaderCellStyle(Sheet sheet, int rowIndex,
                                            int cellIndex,
                                            boolean isAdminTitle) {
@@ -57,7 +62,7 @@ public class ExcelExportUtils {
                                   int rowStartIndex, int cellStartIndex,
                                   LinkedHashMap columnMap, String tableHeader,
                                   String dateCellFormat,
-                                  String emptyValReplace) {
+                                  String emptyValReplace,InputStream imageInpStream) throws IOException {
         int rowIndex = rowStartIndex;
         org.apache.poi.ss.usermodel.Row row = null;
         //Write Table Header
@@ -77,6 +82,7 @@ public class ExcelExportUtils {
                writeData(sheet, row, rowIndex,cellStartIndex, columnMap, rowSet, rowCounter,tableHeader,dateCellFormat,emptyValReplace); 
                rowIndex++;          
            }
+           writeImageTOExcel(sheet,imageInpStream);
           return sheet;
        }
       
@@ -140,30 +146,24 @@ public class ExcelExportUtils {
                                cell.setCellValue(date);                  
                         }                    
                    else{
-                       //Custom Code to write Status based on Status Code for LastStatusCol
-                       if("LastStatus".equals(attribute)){
-                           if("A".equals(currentRow.getAttribute(attribute)))
-                                cell.setCellValue("Approved");
-                           if("AC".equals(currentRow.getAttribute(attribute)))
-                                cell.setCellValue("Approver_Changed");
-                           if("D".equals(currentRow.getAttribute(attribute)))
-                                cell.setCellValue("Denied");
-                           if("M".equals(currentRow.getAttribute(attribute)))
-                                cell.setCellValue("Modified");
-                           if("R".equals(currentRow.getAttribute(attribute)))
-                                cell.setCellValue("ReSubmitted");
-                           if("S".equals(currentRow.getAttribute(attribute)))
-                                cell.setCellValue("Submitted");
-                           if("SC".equals(currentRow.getAttribute(attribute)))
-                                cell.setCellValue("Submitter_Changed");
-                       }
-                       else                      
+                       //Custom Code to write Status based on Status Code for LastStatusCol                                            
                          cell.setCellValue(currentRow.getAttribute(attribute).toString());  
-                   }
-                        
+                   }   
                }
+               if ("RiskPurposeSpFlag".equals(attribute) ||
+                "RiskPurposeDsFlag".equals(attribute) ||
+                "RiskPurposeRmFlag".equals(attribute) ||
+                "RiskPurposePsFlag".equals(attribute) ||
+                "RiskPurposeIbFlag".equals(attribute) ||
+                "RiskPurposeCdFlag".equals(attribute) ||
+                "RiskPurposeOsFlag".equals(attribute) ||
+                "RiskPurposeMiFlag".equals(attribute) ||
+                "RiskPurposeErFlag".equals(attribute))
+                sheet.setColumnWidth(cellIndex, 1000);
+            else
+                sheet.setColumnWidth(cellIndex, 6000);
+               
                setDataCellStyle(sheet, rowIndex, cellIndex);
-               sheet.setColumnWidth(cellIndex, 6000);
                cellIndex++; 
                 
            }       
@@ -220,22 +220,13 @@ public class ExcelExportUtils {
            cell.setCellStyle(cellStyle);
        }
        
-    /**
-     * @return InputStream
-     */
-    public static InputStream getExcelInpStream() {
-        InputStream inputStreamOfExcel =
-            // this.getClass().getClassLoader().getResourceAsStream("EcrsReports.xls");
-            loadResourceAsStream("E:\\Ecrs_WS\\ecrs\\trunk\\ECRS\\ECRSViewController\\public_html\\exceltemplate\\EcrsReports.xls");
-        return inputStreamOfExcel;
-    }
-
+    
     /**
      * This method to upload the file from local.
      * @param resourceName
      * @return
      */
-    private static InputStream loadResourceAsStream(final String resourceName) {
+    public static InputStream loadResourceAsStream(final String resourceName) {
         //_logger.info("Start of CRSReportsBean:loadResourceAsStream()");
         InputStream input = null;
         try {
@@ -251,5 +242,42 @@ public class ExcelExportUtils {
         }
         // _logger.info("End of CRSReportsBean:loadResourceAsStream()");
         return input;
+    }
+
+    /**
+     * @param sheet
+     * @throws IOException
+     */
+    public static void writeImageTOExcel(Sheet sheet,InputStream imageInputStream)throws IOException{
+        byte[] bytes = IOUtils.toByteArray(imageInputStream);
+        int pictureIdx = sheet.getWorkbook().addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
+        imageInputStream.close();
+        CreationHelper helper = sheet.getWorkbook().getCreationHelper();
+        Drawing drawing = sheet.createDrawingPatriarch();
+        ClientAnchor anchor = helper.createClientAnchor();
+        anchor.setCol1(0);
+        anchor.setRow1(0);
+        Picture pict = drawing.createPicture(anchor, pictureIdx);
+        pict.resize();
+    }
+    
+    /**
+     * @return InputStream
+     */
+    public InputStream getExcelInpStream() {
+        InputStream inputStreamOfExcel =
+             this.getClass().getClassLoader().getResourceAsStream("EcrsReports.xls");
+            //ExcelExportUtils.loadResourceAsStream("E:\\Ecrs_WS\\ecrs\\trunk\\ECRS\\ECRSViewController\\public_html\\exceltemplate\\EcrsReports.xls");
+        return inputStreamOfExcel;
+    }
+    
+    /**
+     * @return InputStream
+     */
+    public InputStream getImageInpStream() {
+        InputStream inputStreamOfExcel =
+             this.getClass().getClassLoader().getResourceAsStream("Novartis.PNG");
+            //ExcelExportUtils.loadResourceAsStream("E:\\Ecrs_WS\\ecrs\\trunk\\ECRS\\ECRSViewController\\public_html\\images\\Novartis.PNG");
+        return inputStreamOfExcel;
     }
 }
