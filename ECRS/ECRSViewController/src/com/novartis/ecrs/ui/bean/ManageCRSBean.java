@@ -108,7 +108,7 @@ public class ManageCRSBean implements Serializable {
     private boolean inboxDisable;
     private String loggedInUserRole;
  //   private String bslFacetName;
-    private String relStatusForAnonymous;
+    //private String relStatusForAnonymous ;
     private String userName;
     
     /**
@@ -252,7 +252,7 @@ public class ManageCRSBean implements Serializable {
         //set release staus to binding
         if ("anonymous".equals(userName)) {
             ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}",
-                           getRelStatusForAnonymous());
+                           ModelConstants.STATUS_CURRENT);
         }
         DCBindingContainer bc = ADFUtils.getDCBindingContainer();
         OperationBinding ob = bc.getOperationBinding("filterCRSContent");
@@ -346,10 +346,8 @@ public class ManageCRSBean implements Serializable {
         if (vce!=null) {
             if (vce.getNewValue() != null &&
                 !vce.getNewValue().equals(vce.getOldValue()) &&
-                (Boolean)vce.getNewValue()) {
-                //if (!ModelConstants.ROLE_BSL.equals(loggedInUserRole)) {
-                    setInboxDisable(Boolean.TRUE);
-               // }
+                (Boolean)vce.getNewValue()) {               
+                    setInboxDisable(Boolean.TRUE);                
             } else
                 setInboxDisable(Boolean.FALSE);
 
@@ -571,19 +569,19 @@ public class ManageCRSBean implements Serializable {
 //        return bslFacetName;
 //    }
 
-    /**
-     * @param relStatusForAnonymous
-     */
-    public void setRelStatusForAnonymous(String relStatusForAnonymous) {
-        this.relStatusForAnonymous = relStatusForAnonymous;
-    }
-
-    /**
-     * @return
-     */
-    public String getRelStatusForAnonymous() {
-        return relStatusForAnonymous;
-    }
+//    /**
+//     * @param relStatusForAnonymous
+//     */
+//    public void setRelStatusForAnonymous(String relStatusForAnonymous) {
+//        this.relStatusForAnonymous = relStatusForAnonymous;
+//    }
+//
+//    /**
+//     * @return
+//     */
+//    public String getRelStatusForAnonymous() {
+//        return relStatusForAnonymous;
+//    }
 
     /**
      * @param userName

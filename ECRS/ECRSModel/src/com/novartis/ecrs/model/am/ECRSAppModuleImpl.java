@@ -142,77 +142,67 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         String whereClause = "";
         ViewObjectImpl searchVO = this.getECrsSearchVO();
         
-        ECrsSearchVORowImpl row = (ECrsSearchVORowImpl) searchVO.getCurrentRow();
-        
-        if (row.getReleaseStatus() != null)
+        //IF INBOX SELECTED - PENDING ONES IN USER'S QUEUE
+        if (isInboxDisable) {
             whereClause +=
-                    "RELEASE_STATUS_FLAG = '" + row.getReleaseStatus() +
-                    "' AND ";
-        if (row.getCompoundType() != null)
-                    whereClause +=
-                            "CRS_COMPOUND_TYPE ='" + row.getCompoundType() +
-                            "' AND ";
-        if (row.getCompoundCodeId() != null)
-            whereClause +=
-                    "COMPOUND_ID =" + row.getCompoundCodeId() +
-                    " AND ";
-        //if user role is MQM - set state = 2 and 3 , TASL  - SET State = 4 , ML - set state = 5
-        if (row.getState() != null)
-            whereClause += "STATE_ID =" + row.getState() + " AND ";
-        else if (isInboxDisable) {
-            if (ModelConstants.ROLE_MQM.equals(userInRole))
-                whereClause += "STATE_ID IN (2,3) AND ";
-            if (ModelConstants.ROLE_TASL.equals(userInRole))
-                whereClause += "STATE_ID = 4 AND ";
-            if (ModelConstants.ROLE_ML.equals(userInRole))
-                whereClause += "STATE_ID = 5 AND ";
-//            whereClause += "STATE_ID =" + row.getState() + " AND ";
-            if (ModelConstants.ROLE_BSL.equals(userInRole))
-                whereClause += "STATE_ID NOT IN (2,4,5)  AND ";
-        }
+                    "RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING +
+            "' AND ";
             
-        if (row.getGenericName() != null)
-            whereClause +=
-                    "GENERIC_NAME LIKE '%" + row.getGenericName() +
-                    "%' AND ";
-        if (row.getTradeName() != null)
-            whereClause +=
-                    "TRADE_NAME LIKE '%" + row.getTradeName() +
-                    "%' AND ";
+            //if user role is MQM - set state = 2 and 3 , TASL - SET State = 4 , ML - set state = 5
+            // set appropriate column names
+            if (ModelConstants.ROLE_MQM.equals(userInRole))
+                whereClause += "STATE_ID IN (2,3)";
+            else if (ModelConstants.ROLE_TASL.equals(userInRole))
+                whereClause += "STATE_ID = 4 AND TASL_NAME ='"+userName+"'";
+            else if (ModelConstants.ROLE_ML.equals(userInRole))
+                whereClause += "STATE_ID = 5 AND MEDICAL_LEAD_NAME ='"+userName+"'";          
+            else if (ModelConstants.ROLE_BSL.equals(userInRole))
+                whereClause += "STATE_ID NOT IN (2,4,5) AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')";     
 
-        if (row.getIndication() != null)
-            whereClause +=
-                    "INDICATION LIKE '%" + row.getIndication() +
-                    "%' AND ";
-        if (row.getMarketed() != null)
-            whereClause +=
-                    "IS_MARKETED_FLAG ='" + row.getMarketed() +
-                    "' AND ";
-        if (row.getDesignee() != null)
-            whereClause += "DESIGNEE LIKE '%" + row.getDesignee() + "%' AND ";
+        // INBOX NOT SELECTED
+        } else {
 
-        if (row.getCrsTasl() != null)
-            whereClause +=
-                    "TASL_NAME ='" + row.getCrsTasl() + "' AND ";
-        if (row.getCrsMedicalLead() != null)
-            whereClause +=
-                    "MEDICAL_LEAD_NAME ='" + row.getCrsMedicalLead() +
-                    "' AND ";
-        
-        if (ModelConstants.ROLE_BSL.equals(userInRole)) {
-                whereClause += "BSL_NAME = '" + userName + "' AND ";
-        } else if (row.getCrsBsl() != null)
-            whereClause += "BSL_NAME = '" + row.getCrsBsl() + "' AND ";
-        
-        if (row.getCrsName() != null)
-            whereClause +=
-                    "CRS_NAME LIKE '%" + row.getCrsName() +
-                    "%' AND ";
+            ECrsSearchVORowImpl row = (ECrsSearchVORowImpl)searchVO.getCurrentRow();
 
-        if (row.getCrsId() != null)
-            whereClause +=
-                    "CRS_ID LIKE '%" + row.getCrsId() +
-                    "%' AND ";
+            if (row.getReleaseStatus() != null)
+                whereClause += "RELEASE_STATUS_FLAG = '" + row.getReleaseStatus() + "' AND ";
+            if (row.getCompoundType() != null)
+                whereClause += "CRS_COMPOUND_TYPE ='" + row.getCompoundType() + "' AND ";
+            if (row.getCompoundCodeId() != null)
+                whereClause += "COMPOUND_ID =" + row.getCompoundCodeId() + " AND ";
+            if (row.getState() != null)
+                whereClause += "STATE_ID =" + row.getState() + " AND ";     
+            if (row.getGenericName() != null)
+                whereClause += "GENERIC_NAME LIKE '%" + row.getGenericName() + "%' AND ";
+            if (row.getTradeName() != null)
+                whereClause += "TRADE_NAME LIKE '%" + row.getTradeName() + "%' AND ";
+            if (row.getIndication() != null)
+                whereClause += "INDICATION LIKE '%" + row.getIndication() + "%' AND ";
+            if (row.getMarketed() != null)
+                whereClause += "IS_MARKETED_FLAG ='" + row.getMarketed() + "' AND ";
+            if (row.getDesignee() != null)
+                whereClause += "DESIGNEE LIKE '%" + row.getDesignee() + "%' AND ";
+            if (row.getCrsTasl() != null)
+                whereClause += "TASL_NAME ='" + row.getCrsTasl() + "' AND ";
+            if (row.getCrsMedicalLead() != null)
+                whereClause += "MEDICAL_LEAD_NAME ='" + row.getCrsMedicalLead() + "' AND ";            
+            if (row.getCrsBsl() != null)
+                whereClause += "BSL_NAME = '" + row.getCrsBsl() + "' AND ";
+            if (row.getCrsName() != null)
+                whereClause += "CRS_NAME LIKE '%" + row.getCrsName() + "%' AND ";
+            if (row.getCrsId() != null)
+                whereClause += "CRS_ID LIKE '%" + row.getCrsId() + "%' AND ";
+            
+            // DATA SECUTIRY - BSL/MQM/TASL/ML can view only their corresponding records
+            if (ModelConstants.ROLE_MQM.equals(userInRole))
+                whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID IN (2,3)) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";
+            if (ModelConstants.ROLE_TASL.equals(userInRole))
+                whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 4 AND TASL_NAME ='"+userName+"') OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";
+            if (ModelConstants.ROLE_ML.equals(userInRole))
+                whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 5 AND MEDICAL_LEAD_NAME ='"+userName+"') OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
+            if (ModelConstants.ROLE_BSL.equals(userInRole))
+                whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID NOT IN (2,4,5) AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
+        }
         
         if (whereClause.endsWith("AND "))
             whereClause =

@@ -27,8 +27,7 @@
                                   label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
                                   shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
                                   id="soc10" contentStyle="width:170px;"
-                                  disabled="#{pageFlowScope.manageCRSBean.inboxDisable}"
-                                  value="#{pageFlowScope.manageCRSBean.relStatusForAnonymous}">
+                                  value="#{'C'}" disabled="true">
                 <af:selectItem label="CURRENT" id="si12" value="C"/>
               </af:selectOneChoice>
             </f:facet>
@@ -146,7 +145,7 @@
           <af:selectBooleanCheckbox
                                     label="#{ecrsviewcontrollerBundle.INBOX}" id="sbc1"
                                     valueChangeListener="#{pageFlowScope.manageCRSBean.onSelectInbox}"
-                                    autoSubmit="true"/>
+                                    autoSubmit="true" rendered="#{!securityContext.userInRole['CRSADMIN']}"/>
           <af:commandButton text="#{ecrsviewcontrollerBundle.SEARCH}" id="cb1"
                             actionListener="#{pageFlowScope.manageCRSBean.onClickSearch}"/>
           <f:facet name="separator">
@@ -236,10 +235,18 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.Designee.name}"
                    sortable="false"
                    headerText="#{bindings.CrsContentVO.hints.Designee.label}"
-                   id="c9" align="center">
+                   id="c9" align="center" width="150">
           <af:outputText value="#{row.Designee}"
                          shortDesc="#{bindings.CrsContentVO.hints.Designee.tooltip}"
                          id="ot7"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.BslName.name}" sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.CRS_BSL}" id="c12" width="80" align="center">
+          <af:selectOneChoice value="#{row.bindings.BslName.inputValue}" label="#{row.bindings.BslName.label}"
+                              required="#{bindings.CrsContentVO.hints.BslName.mandatory}"
+                              shortDesc="#{bindings.CrsContentVO.hints.BslName.tooltip}" readOnly="true" id="soc13">
+            <f:selectItems value="#{row.bindings.BslName.items}" id="si15"/>
+          </af:selectOneChoice>
         </af:column>
         <af:column sortProperty="#{bindings.CrsContentVO.hints.TaslName.name}"
                    sortable="false"
@@ -264,18 +271,6 @@
                               readOnly="true" id="soc12">
             <f:selectItems value="#{row.bindings.MedicalLeadName.items}"
                            id="si14"/>
-          </af:selectOneChoice>
-        </af:column>
-        <af:column sortProperty="#{bindings.CrsContentVO.hints.BslName.name}"
-                   sortable="false"
-                   headerText="#{ecrsviewcontrollerBundle.CRS_BSL}"
-                   id="c12" width="80" align="center">
-          <af:selectOneChoice value="#{row.bindings.BslName.inputValue}"
-                              label="#{row.bindings.BslName.label}"
-                              required="#{bindings.CrsContentVO.hints.BslName.mandatory}"
-                              shortDesc="#{bindings.CrsContentVO.hints.BslName.tooltip}"
-                              readOnly="true" id="soc13">
-            <f:selectItems value="#{row.bindings.BslName.items}" id="si15"/>
           </af:selectOneChoice>
         </af:column>
       </af:table>
