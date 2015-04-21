@@ -24,4 +24,8 @@ public class ModelConstants {
     
     public static final String STATUS_PENDING="P";
     public static final String STATUS_CURRENT="C";
+    
+    public static final String REVIEW_REQD_YES = "Y";
+    public static final String REVIEW_REQD_NO = "N";
+    
 }

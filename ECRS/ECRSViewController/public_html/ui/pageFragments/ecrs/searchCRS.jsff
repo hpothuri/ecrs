@@ -162,11 +162,17 @@
                 selectionListener="#{pageFlowScope.manageCRSBean.searchTableSelectionListener}"
                 rowSelection="single" id="t2" styleClass="AFStretchWidth"
                 columnStretching="column:c9" contentDelivery="immediate"
-                autoHeightRows="10">
+                autoHeightRows="15" inlineStyle="min-height:300px;">
+        <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsId.name}" sortable="false"
+                   headerText="#{ecrsviewcontrollerBundle.CRS_ID}" id="c3" width="30" align="center">
+          <af:outputText value="#{row.CrsId}" shortDesc="#{bindings.CrsContentVO.hints.CrsId.tooltip}" id="ot2">
+            <af:convertNumber groupingUsed="false" pattern="#{bindings.CrsContentVO.hints.CrsId.format}"/>
+          </af:outputText>
+        </af:column>
         <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsName.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.CRS_NAME}"
-                   id="c1" align="center" width="70">
+                   id="c1" align="center" width="100">
           <af:outputText value="#{row.CrsName}"
                          shortDesc="#{bindings.CrsContentVO.hints.CrsName.tooltip}"
                          id="ot1"/>
@@ -182,17 +188,6 @@
                               readOnly="true" id="soc8">
             <f:selectItems value="#{row.bindings.StateId.items}" id="si10"/>
           </af:selectOneChoice>
-        </af:column>
-        <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsId.name}"
-                   sortable="false"
-                   headerText="#{ecrsviewcontrollerBundle.CRS_ID}"
-                   id="c3" width="50" align="center">
-          <af:outputText value="#{row.CrsId}"
-                         shortDesc="#{bindings.CrsContentVO.hints.CrsId.tooltip}"
-                         id="ot2">
-            <af:convertNumber groupingUsed="false"
-                              pattern="#{bindings.CrsContentVO.hints.CrsId.format}"/>
-          </af:outputText>
         </af:column>
         <af:column sortProperty="#{bindings.CrsContentVO.hints.CompoundId.name}"
                    sortable="false"
@@ -261,7 +256,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.MedicalLeadName.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.CRS_MEDICAL_LEAD}"
-                   id="c11" align="center" width="80">
+                   id="c11" align="center" width="70">
           <af:selectOneChoice value="#{row.bindings.MedicalLeadName.inputValue}"
                               label="#{row.bindings.MedicalLeadName.label}"
                               required="#{bindings.CrsContentVO.hints.MedicalLeadName.mandatory}"
