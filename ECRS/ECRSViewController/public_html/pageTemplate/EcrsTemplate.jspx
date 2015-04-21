@@ -29,7 +29,7 @@
             </component>
         </af:xmlContent>
         <af:separator id="pt_s1"/>
-        <af:panelGroupLayout id="pt_pgl1" layout="scroll" inlineStyle="background-color: #b1b1b1;">
+        <af:panelGroupLayout id="pt_pgl1" layout="scroll">
             <af:panelGroupLayout id="pt_pgl4" layout="vertical"
                                  inlineStyle="width:#{attrs.contentWidth};margin: 0 auto; background-color: white;">
                 <af:panelGroupLayout id="pt_pgl3" layout="horizontal" styleClass="AFStretchWidth">
