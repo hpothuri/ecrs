@@ -375,7 +375,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 RowSetIterator rs = crsRiskVO.createRowSetIterator(null);
                 while(rs.hasNext()){
                     Row row = rs.next();
-                    if(crsRiskId == null || crsRiskId != (Long)row.getAttribute("CrsRiskId")){
+                    if(crsRiskId == null || !crsRiskId.equals((Long)row.getAttribute("CrsRiskId"))){
                         crsRiskId = (Long)row.getAttribute("CrsRiskId");
                         Row relationRow = relationVO.createRow();
                         relationRow.setAttribute("CrsId", crsId);

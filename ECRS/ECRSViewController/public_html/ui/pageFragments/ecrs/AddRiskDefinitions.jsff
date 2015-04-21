@@ -39,7 +39,7 @@
                   selectedRowKeys="#{bindings.CrsRiskVO.collectionModel.selectedRow}"
                   selectionListener="#{bindings.CrsRiskVO.collectionModel.makeCurrent}" rowSelection="single" id="t2"
                   columnSelection="multiple" styleClass="AFStretchWidth" autoHeightRows="15"
-                  inlineStyle="min-height:400px;">
+                  inlineStyle="min-height:400px;" columnStretching="column:c23">
           <af:column id="c21">
             <af:column sortProperty="#{bindings.CrsRiskVO.hints.SafetyTopicOfInterest.name}" filterable="true"
                        sortable="true" headerText="#{bindings.CrsRiskVO.hints.SafetyTopicOfInterest.label}" id="c1">
@@ -121,8 +121,8 @@
                                           disabled="true"/>
               </af:column>
             </af:column>
-            <af:column sortProperty="#{bindings.CrsRiskVO.hints.SocTerm.name}" filterable="true" sortable="true"
-                       headerText="#{ecrsviewcontrollerBundle.SOC_AS_ASSIGNED_TO_THE_ADR}" id="c11">
+            <af:column sortProperty="#{bindings.CrsRiskVO.hints.SocTerm.name}" filterable="true"
+                       headerText="#{ecrsviewcontrollerBundle.SOC}" id="c11">
               <af:outputText value="#{row.SocTerm}" shortDesc="#{bindings.CrsRiskVO.hints.SocTerm.tooltip}" id="ot11"/>
             </af:column>
             <af:column sortProperty="#{bindings.CrsRiskVO.hints.DatabaseList.name}" filterable="true" sortable="true"
@@ -141,7 +141,7 @@
             </f:facet>
           </af:column>
           <af:column id="c23" headerText="#{ecrsviewcontrollerBundle.CRS_DEFINTION}">
-            <af:column sortProperty="#{bindings.CrsRiskVO.hints.MeddraTerm.name}" filterable="true" sortable="true"
+            <af:column sortProperty="#{bindings.CrsRiskVO.hints.MeddraTerm.name}" filterable="true"
                        headerText="#{bindings.CrsRiskVO.hints.MeddraTerm.label}" id="c14">
               <af:outputText value="#{row.MeddraTerm}" shortDesc="#{bindings.CrsRiskVO.hints.MeddraTerm.tooltip}"
                              id="ot14"/>
@@ -151,19 +151,18 @@
               <af:outputText value="#{row.MeddraLevel}" shortDesc="#{bindings.CrsRiskVO.hints.MeddraLevel.tooltip}"
                              id="ot15"/>
             </af:column>
-            <af:column sortProperty="#{bindings.CrsRiskVO.hints.MeddraQualifier.name}" filterable="true" sortable="true"
+            <af:column sortProperty="#{bindings.CrsRiskVO.hints.MeddraQualifier.name}" filterable="true"
                        headerText="#{bindings.CrsRiskVO.hints.MeddraQualifier.label}" id="c16">
               <af:outputText value="#{row.MeddraQualifier}"
                              shortDesc="#{bindings.CrsRiskVO.hints.MeddraQualifier.tooltip}" id="ot16"/>
             </af:column>
           </af:column>
           <af:column id="c24">
-            <af:column sortProperty="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.name}" filterable="true"
-                       sortable="true" headerText="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.label}" id="c17">
+            <af:column sortProperty="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.name}" filterable="true" headerText="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.label}" id="c17">
               <af:outputText value="#{row.SearchCriteriaDetails}"
                              shortDesc="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.tooltip}" id="ot17"/>
             </af:column>
-            <af:column sortProperty="#{bindings.CrsRiskVO.hints.MqmComment.name}" filterable="true" sortable="true"
+            <af:column sortProperty="#{bindings.CrsRiskVO.hints.MqmComment.name}" filterable="true"
                        headerText="#{bindings.CrsRiskVO.hints.MqmComment.label}" id="c18">
               <af:outputText value="#{row.MqmComment}" shortDesc="#{bindings.CrsRiskVO.hints.MqmComment.tooltip}"
                              id="ot18"/>
@@ -262,7 +261,7 @@
                           maximumLength="#{bindings.NonMeddraComponentComment.hints.precision}"
                           shortDesc="#{bindings.NonMeddraComponentComment.hints.tooltip}" id="it6"
                           contentStyle="width:500px;" rows="3"
-                          disabled="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
+                          disabled="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}" autoSubmit="true">
               <f:validator binding="#{bindings.NonMeddraComponentComment.validator}"/>
             </af:inputText>
             <af:inputText value="#{bindings.MqmComment.inputValue}" label="#{bindings.MqmComment.hints.label}"
@@ -270,7 +269,9 @@
                           columns="#{bindings.MqmComment.hints.displayWidth}"
                           maximumLength="#{bindings.MqmComment.hints.precision}"
                           shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it5" rows="3"
-                          contentStyle="width:500px;" disabled="#{!securityContext.userInRole['MQM']}">
+                          contentStyle="width:500px;"
+                          disabled="#{!securityContext.userInRole['MQM'] &amp;&amp; !securityContext.userInRole['CRSADMIN']}"
+                          autoSubmit="true">
               <f:validator binding="#{bindings.MqmComment.validator}"/>
             </af:inputText>
           </af:panelFormLayout>
@@ -344,7 +345,7 @@
                               columns="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.displayWidth}"
                               maximumLength="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.precision}"
                               shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.tooltip}"
-                              id="it20" autoSubmit="true">
+                              id="it20" autoSubmit="true" readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
                   <f:validator binding="#{row.bindings.SearchCriteriaDetails.validator}"/>
                 </af:inputText>
               </af:column>
@@ -372,6 +373,11 @@
                                   icon="/images/hierarchy.gif" partialSubmit="true"
                                   actionListener="#{pageFlowScope.manageCRSBean.onClickHierarchySearch}"
                                   visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+                <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb13"
+                                  actionListener="#{bindings.Commit.execute}"
+                                  visible="#{securityContext.userInRole['MQM']}">
+                  <af:showPopupBehavior triggerType="action" popupId="::p2"/>
+                </af:commandButton>
               </af:toolbar>
             </f:facet>
           </af:panelCollection>

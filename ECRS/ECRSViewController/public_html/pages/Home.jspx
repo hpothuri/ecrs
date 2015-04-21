@@ -10,7 +10,8 @@
                     <f:facet name="content">
                         <af:panelGroupLayout id="pgl2" layout="vertical" styleClass="AFStetchWidth" halign="center"
                                              inlineStyle="padding:20px; font-size:medium; font-weight:bold;height:400px;">
-                            <af:outputText value="Welcome to Electronic Case Retrieval Strategy(eCRS)" id="ot1"/>
+                            <af:outputText value="Welcome to Electronic Case Retrieval Strategy(eCRS)" id="ot1"
+                                           visible="false"/>
                         </af:panelGroupLayout>
                     </f:facet>
                 </af:pageTemplate>
