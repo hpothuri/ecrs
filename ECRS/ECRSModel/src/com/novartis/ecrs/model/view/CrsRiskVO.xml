@@ -55,7 +55,9 @@ DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'ER,') || DECODE(RISK_PURPOSE_DS_FLAG, 'Y', 'I
 DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'MI,') || DECODE(RISK_PURPOSE_DS_FLAG, 'Y', 'OS,') ||
 DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'PS,') || DECODE(RISK_PURPOSE_DS_FLAG, 'Y', 'RM,') ||
 DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'SP,') AS RISK_PURPOSE_LIST,
-MEDDRA_DICT
+MEDDRA_DICT,
+CRS_EFFECTIVE_DT_REL,
+CRS_EFFECIVE_DT_DEF CRS_EFFECTIVE_DT_DEF
 FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
   <ViewAttribute
     Name="CrsId"
@@ -641,6 +643,26 @@ FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
       <Attr Name="_DisplaySize" Value="10"/>
     </DesignTime>
   </ViewAttribute>
+  <ViewAttribute
+    Name="CrsEffectiveDtRel"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="CRS_EFFECTIVE_DT_REL"
+    Expression="CRS_EFFECTIVE_DT_REL"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="CrsEffectiveDtDef"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="CRS_EFFECTIVE_DT_DEF"
+    Expression="CRS_EFFECTIVE_DT_DEF"
+    SQLType="DATE"/>
   <AttrArray Name="KeyAttributes">
     <Item Value="CrsRiskId"/>
     <Item Value="CrsRiskDefnId"/>
