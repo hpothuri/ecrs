@@ -47,7 +47,7 @@
                                                    filterable="true"
                                                    sortable="true"
                                                    headerText="#{bindings.MedDRAComponentsReport.hints.MeddraTerm.label}"
-                                                   id="c1">
+                                                   id="c1" width="150">
                                             <af:outputText value="#{row.MeddraTerm}"
                                                            shortDesc="#{bindings.MedDRAComponentsReport.hints.MeddraTerm.tooltip}"
                                                            id="ot1"/>
@@ -65,7 +65,7 @@
                                                    filterable="true"
                                                    sortable="true"
                                                    headerText="#{bindings.MedDRAComponentsReport.hints.SafetyTopicOfInterest.label}"
-                                                   id="c3">
+                                                   id="c3" width="200">
                                             <af:outputText value="#{row.SafetyTopicOfInterest}"
                                                            shortDesc="#{bindings.MedDRAComponentsReport.hints.SafetyTopicOfInterest.tooltip}"
                                                            id="ot3"/>
@@ -74,7 +74,7 @@
                                                    filterable="true"
                                                    sortable="true"
                                                    headerText="#{bindings.MedDRAComponentsReport.hints.CrsName.label}"
-                                                   id="c4">
+                                                   id="c4" width="200">
                                             <af:outputText value="#{row.CrsName}"
                                                            shortDesc="#{bindings.MedDRAComponentsReport.hints.CrsName.tooltip}"
                                                            id="ot4"/>
@@ -83,7 +83,7 @@
                                                    filterable="true"
                                                    sortable="true"
                                                    headerText="#{bindings.MedDRAComponentsReport.hints.RiskPurposeList.label}"
-                                                   id="c5">
+                                                   id="c5" width="150">
                                             <af:outputText value="#{row.RiskPurposeList}"
                                                            shortDesc="#{bindings.MedDRAComponentsReport.hints.RiskPurposeList.tooltip}"
                                                            id="ot5"/>
@@ -100,7 +100,7 @@
                                     </af:table>
                                 </af:panelGroupLayout>
                                 <af:panelGroupLayout id="pgl4" layout="vertical">
-                                    <af:spacer width="10" height="10" id="s2"/>
+                                    <af:spacer width="10" height="20" id="s2"/>
                                     <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb2"
                                                       action="home"/>
                                 </af:panelGroupLayout>

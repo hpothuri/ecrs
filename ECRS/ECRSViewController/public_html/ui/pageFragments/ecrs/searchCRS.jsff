@@ -161,7 +161,7 @@
                 rowBandingInterval="0"
                 selectionListener="#{pageFlowScope.manageCRSBean.searchTableSelectionListener}"
                 rowSelection="single" id="t2" styleClass="AFStretchWidth"
-                columnStretching="column:c9" contentDelivery="immediate"
+                columnStretching="column:c1" contentDelivery="immediate"
                 autoHeightRows="15" inlineStyle="min-height:300px;">
         <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsId.name}" sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.CRS_ID}" id="c3" width="30" align="center">

@@ -145,9 +145,11 @@
                                         <af:spacer width="10" height="10"
                                                    id="s2"/>
                                     </f:facet>
+                                    <af:spacer width="10" height="30" id="s3"/>
                                 </af:panelGroupLayout>
+                                <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}"
+                                                  id="cb2" action="home"/>
                             </af:panelHeader>
-                            <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb2" action="home"/>
                         </af:panelGroupLayout>
                     </f:facet>
                 </af:pageTemplate>
