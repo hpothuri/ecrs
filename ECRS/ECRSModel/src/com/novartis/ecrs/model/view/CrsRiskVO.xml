@@ -54,7 +54,8 @@ DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'CD,') || DECODE(RISK_PURPOSE_DS_FLAG, 'Y', 'D
 DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'ER,') || DECODE(RISK_PURPOSE_DS_FLAG, 'Y', 'IB,') ||
 DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'MI,') || DECODE(RISK_PURPOSE_DS_FLAG, 'Y', 'OS,') ||
 DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'PS,') || DECODE(RISK_PURPOSE_DS_FLAG, 'Y', 'RM,') ||
-DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'SP,') AS RISK_PURPOSE_LIST
+DECODE(RISK_PURPOSE_CD_FLAG, 'Y', 'SP,') AS RISK_PURPOSE_LIST,
+MEDDRA_DICT
 FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
   <ViewAttribute
     Name="CrsId"
@@ -625,12 +626,27 @@ FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
       <Attr Name="_DisplaySize" Value="27"/>
     </DesignTime>
   </ViewAttribute>
-  <ResourceBundle>
-    <PropertiesBundle
-      PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>
-  </ResourceBundle>
+  <ViewAttribute
+    Name="MeddraDict"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="10"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_DICT"
+    Expression="MEDDRA_DICT"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </ViewAttribute>
   <AttrArray Name="KeyAttributes">
     <Item Value="CrsRiskId"/>
     <Item Value="CrsRiskDefnId"/>
   </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>
+  </ResourceBundle>
 </ViewObject>
