@@ -31,6 +31,7 @@
       <page>/ui/pageFragments/ecrs/AddRiskDefinitions.jsff</page>
       <train-stop>
        <display-name id="__16">#{pageFlowScope.flowType eq 'S' ? 'Risk Definitions' : 'Add Risk Definitions'}</display-name>
+        <outcome>initRiskRel</outcome>
       </train-stop>
     </view>
     <router id="crsFlowRouter">
@@ -58,6 +59,12 @@
     <parent-action id="home">
       <parent-outcome>home</parent-outcome>
     </parent-action>
+    <method-call id="initRiskRelation">
+      <method>#{pageFlowScope.manageCRSBean.initRisRel}</method>
+      <outcome>
+        <fixed-outcome>intiated</fixed-outcome>
+      </outcome>
+    </method-call>
     <train/>
     <control-flow-rule id="__5">
       <from-activity-id>crsFlowRouter</from-activity-id>
@@ -87,6 +94,27 @@
     <control-flow-rule id="__11">
       <from-activity-id>create</from-activity-id>
       <control-flow-case id="__12">
+        <from-outcome>home</from-outcome>
+        <to-activity-id>home</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__17">
+      <from-activity-id>*</from-activity-id>
+      <control-flow-case id="__18">
+        <from-outcome>initRiskRel</from-outcome>
+        <to-activity-id>initRiskRelation</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__19">
+      <from-activity-id>initRiskRelation</from-activity-id>
+      <control-flow-case id="__20">
+        <from-outcome>intiated</from-outcome>
+        <to-activity-id>RiskDef</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__21">
+      <from-activity-id>RiskDef</from-activity-id>
+      <control-flow-case id="__22">
         <from-outcome>home</from-outcome>
         <to-activity-id>home</to-activity-id>
       </control-flow-case>

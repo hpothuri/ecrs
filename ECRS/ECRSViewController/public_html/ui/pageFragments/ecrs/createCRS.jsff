@@ -305,7 +305,7 @@
                                   id="cb6"
                                   action="#{pageFlowScope.manageCRSBean.onClickNext}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}"
-                                  id="cb7"/>
+                                  id="cb7" action="home"/>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}"
                                          id="plam1">
                     <af:outputText id="ot2"

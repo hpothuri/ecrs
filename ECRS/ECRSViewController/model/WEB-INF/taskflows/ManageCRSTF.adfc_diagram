@@ -198,4 +198,56 @@
       <property
          name="sdm:polyPoints">B56,726.5,207.84473,795.0,293.24707,L50</property>
    </ControlFlowCase>
+   <WildcardControlFlowRule
+      id="WildcardControlFlowRule20">
+      <property
+         name="activityId">*</property>
+      <property
+         name="y">-79.70117</property>
+      <property
+         name="x">811.0</property>
+   </WildcardControlFlowRule>
+   <MethodCall
+      id="MethodCall21">
+      <property
+         name="activityId">initRiskRelation</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>initRiskRelation&lt;/b>&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">-37.93164</property>
+      <property
+         name="x">993.0</property>
+   </MethodCall>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase22"
+      from="WildcardControlFlowRule20"
+      to="MethodCall21">
+      <property
+         name="fromOutcome">initRiskRel</property>
+      <property
+         name="sdm:polyPoints">R50,847.0,-79.55176,952.0,-37.93164,L50</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase23"
+      from="MethodCall21"
+      to="View8">
+      <property
+         name="fromOutcome">intiated</property>
+      <property
+         name="sdm:polyPoints">B50,993.0,16.418945,882.0,104.59766,T50</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase24"
+      from="View8"
+      to="ParentAction17">
+      <property
+         name="fromOutcome">home</property>
+      <property
+         name="sdm:polyPoints">B50,882.0,212.59766,836.0,239.24707,T50</property>
+   </ControlFlowCase>
 </SDM>

@@ -16,7 +16,8 @@
        CrsRiskRelationsEO.SOC_TERM, 
        CrsRiskRelationsEO.UI_VERSION_NUMBER, 
        CrsRiskRelationsEO.DATABASE_LIST, 
-       CrsRiskRelationsEO.RISK_PURPOSE_LIST"
+       CrsRiskRelationsEO.RISK_PURPOSE_LIST, 
+       CrsRiskRelationsEO.CRS_EFFECTIVE_DT"
   FromList="CRS_RISK_RELATIONS CrsRiskRelationsEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -41,11 +42,17 @@
     <AttrArray Name="AttrNames">
       <Item Value="SocTerm"/>
     </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="SocDictContentId"/>
+      <Item Value="SocDictContentEntryTs"/>
+    </AttrArray>
     <AttrArray Name="ListAttrNames">
       <Item Value="Term"/>
+      <Item Value="DictContentId"/>
+      <Item Value="DictContentEntryTs"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="Term"/>
+      <Item Value="UiTerm"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
@@ -171,6 +178,14 @@
     EntityAttrName="RiskPurposeList"
     EntityUsage="CrsRiskRelationsEO"
     AliasName="RISK_PURPOSE_LIST"/>
+  <ViewAttribute
+    Name="CrsEffectiveDt"
+    IsUpdateable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CrsEffectiveDt"
+    EntityUsage="CrsRiskRelationsEO"
+    AliasName="CRS_EFFECTIVE_DT"/>
   <ViewLinkAccessor
     Name="CrsRiskDefinitionsVO"
     ViewLink="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

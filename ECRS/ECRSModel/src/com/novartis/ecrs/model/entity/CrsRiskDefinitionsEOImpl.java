@@ -197,6 +197,16 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
                 obj.setMeddraExtension((String)value);
             }
         }
+        ,
+        CrsEffectiveDt {
+            public Object get(CrsRiskDefinitionsEOImpl obj) {
+                return obj.getCrsEffectiveDt();
+            }
+
+            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
+                obj.setCrsEffectiveDt((Timestamp)value);
+            }
+        }
         ;
         private static AttributesEnum[] vals = null;
         private static int firstIndex = 0;
@@ -244,6 +254,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
     public static final int UIVERSIONNUMBER = AttributesEnum.UiVersionNumber.index();
     public static final int MEDDRADICT = AttributesEnum.MeddraDict.index();
     public static final int MEDDRAEXTENSION = AttributesEnum.MeddraExtension.index();
+    public static final int CRSEFFECTIVEDT = AttributesEnum.CrsEffectiveDt.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -510,6 +521,22 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
      */
     public void setMeddraExtension(String value) {
         setAttributeInternal(MEDDRAEXTENSION, value);
+    }
+
+    /**
+     * Gets the attribute value for CrsEffectiveDt, using the alias name CrsEffectiveDt.
+     * @return the value of CrsEffectiveDt
+     */
+    public Timestamp getCrsEffectiveDt() {
+        return (Timestamp)getAttributeInternal(CRSEFFECTIVEDT);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for CrsEffectiveDt.
+     * @param value value to set the CrsEffectiveDt
+     */
+    public void setCrsEffectiveDt(Timestamp value) {
+        setAttributeInternal(CRSEFFECTIVEDT, value);
     }
 
     /**

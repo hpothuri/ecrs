@@ -162,23 +162,23 @@ public class ManageCRSBean implements Serializable {
         if (oper.getErrors().size() > 0)
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
         else {
-//            String flowType = (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
-//            if (flowType != null && "U".equalsIgnoreCase(flowType)) {
-//                Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
-//                OperationBinding copyOper = ADFUtils.findOperation("copyRoutineDefinition");
-//                copyOper.getParamsMap().put("crsId", crsId);
-//                copyOper.execute();
-//                if (copyOper.getErrors().size() > 0)
-//                    ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
-//                                              FacesMessage.SEVERITY_ERROR);
-//                else {
-//                    ADFUtils.showPopup(getSuccessPopupBinding());
-//                    ADFUtils.addPartialTarget(getWorkflowPanelBox());
-//                }
-//            } else {
+            String flowType = (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
+            if (flowType != null && "C".equalsIgnoreCase(flowType)) {
+                Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
+                OperationBinding copyOper = ADFUtils.findOperation("copyRoutineDefinition");
+                copyOper.getParamsMap().put("crsId", crsId);
+                copyOper.execute();
+                if (copyOper.getErrors().size() > 0)
+                    ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
+                                              FacesMessage.SEVERITY_ERROR);
+                else {
+                    ADFUtils.showPopup(getSuccessPopupBinding());
+                    ADFUtils.addPartialTarget(getWorkflowPanelBox());
+                }
+            } else {
                 ADFUtils.showPopup(getSuccessPopupBinding());
                 ADFUtils.addPartialTarget(getWorkflowPanelBox());
-//            }
+            }
         }
     }
 
@@ -323,6 +323,11 @@ public class ManageCRSBean implements Serializable {
      * @return
      */
     public String onClickNext() {
+        String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getNext}");
+        return returnValue;
+    }
+    
+    public void initRisRel(){
         String crsName = (String)ADFUtils.evaluateEL("#{bindings.CrsName.inputValue}");
         Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
         ADFUtils.setPageFlowScopeValue("crsId", crsId);
@@ -334,8 +339,6 @@ public class ManageCRSBean implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getNext}");
-        return returnValue;
     }
 
     public void onSelectInbox(ValueChangeEvent vce) {
@@ -874,7 +877,8 @@ public class ManageCRSBean implements Serializable {
                 String level = (String)dragRow.getAttribute("Mqlevel");
                 String qual = (String)dragRow.getAttribute("Mqcrtev");
                 String dict = (String)dragRow.getAttribute("DictNm");
-
+                String version = (String)dragRow.getAttribute("Version");
+                
                 if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
                     Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
                     if (rows.length > 0) {
@@ -891,6 +895,8 @@ public class ManageCRSBean implements Serializable {
                 riskDefRow.setAttribute("MeddraLevel", level);
                 riskDefRow.setAttribute("MeddraTerm", term);
                 riskDefRow.setAttribute("MeddraDict", dict);
+                riskDefRow.setAttribute("MeddraVersion", version);
+                riskDefRow.setAttribute("MeddraVersionDate", dragRow.getAttribute("Dates"));
                 
                 if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
                     if (term != null && term.contains("NMQ"))

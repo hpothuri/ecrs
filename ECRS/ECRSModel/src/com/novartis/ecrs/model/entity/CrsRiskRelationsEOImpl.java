@@ -234,7 +234,17 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskRelationsEOImpl obj, Object value) {
-                obj.setUiVersionNumber((Integer)value);
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ,
+        CrsEffectiveDt {
+            public Object get(CrsRiskRelationsEOImpl obj) {
+                return obj.getCrsEffectiveDt();
+            }
+
+            public void put(CrsRiskRelationsEOImpl obj, Object value) {
+                obj.setCrsEffectiveDt((Timestamp)value);
             }
         }
         ,
@@ -275,6 +285,7 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
         }
     }
 
+
     public static final int CRSRISKID = AttributesEnum.CrsRiskId.index();
     public static final int SAFETYTOPICOFINTEREST = AttributesEnum.SafetyTopicOfInterest.index();
     public static final int RISKPURPOSESPFLAG = AttributesEnum.RiskPurposeSpFlag.index();
@@ -297,6 +308,7 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
     public static final int RISKPURPOSELIST = AttributesEnum.RiskPurposeList.index();
     public static final int DATABASELIST = AttributesEnum.DatabaseList.index();
     public static final int UIVERSIONNUMBER = AttributesEnum.UiVersionNumber.index();
+    public static final int CRSEFFECTIVEDT = AttributesEnum.CrsEffectiveDt.index();
     public static final int CRSCONTENTEO = AttributesEnum.CrsContentEO.index();
 
     /**
@@ -304,6 +316,7 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
      */
     public CrsRiskRelationsEOImpl() {
     }
+
 
     /**
      * @return the definition object for this instance class.
@@ -656,12 +669,21 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
         return (Integer)getAttributeInternal(UIVERSIONNUMBER);
     }
 
+
     /**
-     * Sets <code>value</code> as the attribute value for UiVersionNumber.
-     * @param value value to set the UiVersionNumber
+     * Gets the attribute value for CrsEffectiveDt, using the alias name CrsEffectiveDt.
+     * @return the value of CrsEffectiveDt
      */
-    public void setUiVersionNumber(Integer value) {
-        setAttributeInternal(UIVERSIONNUMBER, value);
+    public Timestamp getCrsEffectiveDt() {
+        return (Timestamp)getAttributeInternal(CRSEFFECTIVEDT);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for CrsEffectiveDt.
+     * @param value value to set the CrsEffectiveDt
+     */
+    public void setCrsEffectiveDt(Timestamp value) {
+        setAttributeInternal(CRSEFFECTIVEDT, value);
     }
 
     /**

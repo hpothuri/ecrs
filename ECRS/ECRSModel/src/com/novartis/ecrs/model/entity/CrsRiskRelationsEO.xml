@@ -232,7 +232,8 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS">
+    TableName="CRS_RISK_RELATIONS"
+    IsNotNull="true">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="300"/>
     </DesignTime>
@@ -245,14 +246,16 @@
     SQLType="NUMERIC"
     Type="java.lang.Long"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_RELATIONS"/>
+    TableName="CRS_RISK_RELATIONS"
+    IsNotNull="true"/>
   <Attribute
     Name="SocDictContentEntryTs"
     ColumnName="SOC_DICT_CONTENT_ENTRY_TS"
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS_RISK_RELATIONS"/>
+    TableName="CRS_RISK_RELATIONS"
+    IsNotNull="true"/>
   <Attribute
     Name="RiskPurposeList"
     IsUnique="true"
@@ -290,6 +293,15 @@
     ColumnType="NUMBER"
     TableName="CRS_RISK_RELATIONS"
     HistoryColumn="VersionHistory"/>
+  <Attribute
+    Name="CrsEffectiveDt"
+    IsNotNull="true"
+    ColumnName="CRS_EFFECTIVE_DT"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="DATE"
+    TableName="CRS_RISK_RELATIONS"
+    HistoryColumn="DateHistory"/>
   <AccessorAttribute
     Name="CrsContentEO"
     Association="com.novartis.ecrs.model.entity.assoc.CrsRiskRelationsIdxCrsFkAssoc"
@@ -324,6 +336,42 @@
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.SafetyTopicOfInterest"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="CrsRiskRelationsSocDictContentEntryTsCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_SOC_DICT_CO"/>
+      <Attr Name="_checkCondition" Value='"SOC_DICT_CONTENT_ENTRY_TS" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.SocDictContentEntryTs"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="CrsRiskRelationsSocDictContentIdCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_SOC_DICT_CO"/>
+      <Attr Name="_checkCondition" Value='"SOC_DICT_CONTENT_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.SocDictContentId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="CrsRiskRelationsSocTermCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_SOC_TERM_CH"/>
+      <Attr Name="_checkCondition" Value='"SOC_TERM" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.SocTerm"/>
     </AttrArray>
   </Key>
   <Key

@@ -25,10 +25,10 @@
                                              method="#{pageFlowScope.manageCRSBean.exportRiskDefinitions}"/>
             </af:commandButton>
             <af:commandButton text="#{ecrsviewcontrollerBundle.COPY_RISK_DEFINTION}" id="cb2" icon="/images/copy.png"
-                              rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+                              visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
             <af:commandButton text="#{ecrsviewcontrollerBundle.ADD_RISK_DEFINITION}" id="cb1" icon="/images/Create.png"
                               actionListener="#{pageFlowScope.manageCRSBean.addRiskDefinition}" partialSubmit="true"
-                              rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+                              visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
           </af:toolbar>
         </f:facet>
         <af:table value="#{bindings.CrsRiskVO.collectionModel}" var="row" rows="#{bindings.CrsRiskVO.rangeSize}"
@@ -38,7 +38,8 @@
                   queryListener="#{bindings.CrsRiskVOQuery.processQuery}" filterVisible="true" varStatus="vs"
                   selectedRowKeys="#{bindings.CrsRiskVO.collectionModel.selectedRow}"
                   selectionListener="#{bindings.CrsRiskVO.collectionModel.makeCurrent}" rowSelection="single" id="t2"
-                  columnSelection="multiple" styleClass="AFStretchWidth">
+                  columnSelection="multiple" styleClass="AFStretchWidth" autoHeightRows="15"
+                  inlineStyle="min-height:400px;">
           <af:column id="c21">
             <af:column sortProperty="#{bindings.CrsRiskVO.hints.SafetyTopicOfInterest.name}" filterable="true"
                        sortable="true" headerText="#{bindings.CrsRiskVO.hints.SafetyTopicOfInterest.label}" id="c1">
@@ -176,6 +177,23 @@
           </af:column>
         </af:table>
       </af:panelCollection>
+      <af:spacer width="10" height="10" id="s3"/>
+      <af:panelGroupLayout id="pgl6" layout="horizontal">
+        <af:commandButton text="#{ecrsviewcontrollerBundle.BACK}" id="cb8"
+                          action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}"
+                          visible="#{pageFlowScope.flowType eq 'U' || pageFlowScope.flowType eq 'S'}"/>
+        <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}" id="cb11" disabled="true"/>
+        <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb12" action="home"/>
+        <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}" id="plam4">
+          <af:outputText id="ot9" value="#{ecrsviewcontrollerBundle.DICIONARY_CURR_VERSION_NO}"/>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}#{ecrsviewcontrollerBundle.COLON}" id="plam5">
+          <af:outputText value="#{pageFlowScope.crsName}" id="ot10"/>
+        </af:panelLabelAndMessage>
+        <f:facet name="separator">
+          <af:spacer width="10" height="10" id="s4"/>
+        </f:facet>
+      </af:panelGroupLayout>
     </af:panelHeader>
     <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
               binding="#{pageFlowScope.manageCRSBean.riskDefPopup}" contentDelivery="lazyUncached"
@@ -326,11 +344,11 @@
                               columns="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.displayWidth}"
                               maximumLength="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.precision}"
                               shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.tooltip}"
-                              id="it20" readOnly="true">
+                              id="it20" autoSubmit="true">
                   <f:validator binding="#{row.bindings.SearchCriteriaDetails.validator}"/>
                 </af:inputText>
               </af:column>
-              <af:column id="c29" width="20" rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
+              <af:column id="c29" width="20" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
                 <f:facet name="header">
                   <af:image source="/images/delete.png" id="i2"/>
                 </f:facet>
@@ -346,14 +364,14 @@
                                   actionListener="#{bindings.CreateRiskDefinition.execute}" visible="false"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SELECTED}" id="cb4" icon="/images/delete.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.deleteRiskDefinitions}"
-                                  rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+                                  visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb5" icon="/images/filesave.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.saveRiskDefs}"
-                                  rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+                                  visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" id="cb6"
                                   icon="/images/hierarchy.gif" partialSubmit="true"
                                   actionListener="#{pageFlowScope.manageCRSBean.onClickHierarchySearch}"
-                                  rendered="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+                                  visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
               </af:toolbar>
             </f:facet>
           </af:panelCollection>

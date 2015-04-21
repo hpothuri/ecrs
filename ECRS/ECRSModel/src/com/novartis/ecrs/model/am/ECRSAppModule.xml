@@ -87,6 +87,9 @@
   <ViewUsage
     Name="HierarchySearchVO"
     ViewObjectName="com.novartis.ecrs.model.view.HierarchySearchVO"/>
+  <ViewUsage
+    Name="FetchCrsContentVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsContentVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

@@ -63,6 +63,8 @@
           usageId="com_novartis_ecrs_view_AdminDashBoardReportPageDef"/>
     <page path="/pages/reports/CRSCountperMedDRAReport.jspx"
           usageId="com_novartis_ecrs_view_CRSCountperMedDRAReportPageDef"/>
+    <page path="/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF@initRiskRelation"
+          usageId="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_initRiskRelationPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -115,6 +117,8 @@
           path="pages.reports.AdminDashBoardReportPageDef"/>
     <page id="com_novartis_ecrs_view_CRSCountperMedDRAReportPageDef"
           path="pages.reports.CRSCountperMedDRAReportPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_initRiskRelationPageDef"
+          path="taskflows.ManageCRSTF_ManageCRSTF_initRiskRelationPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

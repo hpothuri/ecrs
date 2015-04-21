@@ -20,7 +20,8 @@
        CrsRiskDefinitionsEO.TMS_UPDATE_FLAG, 
        CrsRiskDefinitionsEO.TMS_UPDATE_FLAG_DT, 
        CrsRiskDefinitionsEO.MEDDRA_DICT, 
-       CrsRiskDefinitionsEO.MEDDRA_EXTENSION"
+       CrsRiskDefinitionsEO.MEDDRA_EXTENSION, 
+       CrsRiskDefinitionsEO.CRS_EFFECTIVE_DT"
   FromList="CRS_RISK_DEFINITIONS CrsRiskDefinitionsEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -117,8 +118,7 @@
     PrecisionRule="true"
     EntityAttrName="MeddraVersionDate"
     EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="MEDDRA_VERSION_DATE"
-    IsUpdateable="false"/>
+    AliasName="MEDDRA_VERSION_DATE"/>
   <ViewAttribute
     Name="SearchCriteriaDetails"
     PrecisionRule="true"
@@ -184,6 +184,14 @@
     EntityAttrName="MeddraExtension"
     EntityUsage="CrsRiskDefinitionsEO"
     AliasName="MEDDRA_EXTENSION"/>
+  <ViewAttribute
+    Name="CrsEffectiveDt"
+    IsUpdateable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CrsEffectiveDt"
+    EntityUsage="CrsRiskDefinitionsEO"
+    AliasName="CRS_EFFECTIVE_DT"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>

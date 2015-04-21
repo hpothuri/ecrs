@@ -13,6 +13,7 @@
               id="CrsRiskDefinitionsVOIterator"/>
     <iterator Binds="HierarchySearchVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
               id="HierarchySearchVOIterator"/>
+    <iterator Binds="CrsContentVO" RangeSize="10" DataControl="ECRSAppModuleDataControl" id="CrsContentVOIterator"/>
   </executables>
   <bindings>
     <tree IterBinding="CrsRiskVOIterator" id="CrsRiskVO">
@@ -51,6 +52,10 @@
           <Item Value="TmsEndTs"/>
           <Item Value="TmsUpdateFlag"/>
           <Item Value="TmsUpdateFlagDt"/>
+          <Item Value="CrsEffectiveDtDef"/>
+          <Item Value="CrsEffectiveDtRel"/>
+          <Item Value="MeddraDict"/>
+          <Item Value="MeddraExtension"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -210,10 +215,22 @@
           <Item Value="Mqlevel"/>
           <Item Value="Mqcrtev"/>
           <Item Value="DictNm"/>
+          <Item Value="Version"/>
+          <Item Value="Dates"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
     <list IterBinding="CrsRiskRelationVOIterator" StaticList="false" Uses="LOV_SocTerm" id="SocTerm"
           DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+    <attributeValues IterBinding="CrsContentVOIterator" id="StateId">
+      <AttrNames>
+        <Item Value="StateId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="ReleaseStatusFlag">
+      <AttrNames>
+        <Item Value="ReleaseStatusFlag"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

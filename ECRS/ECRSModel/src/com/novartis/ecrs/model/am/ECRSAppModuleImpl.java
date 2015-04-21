@@ -367,7 +367,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public void copyRoutineDefinition(Long crsId){
         ViewObject relationVO = this.getCrsRiskRelationVO();
         ViewObject definitionVO = this.getCrsRiskDefinitionsVO();
-        ViewObjectImpl crsContentVO = this.getCrsContentVO();
+        ViewObjectImpl crsContentVO = this.getFetchCrsContentVO();
         crsContentVO.setWhereClause("CRS_NAME = 'ROUTINE'");
         crsContentVO.executeQuery(); 
         crsContentVO.setWhereClause(null);
@@ -390,7 +390,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         Row relationRow = relationVO.createRow();
                         relationRow.setAttribute("CrsId", crsId);
                         relationRow.setAttribute("DataDomain", row.getAttribute("DataDomain"));
-                        relationRow.setAttribute("DatabaseList", row.getAttribute("DatabaseList"));
+                        relationRow.setAttribute("DatabaseList", row.getAttribute("DatabaseList"));                        
                         String riskPurposeList = (String)row.getAttribute("RiskPurposeList");
                         if(riskPurposeList != null && riskPurposeList.endsWith(",")){
                             riskPurposeList = riskPurposeList.substring(0,riskPurposeList.length()-1);
@@ -409,8 +409,10 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         definitionRow.setAttribute("MeddraLevel", row.getAttribute("MeddraLevel"));
                         definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
                         definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
-//                        definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
+                        definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
                         definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
+                        definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
+                        definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
 //                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
 //                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
 //                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
@@ -425,8 +427,10 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         definitionRow.setAttribute("MeddraLevel", row.getAttribute("MeddraLevel"));
                         definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
                         definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
-//                        definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
+                        definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
                         definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
+                        definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
+                        definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
 //                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
 //                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
 //                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
@@ -498,5 +502,13 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             crsRow.remove();
             this.getDBTransaction().commit();
         }
+    }
+
+    /**
+     * Container's getter for FetchCrsContentVO.
+     * @return FetchCrsContentVO
+     */
+    public ViewObjectImpl getFetchCrsContentVO() {
+        return (ViewObjectImpl)findViewObject("FetchCrsContentVO");
     }
 }

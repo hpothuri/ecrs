@@ -39,8 +39,9 @@
   c.value_3,
   c.value_4,
   v.dict_name,
-  v.dict_version,
-  v.dict_version_date
+  V.DICT_VERSION,
+  V.DICT_VERSION_DATE,
+  c.term || '(' || c.dict_content_id || ')' as ui_term
 FROM tms.tms_def_dictionaries d,
   tms.tms_def_levels l,
   crs_dict_versions v,
@@ -52,7 +53,7 @@ AND d.def_dictionary_id = l.def_dictionary_id
 AND l.def_level_id      = c.def_level_id
   --  AND c.dict_content_code LIKE '%'
   --   AND c.term_upper LIKE UPPER('%')
-AND TO_CHAR(c.end_ts,'DD-MON-YYYY') = '15-AUG-3501']]></SQLQuery>
+AND TO_CHAR(c.end_ts,'DD-MON-YYYY') = '15-AUG-3501' order by term]]></SQLQuery>
   <ViewAttribute
     Name="ShortName"
     IsUpdateable="false"
@@ -302,6 +303,21 @@ AND TO_CHAR(c.end_ts,'DD-MON-YYYY') = '15-AUG-3501']]></SQLQuery>
     AliasName="DICT_VERSION_DATE"
     Expression="DICT_VERSION_DATE"
     SQLType="DATE"/>
+  <ViewAttribute
+    Name="UiTerm"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="342"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="UI_TERM"
+    Expression="UI_TERM"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="342"/>
+    </DesignTime>
+  </ViewAttribute>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>
