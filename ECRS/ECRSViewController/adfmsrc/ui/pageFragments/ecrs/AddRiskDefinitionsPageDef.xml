@@ -232,5 +232,7 @@
         <Item Value="ReleaseStatusFlag"/>
       </AttrNames>
     </attributeValues>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
   </bindings>
 </pageDefinition>

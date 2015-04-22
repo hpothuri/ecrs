@@ -1206,4 +1206,19 @@ public class ManageCRSBean implements Serializable {
     public List<SelectItem> getLevelItems() {
         return levelItems;
     }
+
+    public void onCancelCrsRiskPopup(ActionEvent actionEvent) {
+        OperationBinding oper = ADFUtils.findOperation("Rollback");
+        oper.execute();
+        if (oper.getErrors().size() > 0) 
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
+        OperationBinding oper1 = ADFUtils.findOperation("initRiskRelation");
+        oper1.getParamsMap().put("crsId", crsId);
+        oper1.execute();
+        if (oper1.getErrors().size() > 0) 
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        ADFUtils.addPartialTarget(riskDefTable);
+        riskDefPopup.hide();
+    }
 }
