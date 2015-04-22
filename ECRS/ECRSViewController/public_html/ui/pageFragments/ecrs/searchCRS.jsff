@@ -145,7 +145,8 @@
           <af:selectBooleanCheckbox
                                     label="#{ecrsviewcontrollerBundle.INBOX}" id="sbc1"
                                     valueChangeListener="#{pageFlowScope.manageCRSBean.onSelectInbox}"
-                                    autoSubmit="true" rendered="#{!securityContext.userInRole['CRSADMIN']}"/>
+                                    autoSubmit="true"
+                                    rendered="#{!securityContext.userInRole['CRSADMIN'] &amp;&amp; securityContext.authenticated}"/>
           <af:commandButton text="#{ecrsviewcontrollerBundle.SEARCH}" id="cb1"
                             actionListener="#{pageFlowScope.manageCRSBean.onClickSearch}"/>
           <f:facet name="separator">
@@ -163,7 +164,7 @@
                 columnStretching="column:c1" contentDelivery="immediate"
                 autoHeightRows="15" inlineStyle="min-height:300px;">
         <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsId.name}" sortable="false"
-                   headerText="#{ecrsviewcontrollerBundle.CRS_ID}" id="c3" width="30" align="center">
+                   headerText="#{ecrsviewcontrollerBundle.CRS_ID}" id="c3" width="30">
           <af:outputText value="#{row.CrsId}" shortDesc="#{bindings.CrsContentVO.hints.CrsId.tooltip}" id="ot2">
             <af:convertNumber groupingUsed="false" pattern="#{bindings.CrsContentVO.hints.CrsId.format}"/>
           </af:outputText>
@@ -171,7 +172,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsName.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.CRS_NAME}"
-                   id="c1" align="center" width="100">
+                   id="c1" width="100">
           <af:outputText value="#{row.CrsName}"
                          shortDesc="#{bindings.CrsContentVO.hints.CrsName.tooltip}"
                          id="ot1"/>
@@ -179,7 +180,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.StateId.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.STATE}"
-                   id="c2" align="center" width="50">
+                   id="c2" width="50">
           <af:selectOneChoice value="#{row.bindings.StateId.inputValue}"
                               label="#{row.bindings.StateId.label}"
                               required="#{bindings.CrsContentVO.hints.StateId.mandatory}"
@@ -191,7 +192,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.CompoundId.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
-                   id="c4" align="center" width="70" displayIndex="-1">
+                   id="c4" width="70" displayIndex="-1">
           <af:selectOneChoice value="#{row.bindings.CompoundId.inputValue}"
                               label="#{row.bindings.CompoundId.label}"
                               required="#{bindings.CrsContentVO.hints.CompoundId.mandatory}"
@@ -203,7 +204,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.GenericName.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.GENERIC_NAME}"
-                   id="c5" align="center" width="80">
+                   id="c5" width="80">
           <af:outputText value="#{row.GenericName}"
                          shortDesc="#{bindings.CrsContentVO.hints.GenericName.tooltip}"
                          id="ot3"/>
@@ -211,7 +212,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.TradeName.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.TRADE_NAME}"
-                   id="c6" align="center" width="80">
+                   id="c6" width="80">
           <af:outputText value="#{row.TradeName}"
                          shortDesc="#{bindings.CrsContentVO.hints.TradeName.tooltip}"
                          id="ot4"/>
@@ -219,7 +220,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.Indication.name}"
                    sortable="false"
                    headerText="#{bindings.CrsContentVO.hints.Indication.label}"
-                   id="c7" align="center" width="80">
+                   id="c7" width="80">
           <af:outputText value="#{row.Indication}"
                          shortDesc="#{bindings.CrsContentVO.hints.Indication.tooltip}"
                          id="ot5"/>
@@ -227,7 +228,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.IsMarketedFlag.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.MARKETED}"
-                   id="c8" align="center" width="50">
+                   id="c8" width="50">
           <af:outputText value="#{row.IsMarketedFlag}"
                          shortDesc="#{bindings.CrsContentVO.hints.IsMarketedFlag.tooltip}"
                          id="ot6"/>
@@ -235,13 +236,13 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.Designee.name}"
                    sortable="false"
                    headerText="#{bindings.CrsContentVO.hints.Designee.label}"
-                   id="c9" align="center" width="150">
+                   id="c9" width="150">
           <af:outputText value="#{row.Designee}"
                          shortDesc="#{bindings.CrsContentVO.hints.Designee.tooltip}"
                          id="ot7"/>
         </af:column>
         <af:column sortProperty="#{bindings.CrsContentVO.hints.BslName.name}" sortable="false"
-                   headerText="#{ecrsviewcontrollerBundle.CRS_BSL}" id="c12" width="80" align="center">
+                   headerText="#{ecrsviewcontrollerBundle.CRS_BSL}" id="c12" width="80">
           <af:selectOneChoice value="#{row.bindings.BslName.inputValue}" label="#{row.bindings.BslName.label}"
                               required="#{bindings.CrsContentVO.hints.BslName.mandatory}"
                               shortDesc="#{bindings.CrsContentVO.hints.BslName.tooltip}" readOnly="true" id="soc13">
@@ -251,7 +252,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.TaslName.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.CRS_TASL}"
-                   id="c10" align="center" width="80">
+                   id="c10" width="80">
           <af:selectOneChoice value="#{row.bindings.TaslName.inputValue}"
                               label="#{row.bindings.TaslName.label}"
                               required="#{bindings.CrsContentVO.hints.TaslName.mandatory}"
@@ -263,7 +264,7 @@
         <af:column sortProperty="#{bindings.CrsContentVO.hints.MedicalLeadName.name}"
                    sortable="false"
                    headerText="#{ecrsviewcontrollerBundle.CRS_MEDICAL_LEAD}"
-                   id="c11" align="center" width="70">
+                   id="c11" width="70">
           <af:selectOneChoice value="#{row.bindings.MedicalLeadName.inputValue}"
                               label="#{row.bindings.MedicalLeadName.label}"
                               required="#{bindings.CrsContentVO.hints.MedicalLeadName.mandatory}"
