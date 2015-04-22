@@ -41,7 +41,7 @@
   v.dict_name,
   V.DICT_VERSION,
   V.DICT_VERSION_DATE,
-  c.term || '(' || c.dict_content_id || ')' as ui_term
+  c.term || ' (' || c.dict_content_id || ')' as ui_term
 FROM tms.tms_def_dictionaries d,
   tms.tms_def_levels l,
   crs_dict_versions v,
