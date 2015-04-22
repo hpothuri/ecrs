@@ -148,6 +148,23 @@ public class ManageCRSBean implements Serializable {
      */
     public void onClickCreateSave(ActionEvent actionEvent) {
         // Add event code here...
+        // REVIEW REQD - if checked set the state to 
+        Integer state = (Integer)ADFUtils.evaluateEL("#{bindings.StateId.inputValue}");
+        Boolean reviewReqd = (Boolean)ADFUtils.evaluateEL("#{bindings.ReviewApproveRequiredFlag1.inputValue}");
+        // review reqd is false -> set the state to published
+        if(Boolean.FALSE.equals(reviewReqd)){
+            ADFUtils.setEL("#{bindings.StateId.inputValue}",ModelConstants.STATE_PUBLISHED);
+            ADFUtils.addPartialTarget(getCrsStateSOC());
+            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+        }
+        // NEED to check with DONNA - review reqd is true -> set the state to draft
+//        if(reviewReqd){
+//            ADFUtils.setEL("#{bindings.StateId.inputValue}",ModelConstants.STATE_PUBLISHED);
+//            ADFUtils.addPartialTarget(getCrsStateSOC());
+//            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+//        }
+            
+        
         if(selDesigneeList != null && selDesigneeList.size() > 0){
             String designees = "";
             for(String des : selDesigneeList){
