@@ -292,7 +292,8 @@
     Type="java.lang.Integer"
     ColumnType="NUMBER"
     TableName="CRS_RISK_RELATIONS"
-    HistoryColumn="VersionHistory"/>
+    HistoryColumn="VersionHistory"
+    ChangeIndicator="true"/>
   <Attribute
     Name="CrsEffectiveDt"
     IsNotNull="true"

@@ -196,7 +196,8 @@
     Type="java.lang.Integer"
     ColumnType="NUMBER"
     TableName="CRS_RISK_DEFINITIONS"
-    HistoryColumn="VersionHistory"/>
+    HistoryColumn="VersionHistory"
+    ChangeIndicator="true"/>
   <Attribute
     Name="MeddraDict"
     IsNotNull="true"
