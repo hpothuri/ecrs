@@ -3,9 +3,7 @@
           xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
   <af:panelGroupLayout id="pgl1" layout="scroll">
-    <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="t1">
-      1
-    </af:train>
+    <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="t1"/>
     <af:panelHeader text="#{ecrsviewcontrollerBundle.SEARCH_ROLES}" id="ph1" size="1" inlineStyle="padding:5px;">
       <f:facet name="context"/>
       <f:facet name="menuBar"/>
@@ -63,6 +61,11 @@
           </af:column>
         </af:table>
       </af:panelCollection>
+      <af:panelGroupLayout id="pgl2" layout="vertical">
+        <af:spacer width="10" height="10" id="s2"/>
+        <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb2" action="home" immediate="true"
+                          actionListener="#{bindings.Rollback.execute}"/>
+      </af:panelGroupLayout>
     </af:panelHeader>
   </af:panelGroupLayout>
 </jsp:root>

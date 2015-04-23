@@ -29,12 +29,22 @@
     <view id="exceptionHandler">
       <page>/ui/pageFragments/exception/exceptionHandler.jsff</page>
     </view>
+    <parent-action id="home">
+      <parent-outcome>home</parent-outcome>
+    </parent-action>
     <train/>
     <control-flow-rule id="__1">
       <from-activity-id>CreateInsert</from-activity-id>
       <control-flow-case id="__2">
         <from-outcome>CreateInsert</from-outcome>
         <to-activity-id>searchRoles</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__4">
+      <from-activity-id>searchRoles</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome>home</from-outcome>
+        <to-activity-id>home</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

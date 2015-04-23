@@ -183,7 +183,8 @@
                           action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}"
                           visible="#{pageFlowScope.flowType eq 'U' || pageFlowScope.flowType eq 'S'}"/>
         <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}" id="cb11" disabled="true"/>
-        <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb12" action="home"/>
+        <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb12" action="home" immediate="true"
+                          actionListener="#{bindings.Rollback.execute}"/>
         <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}" id="plam4">
           <af:outputText id="ot9" value="#{ecrsviewcontrollerBundle.DICIONARY_CURR_VERSION_NO}"/>
         </af:panelLabelAndMessage>

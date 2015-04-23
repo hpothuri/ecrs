@@ -33,5 +33,7 @@
     </attributeValues>
     <action IterBinding="CrsCompoundVOIterator" id="CreateInsert" InstanceName="ECRSAppModuleDataControl.CrsCompoundVO"
             DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
   </bindings>
 </pageDefinition>

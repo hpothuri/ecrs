@@ -11,7 +11,8 @@
       <f:facet name="legend"/>
       <f:facet name="info"/>
       <af:panelGroupLayout id="pgl1" layout="horizontal" styleClass="AFStretchWidth" halign="end">
-        <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb1"/>
+        <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb1"
+                          action="#{pageFlowScope.compoundsBean.onSave}"/>
         <af:commandButton text="Back" id="cb2" action="#{pageFlowScope.compoundsBean.onClickBack}" immediate="true"/>
         <f:facet name="separator">
           <af:spacer width="10" height="10" id="s1"/>

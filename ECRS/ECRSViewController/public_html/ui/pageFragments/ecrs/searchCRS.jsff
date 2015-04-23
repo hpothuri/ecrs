@@ -280,7 +280,8 @@
                                   id="cb6"
                                   action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getNext}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}"
-                                  id="cb7" action="home"/>
+                                  id="cb7" action="home" immediate="true"
+                                  actionListener="#{bindings.Rollback.execute}"/>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}"
                                          id="plam1">
           <af:outputText value="#{ecrsviewcontrollerBundle.DICIONARY_CURR_VERSION_NO}" id="ot8"/>

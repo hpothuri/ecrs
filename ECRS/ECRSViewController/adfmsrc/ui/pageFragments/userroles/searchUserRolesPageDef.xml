@@ -32,5 +32,7 @@
     <action IterBinding="CrsUserRolesVOIterator" id="CreateInsert"
             InstanceName="ECRSAppModuleDataControl.CrsUserRolesVO" DataControl="ECRSAppModuleDataControl"
             RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
   </bindings>
 </pageDefinition>

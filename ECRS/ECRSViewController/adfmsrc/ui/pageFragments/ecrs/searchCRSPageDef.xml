@@ -94,5 +94,7 @@
       <NamedData NDName="userName" NDType="java.lang.String"/>
       <NamedData NDName="isInboxDisable" NDType="boolean"/>
     </methodAction>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
   </bindings>
 </pageDefinition>

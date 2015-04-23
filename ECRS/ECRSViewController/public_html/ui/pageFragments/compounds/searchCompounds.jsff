@@ -77,6 +77,11 @@
           </af:column>
         </af:table>
       </af:panelCollection>
+      <af:panelGroupLayout id="pgl2" layout="vertical">
+        <af:spacer width="10" height="10" id="s2"/>
+        <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb2" action="home" immediate="true"
+                          actionListener="#{bindings.Rollback.execute}"/>
+      </af:panelGroupLayout>
     </af:panelHeader>
   </af:panelGroupLayout>
 </jsp:root>

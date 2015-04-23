@@ -38,9 +38,9 @@
       <property
          name="y">128.59766</property>
       <property
-         name="x">666.0</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">666.0</property>
    </View>
    <TrainFlow
       islink="true"
@@ -90,8 +90,31 @@
       <property
          name="y">391.79883</property>
       <property
-         name="x">543.77637</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">543.77637</property>
    </View>
+   <ParentAction
+      id="ParentAction8">
+      <property
+         name="activityId">home</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>home&lt;/b>&lt;/p>&lt;p>Activity Type:  Parent Action&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">255.59766</property>
+      <property
+         name="x">612.0</property>
+   </ParentAction>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase9"
+      from="View2"
+      to="ParentAction8">
+      <property
+         name="fromOutcome">home</property>
+      <property
+         name="sdm:polyPoints">R54,422.0,188.74707,571.0,255.24707,L50</property>
+   </ControlFlowCase>
 </SDM>
