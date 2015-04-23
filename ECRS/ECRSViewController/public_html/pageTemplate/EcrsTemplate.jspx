@@ -39,7 +39,8 @@
                             <af:showPopupBehavior triggerType="click" popupId="pt_p1"/>
                         </af:commandButton>
                         <af:panelFormLayout id="pt_pfl1" visible="#{securityContext.authenticated}">
-                            <af:commandButton text="Logoff" id="pt_cb2" actionListener="#{sessionBean.logout}"/>
+                            <af:commandButton text="Logoff" id="pt_cb2" actionListener="#{sessionBean.logout}"
+                                              immediate="true"/>
                             <af:panelLabelAndMessage label="Logged in as:" id="pt_plam1">
                                 <af:outputText value="#{securityContext.userName}" id="pt_ot1"/>
                             </af:panelLabelAndMessage>
