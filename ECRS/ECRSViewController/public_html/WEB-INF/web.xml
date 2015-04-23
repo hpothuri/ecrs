@@ -154,6 +154,9 @@
     <servlet-name>adfAuthentication</servlet-name>
     <url-pattern>/adfAuthentication</url-pattern>
   </servlet-mapping>
+  <session-config>
+    <session-timeout>60</session-timeout>
+  </session-config>
   <mime-mapping>
     <extension>swf</extension>
     <mime-type>application/x-shockwave-flash</mime-type>

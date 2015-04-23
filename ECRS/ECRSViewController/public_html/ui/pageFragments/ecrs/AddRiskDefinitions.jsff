@@ -392,7 +392,8 @@
     </af:popup>
     <af:popup childCreation="deferred" autoCancel="disabled" id="p2"
               binding="#{pageFlowScope.manageCRSBean.successPopup}">
-      <af:dialog id="d2" title="#{ecrsviewcontrollerBundle.INFO}" type="ok" titleIconSource="/images/info_icon.png">
+      <af:dialog id="d2" title="#{ecrsviewcontrollerBundle.INFO}" type="ok" titleIconSource="/images/info_icon.png"
+                 inlineStyle="width:150px;">
         <f:facet name="buttonBar"/>
         <af:outputText id="ot5" value="#{ecrsviewcontrollerBundle.SAVED_SUCCESSFULLY}"/>
       </af:dialog>
