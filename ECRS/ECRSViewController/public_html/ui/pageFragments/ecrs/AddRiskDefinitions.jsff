@@ -400,7 +400,8 @@
     </af:popup>
     <af:popup childCreation="deferred" autoCancel="disabled" id="p3" contentDelivery="lazyUncached"
               binding="#{pageFlowScope.manageCRSBean.hierPopup}">
-      <af:dialog id="d3" title="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" modal="false" type="cancel">
+      <af:dialog id="d3" title="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" modal="false" type="cancel"
+                 contentWidth="350">
         <f:facet name="buttonBar"/>
         <af:panelFormLayout id="pfl1" rows="2" maxColumns="2">
           <af:selectOneChoice label="#{ecrsviewcontrollerBundle.DICTIONARY}" id="soc2"
