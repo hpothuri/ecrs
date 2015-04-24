@@ -119,6 +119,13 @@
         <to-activity-id>home</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
+    <control-flow-rule id="__13">
+      <from-activity-id>serach</from-activity-id>
+      <control-flow-case id="__23">
+        <from-outcome>home</from-outcome>
+        <to-activity-id>home</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
     <use-page-fragments/>
   </task-flow-definition>
 </adfc-config>
