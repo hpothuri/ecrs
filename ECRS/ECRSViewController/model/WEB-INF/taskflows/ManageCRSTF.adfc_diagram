@@ -17,9 +17,9 @@
       <property
          name="y">146.89648</property>
       <property
-         name="x">529.0</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">529.0</property>
    </View>
    <View
       id="View4">
@@ -36,9 +36,9 @@
       <property
          name="y">154.19531</property>
       <property
-         name="x">723.0</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">723.0</property>
    </View>
    <ControlFlowCase
       islink="true"
@@ -73,9 +73,9 @@
       <property
          name="y">158.94824</property>
       <property
-         name="x">882.0</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">882.0</property>
    </View>
    <TrainFlow
       islink="true"
@@ -156,25 +156,6 @@
       <property
          name="sdm:polyPoints">R50,405.0,148.19531,488.0,146.5459,L50</property>
    </ControlFlowCase>
-   <View
-      id="View16">
-      <property
-         name="activityId">exceptionHandler</property>
-      <property
-         name="page">/ui/pageFragments/exception/exceptionHandler.jsff</property>
-      <property
-         name="description">&lt;html>&lt;p>&lt;b>exceptionHandler&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
-      <property
-         name="trainStop">false</property>
-      <property
-         name="exceptionHandler">true</property>
-      <property
-         name="y">425.79883</property>
-      <property
-         name="pageFragment">true</property>
-      <property
-         name="x">836.77637</property>
-   </View>
    <ParentAction
       id="ParentAction17">
       <property
@@ -228,7 +209,7 @@
       <property
          name="fromOutcome">initRiskRel</property>
       <property
-         name="sdm:polyPoints">R50,847.0,-79.55176,952.0,-37.93164,L50</property>
+         name="sdm:polyPoints">R50,847.0,-79.55176,952.0,-38.282227,L50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -249,5 +230,15 @@
          name="fromOutcome">home</property>
       <property
          name="sdm:polyPoints">B50,882.0,212.59766,836.0,239.24707,T50</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase25"
+      from="View3"
+      to="ParentAction17">
+      <property
+         name="fromOutcome">home</property>
+      <property
+         name="sdm:polyPoints">R54,570.0,150.0459,792.3243,296.74707,L54</property>
    </ControlFlowCase>
 </SDM>
