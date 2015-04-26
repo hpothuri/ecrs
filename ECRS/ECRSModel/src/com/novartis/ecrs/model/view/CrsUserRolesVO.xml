@@ -161,7 +161,7 @@
         ViewAttribute="ActiveFlag"
         Operator="="
         Conjunction="AND"
-        Value="A"
+        Value="Y"
         Required="Optional"/>
       <ViewCriteriaItem
         Name="RoleName"

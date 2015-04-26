@@ -34,8 +34,8 @@
       </users>
       <roles>
         <role>
-          <name>BSL</name>
-          <display-name>BSL</display-name>
+          <name>CRS_BSL</name>
+          <display-name>CRS_BSL</display-name>
           <description>Brand Safety Leader</description>
           <members>
             <member>
@@ -45,8 +45,8 @@
           </members>
         </role>
         <role>
-          <name>MQM</name>
-          <display-name>MQM</display-name>
+          <name>CRS_MQM</name>
+          <display-name>CRS_MQM</display-name>
           <description>MedDRA Query Manager</description>
           <members>
             <member>
@@ -56,8 +56,8 @@
           </members>
         </role>
         <role>
-          <name>TASL</name>
-          <display-name>TASL</display-name>
+          <name>CRS_TASL</name>
+          <display-name>CRS_TASL</display-name>
           <description>Therapeutic Area Safety Leader</description>
           <members>
             <member>
@@ -67,8 +67,8 @@
           </members>
         </role>
         <role>
-          <name>ML</name>
-          <display-name>ML</display-name>
+          <name>CRS_ML</name>
+          <display-name>CRS_ML</display-name>
           <description>Medical Lead</description>
           <members>
             <member>
@@ -78,8 +78,8 @@
           </members>
         </role>
         <role>
-          <name>CRSADMIN</name>
-          <display-name>CRSADMIN</display-name>
+          <name>CRS_ADMIN</name>
+          <display-name>CRS_ADMIN</display-name>
           <description>Administrations</description>
           <members>
             <member>
@@ -113,27 +113,7 @@
               </permission>
               <permission>
                 <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>ui.pageFragments.ecrs.createCRSPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
                 <name>taskflows.ManageCRSTF_ManageCRSTF_CreateInsertPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.CrsCreatePageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.controller.security.TaskFlowPermission</class>
-                <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.SearchCRSPageDef</name>
                 <actions>view</actions>
               </permission>
             </permissions>
@@ -155,27 +135,7 @@
               </permission>
               <permission>
                 <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>ui.pageFragments.ecrs.createCRSPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
                 <name>taskflows.ManageCRSTF_ManageCRSTF_CreateInsertPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.CrsCreatePageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.controller.security.TaskFlowPermission</class>
-                <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.SearchCRSPageDef</name>
                 <actions>view</actions>
               </permission>
             </permissions>
@@ -197,27 +157,7 @@
               </permission>
               <permission>
                 <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>ui.pageFragments.ecrs.createCRSPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
                 <name>taskflows.ManageCRSTF_ManageCRSTF_CreateInsertPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.CrsCreatePageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.controller.security.TaskFlowPermission</class>
-                <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.SearchCRSPageDef</name>
                 <actions>view</actions>
               </permission>
             </permissions>
@@ -239,27 +179,7 @@
               </permission>
               <permission>
                 <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>ui.pageFragments.ecrs.createCRSPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
                 <name>taskflows.ManageCRSTF_ManageCRSTF_CreateInsertPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.CrsCreatePageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.controller.security.TaskFlowPermission</class>
-                <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.SearchCRSPageDef</name>
                 <actions>view</actions>
               </permission>
             </permissions>
@@ -268,7 +188,7 @@
             <grantee>
               <principals>
                 <principal>
-                  <name>CRSADMIN</name>
+                  <name>CRS_ADMIN</name>
                   <class>oracle.security.jps.internal.core.principals.JpsXmlEnterpriseRoleImpl</class>
                 </principal>
               </principals>
@@ -324,21 +244,6 @@
                 <name>/WEB-INF/taskflows/CompoundsTF.xml#CompoundsTF</name>
                 <actions>view</actions>
               </permission>
-              <permission>
-                <class>oracle.adf.controller.security.TaskFlowPermission</class>
-                <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.CrsCreatePageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.SearchCRSPageDef</name>
-                <actions>view</actions>
-              </permission>
             </permissions>
           </grant>
           <grant>
@@ -389,6 +294,53 @@
               <permission>
                 <class>oracle.adf.share.security.authorization.RegionPermission</class>
                 <name>pages.reports.CRSCountperMedDRAReportPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.CrsCreatePageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>ui.pageFragments.ecrs.createCRSPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.SearchCRSPageDef</name>
+                <actions>view</actions>
+              </permission>
+            </permissions>
+          </grant>
+          <grant>
+            <grantee>
+              <principals>
+                <principal>
+                  <name>authenticated-role</name>
+                  <class>oracle.security.jps.internal.core.principals.JpsAuthenticatedRoleImpl</class>
+                </principal>
+              </principals>
+            </grantee>
+            <permissions>
+              <permission>
+                <class>oracle.adf.controller.security.TaskFlowPermission</class>
+                <name>/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.CrsCreatePageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>ui.pageFragments.ecrs.createCRSPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.SearchCRSPageDef</name>
                 <actions>view</actions>
               </permission>
             </permissions>

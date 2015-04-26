@@ -54,7 +54,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public List fetchDesignees(){
         List<String> designeeList = new ArrayList<String>();
         ViewObject userVO = this.getCrsUserRolesVO();
-        userVO.setWhereClause("ROLE_NAME = 'BSL'");
+        userVO.setWhereClause("ROLE_NAME = '"+ModelConstants.ROLE_BSL+"'");
         userVO.executeQuery();
         if(userVO.getEstimatedRowCount() > 0){
             RowSetIterator rs = userVO.createRowSetIterator(null);

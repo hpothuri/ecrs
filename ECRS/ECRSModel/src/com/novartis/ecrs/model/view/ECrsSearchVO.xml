@@ -51,7 +51,7 @@
       FullName="com.novartis.ecrs.model.view.CrsUserRolesVO.findByRoleName"/>
     <ParameterMap>
       <PIMap Variable="bindRoleName">
-        <TransientExpression><![CDATA['BSL']]></TransientExpression>
+        <TransientExpression><![CDATA['CRS_BSL']]></TransientExpression>
       </PIMap>
     </ParameterMap>
   </ViewAccessor>
@@ -63,7 +63,7 @@
       FullName="com.novartis.ecrs.model.view.CrsUserRolesVO.findByRoleName"/>
     <ParameterMap>
       <PIMap Variable="bindRoleName">
-        <TransientExpression><![CDATA['TASL']]></TransientExpression>
+        <TransientExpression><![CDATA['CRS_TASL']]></TransientExpression>
       </PIMap>
     </ParameterMap>
   </ViewAccessor>
@@ -75,7 +75,7 @@
       FullName="com.novartis.ecrs.model.view.CrsUserRolesVO.findByRoleName"/>
     <ParameterMap>
       <PIMap Variable="bindRoleName">
-        <TransientExpression><![CDATA['ML']]></TransientExpression>
+        <TransientExpression><![CDATA['CRS_ML']]></TransientExpression>
       </PIMap>
     </ParameterMap>
   </ViewAccessor>

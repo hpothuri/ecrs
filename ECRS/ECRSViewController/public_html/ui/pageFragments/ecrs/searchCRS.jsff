@@ -146,7 +146,7 @@
                                     label="#{ecrsviewcontrollerBundle.INBOX}" id="sbc1"
                                     valueChangeListener="#{pageFlowScope.manageCRSBean.onSelectInbox}"
                                     autoSubmit="true"
-                                    rendered="#{!securityContext.userInRole['CRSADMIN'] &amp;&amp; securityContext.authenticated}"/>
+                                    rendered="#{!securityContext.userInRole['CRS_ADMIN'] &amp;&amp; securityContext.authenticated}"/>
           <af:commandButton text="#{ecrsviewcontrollerBundle.SEARCH}" id="cb1"
                             actionListener="#{pageFlowScope.manageCRSBean.onClickSearch}"/>
           <f:facet name="separator">

@@ -675,72 +675,86 @@ public class ManageCRSBean implements Serializable {
     }
     
     /** DRAFT to REVIEW */
-    public void onClickReview(ActionEvent actionEvent) {
-        // Add event code here...
-        processStateChange(ModelConstants.STATE_REVIEW, getReviewSubmitPopup());       
+     public void processReviewDialog(DialogEvent dialogEvent) {
+         // Add event code here...
+         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
+            processStateChange(ModelConstants.STATE_REVIEW, getReviewSubmitPopup());
+
     }
-    
+       
     /** REVIEW to REVIEWED */
-    public void onClickReviewed(ActionEvent actionEvent) {
-        // Add event code here...
-        processStateChange(ModelConstants.STATE_REVIEWED, getCrsReviewedPopup());          
-    }
-    
+     public void processReviewedDialog(DialogEvent dialogEvent) {
+         // Add event code here...
+         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
+             processStateChange(ModelConstants.STATE_REVIEWED, getCrsReviewedPopup());    
+     }
+       
     /** REVIEWED to TASL APPROVE */
-    public void onClickSubmitForTASL(ActionEvent actionEvent) {
-        // Add event code here...
-        processStateChange(ModelConstants.STATE_TASLAPPROVE, getReviewSubmitPopup());
-    }
-    
-    /** TASL APPROVE to ML APPROVE */   
-    public void onClickTASLApprove(ActionEvent actionEvent) {
-        // Add event code here...
-        processStateChange(ModelConstants.STATE_MLAPPROVE, getCrsApprovePopup());
-    }
-    
-    /** TASL APPROVE to DRAFT */  
-    public void onClickTASLReject(ActionEvent actionEvent) {
-        // Add event code here...
-        String taslComments = (String)ADFUtils.evaluateEL("#{bindings.TaslRejectComment.inputValue}");
-        if (taslComments==null || (taslComments != null && "".equals(taslComments.trim()))){
-            ADFUtils.showFacesMessage("Please enter your comments for rejection and click on Reject.",
-                                      FacesMessage.SEVERITY_ERROR, getTaslCommentsInputText());                
-            return;
+     public void processTaslReviewSubmit(DialogEvent dialogEvent) {
+         // Add event code here...
+         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
+             processStateChange(ModelConstants.STATE_TASLAPPROVE, getReviewSubmitPopup());
+     }
+       
+    /** TASL APPROVE to ML APPROVE */ 
+     public void processTaslApprove(DialogEvent dialogEvent) {
+         // Add event code here...
+         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) 
+             processStateChange(ModelConstants.STATE_MLAPPROVE, getCrsApprovePopup());
+     }
+      
+    /** TASL APPROVE to DRAFT */ 
+     public void processTaslReject(DialogEvent dialogEvent) {
+         // Add event code here...
+        if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
+            String taslComments = (String)ADFUtils.evaluateEL("#{bindings.TaslRejectComment.inputValue}");
+            if (taslComments==null || (taslComments != null && "".equals(taslComments.trim()))){
+                ADFUtils.showFacesMessage("Please enter your comments for rejection.",
+                                          FacesMessage.SEVERITY_ERROR, getTaslCommentsInputText());                
+                return;
+            }
+            
+            // change to DRAFT state
+            processStateChange(ModelConstants.STATE_DRAFT, getCrsRejectPopup());
         }
-        
-        // change to DRAFT state
-        processStateChange(ModelConstants.STATE_DRAFT, getCrsRejectPopup());
-    }
+     }
+   
     /** ML APPROVE to APPROVED */ 
-    public void onClickMLApprove(ActionEvent actionEvent) {
-        // Add event code here...
-        processStateChange(ModelConstants.STATE_APPROVED, getCrsApprovePopup());
-    }
-    
+     public void processMLApprove(DialogEvent dialogEvent) {
+         // Add event code here...
+         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
+             processStateChange(ModelConstants.STATE_APPROVED, getCrsApprovePopup());
+     }
+       
     /** ML APPROVE to DRAFT */ 
-    public void onClickMLReject(ActionEvent actionEvent) {
-        // Add event code here...
-        String mlComments = (String)ADFUtils.evaluateEL("#{bindings.MedicalLeadRejectComment.inputValue}");
-        if (mlComments==null || (mlComments != null && "".equals(mlComments.trim()))){
-            ADFUtils.showFacesMessage("Please enter your comments for rejection and click on Reject.",
-                                      FacesMessage.SEVERITY_ERROR, getMlCommentsInputText());
-        return;
+     public void processMLReject(DialogEvent dialogEvent) {
+         // Add event code here...
+        if (DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
+            String mlComments = (String)ADFUtils.evaluateEL("#{bindings.MedicalLeadRejectComment.inputValue}");
+            if (mlComments == null || (mlComments != null && "".equals(mlComments.trim()))) {
+                ADFUtils.showFacesMessage("Please enter your comments for rejection.",
+                                          FacesMessage.SEVERITY_ERROR, getMlCommentsInputText());
+                return;
+            }
+
+            // change to DRAFT state
+            processStateChange(ModelConstants.STATE_DRAFT, getCrsRejectPopup());
         }
-        
-        // change to DRAFT state
-        processStateChange(ModelConstants.STATE_DRAFT, getCrsRejectPopup());
-    }
-    
-     /** BSL DEMOTE - any state to DRAFT */ 
-    public void onClickDemoteToDraft(ActionEvent actionEvent) {
+     }
+       
+     /** BSL DEMOTE - any state to DRAFT */
+    public void processDemoteToDraftDialog(DialogEvent dialogEvent) {
         // Add event code here...
-        processStateChange(ModelConstants.STATE_DRAFT, getCrsDemoteDraftPopupBinding());        
+         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
+             processStateChange(ModelConstants.STATE_DRAFT, getCrsDemoteDraftPopupBinding());
     }
-    
+
     /** APPROVED to PUBLISHED */ 
-    public void onClickPublished(ActionEvent actionEvent) {
-        processStateChange(ModelConstants.STATE_PUBLISHED, getCrsPublishPopupBinding());       
-    }    
+     public void processPublishDialog(DialogEvent dialogEvent) {
+         // Add event code here...
+         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
+             processStateChange(ModelConstants.STATE_PUBLISHED, getCrsPublishPopupBinding());
+     }     
     
     /** ACTIVATED to RETIRED */
     public void onClickRetire(ActionEvent actionEvent) {
@@ -1238,4 +1252,7 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.addPartialTarget(riskDefTable);
         riskDefPopup.hide();
     }
+
+
+   
 }

@@ -276,7 +276,7 @@
                           maximumLength="#{bindings.MqmComment.hints.precision}"
                           shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it5" rows="3"
                           contentStyle="width:500px;"
-                          disabled="#{!securityContext.userInRole['MQM'] &amp;&amp; !securityContext.userInRole['CRSADMIN']}"
+                          disabled="#{!securityContext.userInRole['CRS_MQM'] &amp;&amp; !securityContext.userInRole['CRS_ADMIN']}"
                           autoSubmit="true">
               <f:validator binding="#{bindings.MqmComment.validator}"/>
             </af:inputText>
@@ -381,7 +381,7 @@
                                   visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb13"
                                   actionListener="#{bindings.Commit.execute}"
-                                  visible="#{securityContext.userInRole['MQM']}">
+                                  visible="#{securityContext.userInRole['CRS_MQM']}">
                   <af:showPopupBehavior triggerType="action" popupId="::p2"/>
                 </af:commandButton>
               </af:toolbar>

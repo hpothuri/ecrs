@@ -6,11 +6,11 @@ public class ModelConstants {
     }
     
     //public static String 
-    public static final String ROLE_BSL = "BSL";
-    public static final String ROLE_TASL = "TASL";
-    public static final String ROLE_ML = "ML";
-    public static final String ROLE_MQM = "MQM";
-    public static final String ROLE_CRSADMIN = "CRSADMIN";
+    public static final String ROLE_BSL = "CRS_BSL";
+    public static final String ROLE_TASL = "CRS_TASL";
+    public static final String ROLE_ML = "CRS_ML";
+    public static final String ROLE_MQM = "CRS_MQM";
+    public static final String ROLE_CRSADMIN = "CRS_ADMIN";
     
     public static final Integer STATE_DRAFT = 1;
     public static final Integer STATE_REVIEW = 2;

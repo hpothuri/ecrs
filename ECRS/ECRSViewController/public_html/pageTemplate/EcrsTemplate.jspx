@@ -54,7 +54,7 @@
                     <af:menuBar id="mb1">
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CREATE}" id="cmi1" action="create" immediate="true"
                                             inlineStyle=" font-weight: bold;     padding-right: 10px;"
-                                            visible="#{securityContext.userInRole['BSL'] || securityContext.userInRole['CRSADMIN']}"/>
+                                            visible="#{securityContext.userInRole['CRS_BSL'] || securityContext.userInRole['CRS_ADMIN']}"/>
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.UPDATE}" id="cmi2" action="update" immediate="true"
                          inlineStyle=" font-weight: bold;     padding-right: 10px;"
                                             visible="#{securityContext.authenticated}"/>
@@ -84,7 +84,7 @@
                         </af:menu>
                         <af:menu text="#{ecrsviewcontrollerBundle.ADMINISTRATION}" id="pt_m1"
                                  inlineStyle="font-weight: bold;     padding-right: 10px;"
-                                 visible="#{securityContext.userInRole['CRSADMIN']}">
+                                 visible="#{securityContext.userInRole['CRS_ADMIN']}">
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.COMPOUNDS}" id="pt_gmi1"
                                                 action="compound" immediate="true" inlineStyle="font-weight: bold;"/>
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.STATES}" id="pt_gmi2" action="states" immediate="true"

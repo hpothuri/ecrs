@@ -21,7 +21,7 @@
                     <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}"
                                       id="cb4"
                                       actionListener="#{pageFlowScope.manageCRSBean.onClickCreateSave}"
-                                      visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable or (securityContext.userInRole['MQM'] and bindings.StateId.inputValue eq 2) or (securityContext.userInRole['TASL'] and bindings.StateId.inputValue eq 4)  || (securityContext.userInRole['ML'] and bindings.StateId.inputValue eq 5)}"
+                                      visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable or (securityContext.userInRole['CRS_MQM'] and bindings.StateId.inputValue eq 2) or (securityContext.userInRole['CRS_TASL'] and bindings.StateId.inputValue eq 4)  || (securityContext.userInRole['CRS_ML'] and bindings.StateId.inputValue eq 5)}"
                                       disabled="#{!bindings.Commit.enabled}"/>
                 </f:facet>
                 <af:panelGroupLayout id="pgl3" layout="horizontal">
@@ -121,7 +121,7 @@
                                                     shortDesc="#{bindings.BslName.hints.tooltip}"
                                                     id="soc3"
                                                     contentStyle="width:170px;"
-                                                    readOnly="#{!securityContext.userInRole['CRSADMIN']}"
+                                                    readOnly="#{!securityContext.userInRole['CRS_ADMIN']}"
                                              showRequired="true" autoSubmit="true">
                                     <f:selectItems value="#{bindings.BslName.items}"
                                                    id="si3"/>
@@ -201,64 +201,84 @@
                         <af:commandButton text="#{ecrsviewcontrollerBundle.DEMOTE_TO_DRAFT}"
                                           id="cb1"
                                           disabled="#{bindings.StateId.inputValue eq 1}"
-                                          visible="#{(securityContext.userInRole['BSL'] || securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}" partialSubmit="true"
-                                          actionListener="#{pageFlowScope.manageCRSBean.onClickDemoteToDraft}"/>
+                                          visible="#{(securityContext.userInRole['CRS_BSL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}" partialSubmit="true"
+                                          inlineStyle="margin-right:10px;">
+                            <af:showPopupBehavior popupId="demtodft" triggerType="action"/>
+                        </af:commandButton>
                         <af:commandButton text="#{ecrsviewcontrollerBundle.REVIEW}"
                                           id="cb2"
-                                          visible="#{(securityContext.userInRole['BSL']  || securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                          actionListener="#{pageFlowScope.manageCRSBean.onClickReview}"
-                                          disabled="#{bindings.EntityState eq 'NEW' or bindings.StateId.inputValue ne 1}" partialSubmit="true"/>
+                                          visible="#{(securityContext.userInRole['CRS_BSL']  || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"                                         
+                                          disabled="#{bindings.EntityState eq 'NEW' or bindings.StateId.inputValue ne 1}" partialSubmit="true"
+                                          inlineStyle="margin-right:10px;">
+                            <af:showPopupBehavior popupId="review" triggerType="action"/>
+                        </af:commandButton>
                         <af:commandButton text="#{ecrsviewcontrollerBundle.REVIEWED}"
                                           id="cb11"
-                                          visible="#{(securityContext.userInRole['MQM'] || securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                          actionListener="#{pageFlowScope.manageCRSBean.onClickReviewed}"
-                                          partialSubmit="true" disabled="#{bindings.StateId.inputValue ne 2}"/>                                          
+                                          visible="#{(securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"                                          
+                                          partialSubmit="true" disabled="#{bindings.StateId.inputValue ne 2}"
+                                          inlineStyle="margin-right:10px;">
+                            <af:showPopupBehavior popupId="reviewed" triggerType="action"/>
+                        </af:commandButton>                                          
                         <af:commandButton text="#{ecrsviewcontrollerBundle.SUBMIT_FOR_TASL_APPROVAL}" id="cb9"
-                                          visible="#{(securityContext.userInRole['BSL'] || securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}" partialSubmit="true"
-                                          
-                                          actionListener="#{pageFlowScope.manageCRSBean.onClickSubmitForTASL}"
-                                          disabled="#{bindings.StateId.inputValue ne 3}"/>
-                        <af:commandButton text="#{securityContext.userInRole['CRSADMIN'] ? ecrsviewcontrollerBundle.TASL_APPROVE : ecrsviewcontrollerBundle.APPROVE}" id="cb8"
+                                          visible="#{(securityContext.userInRole['CRS_BSL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}" partialSubmit="true"
+                                          disabled="#{bindings.StateId.inputValue ne 3}"
+                                          inlineStyle="margin-right:10px;">
+                            <af:showPopupBehavior popupId="taslRevSubmit" triggerType="action"/>
+                        </af:commandButton>
+                        <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.TASL_APPROVE : ecrsviewcontrollerBundle.APPROVE}" id="cb8"
                                           disabled="#{bindings.StateId.inputValue ne 4}"
-                                          visible="#{(securityContext.userInRole['TASL'] || securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                          visible="#{(securityContext.userInRole['CRS_TASL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
                                           partialSubmit="true"
-                                          actionListener="#{pageFlowScope.manageCRSBean.onClickTASLApprove}"/>
-                        <af:commandButton text="#{securityContext.userInRole['CRSADMIN'] ? ecrsviewcontrollerBundle.ML_APPROVE : ecrsviewcontrollerBundle.APPROVE}" id="cb15"
+                                          inlineStyle="margin-right:10px;">
+                            <af:showPopupBehavior popupId="taslApprove" triggerType="action"/>
+                        </af:commandButton>
+                        <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.ML_APPROVE : ecrsviewcontrollerBundle.APPROVE}" id="cb15"
                                           disabled="#{bindings.StateId.inputValue ne 5}"
-                                          visible="#{(securityContext.userInRole['ML'] || securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                          visible="#{(securityContext.userInRole['CRS_ML'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
                                           partialSubmit="true"
-                                          actionListener="#{pageFlowScope.manageCRSBean.onClickMLApprove}"/>
-                        <af:commandButton text="#{securityContext.userInRole['CRSADMIN'] ? ecrsviewcontrollerBundle.TASL_REJECT : ecrsviewcontrollerBundle.REJECT}" id="cb10" partialSubmit="true"
+                                          inlineStyle="margin-right:10px;">
+                            <af:showPopupBehavior popupId="mlApprv" triggerType="action"/>
+                        </af:commandButton>
+                        <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.TASL_REJECT : ecrsviewcontrollerBundle.REJECT}" id="cb10" partialSubmit="true"
                                           disabled="#{bindings.StateId.inputValue ne 4}"
-                                          visible="#{(securityContext.userInRole['TASL'] or securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                          actionListener="#{pageFlowScope.manageCRSBean.onClickTASLReject}"/>
-                       <af:commandButton text="#{securityContext.userInRole['CRSADMIN'] ? ecrsviewcontrollerBundle.ML_REJECT : ecrsviewcontrollerBundle.REJECT}" id="cb16" partialSubmit="true"
+                                          visible="#{(securityContext.userInRole['CRS_TASL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                          inlineStyle="margin-right:10px;">
+                            <af:showPopupBehavior popupId="taslReject" triggerType="action"/>
+                        </af:commandButton>
+                       <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.ML_REJECT : ecrsviewcontrollerBundle.REJECT}" id="cb16" partialSubmit="true"
                                           disabled="#{bindings.StateId.inputValue ne 5}"
-                                          visible="#{(securityContext.userInRole['ML'] or securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                          actionListener="#{pageFlowScope.manageCRSBean.onClickMLReject}"/>
+                                          visible="#{(securityContext.userInRole['CRS_ML'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                          inlineStyle="margin-right:10px;">
+                            <af:showPopupBehavior popupId="mlReject" triggerType="action"/>
+                        </af:commandButton>
                         <af:commandButton text="#{ecrsviewcontrollerBundle.PUBLISHED}" id="cb14"
                                           disabled="#{bindings.StateId.inputValue ne 6}"
-                                          visible="#{(securityContext.userInRole['BSL'] or securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                          actionListener="#{pageFlowScope.manageCRSBean.onClickPublished}"/>
+                                          visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                          inlineStyle="margin-right:10px;">
+                            <af:showPopupBehavior popupId="publish" triggerType="action"/>
+                        </af:commandButton>
                         <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE}"
                                           id="cb3"
-                                          visible="#{(securityContext.userInRole['BSL'] or securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}" partialSubmit="true">
+                                          visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}" partialSubmit="true"
+                                          inlineStyle="margin-right:10px;">
                                           <af:showPopupBehavior popupId="delConfPopup" triggerType="action"/>
-                         </af:commandButton>
+                        </af:commandButton>
                          <af:commandButton text="#{ecrsviewcontrollerBundle.RETIRE}"
                                           id="cb12"
-                                          visible="#{(securityContext.userInRole['BSL'] or securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'C'}" partialSubmit="true"
+                                          visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'C'}" partialSubmit="true"
                                            disabled="#{bindings.StateId.inputValue eq 8}"
-                                           actionListener="#{pageFlowScope.manageCRSBean.onClickRetire}"/>                                        
+                                           actionListener="#{pageFlowScope.manageCRSBean.onClickRetire}">
+                            
+                        </af:commandButton>                                        
                          
                          <af:commandButton text="#{ecrsviewcontrollerBundle.REACTIVATE}"
                                           id="cb13"
-                                          rendered="#{(securityContext.userInRole['BSL'] or securityContext.userInRole['CRSADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'C'}" partialSubmit="true"
+                                          rendered="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'C'}" partialSubmit="true"
                                            disabled="#{bindings.StateId.inputValue eq 7}"
-                                           actionListener="#{pageFlowScope.manageCRSBean.onClickReactivate}"/>                                          
-                        <f:facet name="separator">
-                            <af:spacer width="10" height="10" id="s1"/>
-                        </f:facet>
+                                           actionListener="#{pageFlowScope.manageCRSBean.onClickReactivate}">
+                           
+                        </af:commandButton>                                          
+                        <f:facet name="separator"/>
                     </af:panelGroupLayout>
                 </f:facet>
                 <af:panelFormLayout id="pfl2" styleClass="AFStretchWidth" rows="3" maxColumns="1" fieldWidth="90%"
@@ -271,8 +291,8 @@
                                   shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it7"
                                   styleClass="AFStretchWidth"
                                   label="#{ecrsviewcontrollerBundle.MQM_COMMENT}" rows="3" contentStyle="width:75%;"
-                                  disabled="#{!((securityContext.userInRole['MQM'] or securityContext.userInRole['CRSADMIN']) and bindings.StateId.inputValue eq 2)}"
-                                  visible="#{securityContext.userInRole['CRSADMIN']  or securityContext.userInRole['BSL'] or securityContext.userInRole['MQM']}">
+                                  disabled="#{!((securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN']) and bindings.StateId.inputValue eq 2)}"
+                                  visible="#{securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_MQM']}">
                         <f:validator binding="#{bindings.MqmComment.validator}"/>
                     </af:inputText>
                     <af:inputText value="#{bindings.TaslRejectComment.inputValue}"
@@ -280,9 +300,8 @@
                                   maximumLength="#{bindings.TaslRejectComment.hints.precision}"
                                   shortDesc="#{bindings.TaslRejectComment.hints.tooltip}" id="it8"
                                   label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}" rows="3"
-                                  contentStyle="width:75%;" styleClass="AFStretchWidth"
-                                  disabled="#{!((securityContext.userInRole['TASL'] or securityContext.userInRole['CRSADMIN']) and bindings.StateId.inputValue eq 4)}" autoSubmit="true"
-                                  binding="#{pageFlowScope.manageCRSBean.taslCommentsInputText}">
+                                  contentStyle="width:75%;" styleClass="AFStretchWidth" autoSubmit="true"
+                                  disabled="true">
                         <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
                     </af:inputText>
                     <af:inputText value="#{bindings.MedicalLeadRejectComment.inputValue}"
@@ -290,9 +309,8 @@
                                   maximumLength="#{bindings.MedicalLeadRejectComment.hints.precision}"
                                   shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}" id="it9"
                                   label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}" rows="3"
-                                  contentStyle="width:75%;" styleClass="AFStretchWidth"
-                                  disabled="#{!((securityContext.userInRole['ML'] or securityContext.userInRole['CRSADMIN']) and bindings.StateId.inputValue eq 5)}" autoSubmit="true"
-                                  binding="#{pageFlowScope.manageCRSBean.mlCommentsInputText}">
+                                  contentStyle="width:75%;" styleClass="AFStretchWidth" autoSubmit="true"
+                                  disabled="true">
                         <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
                     </af:inputText>
                 </af:panelFormLayout>
@@ -416,6 +434,124 @@
                 <f:facet name="buttonBar"/>
                 <af:outputText value="#{ecrsviewcontrollerBundle.THE_CRS_HAS_BEEN_DEMOTED_TO_DR}"
                                id="ot12"/>
+            </af:dialog>
+        </af:popup>
+        <!-- CONFIRMATION POPUPS -->
+        <af:popup childCreation="deferred" autoCancel="disabled" id="demtodft">
+            <af:dialog id="d11" title="#{ecrsviewcontrollerBundle.DEMOTE_CONFIRMATION}"
+                       titleIconSource="/images/warning.png"
+                       closeIconVisible="false" type="yesNo"
+                       dialogListener="#{pageFlowScope.manageCRSBean.processDemoteToDraftDialog}" contentWidth="270">
+                <f:facet name="buttonBar"/>
+                <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_DEMOTE_T}"
+                               id="ot13"/>
+            </af:dialog>
+        </af:popup>
+         <af:popup childCreation="deferred" autoCancel="disabled" id="review">
+            <af:dialog id="d12" title="#{ecrsviewcontrollerBundle.REVIEW_CONFIRMATION}"
+                       titleIconSource="/images/warning.png"
+                       closeIconVisible="false" type="yesNo"
+                       dialogListener="#{pageFlowScope.manageCRSBean.processReviewDialog}">
+                <f:facet name="buttonBar"/>
+                <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_SUBMIT_T}"
+                               id="ot14"/>
+            </af:dialog>
+        </af:popup>
+         <af:popup childCreation="deferred" autoCancel="disabled" id="reviewed">
+            <af:dialog id="d13" title="#{ecrsviewcontrollerBundle.REVIEW_CONFIRMATION}"
+                       titleIconSource="/images/warning.png"
+                       closeIconVisible="false" type="yesNo"
+                       dialogListener="#{pageFlowScope.manageCRSBean.processReviewedDialog}"
+                       styleClass="AFStretchWidth" contentWidth="180">
+                <f:facet name="buttonBar"/>
+                <af:outputText value="#{ecrsviewcontrollerBundle.ARE_YOU_DONE_REVIEWING_THE_CRS}"
+                               id="ot15"/>
+            </af:dialog>
+        </af:popup>
+        <af:popup childCreation="deferred" autoCancel="disabled" id="taslRevSubmit">
+            <af:dialog id="d14" title="#{ecrsviewcontrollerBundle.SUBMIT_CONFIRMATION}"
+                       titleIconSource="/images/warning.png"
+                       closeIconVisible="false" type="yesNo"
+                       dialogListener="#{pageFlowScope.manageCRSBean.processTaslReviewSubmit}">
+                <f:facet name="buttonBar"/>
+                <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_SUBMIT_0}"
+                               id="ot16"/>
+            </af:dialog>
+        </af:popup>
+        <af:popup childCreation="deferred" autoCancel="disabled" id="taslApprove">
+            <af:dialog id="d15" title="#{ecrsviewcontrollerBundle.APPROVE_CONFIRMATION}"
+                       titleIconSource="/images/warning.png"
+                       closeIconVisible="false" type="yesNo"
+                       dialogListener="#{pageFlowScope.manageCRSBean.processTaslApprove}">
+                <f:facet name="buttonBar"/>
+                <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_APPROVE_}"
+                               id="ot17"/>
+            </af:dialog>
+        </af:popup>
+        <af:popup childCreation="deferred" autoCancel="disabled" id="taslReject">
+            <af:dialog id="d16" title="#{ecrsviewcontrollerBundle.REJECT_CONFIRMATION}"
+                       titleIconSource="/images/warning.png"
+                       closeIconVisible="false" type="yesNo"
+                       dialogListener="#{pageFlowScope.manageCRSBean.processTaslReject}" contentWidth="600">
+                <f:facet name="buttonBar"/>
+                <af:panelGroupLayout id="pgl8" layout="vertical">
+                    <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_REJECT_T}" id="ot18"/>
+                    <f:facet name="separator">
+                        <af:spacer width="10" height="20" id="s8"/>
+                    </f:facet>
+                    <af:inputText value="#{bindings.TaslRejectComment.inputValue}" columns="100"
+                                  maximumLength="#{bindings.TaslRejectComment.hints.precision}"
+                                  shortDesc="#{bindings.TaslRejectComment.hints.tooltip}" id="it10"
+                                  label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}" rows="3"
+                                  styleClass="AFStretchWidth" autoSubmit="true"
+                                  binding="#{pageFlowScope.manageCRSBean.taslCommentsInputText}" showRequired="true"
+                                  labelStyle="vertical-align: middle;  white-space: nowrap;">
+                        <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
+                    </af:inputText>
+                </af:panelGroupLayout>
+            </af:dialog>
+        </af:popup>
+        <af:popup childCreation="deferred" autoCancel="disabled" id="mlApprv">
+            <af:dialog id="d17" title="#{ecrsviewcontrollerBundle.APPROVE_CONFIRMATION}"
+                       titleIconSource="/images/warning.png"
+                       closeIconVisible="false" type="yesNo"
+                       dialogListener="#{pageFlowScope.manageCRSBean.processMLApprove}">
+                <f:facet name="buttonBar"/>
+                <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_APPROVE_}"
+                               id="ot19"/>
+            </af:dialog>
+        </af:popup>
+        <af:popup childCreation="deferred" autoCancel="disabled" id="mlReject">
+            <af:dialog id="d18" title="#{ecrsviewcontrollerBundle.REJECT_CONFIRMATION}"
+                       titleIconSource="/images/warning.png"
+                       closeIconVisible="false" type="yesNo"
+                       dialogListener="#{pageFlowScope.manageCRSBean.processMLReject}" contentWidth="600">
+                <f:facet name="buttonBar"/>
+                <af:panelGroupLayout id="pgl9" layout="vertical">
+                    <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_REJECT_T}" id="ot20"/>
+                    <f:facet name="separator">
+                        <af:spacer width="10" height="20" id="s9"/>
+                    </f:facet>
+                    <af:inputText value="#{bindings.MedicalLeadRejectComment.inputValue}" columns="100"
+                                  maximumLength="#{bindings.MedicalLeadRejectComment.hints.precision}"
+                                  shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}" id="it11"
+                                  label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}" rows="3"
+                                  styleClass="AFStretchWidth" autoSubmit="true"
+                                  binding="#{pageFlowScope.manageCRSBean.taslCommentsInputText}"
+                                  showRequired="true" labelStyle="vertical-align: middle;  white-space: nowrap;">
+                        <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
+                    </af:inputText>
+                </af:panelGroupLayout>
+            </af:dialog>           
+        </af:popup>
+         <af:popup childCreation="deferred" autoCancel="disabled" id="publish">
+            <af:dialog id="d19" title="#{ecrsviewcontrollerBundle.PUBLISH_CONFIRMATION}"
+                       titleIconSource="/images/warning.png"
+                       closeIconVisible="false" type="yesNo"
+                       dialogListener="#{pageFlowScope.manageCRSBean.processPublishDialog}">
+                <f:facet name="buttonBar"/>
+                <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_PUBLISH_}"
+                               id="ot21"/>
             </af:dialog>
         </af:popup>
     </af:panelHeader>
