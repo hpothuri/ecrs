@@ -28,7 +28,7 @@
     TableName="CRS.CRS_CONTENT"
     PrimaryKey="true"
     RetrievedOnInsert="true">
-    <TransientExpression><![CDATA[-999]]></TransientExpression>
+    <TransientExpression><![CDATA[(new oracle.jbo.server.SequenceImpl("crs_content_seq",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
   </Attribute>
   <Attribute
     Name="CrsName"
@@ -256,6 +256,66 @@
     TableName="CRS.CRS_CONTENT"
     HistoryColumn="VersionHistory"
     ChangeIndicator="true"/>
+  <Attribute
+    Name="ReasonForChange"
+    IsNotNull="true"
+    Precision="200"
+    ColumnName="REASON_FOR_CHANGE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS.CRS_CONTENT"
+    DefaultValue="None">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CreatedBy"
+    IsNotNull="true"
+    Precision="30"
+    ColumnName="CREATED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS.CRS_CONTENT"
+    IsUpdateable="while_insert"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CreationTs"
+    IsNotNull="true"
+    ColumnName="CREATION_TS"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="DATE"
+    TableName="CRS.CRS_CONTENT"
+    IsUpdateable="while_insert"
+    HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="ModifiedBy"
+    Precision="30"
+    ColumnName="MODIFIED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS.CRS_CONTENT"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ModificationTs"
+    ColumnName="MODIFICATION_TS"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="DATE"
+    TableName="CRS.CRS_CONTENT"
+    HistoryColumn="DateHistory"/>
   <AccessorAttribute
     Name="CrsStateEO"
     Association="com.novartis.ecrs.model.entity.assoc.CrsContentIdxStateFkAssoc"

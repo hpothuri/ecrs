@@ -203,7 +203,7 @@
         <f:facet name="buttonBar">
           <af:panelGroupLayout id="pgl3">
             <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb14"
-                              actionListener="#{pageFlowScope.manageCRSBean.onCancelCrsRiskPopup}"/>
+                              actionListener="#{pageFlowScope.manageCRSBean.onCancelCrsRiskPopup}" immediate="true"/>
           </af:panelGroupLayout>
         </f:facet>
         <af:panelGroupLayout id="pgl2" layout="vertical">
@@ -438,10 +438,35 @@
                            id="ot7"/>
           </af:column>
           <af:column id="c32" width="20">
-            <af:commandButton id="cb9"/>
+            <af:commandButton id="cb9" actionListener="#{pageFlowScope.manageCRSBean.executeHierarchyChild}"/>
           </af:column>
           <af:dragSource actions="COPY" defaultAction="COPY" discriminant="copyRows"/>
         </af:table>
+        <af:treeTable value="#{bindings.HierarchyChildVO.treeModel}" var="node"
+                      selectionListener="#{bindings.HierarchyChildVO.treeModel.makeCurrent}" rowSelection="single"
+                      id="tt1" styleClass="AFStretchWidth" visible="false"
+                      binding="#{pageFlowScope.manageCRSBean.childTreeTable}">
+          <f:facet name="nodeStamp">
+            <af:column id="c33" width="150">
+              <af:outputText value="#{node.Term}" id="ot19"/>
+            </af:column>
+          </f:facet>
+          <f:facet name="pathStamp">
+            <af:outputText value="#{node}" id="ot20"/>
+          </f:facet>
+          <af:column id="c34" headerText="#{ecrsviewcontrollerBundle.HIERARCHY_DETAILS}">
+            <af:column id="c35" headerText="#{ecrsviewcontrollerBundle.CODE}">
+              <af:outputText value="#{node.DictContentCode}" id="ot24"/>
+            </af:column>
+            <af:column id="c36" headerText="#{ecrsviewcontrollerBundle.LEVEL}">
+              <af:outputText value="#{node.LevelName}" id="ot22"/>
+            </af:column>
+            <af:column id="c37" headerText="#{ecrsviewcontrollerBundle.SCOPE}">
+              <af:outputText value="#{pageFlowScope.manageCRSBean.childScope}" id="ot23"/>
+            </af:column>
+          </af:column>
+          <af:dragSource actions="COPY" defaultAction="COPY" discriminant="copyRows"/>
+        </af:treeTable>
       </af:dialog>
     </af:popup>
     <af:popup childCreation="deferred" autoCancel="disabled" id="p4"
@@ -449,6 +474,13 @@
       <af:dialog id="d4" title="#{ecrsviewcontrollerBundle.ERROR}" titleIconSource="/images/delete.png" type="ok">
         <f:facet name="buttonBar"/>
         <af:outputText value="#{ecrsviewcontrollerBundle.ONLY_ONE_MEDDRA_ROW_CAN_BE_ADD}" id="ot8"/>
+      </af:dialog>
+    </af:popup>
+    <af:popup childCreation="deferred" autoCancel="disabled" id="p5"
+              binding="#{pageFlowScope.manageCRSBean.parentError}">
+      <af:dialog id="d5" title="#{ecrsviewcontrollerBundle.ERROR}" titleIconSource="/images/delete.png" type="ok">
+        <f:facet name="buttonBar"/>
+        <af:outputText value="#{ecrsviewcontrollerBundle.PARENT_NODE_CANNOT_BE_DRAGGED_}" id="ot21"/>
       </af:dialog>
     </af:popup>
   </af:panelGroupLayout>

@@ -31,6 +31,7 @@ import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.adf.share.ADFContext;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichTable;
+import oracle.adf.view.rich.component.rich.data.RichTreeTable;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
@@ -53,6 +54,7 @@ import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
 
 import oracle.security.crypto.util.InvalidFormatException;
 
+import org.apache.myfaces.trinidad.component.UIXCollection;
 import org.apache.myfaces.trinidad.event.SelectionEvent;
 import org.apache.myfaces.trinidad.model.CollectionModel;
 import org.apache.myfaces.trinidad.model.RowKeySet;
@@ -97,6 +99,10 @@ public class ManageCRSBean implements Serializable {
     private List<SelectItem> filterItems;
     private List<SelectItem> meddraItems;
     private List<SelectItem> levelItems;
+    private String contentId;
+    private String childScope;
+    private RichTreeTable childTreeTable;
+    private RichPopup parentError;
 
     public ManageCRSBean() {
         super();
@@ -173,29 +179,29 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.setEL("#{bindings.Designee.inputValue}", designees.substring(1));
         } else
             ADFUtils.setEL("#{bindings.Designee.inputValue}",null);
-
+//        ADFUtils.setEL("#{bindings.CrsName.inputValue}", "Routine");
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0)
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
         else {
-            String flowType = (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
-            if (flowType != null && "C".equalsIgnoreCase(flowType)) {
-                Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
-                OperationBinding copyOper = ADFUtils.findOperation("copyRoutineDefinition");
-                copyOper.getParamsMap().put("crsId", crsId);
-                copyOper.execute();
-                if (copyOper.getErrors().size() > 0)
-                    ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
-                                              FacesMessage.SEVERITY_ERROR);
-                else {
-                    ADFUtils.showPopup(getSuccessPopupBinding());
-                    ADFUtils.addPartialTarget(getWorkflowPanelBox());
-                }
-            } else {
+//            String flowType = (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
+//            if (flowType != null && "C".equalsIgnoreCase(flowType)) {
+//                Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
+//                OperationBinding copyOper = ADFUtils.findOperation("copyRoutineDefinition");
+//                copyOper.getParamsMap().put("crsId", crsId);
+//                copyOper.execute();
+//                if (copyOper.getErrors().size() > 0)
+//                    ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
+//                                              FacesMessage.SEVERITY_ERROR);
+//                else {
+//                    ADFUtils.showPopup(getSuccessPopupBinding());
+//                    ADFUtils.addPartialTarget(getWorkflowPanelBox());
+//                }
+//            } else {
                 ADFUtils.showPopup(getSuccessPopupBinding());
                 ADFUtils.addPartialTarget(getWorkflowPanelBox());
-            }
+//            }
         }
     }
 
@@ -217,6 +223,11 @@ public class ManageCRSBean implements Serializable {
             row.setReviewApproveRequiredFlag(ModelConstants.REVIEW_REQD_YES);
             row.setReleaseStatusFlag(ModelConstants.STATUS_PENDING);
             row.setCrsEffectiveDt(ADFUtils.getJBOTimeStamp());
+            
+            Long crsId = row.getCrsId();
+            OperationBinding copyOper = bc.getOperationBinding("copyRoutineDefinition");
+            copyOper.getParamsMap().put("crsId", crsId);
+            copyOper.execute();
         }
     }
 
@@ -859,9 +870,15 @@ public class ManageCRSBean implements Serializable {
         DCIteratorBinding iter = ADFUtils.findIterator("HierarchySearchVOIterator");
         ViewObject hierVO = iter.getViewObject();
         hierVO.executeEmptyRowSet();
+        DCIteratorBinding childIter = ADFUtils.findIterator("HierarchyChildVOIterator");
+        ViewObject childVO = childIter.getViewObject();
+        childVO.executeEmptyRowSet();
         setTerm(null);
         setLevel(null);
         setDictionary(null);
+        setContentId(null);
+        if(childTreeTable != null)
+            childTreeTable.setVisible(false);
         ADFUtils.showPopup(hierPopup);
     }
 
@@ -878,7 +895,7 @@ public class ManageCRSBean implements Serializable {
         DCIteratorBinding riskDefIter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
         ViewObject riskDefVO = riskDefIter.getViewObject();
         
-        RichTable dragTable = (RichTable)dropEvent.getDragComponent();
+        UIXCollection dragTable = (UIXCollection)dropEvent.getDragComponent();
         RichTable dropTable = (RichTable)dropEvent.getDropComponent();
         String dragNodeVO = null;
         Transferable t = dropEvent.getTransferable();
@@ -894,13 +911,50 @@ public class ManageCRSBean implements Serializable {
             JUCtrlHierNodeBinding rowBinding = (JUCtrlHierNodeBinding)dragTable.getRowData();
             dragRow = rowBinding.getRow();
             dragNodeVO = dragRow.getStructureDef().getDefName();
-            if (!("HierarchySearchVO".equalsIgnoreCase(dragNodeVO))) {
-                FacesMessage msg =
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Drag and Drop a row from the Hierachy Search Results.");
-                FacesContext.getCurrentInstance().addMessage(null, msg);
-                return DnDAction.NONE;
+            if (("HierarchyChildVO".equalsIgnoreCase(dragNodeVO))) {
+                String term = (String)dragRow.getAttribute("Term");
+                String code = (String)dragRow.getAttribute("DictContentCode");
+                String level = (String)dragRow.getAttribute("LevelName");
+                String dict = (String)dragRow.getAttribute("DictShortName");
+                String version = (String)dragRow.getAttribute("DictContentAltCode");
+                
+                if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
+                    Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
+                    if (rows.length > 0) {
+                        ADFUtils.showPopup(meddraError);
+                        dragTable.setRowKey(dragCurrentRowKey);
+                        AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                        AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                        return DnDAction.NONE;
+                    }
+                }
+                
+                Row riskDefRow = riskDefVO.createRow();
+                riskDefRow.setAttribute("MeddraCode", code);
+                riskDefRow.setAttribute("MeddraLevel", level);
+                riskDefRow.setAttribute("MeddraTerm", term);
+                riskDefRow.setAttribute("MeddraDict", dict);
+                riskDefRow.setAttribute("MeddraVersion", version != null ? version : ADFUtils.getPageFlowScopeValue("childVersion"));
+                riskDefRow.setAttribute("MeddraVersionDate", ADFUtils.getPageFlowScopeValue("childDate"));
+                
+                if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
+                    if (term != null && term.contains("NMQ"))
+                        riskDefRow.setAttribute("MeddraExtension", "NMQ");
+                    else if (term != null && term.contains("CMQ"))
+                        riskDefRow.setAttribute("MeddraExtension", "CMQ");
+                    else if (term != null && term.contains("SMQ"))
+                        riskDefRow.setAttribute("MeddraExtension", "SMQ");
+                    else
+                        riskDefRow.setAttribute("MeddraExtension", level);
+                } else
+                    riskDefRow.setAttribute("MeddraExtension", level);
+                
+             
+                riskDefRow.setAttribute("MeddraQualifier", getChildScope());
+                //                meddra_qualifier IN ('BROAD','NARROW','CHILD NARROW')
+                riskDefVO.insertRow(riskDefRow);
             }
-            else{
+            else if("HierarchySearchVO".equalsIgnoreCase(dragNodeVO)){
                 String term = (String)dragRow.getAttribute("Mqterm");
                 String code = (String)dragRow.getAttribute("Mqcode");
                 String level = (String)dragRow.getAttribute("Mqlevel");
@@ -945,6 +999,13 @@ public class ManageCRSBean implements Serializable {
                     riskDefRow.setAttribute("MeddraQualifier", "CHILD NARROW");
 //                meddra_qualifier IN ('BROAD','NARROW','CHILD NARROW')
                 riskDefVO.insertRow(riskDefRow);
+            }
+            else{
+                ADFUtils.showPopup(parentError);
+                dragTable.setRowKey(dragCurrentRowKey);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                return DnDAction.NONE;
             }
         }
         dragTable.setRowKey(dragCurrentRowKey);
@@ -1253,6 +1314,55 @@ public class ManageCRSBean implements Serializable {
         riskDefPopup.hide();
     }
 
+    public void setContentId(String contentId) {
+        this.contentId = contentId;
+    }
 
-   
+    public String getContentId() {
+        return contentId;
+    }
+
+    public void setChildScope(String childScope) {
+        this.childScope = childScope;
+    }
+
+    public String getChildScope() {
+        return childScope;
+    }
+
+    public void executeHierarchyChild(ActionEvent actionEvent) {
+        DCIteratorBinding childIter = ADFUtils.findIterator("HierarchyChildVOIterator");
+        ViewObject childVO = childIter.getViewObject();
+        childVO.setNamedWhereClauseParam("bContentId", ADFUtils.evaluateEL("#{row.ContentId}"));
+        childVO.executeQuery();
+        getChildTreeTable().setVisible(Boolean.TRUE);
+        
+        String qual = (String)ADFUtils.evaluateEL("#{row.Mqcrtev}");
+        ADFUtils.setPageFlowScopeValue("childVersion", ADFUtils.evaluateEL("#{row.Version}"));
+        ADFUtils.setPageFlowScopeValue("childDate", ADFUtils.evaluateEL("#{row.Dates}"));
+        
+        if(qual != null && qual.contains("Y_BROAD"))
+            setChildScope("BROAD");
+        else if(qual != null && qual.contains("Y_NARROW"))
+            setChildScope("NARROW");
+        else
+            setChildScope("CHILD NARROW");
+        ADFUtils.addPartialTarget(getChildTreeTable());
+    }
+
+    public void setChildTreeTable(RichTreeTable childTreeTable) {
+        this.childTreeTable = childTreeTable;
+    }
+
+    public RichTreeTable getChildTreeTable() {
+        return childTreeTable;
+    }
+
+    public void setParentError(RichPopup parentError) {
+        this.parentError = parentError;
+    }
+
+    public RichPopup getParentError() {
+        return parentError;
+    }
 }

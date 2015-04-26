@@ -205,7 +205,57 @@ public class CrsContentEOImpl extends EntityImpl {
             }
 
             public void put(CrsContentEOImpl obj, Object value) {
-                obj.setUiVersionNumber((Integer)value);
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ,
+        ReasonForChange {
+            public Object get(CrsContentEOImpl obj) {
+                return obj.getReasonForChange();
+            }
+
+            public void put(CrsContentEOImpl obj, Object value) {
+                obj.setReasonForChange((String)value);
+            }
+        }
+        ,
+        CreatedBy {
+            public Object get(CrsContentEOImpl obj) {
+                return obj.getCreatedBy();
+            }
+
+            public void put(CrsContentEOImpl obj, Object value) {
+                obj.setCreatedBy((String)value);
+            }
+        }
+        ,
+        CreationTs {
+            public Object get(CrsContentEOImpl obj) {
+                return obj.getCreationTs();
+            }
+
+            public void put(CrsContentEOImpl obj, Object value) {
+                obj.setCreationTs((Timestamp)value);
+            }
+        }
+        ,
+        ModifiedBy {
+            public Object get(CrsContentEOImpl obj) {
+                return obj.getModifiedBy();
+            }
+
+            public void put(CrsContentEOImpl obj, Object value) {
+                obj.setModifiedBy((String)value);
+            }
+        }
+        ,
+        ModificationTs {
+            public Object get(CrsContentEOImpl obj) {
+                return obj.getModificationTs();
+            }
+
+            public void put(CrsContentEOImpl obj, Object value) {
+                obj.setModificationTs((Timestamp)value);
             }
         }
         ,
@@ -287,6 +337,11 @@ public class CrsContentEOImpl extends EntityImpl {
     public static final int CRSEFFECTIVEDT = AttributesEnum.CrsEffectiveDt.index();
     public static final int REVIEWAPPROVEREQUIREDFLAG = AttributesEnum.ReviewApproveRequiredFlag.index();
     public static final int UIVERSIONNUMBER = AttributesEnum.UiVersionNumber.index();
+    public static final int REASONFORCHANGE = AttributesEnum.ReasonForChange.index();
+    public static final int CREATEDBY = AttributesEnum.CreatedBy.index();
+    public static final int CREATIONTS = AttributesEnum.CreationTs.index();
+    public static final int MODIFIEDBY = AttributesEnum.ModifiedBy.index();
+    public static final int MODIFICATIONTS = AttributesEnum.ModificationTs.index();
     public static final int CRSSTATEEO = AttributesEnum.CrsStateEO.index();
     public static final int CRSCOMPOUNDEO = AttributesEnum.CrsCompoundEO.index();
     public static final int CRSRISKRELATIONSEO = AttributesEnum.CrsRiskRelationsEO.index();
@@ -601,12 +656,85 @@ public class CrsContentEOImpl extends EntityImpl {
         return (Integer)getAttributeInternal(UIVERSIONNUMBER);
     }
 
+
     /**
-     * Sets <code>value</code> as the attribute value for UiVersionNumber.
-     * @param value value to set the UiVersionNumber
+     * Gets the attribute value for ReasonForChange, using the alias name ReasonForChange.
+     * @return the value of ReasonForChange
      */
-    public void setUiVersionNumber(Integer value) {
-        setAttributeInternal(UIVERSIONNUMBER, value);
+    public String getReasonForChange() {
+        return (String)getAttributeInternal(REASONFORCHANGE);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ReasonForChange.
+     * @param value value to set the ReasonForChange
+     */
+    public void setReasonForChange(String value) {
+        setAttributeInternal(REASONFORCHANGE, value);
+    }
+
+    /**
+     * Gets the attribute value for CreatedBy, using the alias name CreatedBy.
+     * @return the value of CreatedBy
+     */
+    public String getCreatedBy() {
+        return (String)getAttributeInternal(CREATEDBY);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for CreatedBy.
+     * @param value value to set the CreatedBy
+     */
+    public void setCreatedBy(String value) {
+        setAttributeInternal(CREATEDBY, value);
+    }
+
+    /**
+     * Gets the attribute value for CreationTs, using the alias name CreationTs.
+     * @return the value of CreationTs
+     */
+    public Timestamp getCreationTs() {
+        return (Timestamp)getAttributeInternal(CREATIONTS);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for CreationTs.
+     * @param value value to set the CreationTs
+     */
+    public void setCreationTs(Timestamp value) {
+        setAttributeInternal(CREATIONTS, value);
+    }
+
+    /**
+     * Gets the attribute value for ModifiedBy, using the alias name ModifiedBy.
+     * @return the value of ModifiedBy
+     */
+    public String getModifiedBy() {
+        return (String)getAttributeInternal(MODIFIEDBY);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ModifiedBy.
+     * @param value value to set the ModifiedBy
+     */
+    public void setModifiedBy(String value) {
+        setAttributeInternal(MODIFIEDBY, value);
+    }
+
+    /**
+     * Gets the attribute value for ModificationTs, using the alias name ModificationTs.
+     * @return the value of ModificationTs
+     */
+    public Timestamp getModificationTs() {
+        return (Timestamp)getAttributeInternal(MODIFICATIONTS);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ModificationTs.
+     * @param value value to set the ModificationTs
+     */
+    public void setModificationTs(Timestamp value) {
+        setAttributeInternal(MODIFICATIONTS, value);
     }
 
     /**
@@ -687,10 +815,10 @@ public class CrsContentEOImpl extends EntityImpl {
         return new Key(new Object[]{crsId});
     }
 
-    public void doDML(int operation, TransactionEvent e) {
-        if (operation == DML_INSERT)
-            this.setCrsId((new SequenceImpl("CRS_CONTENT_SEQ",
-                                                          getDBTransaction()).getSequenceNumber()).longValue());
-        super.doDML(operation, e);
-    }
+//    public void doDML(int operation, TransactionEvent e) {
+//        if (operation == DML_INSERT)
+//            this.setCrsId((new SequenceImpl("CRS_CONTENT_SEQ",
+//                                                          getDBTransaction()).getSequenceNumber()).longValue());
+//        super.doDML(operation, e);
+//    }
 }

@@ -430,7 +430,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     }
                 }
             }
-            this.getDBTransaction().commit();
+//            this.getDBTransaction().commit();
         }
     }
 
@@ -500,5 +500,29 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getFetchCrsContentVO() {
         return (ViewObjectImpl)findViewObject("FetchCrsContentVO");
+    }
+
+    /**
+     * Container's getter for HierarchyChildVO.
+     * @return HierarchyChildVO
+     */
+    public ViewObjectImpl getHierarchyChildVO() {
+        return (ViewObjectImpl)findViewObject("HierarchyChildVO");
+    }
+
+    /**
+     * Container's getter for HierarchyChildSelfVO.
+     * @return HierarchyChildSelfVO
+     */
+    public ViewObjectImpl getHierarchyChildSelfVO() {
+        return (ViewObjectImpl)findViewObject("HierarchyChildSelfVO");
+    }
+
+    /**
+     * Container's getter for HierarchyChildSelfLink1.
+     * @return HierarchyChildSelfLink1
+     */
+    public ViewLinkImpl getHierarchyChildSelfLink1() {
+        return (ViewLinkImpl)findViewLink("HierarchyChildSelfLink1");
     }
 }

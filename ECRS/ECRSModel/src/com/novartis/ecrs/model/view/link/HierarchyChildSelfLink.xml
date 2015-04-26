@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewLink SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewLink
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="HierarchyChildSelfLink"
+  Version="11.1.2.64.36">
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.novartis.ecrs.model.view.link.HierarchyChildSelfLink_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewLinkDefEnd
+    Name="ParentHierarchyChildVO"
+    Cardinality="1"
+    Source="true"
+    Owner="com.novartis.ecrs.model.view.HierarchyChildVO">
+    <DesignTime>
+      <Attr Name="_finderName" Value="ParentHierarchyChildVO"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.novartis.ecrs.model.view.HierarchyChildVO.DictContentId"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ViewLinkDefEnd
+    Name="DictContentIdHierarchyChildVO"
+    Cardinality="-1"
+    Owner="com.novartis.ecrs.model.view.HierarchyChildVO">
+    <DesignTime>
+      <Attr Name="_finderName" Value="DictContentIdHierarchyChildVO"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.novartis.ecrs.model.view.HierarchyChildVO.Parent"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>
+  </ResourceBundle>
+</ViewLink>

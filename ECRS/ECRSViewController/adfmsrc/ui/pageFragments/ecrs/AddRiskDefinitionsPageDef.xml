@@ -14,6 +14,8 @@
     <iterator Binds="HierarchySearchVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
               id="HierarchySearchVOIterator"/>
     <iterator Binds="CrsContentVO" RangeSize="10" DataControl="ECRSAppModuleDataControl" id="CrsContentVOIterator"/>
+    <iterator Binds="HierarchyChildVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="HierarchyChildVOIterator"/>
   </executables>
   <bindings>
     <tree IterBinding="CrsRiskVOIterator" id="CrsRiskVO">
@@ -217,6 +219,7 @@
           <Item Value="DictNm"/>
           <Item Value="Version"/>
           <Item Value="Dates"/>
+          <Item Value="ContentId"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -234,5 +237,22 @@
     </attributeValues>
     <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
             RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <tree IterBinding="HierarchyChildVOIterator" id="HierarchyChildVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.HierarchyChildVO" Name="HierarchyChildVO0">
+        <AttrNames>
+          <Item Value="Term"/>
+          <Item Value="DictContentCode"/>
+          <Item Value="DictContentId"/>
+          <Item Value="FormattedScope"/>
+          <Item Value="Level"/>
+          <Item Value="LevelName"/>
+          <Item Value="DictContentAltCode"/>
+          <Item Value="DictShortName"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="DictContentIdHierarchyChildVO"/>
+        </Accessors>
+      </nodeDefinition>
+    </tree>
   </bindings>
 </pageDefinition>
