@@ -20,4 +20,6 @@ public interface ECRSAppModule extends ApplicationModule {
     List fetchDatabases();
 
     void deleteCrs();
+
+    void copyCurrentRiskRelation(Long srcRiskId, Long destCrsId);
 }

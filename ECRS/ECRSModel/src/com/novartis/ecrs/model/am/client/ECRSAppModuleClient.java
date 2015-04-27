@@ -19,6 +19,12 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
     }
 
 
+    public void copyCurrentRiskRelation(Long srcRiskId, Long destCrsId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"copyCurrentRiskRelation",new String [] {"java.lang.Long","java.lang.Long"},new Object[] {srcRiskId, destCrsId});
+        return;
+    }
+
     public void copyRoutineDefinition(Long crsId) {
         Object _ret = this.riInvokeExportedMethod(this,"copyRoutineDefinition",new String [] {"java.lang.Long"},new Object[] {crsId});
         return;

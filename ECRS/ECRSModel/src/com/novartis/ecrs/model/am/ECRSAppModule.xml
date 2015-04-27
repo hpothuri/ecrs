@@ -96,6 +96,12 @@
   <ViewUsage
     Name="HierarchyChildSelfVO"
     ViewObjectName="com.novartis.ecrs.model.view.HierarchyChildVO"/>
+  <ViewUsage
+    Name="CopyCrsRiskVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsRiskVO"/>
+  <ViewUsage
+    Name="FetchCrsRiskVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsRiskVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"
@@ -159,6 +165,18 @@
       MethodName="deleteCrs">
       <Return
         Type="void"/>
+    </Method>
+    <Method
+      Name="copyCurrentRiskRelation"
+      MethodName="copyCurrentRiskRelation">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="srcRiskId"
+        Type="java.lang.Long"/>
+      <Parameter
+        Name="destCrsId"
+        Type="java.lang.Long"/>
     </Method>
   </ClientInterface>
 </AppModule>
