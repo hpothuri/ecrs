@@ -695,7 +695,7 @@
                         fetchSize="#{bindings.CrsRiskDefinitionsVO1.rangeSize}" rowBandingInterval="0"
                         selectedRowKeys="#{bindings.CrsRiskDefinitionsVO1.collectionModel.selectedRow}"
                         selectionListener="#{bindings.CrsRiskDefinitionsVO1.collectionModel.makeCurrent}"
-                        rowSelection="single" id="t8" partialTriggers="::pc2:cb7 :::pc2:cb7" styleClass="AFStretchWidth"
+                        rowSelection="multiple" id="t8" partialTriggers="::pc2:cb7 :::pc2:cb7" styleClass="AFStretchWidth"
                         columnStretching="column:c55">
                 <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraTerm.name}" sortable="false"
                            headerText="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraTerm.label}" id="c55">
@@ -729,7 +729,7 @@
                     <af:image source="/images/delete.png" id="i3"/>
                   </f:facet>
                   <af:commandImageLink id="cil3" icon="/images/delete.png"
-                                       actionListener="#{bindings.DeleteRiskDefinition.execute}"/>
+                                       actionListener="#{bindings.DeleteRiskDefinition.execute}" partialSubmit="true"/>
                 </af:column>
                 <af:collectionDropTarget dropListener="#{pageFlowScope.manageCRSBean.dragDropListener}" actions="COPY"
                                          modelName="copyRows"/>
@@ -738,7 +738,8 @@
                 <af:toolbar id="t9">
                   <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SELECTED}" id="cb81"
                                     icon="/images/delete.png"
-                                    actionListener="#{pageFlowScope.manageCRSBean.deleteRiskDefinitions}"/>
+                                    actionListener="#{pageFlowScope.manageCRSBean.deleteRiskDefinitions}"
+                                    partialSubmit="true"/>
                   <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb18" icon="/images/filesave.png"
                                     actionListener="#{pageFlowScope.manageCRSBean.saveRiskDefs}" partialSubmit="true"/>
                   <af:commandButton text="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" id="cb19"
