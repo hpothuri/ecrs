@@ -26,6 +26,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import oracle.adf.model.BindingContext;
 import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.adf.share.ADFContext;
@@ -35,6 +36,7 @@ import oracle.adf.view.rich.component.rich.data.RichTreeTable;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
+import oracle.adf.view.rich.component.rich.layout.RichPanelGroupLayout;
 import oracle.adf.view.rich.context.AdfFacesContext;
 import oracle.adf.view.rich.datatransfer.DataFlavor;
 import oracle.adf.view.rich.datatransfer.Transferable;
@@ -43,6 +45,7 @@ import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.event.DropEvent;
 import oracle.adf.view.rich.event.PopupCanceledEvent;
 
+import oracle.binding.BindingContainer;
 import oracle.binding.OperationBinding;
 
 import oracle.javatools.resourcebundle.BundleFactory;
@@ -103,6 +106,10 @@ public class ManageCRSBean implements Serializable {
     private String childScope;
     private RichTreeTable childTreeTable;
     private RichPopup parentError;
+    private String safetyTopicOfInterest;
+    private RichPopup copyPopup;
+    private RichPanelGroupLayout copyPanel;
+    private RichPopup pendingPopup;
 
     public ManageCRSBean() {
         super();
@@ -1310,8 +1317,12 @@ public class ManageCRSBean implements Serializable {
         oper1.execute();
         if (oper1.getErrors().size() > 0) 
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
-        ADFUtils.addPartialTarget(riskDefTable);
-        riskDefPopup.hide();
+        if(riskDefTable != null)
+            ADFUtils.addPartialTarget(riskDefTable);
+        if(riskDefPopup != null)
+            riskDefPopup.hide();
+        if(copyPopup != null)
+            copyPopup.hide();
     }
 
     public void setContentId(String contentId) {
@@ -1364,5 +1375,116 @@ public class ManageCRSBean implements Serializable {
 
     public RichPopup getParentError() {
         return parentError;
+    }
+    
+    public void searchCrs(ActionEvent actionEvent) {
+        String stoi = getSafetyTopicOfInterest();
+        DCIteratorBinding iter = ADFUtils.findIterator("CopyCrsRiskVOIterator");
+        ViewObject crsSearchVO = iter.getViewObject();
+        crsSearchVO.setWhereClause("SAFETY_TOPIC_OF_INTEREST like '"+stoi+"'");
+        crsSearchVO.executeQuery();
+    }
+
+    public void setSafetyTopicOfInterest(String safetyTopicOfInterest) {
+        this.safetyTopicOfInterest = safetyTopicOfInterest;
+    }
+
+    public String getSafetyTopicOfInterest() {
+        return safetyTopicOfInterest;
+    }
+    
+    public void copyCrsRiskRelation(ActionEvent actionEvent) {
+    
+        DCBindingContainer dcbind =(DCBindingContainer)getBindings();
+        Boolean dirty = dcbind.getDataControl().isTransactionModified();
+        if(dirty){
+            ADFUtils.showPopup(pendingPopup);
+            return;
+        }
+        
+        ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
+        Long riskId = (Long)ADFUtils.evaluateEL("#{row.CrsRiskId}");
+        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
+        String databaseList = (String)ADFUtils.evaluateEL("#{row.DatabaseList}");
+        List<String> dbList = new ArrayList<String>();
+        if(databaseList != null){
+            String split[] = databaseList.split(",");
+            for(String db : split){
+                dbList.add(db);
+            }
+        }
+        setSelDatabases(dbList);
+        String riskPurposeList = (String)ADFUtils.evaluateEL("#{row.RiskPurposeList}");
+        List<String> rpList = new ArrayList<String>();
+        if(riskPurposeList != null){
+            if(riskPurposeList.endsWith(",")){
+                riskPurposeList = riskPurposeList.substring(0, riskPurposeList.length()-1);
+            }
+            String split[] = riskPurposeList.split(",");
+            for(String rp : split){
+                rpList.add(rp);
+            }
+        }
+        setSelRiskPurposes(rpList);
+        
+        Map params = new HashMap<String, Object>();
+        params.put("srcRiskId", riskId);
+        params.put("destCrsId", crsId);
+        try {
+            ADFUtils.executeAction("copyCurrentRiskRelation", params);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        copyPanel.setVisible(true);
+        ADFUtils.addPartialTarget(copyPanel);
+    }
+    
+    public BindingContainer getBindings() {
+        return BindingContext.getCurrent().getCurrentBindingsEntry();
+    }
+
+    public void setCopyPopup(RichPopup copyPopup) {
+        this.copyPopup = copyPopup;
+    }
+
+    public RichPopup getCopyPopup() {
+        return copyPopup;
+    }
+    
+    public void setCopyPanel(RichPanelGroupLayout copyPanel) {
+        this.copyPanel = copyPanel;
+    }
+
+    public RichPanelGroupLayout getCopyPanel() {
+        return copyPanel;
+    }
+
+    public void setPendingPopup(RichPopup pendingPopup) {
+        this.pendingPopup = pendingPopup;
+    }
+
+    public RichPopup getPendingPopup() {
+        return pendingPopup;
+    }
+
+    public void onClickYes(ActionEvent actionEvent) {
+        OperationBinding oper = ADFUtils.findOperation("Rollback");
+        oper.execute();
+        if (oper.getErrors().size() > 0) 
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+         else
+            copyCrsRiskRelation(actionEvent);
+    }
+    
+    public void onClickCopy(ActionEvent actionEvent) {
+        setSafetyTopicOfInterest(null);
+        setSelDatabases(null);
+        setSelDesigneeList(null);
+        DCIteratorBinding iter = ADFUtils.findIterator("CopyCrsRiskVOIterator");
+        ViewObject crsSearchVO = iter.getViewObject();
+        crsSearchVO.executeEmptyRowSet();
+        ADFUtils.showPopup(copyPopup);
+        if(copyPanel != null)
+            copyPanel.setVisible(Boolean.FALSE);
     }
 }

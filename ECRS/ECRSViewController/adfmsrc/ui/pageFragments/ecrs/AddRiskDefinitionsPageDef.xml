@@ -16,6 +16,7 @@
     <iterator Binds="CrsContentVO" RangeSize="10" DataControl="ECRSAppModuleDataControl" id="CrsContentVOIterator"/>
     <iterator Binds="HierarchyChildVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
               id="HierarchyChildVOIterator"/>
+    <iterator Binds="CopyCrsRiskVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CopyCrsRiskVOIterator"/>
   </executables>
   <bindings>
     <tree IterBinding="CrsRiskVOIterator" id="CrsRiskVO">
@@ -252,6 +253,159 @@
         <Accessors>
           <Item Value="DictContentIdHierarchyChildVO"/>
         </Accessors>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="CopyCrsRiskVOIterator" id="CopyCrsRiskVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsRiskVO" Name="CopyCrsRiskVO0">
+        <AttrNames>
+          <Item Value="CrsId"/>
+          <Item Value="CrsRiskId"/>
+          <Item Value="DataDomain"/>
+          <Item Value="DatabaseList"/>
+          <Item Value="MqmComment"/>
+          <Item Value="NonMeddraComponentComment"/>
+          <Item Value="RiskPurposeCdFlag" Binds="RiskPurposeCdFlag1"/>
+          <Item Value="RiskPurposeDsFlag" Binds="RiskPurposeDsFlag1"/>
+          <Item Value="RiskPurposeErFlag" Binds="RiskPurposeErFlag1"/>
+          <Item Value="RiskPurposeIbFlag" Binds="RiskPurposeIbFlag1"/>
+          <Item Value="RiskPurposeMiFlag" Binds="RiskPurposeMiFlag1"/>
+          <Item Value="RiskPurposeOsFlag" Binds="RiskPurposeOsFlag1"/>
+          <Item Value="RiskPurposePsFlag" Binds="RiskPurposePsFlag1"/>
+          <Item Value="RiskPurposeRmFlag" Binds="RiskPurposeRmFlag1"/>
+          <Item Value="RiskPurposeSpFlag" Binds="RiskPurposeSpFlag1"/>
+          <Item Value="SafetyTopicOfInterest"/>
+          <Item Value="SocDictContentEntryTs"/>
+          <Item Value="SocDictContentId"/>
+          <Item Value="SocTerm"/>
+          <Item Value="CrsRiskDefnId"/>
+          <Item Value="MeddraCode"/>
+          <Item Value="MeddraLevel"/>
+          <Item Value="MeddraQualifier"/>
+          <Item Value="MeddraTerm"/>
+          <Item Value="MeddraVersion"/>
+          <Item Value="MeddraVersionDate"/>
+          <Item Value="SearchCriteriaDetails"/>
+          <Item Value="TmsDictContentEntryTs"/>
+          <Item Value="TmsDictContentId"/>
+          <Item Value="TmsEndTs"/>
+          <Item Value="TmsUpdateFlag"/>
+          <Item Value="TmsUpdateFlagDt"/>
+          <Item Value="RiskPurposeList"/>
+          <Item Value="MeddraDict"/>
+          <Item Value="CrsEffectiveDtRel"/>
+          <Item Value="CrsEffectiveDtDef"/>
+          <Item Value="MeddraExtension"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="CopyCrsRiskVOIterator" id="RiskPurposeSpFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeSpFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CopyCrsRiskVOIterator" id="RiskPurposeDsFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeDsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CopyCrsRiskVOIterator" id="RiskPurposeRmFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeRmFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CopyCrsRiskVOIterator" id="RiskPurposePsFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposePsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CopyCrsRiskVOIterator" id="RiskPurposeIbFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeIbFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CopyCrsRiskVOIterator" id="RiskPurposeCdFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeCdFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CopyCrsRiskVOIterator" id="RiskPurposeOsFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeOsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CopyCrsRiskVOIterator" id="RiskPurposeMiFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeMiFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CopyCrsRiskVOIterator" id="RiskPurposeErFlag1" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeErFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <methodAction id="copyCurrentRiskRelation" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="copyCurrentRiskRelation" IsViewObjectMethod="false">
+      <NamedData NDName="srcRiskId" NDType="java.lang.Long"/>
+      <NamedData NDName="destCrsId" NDType="java.lang.Long"/>
+    </methodAction>
+    <tree IterBinding="CrsRiskDefinitionsVOIterator" id="CrsRiskDefinitionsVO1">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsRiskDefinitionsVO" Name="CrsRiskDefinitionsVO10">
+        <AttrNames>
+          <Item Value="CrsRiskDefnId"/>
+          <Item Value="CrsRiskId"/>
+          <Item Value="MeddraCode"/>
+          <Item Value="MeddraLevel"/>
+          <Item Value="MeddraQualifier"/>
+          <Item Value="MeddraTerm"/>
+          <Item Value="MeddraVersion"/>
+          <Item Value="MeddraVersionDate"/>
+          <Item Value="SearchCriteriaDetails"/>
+          <Item Value="TmsDictContentEntryTs"/>
+          <Item Value="TmsDictContentId"/>
+          <Item Value="TmsEndTs"/>
+          <Item Value="TmsUpdateFlag"/>
+          <Item Value="TmsUpdateFlagDt"/>
+          <Item Value="MeddraDict"/>
+          <Item Value="MeddraExtension"/>
+          <Item Value="CrsEffectiveDt"/>
+        </AttrNames>
       </nodeDefinition>
     </tree>
   </bindings>
