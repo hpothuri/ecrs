@@ -6,7 +6,7 @@
   Name="CrsRiskRelationsEO"
   Version="11.1.2.64.36"
   DBObjectType="TABLE"
-  DBObjectName="CRS_RISK_RELATIONS"
+  DBObjectName="CRS_RISK_RELATIONS_STG"
   AliasName="CrsRiskRelationsEO"
   BindingStyle="OracleName"
   UseGlueCode="false"
@@ -24,7 +24,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Long"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_RELATIONS"
+    TableName="CRS_RISK_RELATIONS_STG"
     PrimaryKey="true">
     <TransientExpression><![CDATA[(new oracle.jbo.server.SequenceImpl("crs_risk_relations_seq",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
   </Attribute>
@@ -37,7 +37,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS">
+    TableName="CRS_RISK_RELATIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
     </DesignTime>
@@ -177,7 +177,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Long"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_RELATIONS"/>
+    TableName="CRS_RISK_RELATIONS_STG"/>
   <Attribute
     Name="DatabaseId"
     Precision="5"
@@ -196,7 +196,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS">
+    TableName="CRS_RISK_RELATIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="30"/>
     </DesignTime>
@@ -208,7 +208,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS">
+    TableName="CRS_RISK_RELATIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
     </DesignTime>
@@ -220,7 +220,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS">
+    TableName="CRS_RISK_RELATIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
     </DesignTime>
@@ -232,7 +232,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS"
+    TableName="CRS_RISK_RELATIONS_STG"
     IsNotNull="true">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="300"/>
@@ -246,7 +246,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Long"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_RELATIONS"
+    TableName="CRS_RISK_RELATIONS_STG"
     IsNotNull="true"/>
   <Attribute
     Name="SocDictContentEntryTs"
@@ -254,7 +254,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS_RISK_RELATIONS"
+    TableName="CRS_RISK_RELATIONS_STG"
     IsNotNull="true"/>
   <Attribute
     Name="RiskPurposeList"
@@ -265,7 +265,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS">
+    TableName="CRS_RISK_RELATIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="40"/>
     </DesignTime>
@@ -278,7 +278,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS">
+    TableName="CRS_RISK_RELATIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="40"/>
     </DesignTime>
@@ -291,7 +291,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Integer"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_RELATIONS"
+    TableName="CRS_RISK_RELATIONS_STG"
     HistoryColumn="VersionHistory"
     ChangeIndicator="true"/>
   <Attribute
@@ -301,7 +301,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS_RISK_RELATIONS"
+    TableName="CRS_RISK_RELATIONS_STG"
     HistoryColumn="DateHistory"/>
   <AccessorAttribute
     Name="CrsContentEO"

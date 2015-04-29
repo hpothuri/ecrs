@@ -510,21 +510,6 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         return (ViewObjectImpl)findViewObject("HierarchyChildVO");
     }
 
-    /**
-     * Container's getter for HierarchyChildSelfVO.
-     * @return HierarchyChildSelfVO
-     */
-    public ViewObjectImpl getHierarchyChildSelfVO() {
-        return (ViewObjectImpl)findViewObject("HierarchyChildSelfVO");
-    }
-
-    /**
-     * Container's getter for HierarchyChildSelfLink1.
-     * @return HierarchyChildSelfLink1
-     */
-    public ViewLinkImpl getHierarchyChildSelfLink1() {
-        return (ViewLinkImpl)findViewLink("HierarchyChildSelfLink1");
-    }
 
     /**
      * Container's getter for CopyCrsRiskVO.
@@ -615,5 +600,21 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getFetchCrsRiskVO() {
         return (ViewObjectImpl)findViewObject("FetchCrsRiskVO");
+    }
+
+    /**
+     * Container's getter for HierarchyChildDetailVO1.
+     * @return HierarchyChildDetailVO1
+     */
+    public ViewObjectImpl getHierarchyChildDetailVO1() {
+        return (ViewObjectImpl)findViewObject("HierarchyChildDetailVO1");
+    }
+
+    /**
+     * Container's getter for HierarchyChildSelfLink1.
+     * @return HierarchyChildSelfLink1
+     */
+    public ViewLinkImpl getHierarchyChildSelfLink1() {
+        return (ViewLinkImpl)findViewLink("HierarchyChildSelfLink1");
     }
 }

@@ -5,7 +5,20 @@
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="CrsRiskDefinitionsVO"
   Version="11.1.2.64.36"
-  SelectList="CrsRiskDefinitionsEO.CRS_RISK_DEFN_ID, 
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.novartis.ecrs.model.view.CrsRiskDefinitionsVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <SQLQuery><![CDATA[SELECT CrsRiskDefinitionsEO.CRS_RISK_DEFN_ID, 
        CrsRiskDefinitionsEO.CRS_RISK_ID, 
        CrsRiskDefinitionsEO.MEDDRA_CODE, 
        CrsRiskDefinitionsEO.MEDDRA_LEVEL, 
@@ -21,18 +34,8 @@
        CrsRiskDefinitionsEO.TMS_UPDATE_FLAG_DT, 
        CrsRiskDefinitionsEO.MEDDRA_DICT, 
        CrsRiskDefinitionsEO.MEDDRA_EXTENSION, 
-       CrsRiskDefinitionsEO.CRS_EFFECTIVE_DT"
-  FromList="CRS_RISK_DEFINITIONS CrsRiskDefinitionsEO"
-  BindingStyle="OracleName"
-  CustomQuery="false"
-  PageIterMode="Full"
-  UseGlueCode="false">
-  <Properties>
-    <SchemaBasedProperties>
-      <LABEL
-        ResId="com.novartis.ecrs.model.view.CrsRiskDefinitionsVO_LABEL"/>
-    </SchemaBasedProperties>
-  </Properties>
+       CrsRiskDefinitionsEO.CRS_EFFECTIVE_DT
+FROM CRS_RISK_DEFINITIONS_STG CrsRiskDefinitionsEO]]></SQLQuery>
   <EntityUsage
     Name="CrsRiskDefinitionsEO"
     Entity="com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO"/>

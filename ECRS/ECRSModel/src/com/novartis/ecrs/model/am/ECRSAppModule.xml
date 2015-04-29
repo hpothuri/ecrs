@@ -94,14 +94,14 @@
     Name="HierarchyChildVO"
     ViewObjectName="com.novartis.ecrs.model.view.HierarchyChildVO"/>
   <ViewUsage
-    Name="HierarchyChildSelfVO"
-    ViewObjectName="com.novartis.ecrs.model.view.HierarchyChildVO"/>
-  <ViewUsage
     Name="CopyCrsRiskVO"
     ViewObjectName="com.novartis.ecrs.model.view.CrsRiskVO"/>
   <ViewUsage
     Name="FetchCrsRiskVO"
     ViewObjectName="com.novartis.ecrs.model.view.CrsRiskVO"/>
+  <ViewUsage
+    Name="HierarchyChildDetailVO1"
+    ViewObjectName="com.novartis.ecrs.model.view.HierarchyChildDetailVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"
@@ -112,7 +112,7 @@
     Name="HierarchyChildSelfLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.HierarchyChildSelfLink"
     SrcViewUsageName="com.novartis.ecrs.model.am.ECRSAppModule.HierarchyChildVO"
-    DstViewUsageName="com.novartis.ecrs.model.am.ECRSAppModule.HierarchyChildSelfVO"
+    DstViewUsageName="com.novartis.ecrs.model.am.ECRSAppModule.HierarchyChildDetailVO1"
     Reversed="false"/>
   <ClientInterface>
     <Method

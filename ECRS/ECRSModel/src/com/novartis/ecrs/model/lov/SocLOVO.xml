@@ -36,18 +36,18 @@
   c.transaction_id,
   c.value_1,
   c.value_2,
-  c.value_3,
+  C.VALUE_3,
   c.value_4,
-  v.dict_name,
-  V.DICT_VERSION,
-  V.DICT_VERSION_DATE,
+--  v.dict_name,
+--  V.DICT_VERSION,
+--  V.DICT_VERSION_DATE,
   c.term || ' (' || c.dict_content_id || ')' as ui_term
 FROM tms.tms_def_dictionaries d,
   tms.tms_def_levels l,
-  crs_dict_versions v,
+--  crs_dict_versions v,
   tms.tms_dict_contents c
 WHERE d.short_name = 'NMATMED'
-AND v.dict_id      = d.def_dictionary_id
+--AND v.dict_id      = d.def_dictionary_id
 AND l.short_name LIKE 'SOC'
 AND d.def_dictionary_id = l.def_dictionary_id
 AND l.def_level_id      = c.def_level_id
@@ -263,46 +263,6 @@ AND TO_CHAR(c.end_ts,'DD-MON-YYYY') = '15-AUG-3501' order by term]]></SQLQuery>
       <Attr Name="_DisplaySize" Value="300"/>
     </DesignTime>
   </ViewAttribute>
-  <ViewAttribute
-    Name="DictName"
-    IsUpdateable="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Precision="10"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    AliasName="DICT_NAME"
-    Expression="DICT_NAME"
-    SQLType="VARCHAR">
-    <DesignTime>
-      <Attr Name="_DisplaySize" Value="10"/>
-    </DesignTime>
-  </ViewAttribute>
-  <ViewAttribute
-    Name="DictVersion"
-    IsUpdateable="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Precision="15"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    AliasName="DICT_VERSION"
-    Expression="DICT_VERSION"
-    SQLType="VARCHAR">
-    <DesignTime>
-      <Attr Name="_DisplaySize" Value="15"/>
-    </DesignTime>
-  </ViewAttribute>
-  <ViewAttribute
-    Name="DictVersionDate"
-    IsUpdateable="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Type="java.sql.Timestamp"
-    ColumnType="DATE"
-    AliasName="DICT_VERSION_DATE"
-    Expression="DICT_VERSION_DATE"
-    SQLType="DATE"/>
   <ViewAttribute
     Name="UiTerm"
     IsUpdateable="false"

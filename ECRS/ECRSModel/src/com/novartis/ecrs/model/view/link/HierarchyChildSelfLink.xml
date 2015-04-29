@@ -4,7 +4,8 @@
 <ViewLink
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="HierarchyChildSelfLink"
-  Version="11.1.2.64.36">
+  Version="11.1.2.64.36"
+  >
   <Properties>
     <SchemaBasedProperties>
       <LABEL
@@ -25,15 +26,15 @@
     </AttrArray>
   </ViewLinkDefEnd>
   <ViewLinkDefEnd
-    Name="DictContentIdHierarchyChildVO"
+    Name="HierarchyChildDetailVO"
     Cardinality="-1"
-    Owner="com.novartis.ecrs.model.view.HierarchyChildVO">
+    Owner="com.novartis.ecrs.model.view.HierarchyChildDetailVO">
     <DesignTime>
-      <Attr Name="_finderName" Value="DictContentIdHierarchyChildVO"/>
+      <Attr Name="_finderName" Value="HierarchyChildDetailVO"/>
       <Attr Name="_isUpdateable" Value="true"/>
     </DesignTime>
     <AttrArray Name="Attributes">
-      <Item Value="com.novartis.ecrs.model.view.HierarchyChildVO.Parent"/>
+      <Item Value="com.novartis.ecrs.model.view.HierarchyChildDetailVO.Parent"/>
     </AttrArray>
   </ViewLinkDefEnd>
   <ResourceBundle>

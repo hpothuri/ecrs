@@ -5,24 +5,13 @@
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="CrsRiskRelationVO"
   Version="11.1.2.64.36"
-  SelectList="CrsRiskRelationsEO.CRS_ID, 
-       CrsRiskRelationsEO.CRS_RISK_ID, 
-       CrsRiskRelationsEO.DATA_DOMAIN, 
-       CrsRiskRelationsEO.MQM_COMMENT, 
-       CrsRiskRelationsEO.NON_MEDDRA_COMPONENT_COMMENT, 
-       CrsRiskRelationsEO.SAFETY_TOPIC_OF_INTEREST, 
-       CrsRiskRelationsEO.SOC_DICT_CONTENT_ENTRY_TS, 
-       CrsRiskRelationsEO.SOC_DICT_CONTENT_ID, 
-       CrsRiskRelationsEO.SOC_TERM, 
-       CrsRiskRelationsEO.UI_VERSION_NUMBER, 
-       CrsRiskRelationsEO.DATABASE_LIST, 
-       CrsRiskRelationsEO.RISK_PURPOSE_LIST, 
-       CrsRiskRelationsEO.CRS_EFFECTIVE_DT"
-  FromList="CRS_RISK_RELATIONS CrsRiskRelationsEO"
   BindingStyle="OracleName"
-  CustomQuery="false"
+  CustomQuery="true"
   PageIterMode="Full"
   UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
   <Properties>
     <SchemaBasedProperties>
       <LABEL
@@ -56,6 +45,20 @@
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
+  <SQLQuery><![CDATA[SELECT CrsRiskRelationsEO.CRS_ID, 
+       CrsRiskRelationsEO.CRS_RISK_ID, 
+       CrsRiskRelationsEO.DATA_DOMAIN, 
+       CrsRiskRelationsEO.MQM_COMMENT, 
+       CrsRiskRelationsEO.NON_MEDDRA_COMPONENT_COMMENT, 
+       CrsRiskRelationsEO.SAFETY_TOPIC_OF_INTEREST, 
+       CrsRiskRelationsEO.SOC_DICT_CONTENT_ENTRY_TS, 
+       CrsRiskRelationsEO.SOC_DICT_CONTENT_ID, 
+       CrsRiskRelationsEO.SOC_TERM, 
+       CrsRiskRelationsEO.UI_VERSION_NUMBER, 
+       CrsRiskRelationsEO.DATABASE_LIST, 
+       CrsRiskRelationsEO.RISK_PURPOSE_LIST, 
+       CrsRiskRelationsEO.CRS_EFFECTIVE_DT
+FROM CRS_RISK_RELATIONS_STG CrsRiskRelationsEO]]></SQLQuery>
   <EntityUsage
     Name="CrsRiskRelationsEO"
     Entity="com.novartis.ecrs.model.entity.CrsRiskRelationsEO"/>

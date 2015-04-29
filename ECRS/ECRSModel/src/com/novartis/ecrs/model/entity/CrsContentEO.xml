@@ -6,7 +6,7 @@
   Name="CrsContentEO"
   Version="11.1.2.64.36"
   DBObjectType="table"
-  DBObjectName="CRS.CRS_CONTENT"
+  DBObjectName="CRS_CONTENT_STG"
   AliasName="CrsContentEO"
   BindingStyle="OracleName"
   UseGlueCode="false"
@@ -25,7 +25,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Long"
     ColumnType="NUMBER"
-    TableName="CRS.CRS_CONTENT"
+    TableName="CRS_CONTENT_STG"
     PrimaryKey="true"
     RetrievedOnInsert="true">
     <TransientExpression><![CDATA[(new oracle.jbo.server.SequenceImpl("crs_content_seq",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
@@ -38,7 +38,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="65"/>
     </DesignTime>
@@ -52,7 +52,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Integer"
     ColumnType="NUMBER"
-    TableName="CRS.CRS_CONTENT"/>
+    TableName="CRS_CONTENT_STG"/>
   <Attribute
     Name="CompoundId"
     IsNotNull="true"
@@ -62,7 +62,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Integer"
     ColumnType="NUMBER"
-    TableName="CRS.CRS_CONTENT"/>
+    TableName="CRS_CONTENT_STG"/>
   <Attribute
     Name="GenericName"
     Precision="50"
@@ -70,7 +70,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="50"/>
     </DesignTime>
@@ -88,7 +88,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="30"/>
     </DesignTime>
@@ -106,7 +106,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="50"/>
     </DesignTime>
@@ -119,7 +119,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
@@ -132,7 +132,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
@@ -145,7 +145,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="50"/>
     </DesignTime>
@@ -157,7 +157,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
     </DesignTime>
@@ -169,7 +169,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
     </DesignTime>
@@ -182,7 +182,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="50"/>
     </DesignTime>
@@ -194,7 +194,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
     </DesignTime>
@@ -207,7 +207,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="50"/>
     </DesignTime>
@@ -219,7 +219,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
     </DesignTime>
@@ -231,7 +231,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS.CRS_CONTENT"/>
+    TableName="CRS_CONTENT_STG"/>
   <Attribute
     Name="ReviewApproveRequiredFlag"
     IsNotNull="true"
@@ -240,7 +240,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT">
+    TableName="CRS_CONTENT_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
@@ -253,7 +253,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Integer"
     ColumnType="NUMBER"
-    TableName="CRS.CRS_CONTENT"
+    TableName="CRS_CONTENT_STG"
     HistoryColumn="VersionHistory"
     ChangeIndicator="true"/>
   <Attribute
@@ -264,7 +264,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT"
+    TableName="CRS_CONTENT_STG"
     DefaultValue="None">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
@@ -278,7 +278,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT"
+    TableName="CRS_CONTENT_STG"
     IsUpdateable="while_insert"
     HistoryColumn="UserHistory">
     <DesignTime>
@@ -292,7 +292,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS.CRS_CONTENT"
+    TableName="CRS_CONTENT_STG"
     IsUpdateable="while_insert"
     HistoryColumn="DateHistory"/>
   <Attribute
@@ -302,7 +302,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS.CRS_CONTENT"
+    TableName="CRS_CONTENT_STG"
     HistoryColumn="UserHistory">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="30"/>
@@ -314,7 +314,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS.CRS_CONTENT"
+    TableName="CRS_CONTENT_STG"
     HistoryColumn="DateHistory"/>
   <AccessorAttribute
     Name="CrsStateEO"

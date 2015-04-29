@@ -238,23 +238,6 @@
     </attributeValues>
     <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
             RequiresUpdateModel="false" Action="rollbackTransaction"/>
-    <tree IterBinding="HierarchyChildVOIterator" id="HierarchyChildVO">
-      <nodeDefinition DefName="com.novartis.ecrs.model.view.HierarchyChildVO" Name="HierarchyChildVO0">
-        <AttrNames>
-          <Item Value="Term"/>
-          <Item Value="DictContentCode"/>
-          <Item Value="DictContentId"/>
-          <Item Value="FormattedScope"/>
-          <Item Value="Level"/>
-          <Item Value="LevelName"/>
-          <Item Value="DictContentAltCode"/>
-          <Item Value="DictShortName"/>
-        </AttrNames>
-        <Accessors>
-          <Item Value="DictContentIdHierarchyChildVO"/>
-        </Accessors>
-      </nodeDefinition>
-    </tree>
     <tree IterBinding="CopyCrsRiskVOIterator" id="CopyCrsRiskVO">
       <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsRiskVO" Name="CopyCrsRiskVO0">
         <AttrNames>
@@ -405,6 +388,61 @@
           <Item Value="MeddraDict"/>
           <Item Value="MeddraExtension"/>
           <Item Value="CrsEffectiveDt"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="HierarchyChildVOIterator" id="HierarchyChildVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.HierarchyChildVO" Name="HierarchyChildVO0">
+        <AttrNames>
+          <Item Value="Prikey"/>
+          <Item Value="ApprovedFlag"/>
+          <Item Value="ChildExists"/>
+          <Item Value="DictContentAltCode"/>
+          <Item Value="DictContentCode"/>
+          <Item Value="DictContentId"/>
+          <Item Value="DictShortName"/>
+          <Item Value="FormattedScope"/>
+          <Item Value="Level"/>
+          <Item Value="LevelName"/>
+          <Item Value="Parent"/>
+          <Item Value="PredictGroupId"/>
+          <Item Value="PrimLinkFlag"/>
+          <Item Value="SortOrder"/>
+          <Item Value="Status"/>
+          <Item Value="Term"/>
+          <Item Value="Termcat"/>
+          <Item Value="Termlvl"/>
+          <Item Value="TermPath"/>
+          <Item Value="Termscp"/>
+          <Item Value="Termweig"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="HierarchyChildDetailVO"/>
+        </Accessors>
+      </nodeDefinition>
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.HierarchyChildDetailVO" Name="HierarchyChildVO1">
+        <AttrNames>
+          <Item Value="Prikey"/>
+          <Item Value="ApprovedFlag"/>
+          <Item Value="ChildExists"/>
+          <Item Value="DictContentAltCode"/>
+          <Item Value="DictContentCode"/>
+          <Item Value="DictContentId"/>
+          <Item Value="DictShortName"/>
+          <Item Value="FormattedScope"/>
+          <Item Value="Level"/>
+          <Item Value="LevelName"/>
+          <Item Value="Parent"/>
+          <Item Value="PredictGroupId"/>
+          <Item Value="PrimLinkFlag"/>
+          <Item Value="SortOrder"/>
+          <Item Value="Status"/>
+          <Item Value="Term"/>
+          <Item Value="Termcat"/>
+          <Item Value="Termlvl"/>
+          <Item Value="TermPath"/>
+          <Item Value="Termscp"/>
+          <Item Value="Termweig"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

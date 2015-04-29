@@ -6,7 +6,7 @@
   Name="CrsRiskDefinitionsEO"
   Version="11.1.2.64.36"
   DBObjectType="TABLE"
-  DBObjectName="CRS_RISK_DEFINITIONS"
+  DBObjectName="CRS_RISK_DEFINITIONS_STG"
   AliasName="CrsRiskDefinitionsEO"
   BindingStyle="OracleName"
   UseGlueCode="false"
@@ -24,7 +24,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Long"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_DEFINITIONS"
+    TableName="CRS_RISK_DEFINITIONS_STG"
     PrimaryKey="true">
     <TransientExpression><![CDATA[(new oracle.jbo.server.SequenceImpl("crs_risk_definitions_seq",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
   </Attribute>
@@ -37,7 +37,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Long"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_DEFINITIONS"/>
+    TableName="CRS_RISK_DEFINITIONS_STG"/>
   <Attribute
     Name="CrsQualifier"
     Precision="15"
@@ -59,7 +59,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_DEFINITIONS">
+    TableName="CRS_RISK_DEFINITIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="5"/>
     </DesignTime>
@@ -72,7 +72,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_DEFINITIONS">
+    TableName="CRS_RISK_DEFINITIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="30"/>
     </DesignTime>
@@ -85,7 +85,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_DEFINITIONS">
+    TableName="CRS_RISK_DEFINITIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="300"/>
     </DesignTime>
@@ -98,7 +98,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_DEFINITIONS">
+    TableName="CRS_RISK_DEFINITIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="15"/>
     </DesignTime>
@@ -110,7 +110,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS_RISK_DEFINITIONS"/>
+    TableName="CRS_RISK_DEFINITIONS_STG"/>
   <Attribute
     Name="SearchCriteriaDetails"
     Precision="200"
@@ -118,7 +118,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_DEFINITIONS">
+    TableName="CRS_RISK_DEFINITIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
     </DesignTime>
@@ -132,7 +132,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Long"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_DEFINITIONS"
+    TableName="CRS_RISK_DEFINITIONS_STG"
     DefaultValue="1"/>
   <Attribute
     Name="TmsDictContentEntryTs"
@@ -141,7 +141,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS_RISK_DEFINITIONS"
+    TableName="CRS_RISK_DEFINITIONS_STG"
     HistoryColumn="DateHistory"/>
   <Attribute
     Name="TmsEndTs"
@@ -150,7 +150,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS_RISK_DEFINITIONS"
+    TableName="CRS_RISK_DEFINITIONS_STG"
     HistoryColumn="DateHistory"/>
   <Attribute
     Name="TmsUpdateFlag"
@@ -160,7 +160,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_DEFINITIONS"
+    TableName="CRS_RISK_DEFINITIONS_STG"
     DefaultValue="N">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
@@ -173,7 +173,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS_RISK_DEFINITIONS"
+    TableName="CRS_RISK_DEFINITIONS_STG"
     HistoryColumn="DateHistory"/>
   <Attribute
     Name="MeddraQualifier"
@@ -182,7 +182,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_DEFINITIONS">
+    TableName="CRS_RISK_DEFINITIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="15"/>
     </DesignTime>
@@ -195,7 +195,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Integer"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_DEFINITIONS"
+    TableName="CRS_RISK_DEFINITIONS_STG"
     HistoryColumn="VersionHistory"
     ChangeIndicator="true"/>
   <Attribute
@@ -206,7 +206,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_DEFINITIONS">
+    TableName="CRS_RISK_DEFINITIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="10"/>
     </DesignTime>
@@ -219,7 +219,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_DEFINITIONS">
+    TableName="CRS_RISK_DEFINITIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="5"/>
     </DesignTime>
@@ -231,7 +231,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS_RISK_DEFINITIONS"
+    TableName="CRS_RISK_DEFINITIONS_STG"
     HistoryColumn="DateHistory"/>
   <Key
     Name="CrsRiskDefnChkQual">

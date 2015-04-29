@@ -918,7 +918,7 @@ public class ManageCRSBean implements Serializable {
             JUCtrlHierNodeBinding rowBinding = (JUCtrlHierNodeBinding)dragTable.getRowData();
             dragRow = rowBinding.getRow();
             dragNodeVO = dragRow.getStructureDef().getDefName();
-            if (("HierarchyChildVO".equalsIgnoreCase(dragNodeVO))) {
+            if (("HierarchyChildDetailVO".equalsIgnoreCase(dragNodeVO))) {
                 String term = (String)dragRow.getAttribute("Term");
                 String code = (String)dragRow.getAttribute("DictContentCode");
                 String level = (String)dragRow.getAttribute("LevelName");

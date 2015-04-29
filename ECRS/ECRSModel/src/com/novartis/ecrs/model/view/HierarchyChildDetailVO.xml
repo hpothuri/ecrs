@@ -3,7 +3,7 @@
 <!---->
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
-  Name="HierarchyChildVO"
+  Name="HierarchyChildDetailVO"
   Version="11.1.2.64.36"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -15,7 +15,7 @@
   <Properties>
     <SchemaBasedProperties>
       <LABEL
-        ResId="com.novartis.ecrs.model.view.HierarchyChildVO_LABEL"/>
+        ResId="com.novartis.ecrs.model.view.HierarchyChildDetailVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
   <Variable
@@ -62,7 +62,6 @@ FROM TABLE (HIERARCHY_PKG.GET_HIERARCHY(
         I_IGNORE_PREDICT => NULL,
         i_dict_version => NULL
 	))
-   where dict_content_id = 0
 ORDER BY SORT_ORDER]]></SQLQuery>
   <ViewAttribute
     Name="Prikey"
@@ -372,11 +371,6 @@ ORDER BY SORT_ORDER]]></SQLQuery>
       <Attr Name="_DisplaySize" Value="4"/>
     </DesignTime>
   </ViewAttribute>
-  <ViewLinkAccessor
-    Name="HierarchyChildDetailVO"
-    ViewLink="com.novartis.ecrs.model.view.link.HierarchyChildSelfLink"
-    Type="oracle.jbo.RowIterator"
-    IsUpdateable="false"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>
