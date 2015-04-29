@@ -8,7 +8,8 @@
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  UseGlueCode="false">
+  UseGlueCode="false"
+  FetchSize="20">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
@@ -18,21 +19,32 @@
         ResId="com.novartis.ecrs.model.view.report.CRSCurrentAndPendingCRSReport_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
-  <SQLQuery><![CDATA[SELECT c.crs_name        crs_name,
-          s.state_name      crs_state,
-          d.meddra_version  meddra_vers
-   FROM crs_states           s,
-        crs_compounds        p,
-        crs_content          c,
-        crs_risk_relations   r,
-        crs_risk_definitions d
-    WHERE p.compound_id = c.compound_id
-      AND p.compound_type = 'COMPOUND'
-      AND s.state_id = c.state_id
-      AND c.crs_id = r.crs_id 
-      AND r.crs_risk_id = d.crs_risk_id
-    GROUP BY c.crs_name, s.state_name, d.meddra_version
-    ORDER BY c.crs_name, d.meddra_version, s.state_name]]></SQLQuery>
+  <SQLQuery><![CDATA[SELECT crs_name,
+          crs_state,
+          meddra_vers
+   FROM (SELECT c.crs_name        crs_name,
+                s.state_name      crs_state,
+                d.meddra_version  meddra_vers
+         FROM crs_states               s,
+              crs_content_stg          c,
+              crs_risk_relations_stg   r,
+              crs_risk_definitions_stg d
+         WHERE s.state_id = c.state_id
+           AND c.crs_id = r.crs_id 
+          AND r.crs_risk_id = d.crs_risk_id
+      UNION
+         SELECT c.crs_name        crs_name,
+                s.state_name      crs_state,
+                d.meddra_version  meddra_vers
+         FROM crs_states              s,
+              crs_content             c,
+              crs_risk_relations      r,
+              crs_risk_definitions    d
+         WHERE s.state_id = c.state_id
+           AND c.crs_id = r.crs_id 
+          AND r.crs_risk_id = d.crs_risk_id)
+    GROUP BY crs_name, crs_state, meddra_vers
+    ORDER BY crs_name, meddra_vers, crs_state]]></SQLQuery>
   <ViewAttribute
     Name="CrsName"
     IsUpdateable="false"

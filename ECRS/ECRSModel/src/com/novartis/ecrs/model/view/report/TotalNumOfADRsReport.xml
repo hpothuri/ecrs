@@ -19,34 +19,24 @@
     </SchemaBasedProperties>
   </Properties>
   <SQLQuery><![CDATA[(SELECT 'Total number ADRs ', COUNT(*) AS TotalNumOfADRs
-      FROM crs_compounds                 p,
-           crs_content                   c,
+      FROM crs_content                   c,
            crs_risk_relations            r,
            crs_risk_relation_purposes_vw a
-      WHERE p.compound_id = c.compound_id
-        AND p.compound_type = 'COMPOUND'
-        AND c.release_status_flag = 'C'
-        AND c.crs_id = r.crs_id
+      WHERE c.crs_id = r.crs_id
         AND r.crs_risk_id = a.crs_risk_id
-        AND a.risk_purpose_code = 'CD'
-        )
+        AND a.risk_purpose_code = 'CD')
 UNION ALL
-      (SELECT 'Total number ADRs with CMQ ',
+      (SELECT 'Total number ADRs with CMQ ' ,
               COUNT(*)
-      FROM crs_compounds                 p,
-           crs_content                   c,
+      FROM crs_content                   c,
            crs_risk_relations            r,
            crs_risk_relation_purposes_vw a,
            crs_risk_definitions          d
-      WHERE p.compound_id = c.compound_id
-        AND p.compound_type = 'COMPOUND'
-        AND c.release_status_flag = 'C'
-        AND c.crs_id = r.crs_id
+      WHERE c.crs_id = r.crs_id
         AND r.crs_risk_id = a.crs_risk_id
         AND a.risk_purpose_code = 'CD'
         AND r.crs_risk_id = d.crs_risk_id
-        AND SUBSTR(d.meddra_level,1,3) = 'CMQ'
-)]]></SQLQuery>
+        AND d.meddra_extension = 'CMQ')]]></SQLQuery>
   <ViewAttribute
     Name="Totalnumberadrs"
     IsUpdateable="false"

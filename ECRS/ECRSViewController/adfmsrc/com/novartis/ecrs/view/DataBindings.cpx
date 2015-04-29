@@ -65,6 +65,8 @@
           usageId="com_novartis_ecrs_view_CRSCountperMedDRAReportPageDef"/>
     <page path="/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF@initRiskRelation"
           usageId="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_initRiskRelationPageDef"/>
+    <page path="/pages/reports/RetiredNMQsCMQsReport.jspx"
+          usageId="com_novartis_ecrs_view_RetiredNMQsCMQsReportPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -119,6 +121,8 @@
           path="pages.reports.CRSCountperMedDRAReportPageDef"/>
     <page id="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_initRiskRelationPageDef"
           path="taskflows.ManageCRSTF_ManageCRSTF_initRiskRelationPageDef"/>
+    <page id="com_novartis_ecrs_view_RetiredNMQsCMQsReportPageDef"
+          path="pages.reports.RetiredNMQsCMQsReportPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

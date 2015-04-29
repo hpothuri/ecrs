@@ -8,7 +8,8 @@
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  UseGlueCode="false">
+  UseGlueCode="false"
+  FetchSize="20">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
@@ -18,36 +19,56 @@
         ResId="com.novartis.ecrs.model.view.report.RiskDefinitionsSafetyTopicReport_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
-  <SQLQuery><![CDATA[SELECT c.crs_name,
-          r.safety_topic_of_interest,
+  <SQLQuery><![CDATA[SELECT m.crs_name,
+           m.safety_topic_of_interest,
           (SELECT COUNT(*) 
-           FROM crs_risk_definitions
-           WHERE crs_risk_id = r.crs_risk_id
-             AND SUBSTR(meddra_level,1,3) NOT IN ('SMQ','NMQ','CMQ')) meddra_term_count,
+           FROM crs_risk_relations    r,
+                crs_risk_definitions  d
+           WHERE r.crs_id = m.crs_id
+             AND r.safety_topic_of_interest =  m.safety_topic_of_interest
+             AND r.crs_risk_id = d.crs_risk_id
+             AND d.meddra_extension IN
+                 ('LLT','PT','HLT','HLGT','SOC'))   meddra_term_count,
           (SELECT COUNT(*) 
-           FROM crs_risk_definitions
-           WHERE crs_risk_id = r.crs_risk_id
-             AND SUBSTR(meddra_level,1,3) = 'SMQ') smq_count,
+           FROM crs_risk_relations    r,
+                crs_risk_definitions  d
+           WHERE r.crs_id = m.crs_id
+             AND r.safety_topic_of_interest = 
+                  m.safety_topic_of_interest
+             AND r.crs_risk_id = d.crs_risk_id
+             AND d.meddra_extension = 'SMQ')        smq_count,
           (SELECT COUNT(*) 
-           FROM crs_risk_definitions
-           WHERE crs_risk_id = r.crs_risk_id
-             AND SUBSTR(meddra_level,1,3) = 'NMQ') nmq_count,
+           FROM crs_risk_relations    r,
+                crs_risk_definitions  d
+           WHERE r.crs_id = m.crs_id
+             AND r.safety_topic_of_interest = 
+                  m.safety_topic_of_interest
+             AND r.crs_risk_id = d.crs_risk_id
+             AND d.meddra_extension = 'NMQ')        nmq_count,
           (SELECT COUNT(*) 
-           FROM crs_risk_definitions
-           WHERE crs_risk_id = r.crs_risk_id
-             AND SUBSTR(meddra_level,1,3) = 'CMQ') cmq_count,
+           FROM crs_risk_relations    r,
+                crs_risk_definitions  d
+           WHERE r.crs_id = m.crs_id
+             AND r.safety_topic_of_interest = 
+                  m.safety_topic_of_interest
+             AND r.crs_risk_id = d.crs_risk_id
+             AND d.meddra_extension = 'CMQ')        cmq_count,
           (SELECT COUNT(*) 
-           FROM crs_risk_relation_purposes_vw
-           WHERE crs_risk_id = r.crs_risk_id
-            AND risk_purpose_code = 'CD')          adr_count          
-    FROM crs_compounds       p,
-         crs_content         c,
-         crs_risk_relations  r
-    WHERE p.compound_id = c.compound_id
-      AND p.compound_type = 'COMPOUND'
-      AND c.release_status_flag = 'C'
-      AND c.crs_id = r.crs_id
-    ORDER BY c.crs_name, r.safety_topic_of_interest]]></SQLQuery>
+           FROM crs_risk_relations            r,
+                crs_risk_relation_purposes_vw v
+           WHERE r.crs_id = m.crs_id
+             AND r.safety_topic_of_interest = 
+                  m.safety_topic_of_interest
+             AND r.crs_risk_id = v.crs_risk_id
+             AND v.risk_purpose_code = 'CD')        adr_count      
+    FROM (SELECT c.crs_id,
+                 c.crs_name,
+                 r.safety_topic_of_interest    
+          FROM crs_content         c,
+               crs_risk_relations  r
+          WHERE c.crs_id = r.crs_id
+          GROUP BY c.crs_id, c.crs_name, r.safety_topic_of_interest) m
+    ORDER BY m.crs_name, m.safety_topic_of_interest]]></SQLQuery>
   <ViewAttribute
     Name="CrsName"
     IsUpdateable="false"

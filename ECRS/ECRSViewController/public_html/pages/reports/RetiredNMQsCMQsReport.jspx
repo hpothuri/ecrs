@@ -8,6 +8,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <f:view>
         <af:document title="Retired NMQsCMQsReport.jspx" id="d1">
+            <af:messages id="m1"/>
             <af:form id="f1">
                 <af:pageTemplate viewId="/pageTemplate/EcrsTemplate.jspx"
                                  id="pt1">
@@ -21,8 +22,7 @@
                                 <af:toolbar id="t4">
                                     <af:commandButton text="#{ecrsviewcontrollerBundle.EXPORT}"
                                                       id="cb1"
-                                                      partialSubmit="true"
-                                                      rendered="false">
+                                                      partialSubmit="true">
                                         <af:fileDownloadActionListener contentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                                                                        filename="RetiredNmqCmqPreviouslyUsedReport.xls"
                                                                        method="#{pageFlowScope.reportsBean.downloadRetiredNMQsReport}"/>
@@ -31,6 +31,45 @@
                             </f:facet>
                             <f:facet name="legend"/>
                             <f:facet name="info"/>
+                            <af:panelGroupLayout id="pgl2" halign="center"
+                                                 layout="horizontal"
+                                                 inlineStyle="width:500px;">
+                                <af:table value="#{bindings.RetiredNmqCmqPrevUsedReport.collectionModel}"
+                                          var="row"
+                                          rows="#{bindings.RetiredNmqCmqPrevUsedReport.rangeSize}"
+                                          emptyText="#{bindings.RetiredNmqCmqPrevUsedReport.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          fetchSize="#{bindings.RetiredNmqCmqPrevUsedReport.rangeSize}"
+                                          rowBandingInterval="0" id="t1"
+                                          inlineStyle="width:500px;"
+                                          columnStretching="column:c1">
+                                    <af:column sortProperty="#{bindings.RetiredNmqCmqPrevUsedReport.hints.MeddraTerm.name}"
+                                               sortable="false"
+                                               headerText="#{bindings.RetiredNmqCmqPrevUsedReport.hints.MeddraTerm.label}"
+                                               id="c1" align="left" width="150">
+                                        <af:outputText value="#{row.MeddraTerm}"
+                                                       shortDesc="#{bindings.RetiredNmqCmqPrevUsedReport.hints.MeddraTerm.tooltip}"
+                                                       id="ot1"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.RetiredNmqCmqPrevUsedReport.hints.CrsEffectiveDt.name}"
+                                               sortable="false"
+                                               headerText="#{bindings.RetiredNmqCmqPrevUsedReport.hints.CrsEffectiveDt.label}"
+                                               id="c2">
+                                        <af:outputText value="#{row.CrsEffectiveDt}"
+                                                       shortDesc="#{bindings.RetiredNmqCmqPrevUsedReport.hints.CrsEffectiveDt.tooltip}"
+                                                       id="ot2">
+                                            <af:convertDateTime pattern="#{bindings.RetiredNmqCmqPrevUsedReport.hints.CrsEffectiveDt.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.RetiredNmqCmqPrevUsedReport.hints.CrsName.name}"
+                                               sortable="false"
+                                               headerText="#{bindings.RetiredNmqCmqPrevUsedReport.hints.CrsName.label}"
+                                               id="c3" width="170">
+                                        <af:outputText value="#{row.CrsName}"
+                                                       shortDesc="#{bindings.RetiredNmqCmqPrevUsedReport.hints.CrsName.tooltip}"
+                                                       id="ot3"/>
+                                    </af:column>
+                                </af:table>
+                            </af:panelGroupLayout>
                             <af:panelGroupLayout id="pgl3" layout="vertical">
                                 <af:spacer width="10" height="10" id="s2"/>
                                 <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb2" action="home"/>

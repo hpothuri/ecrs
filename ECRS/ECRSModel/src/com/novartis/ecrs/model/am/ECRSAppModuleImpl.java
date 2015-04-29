@@ -617,4 +617,12 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public ViewLinkImpl getHierarchyChildSelfLink1() {
         return (ViewLinkImpl)findViewLink("HierarchyChildSelfLink1");
     }
+
+    /**
+     * Container's getter for RetiredNmqCmqprevUsedReport1.
+     * @return RetiredNmqCmqprevUsedReport1
+     */
+    public ViewObjectImpl getRetiredNmqCmqPrevUsedReport() {
+        return (ViewObjectImpl)findViewObject("RetiredNmqCmqPrevUsedReport");
+    }
 }

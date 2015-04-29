@@ -33,30 +33,28 @@
                             <af:panelGroupLayout id="pgl2" layout="horizontal"
                                                  halign="center"
                                                  inlineStyle="width:400px;">
-                                <af:table value="#{bindings.MedDRAStandardReport.collectionModel}"
+                                <af:table value="#{bindings.MedDRAStandardReport1.collectionModel}"
                                           var="row"
-                                          rows="#{bindings.MedDRAStandardReport.rangeSize}"
-                                          emptyText="#{bindings.MedDRAStandardReport.viewable ? 'No data to display.' : 'Access Denied.'}"
-                                          fetchSize="#{bindings.MedDRAStandardReport.rangeSize}"
+                                          rows="#{bindings.MedDRAStandardReport1.rangeSize}"
+                                          emptyText="#{bindings.MedDRAStandardReport1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          fetchSize="#{bindings.MedDRAStandardReport1.rangeSize}"
                                           rowBandingInterval="0"
-                                          filterModel="#{bindings.MedDRAStandardReportQuery.queryDescriptor}"
-                                          queryListener="#{bindings.MedDRAStandardReportQuery.processQuery}" varStatus="vs"
                                           id="t1" inlineStyle="width:400px;"
                                           columnStretching="column:c1" columnBandingInterval="0">
-                                    <af:column sortProperty="#{bindings.MedDRAStandardReport.hints.DefinitionType.name}"
-                                               filterable="true" sortable="true"
-                                               headerText="#{bindings.MedDRAStandardReport.hints.DefinitionType.label}"
-                                               id="c1" width="104">
+                                    <af:column sortProperty="#{bindings.MedDRAStandardReport1.hints.DefinitionType.name}"
+                                               sortable="false"
+                                               headerText="#{bindings.MedDRAStandardReport1.hints.DefinitionType.label}"
+                                               id="c1">
                                         <af:outputText value="#{row.DefinitionType}"
-                                                       shortDesc="#{bindings.MedDRAStandardReport.hints.DefinitionType.tooltip}"
+                                                       shortDesc="#{bindings.MedDRAStandardReport1.hints.DefinitionType.tooltip}"
                                                        id="ot1"/>
                                     </af:column>
-                                    <af:column sortProperty="#{bindings.MedDRAStandardReport.hints.PercentOfUse.name}"
-                                               filterable="true" sortable="true"
-                                               headerText="#{bindings.MedDRAStandardReport.hints.PercentOfUse.label}"
-                                               id="c2" width="106">
-                                        <af:outputText value="#{row.PercentOfUse}"
-                                                       shortDesc="#{bindings.MedDRAStandardReport.hints.PercentOfUse.tooltip}"
+                                    <af:column sortProperty="#{bindings.MedDRAStandardReport1.hints.Percentofuse.name}"
+                                               sortable="false"
+                                               headerText="#{bindings.MedDRAStandardReport1.hints.Percentofuse.label}"
+                                               id="c2">
+                                        <af:outputText value="#{row.Percentofuse}"
+                                                       shortDesc="#{bindings.MedDRAStandardReport1.hints.Percentofuse.tooltip}"
                                                        id="ot2"/>
                                     </af:column>
                                 </af:table>

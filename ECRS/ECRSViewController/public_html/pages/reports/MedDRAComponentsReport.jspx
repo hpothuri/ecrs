@@ -32,69 +32,60 @@
                                 <f:facet name="legend"/>
                                 <f:facet name="info"/>
                                 <af:panelGroupLayout id="pgl3">
-                                    <af:table value="#{bindings.MedDRAComponentsReport.collectionModel}"
+                                    <af:table value="#{bindings.MedDRAComponentsReport1.collectionModel}"
                                               var="row"
-                                              rows="#{bindings.MedDRAComponentsReport.rangeSize}"
-                                              emptyText="#{bindings.MedDRAComponentsReport.viewable ? 'No data to display.' : 'Access Denied.'}"
-                                              fetchSize="#{bindings.MedDRAComponentsReport.rangeSize}"
-                                              rowBandingInterval="0"
-                                              filterModel="#{bindings.MedDRAComponentsReportQuery.queryDescriptor}"
-                                              queryListener="#{bindings.MedDRAComponentsReportQuery.processQuery}"
-                                              varStatus="vs" id="t1"
-                                              columnStretching="column:c6"
+                                              rows="#{bindings.MedDRAComponentsReport1.rangeSize}"
+                                              emptyText="#{bindings.MedDRAComponentsReport1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              fetchSize="#{bindings.MedDRAComponentsReport1.rangeSize}"
+                                              rowBandingInterval="0" id="t1"
+                                              columnStretching="column:c2"
                                               styleClass="AFStretchWidth" columnBandingInterval="0">
-                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport.hints.MeddraTerm.name}"
-                                                   filterable="true"
-                                                   sortable="true"
-                                                   headerText="#{bindings.MedDRAComponentsReport.hints.MeddraTerm.label}"
-                                                   id="c1" width="150">
+                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport1.hints.MeddraTerm.name}"
+                                                   sortable="false"
+                                                   headerText="#{bindings.MedDRAComponentsReport1.hints.MeddraTerm.label}"
+                                                   id="c4" width="200">
                                             <af:outputText value="#{row.MeddraTerm}"
-                                                           shortDesc="#{bindings.MedDRAComponentsReport.hints.MeddraTerm.tooltip}"
+                                                           shortDesc="#{bindings.MedDRAComponentsReport1.hints.MeddraTerm.tooltip}"
                                                            id="ot1"/>
                                         </af:column>
-                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport.hints.MeddraLevel.name}"
-                                                   filterable="true"
-                                                   sortable="true"
-                                                   headerText="#{bindings.MedDRAComponentsReport.hints.MeddraLevel.label}"
-                                                   id="c2">
-                                            <af:outputText value="#{row.MeddraLevel}"
-                                                           shortDesc="#{bindings.MedDRAComponentsReport.hints.MeddraLevel.tooltip}"
-                                                           id="ot2"/>
-                                        </af:column>
-                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport.hints.SafetyTopicOfInterest.name}"
-                                                   filterable="true"
-                                                   sortable="true"
-                                                   headerText="#{bindings.MedDRAComponentsReport.hints.SafetyTopicOfInterest.label}"
-                                                   id="c3" width="200">
-                                            <af:outputText value="#{row.SafetyTopicOfInterest}"
-                                                           shortDesc="#{bindings.MedDRAComponentsReport.hints.SafetyTopicOfInterest.tooltip}"
-                                                           id="ot3"/>
-                                        </af:column>
-                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport.hints.CrsName.name}"
-                                                   filterable="true"
-                                                   sortable="true"
-                                                   headerText="#{bindings.MedDRAComponentsReport.hints.CrsName.label}"
-                                                   id="c4" width="200">
-                                            <af:outputText value="#{row.CrsName}"
-                                                           shortDesc="#{bindings.MedDRAComponentsReport.hints.CrsName.tooltip}"
-                                                           id="ot4"/>
-                                        </af:column>
-                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport.hints.RiskPurposeList.name}"
-                                                   filterable="true"
-                                                   sortable="true"
-                                                   headerText="#{bindings.MedDRAComponentsReport.hints.RiskPurposeList.label}"
-                                                   id="c5" width="150">
-                                            <af:outputText value="#{row.RiskPurposeList}"
-                                                           shortDesc="#{bindings.MedDRAComponentsReport.hints.RiskPurposeList.tooltip}"
+                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport1.hints.MeddraExtension.name}"
+                                                   sortable="false"
+                                                   headerText="#{bindings.MedDRAComponentsReport1.hints.MeddraExtension.label}"
+                                                   id="c3">
+                                            <af:outputText value="#{row.MeddraExtension}"
+                                                           shortDesc="#{bindings.MedDRAComponentsReport1.hints.MeddraExtension.tooltip}"
                                                            id="ot5"/>
                                         </af:column>
-                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport.hints.SocTerm.name}"
-                                                   filterable="true"
-                                                   sortable="true"
-                                                   headerText="#{bindings.MedDRAComponentsReport.hints.SocTerm.label}"
+                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport1.hints.SafetyTopicOfInterest.name}"
+                                                   sortable="false"
+                                                   headerText="#{bindings.MedDRAComponentsReport1.hints.SafetyTopicOfInterest.label}"
+                                                   id="c5">
+                                            <af:outputText value="#{row.SafetyTopicOfInterest}"
+                                                           shortDesc="#{bindings.MedDRAComponentsReport1.hints.SafetyTopicOfInterest.tooltip}"
+                                                           id="ot4"/>
+                                        </af:column>
+                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport1.hints.CrsName.name}"
+                                                   sortable="false"
+                                                   headerText="#{bindings.MedDRAComponentsReport1.hints.CrsName.label}"
+                                                   id="c2" width="200">
+                                            <af:outputText value="#{row.CrsName}"
+                                                           shortDesc="#{bindings.MedDRAComponentsReport1.hints.CrsName.tooltip}"
+                                                           id="ot3"/>
+                                        </af:column>
+                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport1.hints.RiskPurposeList.name}"
+                                                   sortable="false"
+                                                   headerText="#{bindings.MedDRAComponentsReport1.hints.RiskPurposeList.label}"
                                                    id="c6">
+                                            <af:outputText value="#{row.RiskPurposeList}"
+                                                           shortDesc="#{bindings.MedDRAComponentsReport1.hints.RiskPurposeList.tooltip}"
+                                                           id="ot2"/>
+                                        </af:column>
+                                        <af:column sortProperty="#{bindings.MedDRAComponentsReport1.hints.SocTerm.name}"
+                                                   sortable="false"
+                                                   headerText="#{bindings.MedDRAComponentsReport1.hints.SocTerm.label}"
+                                                   id="c1" width="200">
                                             <af:outputText value="#{row.SocTerm}"
-                                                           shortDesc="#{bindings.MedDRAComponentsReport.hints.SocTerm.tooltip}"
+                                                           shortDesc="#{bindings.MedDRAComponentsReport1.hints.SocTerm.tooltip}"
                                                            id="ot6"/>
                                         </af:column>
                                     </af:table>

@@ -3,7 +3,7 @@
 <!---->
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
-  Name="CRSCountPerMeddraReportVO"
+  Name="RetiredNmqCmqprevUsedReport"
   Version="11.1.2.64.36"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -16,22 +16,23 @@
   <Properties>
     <SchemaBasedProperties>
       <LABEL
-        ResId="com.novartis.ecrs.model.view.report.CRSCountPerMeddraReportVO_LABEL"/>
+        ResId="com.novartis.ecrs.model.view.report.RetiredNmqCmqprevUsedReport_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
-  <SQLQuery><![CDATA[SELECT meddra_term                             meddra_term, 
-          meddra_extension                        meddra_comp_defn,
-          COUNT(*)                                number_of_crs
-   FROM (SELECT d.meddra_term,
-                d.meddra_extension,
-                c.crs_id 
-         FROM crs_content           c,
-              crs_risk_relations    r,
-              crs_risk_definitions  d 
-         WHERE c.crs_id = r.crs_id
-           AND r.crs_risk_id = d.crs_risk_id
-        GROUP BY d.meddra_term, meddra_extension)
-    GROUP BY meddra_term, meddra_extension]]></SQLQuery>
+  <SQLQuery><![CDATA[SELECT d.meddra_term,
+          c.crs_effective_dt,
+          c.crs_name
+    FROM crs_content             c,
+         crs_risk_relations      r,
+         crs_risk_definitions_jn d,
+         tms.tms_dict_contents   t
+    WHERE c.crs_id = r.crs_id
+      AND r.crs_risk_id = d.crs_risk_id
+      AND d.meddra_extension IN ('NMQ','CMQ')
+      AND d.tms_dict_content_id = t.dict_content_id
+      AND t.status = 'I'
+      AND TO_CHAR(t.end_ts,'DD-MON-YYYY') = '15-AUG-3501'
+    ORDER BY d.meddra_term, c.crs_effective_dt, c.crs_name]]></SQLQuery>
   <ViewAttribute
     Name="MeddraTerm"
     IsUpdateable="false"
@@ -49,51 +50,48 @@
     <Properties>
       <SchemaBasedProperties>
         <LABEL
-          ResId="MEDDRA_COMPONENT"/>
+          ResId="com.novartis.ecrs.model.view.report.RetiredNmqCmqprevUsedReport.MeddraTerm_LABEL"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
   <ViewAttribute
-    Name="MeddraCompDefn"
+    Name="CrsEffectiveDt"
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Precision="3"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="CRS_EFFECTIVE_DT"
+    Expression="CRS_EFFECTIVE_DT"
+    SQLType="DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.novartis.ecrs.model.view.report.RetiredNmqCmqprevUsedReport.CrsEffectiveDt_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CrsName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="65"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    AliasName="MEDDRA_COMP_DEFN"
-    Expression="MEDDRA_COMP_DEFN"
+    AliasName="CRS_NAME"
+    Expression="CRS_NAME"
     SQLType="VARCHAR">
     <DesignTime>
-      <Attr Name="_DisplaySize" Value="3"/>
+      <Attr Name="_DisplaySize" Value="65"/>
     </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
-          ResId="com.novartis.ecrs.model.view.CrsRiskVO.MeddraLevel_LABEL"/>
+          ResId="CRS_NAME"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
-  <ViewAttribute
-    Name="NumberOfCrs"
-    IsUpdateable="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Type="java.math.BigDecimal"
-    ColumnType="NUMBER"
-    AliasName="NUMBER_OF_CRS"
-    Expression="NUMBER_OF_CRS"
-    SQLType="NUMERIC">
-    <Properties>
-      <SchemaBasedProperties>
-        <LABEL
-          ResId="NUMBER_OF_CRSS"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </ViewAttribute>
-  <AttrArray Name="KeyAttributes">
-    <Item Value="MeddraTerm"/>
-  </AttrArray>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>

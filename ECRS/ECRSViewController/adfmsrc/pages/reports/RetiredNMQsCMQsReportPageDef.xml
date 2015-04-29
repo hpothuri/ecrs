@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.2.64.36" id="RetiredNMQsCMQsReportPageDef"
+                Package="pages.reports">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="RetiredNmqCmqPrevUsedReport" RangeSize="25"
+              DataControl="ECRSAppModuleDataControl"
+              id="RetiredNmqCmqPrevUsedReportIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="RetiredNmqCmqPrevUsedReportIterator"
+          id="RetiredNmqCmqPrevUsedReport">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.report.RetiredNmqCmqprevUsedReport"
+                      Name="RetiredNmqCmqPrevUsedReport0">
+        <AttrNames>
+          <Item Value="MeddraTerm"/>
+          <Item Value="CrsEffectiveDt"/>
+          <Item Value="CrsName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

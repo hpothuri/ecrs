@@ -8,18 +8,15 @@
     <iterator Binds="MedDRAComponentsReport" RangeSize="25"
               DataControl="ECRSAppModuleDataControl"
               id="MedDRAComponentsReportIterator"/>
-    <searchRegion Binds="MedDRAComponentsReportIterator" Criteria=""
-                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
-                  id="MedDRAComponentsReportQuery"/>
   </executables>
   <bindings>
     <tree IterBinding="MedDRAComponentsReportIterator"
-          id="MedDRAComponentsReport">
+          id="MedDRAComponentsReport1">
       <nodeDefinition DefName="com.novartis.ecrs.model.view.report.MedDRAComponentsReport"
-                      Name="MedDRAComponentsReport0">
+                      Name="MedDRAComponentsReport10">
         <AttrNames>
           <Item Value="MeddraTerm"/>
-          <Item Value="MeddraLevel"/>
+          <Item Value="MeddraExtension"/>
           <Item Value="SafetyTopicOfInterest"/>
           <Item Value="CrsName"/>
           <Item Value="RiskPurposeList"/>

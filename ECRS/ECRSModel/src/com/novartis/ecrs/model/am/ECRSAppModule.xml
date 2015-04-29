@@ -102,6 +102,9 @@
   <ViewUsage
     Name="HierarchyChildDetailVO1"
     ViewObjectName="com.novartis.ecrs.model.view.HierarchyChildDetailVO"/>
+  <ViewUsage
+    Name="RetiredNmqCmqPrevUsedReport"
+    ViewObjectName="com.novartis.ecrs.model.view.report.RetiredNmqCmqprevUsedReport"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

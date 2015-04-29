@@ -293,7 +293,7 @@ public class CRSReportsBean {
                 BundleFactory.getBundle("com.novartis.ecrs.model.ECRSModelBundle");
             //Here Key will be ViewObject Attribute
             columnMap.put("MeddraTerm", rsBundle.getString("DEFINITIONS"));
-            columnMap.put("MeddraLevel", rsBundle.getString("LEVEL"));
+            columnMap.put("MeddraExtension", rsBundle.getString("LEVEL"));
             columnMap.put("SafetyTopicOfInterest",
                           rsBundle.getString("SAFETY_TOPIC"));
             columnMap.put("CrsName", rsBundle.getString("CRS_NAME"));
@@ -352,7 +352,7 @@ public class CRSReportsBean {
             //Here Key will be ViewObject Attribute
             columnMap.put("DefinitionType",
                           rsBundle.getString("DEFINITIONS_TYPE"));
-            columnMap.put("PercentOfUse", rsBundle.getString("_OF_USE"));
+            columnMap.put("Percentofuse", rsBundle.getString("_OF_USE"));
 
             workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
             Sheet sheet = workbook.getSheetAt(0);
@@ -389,15 +389,33 @@ public class CRSReportsBean {
         InputStream excelInputStream = getExcelInpStream();
         try {
             //create sheet
-            ADFUtils.findIterator("");
+            DCIteratorBinding iter =
+                ADFUtils.findIterator("RetiredNmqCmqPrevUsedReportIterator");
+            RowSetIterator rowSet = null;
+            int rowStartIndex = 8;
+            int cellStartIndex = 0;
+            String emptyValReplace = null;
+            String dateCellFormat = "M/dd/yyyy";
+            if (iter != null) {
+                iter.setRangeSize(-1);
+                rowSet = iter.getRowSetIterator();
+            }
             workbook = WorkbookFactory.create(excelInputStream);
-
-            int count = 8;
+            LinkedHashMap columnMap = new LinkedHashMap();
+            ResourceBundle rsBundle =
+                BundleFactory.getBundle("com.novartis.ecrs.model.ECRSModelBundle");
+            //Here Key will be ViewObject Attribute
+            columnMap.put("MeddraTerm", rsBundle.getString("DEFINITIONS"));
+            columnMap.put("CrsEffectiveDt",
+                          rsBundle.getString("com.novartis.ecrs.model.view.report.RetiredNmqCmqprevUsedReport.CrsEffectiveDt_LABEL"));
+            columnMap.put("CrsName", rsBundle.getString("CRS_NAME"));
             workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
             Sheet sheet = workbook.getSheetAt(0);
 
-            // ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex, cellStartIndex, columnMap, tableHeader, dateCellFormat, emptyValReplace)
-
+            ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
+                                             cellStartIndex, columnMap, null,
+                                             dateCellFormat, emptyValReplace,
+                                             getImageInpStream());
             //write image to sheet
             //ExcelExportUtils.writeImageTOExcel(sheet,getImageInpStream());
         } catch (InvalidFormatException invalidFormatException) {
@@ -411,7 +429,6 @@ public class CRSReportsBean {
             excelInputStream.close();
             outputStream.close();
         }
-
     }
 
     /**

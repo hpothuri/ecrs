@@ -8,7 +8,8 @@
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  UseGlueCode="false">
+  UseGlueCode="false"
+  FetchSize="20">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
@@ -19,32 +20,25 @@
     </SchemaBasedProperties>
   </Properties>
   <SQLQuery><![CDATA[SELECT definition_type,
-         ROUND((definition_count/total_crs_recs)*100) percent_of_use
-   FROM (SELECT DECODE(SUBSTR(d.meddra_level,1,3),
-                'SMQ','SMQ','NMQ','NMQ','CMQ','CMQ',
-                 'Single MedDRA term')               definition_type,
-                 COUNT(*)                            definition_count,
-                (SELECT COUNT(*)
-                 FROM crs_compounds   p,
-                      crs_content     c
-                 WHERE p.compound_id = c.compound_id
-                   AND p.compound_type = 'COMPOUND'
-                   AND c.release_status_flag = 'C')  total_crs_recs          
-         FROM crs_compounds                 p,
-              crs_content                   c,
-              crs_risk_relations            r,
-              crs_risk_relation_purposes_vw a,
-              crs_risk_definitions          d
-         WHERE p.compound_id = c.compound_id
-           AND p.compound_type = 'COMPOUND'
-           AND c.release_status_flag = 'C'
-           AND c.crs_id = r.crs_id
-           AND r.crs_risk_id = a.crs_risk_id
-           AND a.risk_purpose_code = 'CD'
-           AND r.crs_risk_id = d.crs_risk_id
-         GROUP BY DECODE(SUBSTR(d.meddra_level,1,3),
-            'SMQ','SMQ','NMQ','NMQ','CMQ','CMQ','Single MedDRA term'))
-     ORDER BY definition_type]]></SQLQuery>
+          CAST(ROUND((definition_count/total_defn_recs)*100)||'%' AS VARCHAR2(15)) as PercentOfUse
+   FROM (SELECT DECODE(INSTR(d.meddra_dict,'SMQ'),
+                    0,'Single MedDRA Term',
+                       d.meddra_extension)       definition_type,
+                COUNT(*)                         definition_count,
+               (SELECT COUNT(*)
+                FROM crs_content          c,
+                     crs_risk_relations   r,
+                     crs_risk_definitions d
+                WHERE c.crs_id = r.crs_id
+                  AND r.crs_risk_id = d.crs_risk_id )       total_defn_recs
+          FROM crs_content          c,
+               crs_risk_relations   r,
+               crs_risk_definitions d
+           WHERE c.crs_id = r.crs_id
+             AND r.crs_risk_id = d.crs_risk_id 
+           GROUP BY DECODE(INSTR(d.meddra_dict,'SMQ'),
+                      0,'Single MedDRA Term',
+                         d.meddra_extension))]]></SQLQuery>
   <ViewAttribute
     Name="DefinitionType"
     IsUpdateable="false"
@@ -67,15 +61,19 @@
     </Properties>
   </ViewAttribute>
   <ViewAttribute
-    Name="PercentOfUse"
+    Name="Percentofuse"
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Type="java.math.BigDecimal"
-    ColumnType="NUMBER"
-    AliasName="PERCENT_OF_USE"
-    Expression="PERCENT_OF_USE"
-    SQLType="NUMERIC">
+    Precision="15"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PERCENTOFUSE"
+    Expression="PERCENTOFUSE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
