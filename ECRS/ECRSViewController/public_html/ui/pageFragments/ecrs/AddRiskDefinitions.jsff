@@ -12,7 +12,7 @@
       <f:facet name="toolbar"/>
       <f:facet name="legend"/>
       <f:facet name="info"/>
-      <af:switcher id="s6" facetName="#{pageFlowScope.manageCRSBean.currentStatus}" defaultFacet="C">
+      <af:switcher id="s6" facetName="#{pageFlowScope.manageCRSBean.currentStatus}" defaultFacet="P">
         <f:facet name="P">
           <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="freeze wrap">
             <f:facet name="menus"/>
@@ -179,7 +179,7 @@
                       queryListener="#{bindings.CrsRiskBaseVOQuery.processQuery}" filterVisible="true" varStatus="vs"
                       selectedRowKeys="#{bindings.CrsRiskBaseVO.collectionModel.selectedRow}"
                       selectionListener="#{bindings.CrsRiskBaseVO.collectionModel.makeCurrent}" rowSelection="single"
-                      id="t10" styleClass="AFStretchWidth">
+                      id="t10" styleClass="AFStretchWidth" autoHeightRows="15" columnSelection="multiple">
               <af:column id="c80">
                 <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.SafetyTopicOfInterest.name}" filterable="true"
                            sortable="true" headerText="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_OF_INTEREST}" id="c61"
@@ -398,7 +398,7 @@
                           shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it5" rows="3"
                           contentStyle="width:500px;"
                           disabled="#{!securityContext.userInRole['CRS_MQM'] &amp;&amp; !securityContext.userInRole['CRS_ADMIN']}"
-                          autoSubmit="true">
+                          autoSubmit="true" rendered="false">
               <f:validator binding="#{bindings.MqmComment.validator}"/>
             </af:inputText>
           </af:panelFormLayout>
@@ -628,7 +628,7 @@
     </af:popup>
     <af:popup childCreation="deferred" autoCancel="disabled" id="p7" contentDelivery="lazyUncached"
               binding="#{pageFlowScope.manageCRSBean.copyPopup}">
-      <af:dialog id="d7" title="#{ecrsviewcontrollerBundle.COPY_RISK_DEFINTION}" type="none">
+      <af:dialog id="d7" title="#{ecrsviewcontrollerBundle.COPY_RISK_DEFINTION}" type="none" contentWidth="800">
         <f:facet name="buttonBar">
           <af:panelGroupLayout id="pgl7">
             <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb20"
@@ -726,22 +726,22 @@
                              id="ot28"/>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraLevel.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.MeddraLevel.label}" id="c52">
+                       headerText="#{bindings.CopyCrsRiskVO.hints.MeddraLevel.label}" id="c52" width="50">
               <af:outputText value="#{copyRow.MeddraLevel}" shortDesc="#{bindings.CopyCrsRiskVO.hints.MeddraLevel.tooltip}"
                              id="ot29"/>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraQualifier.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.MeddraQualifier.label}" id="c485">
+                       headerText="#{bindings.CopyCrsRiskVO.hints.MeddraQualifier.label}" id="c485" width="50">
               <af:outputText value="#{copyRow.MeddraQualifier}"
                              shortDesc="#{bindings.CopyCrsRiskVO.hints.MeddraQualifier.tooltip}" id="ot30"/>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraCode.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.MeddraCode.label}" id="c53">
+                       headerText="#{bindings.CopyCrsRiskVO.hints.MeddraCode.label}" id="c53" width="50">
               <af:outputText value="#{copyRow.MeddraCode}" shortDesc="#{bindings.CopyCrsRiskVO.hints.MeddraCode.tooltip}"
                              id="ot31"/>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.label}" id="c54">
+                       headerText="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.label}" id="c54" width="50">
               <af:outputText value="#{copyRow.SearchCriteriaDetails}"
                              shortDesc="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.tooltip}" id="ot32"/>
             </af:column>

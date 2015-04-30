@@ -1435,12 +1435,12 @@ public class ManageCRSBean implements Serializable {
     
     public void copyCrsRiskRelation(ActionEvent actionEvent) {
     
-        DCBindingContainer dcbind =(DCBindingContainer)getBindings();
-        Boolean dirty = dcbind.getDataControl().isTransactionModified();
-        if(dirty){
-            ADFUtils.showPopup(pendingPopup);
-            return;
-        }
+//        DCBindingContainer dcbind =(DCBindingContainer)getBindings();
+//        Boolean dirty = dcbind.getDataControl().isTransactionModified();
+//        if(dirty){
+//            ADFUtils.showPopup(pendingPopup);
+//            return;
+//        }
         
         ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
         Long riskId = (Long)ADFUtils.evaluateEL("#{copyRow.CrsRiskId}");
@@ -1523,6 +1523,7 @@ public class ManageCRSBean implements Serializable {
         DCIteratorBinding iter = ADFUtils.findIterator("CopyCrsRiskVOIterator");
         ViewObject crsSearchVO = iter.getViewObject();
         crsSearchVO.executeEmptyRowSet();
+        setSafetyTopicOfInterest(null);
         ADFUtils.showPopup(copyPopup);
         if(copyPanel != null)
             copyPanel.setVisible(Boolean.FALSE);
