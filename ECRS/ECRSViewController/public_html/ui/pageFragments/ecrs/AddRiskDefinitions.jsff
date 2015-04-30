@@ -405,7 +405,15 @@
           <af:panelCollection id="pc2" styleClass="AFStretchWidth">
             <f:facet name="menus"/>
             <f:facet name="toolbar"/>
-            <f:facet name="statusbar"/>
+            <f:facet name="statusbar">
+              <af:toolbar id="t12">
+                <af:panelLabelAndMessage id="plam8" visible="false"
+                                         binding="#{pageFlowScope.manageCRSBean.savedSuccessMessage}">
+                  <af:image source="/images/tick.png" id="i4"/>
+                  <af:outputText value="#{ecrsviewcontrollerBundle.SAVED_SUCCESSFULLY}" id="ot66"/>
+                </af:panelLabelAndMessage>
+              </af:toolbar>
+            </f:facet>
             <af:table value="#{bindings.CrsRiskDefinitionsVO.collectionModel}" var="row"
                       rows="#{bindings.CrsRiskDefinitionsVO.rangeSize}"
                       emptyText="#{bindings.CrsRiskDefinitionsVO.viewable ? 'No data to display.' : 'Access Denied.'}"
@@ -810,7 +818,15 @@
             <af:panelCollection id="pc3" styleClass="AFStretchWidth">
               <f:facet name="menus"/>
               <f:facet name="toolbar"/>
-              <f:facet name="statusbar"/>
+              <f:facet name="statusbar">
+                <af:toolbar id="t13" visible="false">
+                  <af:panelLabelAndMessage id="plam9"
+                                           binding="#{pageFlowScope.manageCRSBean.copySuccessMessage}">
+                    <af:image source="/images/tick.png" id="i5"/>
+                    <af:outputText value="#{ecrsviewcontrollerBundle.SAVED_SUCCESSFULLY}" id="ot67"/>
+                  </af:panelLabelAndMessage>
+                </af:toolbar>
+              </f:facet>
               <af:table value="#{bindings.CrsRiskDefinitionsVO1.collectionModel}" var="row"
                         rows="#{bindings.CrsRiskDefinitionsVO1.rangeSize}"
                         emptyText="#{bindings.CrsRiskDefinitionsVO1.viewable ? 'No data to display.' : 'Access Denied.'}"

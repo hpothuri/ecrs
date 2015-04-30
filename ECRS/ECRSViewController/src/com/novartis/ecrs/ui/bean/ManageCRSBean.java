@@ -38,6 +38,7 @@ import oracle.adf.view.rich.component.rich.input.RichInputText;
 import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
 import oracle.adf.view.rich.component.rich.layout.RichPanelGroupLayout;
+import oracle.adf.view.rich.component.rich.layout.RichPanelLabelAndMessage;
 import oracle.adf.view.rich.context.AdfFacesContext;
 import oracle.adf.view.rich.datatransfer.DataFlavor;
 import oracle.adf.view.rich.datatransfer.Transferable;
@@ -114,6 +115,8 @@ public class ManageCRSBean implements Serializable {
     private RichPopup pendingPopup;
     private RichTable copyRiskDefTable;
     private String currentStatus;
+    private RichPanelLabelAndMessage savedSuccessMessage;
+    private RichPanelLabelAndMessage copySuccessMessage;
 
     public ManageCRSBean() {
         super();
@@ -487,6 +490,9 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.setPageFlowScopeValue("popupMode", "Add");
         setSelDatabases(null);
         setSelRiskPurposes(null);
+        if(savedSuccessMessage != null){
+            savedSuccessMessage.setVisible(Boolean.FALSE);
+        }
         ADFUtils.showPopup(riskDefPopup);
     }
 
@@ -572,10 +578,28 @@ public class ManageCRSBean implements Serializable {
         
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
-        if (oper.getErrors().size() > 0) 
+        if (oper.getErrors().size() > 0) {
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
-         else
-            ADFUtils.showPopup(successPopup);
+            if(savedSuccessMessage != null){
+                savedSuccessMessage.setVisible(Boolean.FALSE);
+                ADFUtils.addPartialTarget(savedSuccessMessage);
+            }
+            if(copySuccessMessage != null){
+                copySuccessMessage.setVisible(Boolean.FALSE);
+                ADFUtils.addPartialTarget(copySuccessMessage);
+            }
+        }
+        else{
+//            ADFUtils.showPopup(successPopup);
+            if(savedSuccessMessage != null){
+                savedSuccessMessage.setVisible(Boolean.TRUE);
+                ADFUtils.addPartialTarget(savedSuccessMessage);
+            }
+            if(copySuccessMessage != null){
+                copySuccessMessage.setVisible(Boolean.TRUE);
+                ADFUtils.addPartialTarget(copySuccessMessage);
+            }
+        }
     }
 
     public void setSuccessPopup(RichPopup successPopup) {
@@ -1314,10 +1338,18 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void onCancelCrsRiskPopup(ActionEvent actionEvent) {
-        OperationBinding oper = ADFUtils.findOperation("Rollback");
-        oper.execute();
-        if (oper.getErrors().size() > 0) 
-            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
+        ViewObject riskDefVO = iter.getViewObject();
+        Row currRow = riskDefVO.getCurrentRow();
+        if(currRow != null){
+            currRow.refresh(Row.REFRESH_WITH_DB_FORGET_CHANGES | Row.REFRESH_UNDO_CHANGES);
+        }
+        
+        
+//        OperationBinding oper = ADFUtils.findOperation("Rollback");
+//        oper.execute();
+//        if (oper.getErrors().size() > 0) 
+//            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
         OperationBinding oper1 = ADFUtils.findOperation("initRiskRelation");
         oper1.getParamsMap().put("crsId", crsId);
@@ -1494,6 +1526,8 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.showPopup(copyPopup);
         if(copyPanel != null)
             copyPanel.setVisible(Boolean.FALSE);
+        if(copySuccessMessage != null)
+            copySuccessMessage.setVisible(Boolean.FALSE);
     }
 
     public void deleteCopiedRiskDefs(ActionEvent actionEvent) {
@@ -1520,5 +1554,21 @@ public class ManageCRSBean implements Serializable {
 
     public String getCurrentStatus() {
         return currentStatus;
+    }
+
+    public void setSavedSuccessMessage(RichPanelLabelAndMessage savedSuccessMessage) {
+        this.savedSuccessMessage = savedSuccessMessage;
+    }
+
+    public RichPanelLabelAndMessage getSavedSuccessMessage() {
+        return savedSuccessMessage;
+    }
+
+    public void setCopySuccessMessage(RichPanelLabelAndMessage copySuccessMessage) {
+        this.copySuccessMessage = copySuccessMessage;
+    }
+
+    public RichPanelLabelAndMessage getCopySuccessMessage() {
+        return copySuccessMessage;
     }
 }
