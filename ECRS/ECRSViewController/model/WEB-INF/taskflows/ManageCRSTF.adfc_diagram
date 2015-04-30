@@ -17,9 +17,9 @@
       <property
          name="y">146.89648</property>
       <property
-         name="pageFragment">true</property>
-      <property
          name="x">529.0</property>
+      <property
+         name="pageFragment">true</property>
    </View>
    <View
       id="View4">
@@ -36,9 +36,9 @@
       <property
          name="y">154.19531</property>
       <property
-         name="pageFragment">true</property>
-      <property
          name="x">723.0</property>
+      <property
+         name="pageFragment">true</property>
    </View>
    <ControlFlowCase
       islink="true"
@@ -73,9 +73,9 @@
       <property
          name="y">158.94824</property>
       <property
-         name="pageFragment">true</property>
-      <property
          name="x">882.0</property>
+      <property
+         name="pageFragment">true</property>
    </View>
    <TrainFlow
       islink="true"
@@ -241,4 +241,21 @@
       <property
          name="sdm:polyPoints">R54,570.0,150.0459,792.3243,296.74707,L54</property>
    </ControlFlowCase>
+   <View
+      id="View26">
+      <property
+         name="activityId">exceptionHandler</property>
+      <property
+         name="page">/ui/pageFragments/exception/exceptionHandler.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>exceptionHandler&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">true</property>
+      <property
+         name="y">-41.25293</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">44.776367</property>
+   </View>
 </SDM>

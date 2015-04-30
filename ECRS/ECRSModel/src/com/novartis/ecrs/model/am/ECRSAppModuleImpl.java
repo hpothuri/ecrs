@@ -287,10 +287,21 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      * 
      * Info : Metdod to show the risk definitions (if any) for the selected CRS on load of risk definitions page.
      */
-    public void initRiskRelation(Long crsId){
-        ViewObject riskVO = this.getCrsRiskVO();
-        riskVO.setWhereClause("CRS_ID = "+crsId);
-        riskVO.executeQuery();
+    public void initRiskRelation(Long crsId, String status){
+        if(status != null && "P".equals(status)){
+            ViewObject riskVO = this.getCrsRiskVO();
+            riskVO.setWhereClause("CRS_ID = "+crsId);
+            riskVO.executeQuery();
+            ViewObject riskBaseVO = this.getCrsRiskBaseVO();
+            riskBaseVO.executeEmptyRowSet();
+        }
+        else{
+            ViewObject riskBaseVO = this.getCrsRiskBaseVO();
+            riskBaseVO.setWhereClause("CRS_ID = "+crsId);
+            riskBaseVO.executeQuery();
+            ViewObject riskVO = this.getCrsRiskVO();
+            riskVO.executeEmptyRowSet();
+        }
     }
 
     /**

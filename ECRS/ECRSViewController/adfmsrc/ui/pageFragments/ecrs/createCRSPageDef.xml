@@ -89,6 +89,7 @@
                   DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="initRiskRelation" IsViewObjectMethod="false">
       <NamedData NDName="crsId" NDType="java.lang.Long"/>
+      <NamedData NDName="status" NDType="java.lang.String"/>
     </methodAction>
     <attributeValues IterBinding="CrsContentVOIterator" id="MqmComment">
       <AttrNames>

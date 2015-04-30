@@ -117,6 +117,7 @@
                   MethodName="initRiskRelation" IsViewObjectMethod="false"
                   ReturnName="data.ECRSAppModuleDataControl.methodResults.initRiskRelation_ECRSAppModuleDataControl_dataProvider_initRiskRelation_result">
       <NamedData NDName="crsId" NDType="java.lang.Long"/>
+      <NamedData NDName="status" NDType="java.lang.String"/>
     </methodAction>
     <attributeValues IterBinding="CrsRiskRelationVOIterator" id="DatabaseList">
       <AttrNames>

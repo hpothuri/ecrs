@@ -13,7 +13,6 @@ public interface ECRSAppModule extends ApplicationModule {
     void filterCRSContent(String userInRole, String userName,
                           boolean isInboxDisable);
 
-    void initRiskRelation(Long crsId);
 
     void copyRoutineDefinition(Long crsId);
 
@@ -22,4 +21,6 @@ public interface ECRSAppModule extends ApplicationModule {
     void deleteCrs();
 
     void copyCurrentRiskRelation(Long srcRiskId, Long destCrsId);
+
+    void initRiskRelation(Long crsId, String status);
 }

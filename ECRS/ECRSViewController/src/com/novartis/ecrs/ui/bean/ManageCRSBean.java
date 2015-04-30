@@ -374,6 +374,7 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.setPageFlowScopeValue("crsName", crsName);
         Map params = new HashMap<String, Object>();
         params.put("crsId", crsId);
+        params.put("status", getCurrentStatus());
         try {
             ADFUtils.executeAction("initRiskRelation", params);
         } catch (Exception e) {
@@ -589,6 +590,7 @@ public class ManageCRSBean implements Serializable {
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
         OperationBinding oper = ADFUtils.findOperation("initRiskRelation");
         oper.getParamsMap().put("crsId", crsId);
+        oper.getParamsMap().put("status", getCurrentStatus());
         oper.execute();
         if (oper.getErrors().size() > 0) 
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
@@ -1319,6 +1321,7 @@ public class ManageCRSBean implements Serializable {
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
         OperationBinding oper1 = ADFUtils.findOperation("initRiskRelation");
         oper1.getParamsMap().put("crsId", crsId);
+        oper1.getParamsMap().put("status", getCurrentStatus());
         oper1.execute();
         if (oper1.getErrors().size() > 0) 
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);

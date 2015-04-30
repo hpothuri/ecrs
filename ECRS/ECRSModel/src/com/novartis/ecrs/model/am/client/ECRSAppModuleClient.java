@@ -51,8 +51,9 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return;
     }
 
-    public void initRiskRelation(Long crsId) {
-        Object _ret = this.riInvokeExportedMethod(this,"initRiskRelation",new String [] {"java.lang.Long"},new Object[] {crsId});
+    public void initRiskRelation(Long crsId, String status) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"initRiskRelation",new String [] {"java.lang.Long","java.lang.String"},new Object[] {crsId, status});
         return;
     }
 }

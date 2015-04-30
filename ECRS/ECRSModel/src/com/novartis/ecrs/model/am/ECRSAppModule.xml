@@ -143,15 +143,6 @@
         Type="boolean"/>
     </Method>
     <Method
-      Name="initRiskRelation"
-      MethodName="initRiskRelation">
-      <Return
-        Type="void"/>
-      <Parameter
-        Name="crsId"
-        Type="java.lang.Long"/>
-    </Method>
-    <Method
       Name="copyRoutineDefinition"
       MethodName="copyRoutineDefinition">
       <Return
@@ -183,6 +174,18 @@
       <Parameter
         Name="destCrsId"
         Type="java.lang.Long"/>
+    </Method>
+    <Method
+      Name="initRiskRelation"
+      MethodName="initRiskRelation">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="crsId"
+        Type="java.lang.Long"/>
+      <Parameter
+        Name="status"
+        Type="java.lang.String"/>
     </Method>
   </ClientInterface>
 </AppModule>
