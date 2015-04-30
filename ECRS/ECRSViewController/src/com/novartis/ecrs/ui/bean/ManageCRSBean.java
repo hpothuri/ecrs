@@ -39,6 +39,7 @@ import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
 import oracle.adf.view.rich.component.rich.layout.RichPanelGroupLayout;
 import oracle.adf.view.rich.component.rich.layout.RichPanelLabelAndMessage;
+import oracle.adf.view.rich.component.rich.output.RichOutputText;
 import oracle.adf.view.rich.context.AdfFacesContext;
 import oracle.adf.view.rich.datatransfer.DataFlavor;
 import oracle.adf.view.rich.datatransfer.Transferable;
@@ -117,6 +118,7 @@ public class ManageCRSBean implements Serializable {
     private String currentStatus;
     private RichPanelLabelAndMessage savedSuccessMessage;
     private RichPanelLabelAndMessage copySuccessMessage;
+    private RichOutputText hiddenPopupAlign;
 
     public ManageCRSBean() {
         super();
@@ -917,7 +919,11 @@ public class ManageCRSBean implements Serializable {
         setContentId(null);
         if(childTreeTable != null)
             childTreeTable.setVisible(false);
-        ADFUtils.showPopup(hierPopup);
+        RichPopup.PopupHints hints = new RichPopup.PopupHints();
+        hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN_ID, this.getHiddenPopupAlign());
+        hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN, RichPopup.PopupHints.AlignTypes.ALIGN_END_BEFORE);
+        hierPopup.show(hints);
+//        ADFUtils.showPopup(hierPopup);
     }
 
     public void setHierPopup(RichPopup hierPopup) {
@@ -1571,5 +1577,13 @@ public class ManageCRSBean implements Serializable {
 
     public RichPanelLabelAndMessage getCopySuccessMessage() {
         return copySuccessMessage;
+    }
+
+    public void setHiddenPopupAlign(RichOutputText hiddenPopupAlign) {
+        this.hiddenPopupAlign = hiddenPopupAlign;
+    }
+
+    public RichOutputText getHiddenPopupAlign() {
+        return hiddenPopupAlign;
     }
 }

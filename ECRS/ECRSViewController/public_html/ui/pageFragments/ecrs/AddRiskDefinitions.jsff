@@ -328,6 +328,12 @@
           </af:panelGroupLayout>
         </f:facet>
         <af:panelGroupLayout id="pgl2" layout="vertical">
+          <af:panelGroupLayout id="pgl8" layout="horizontal" halign="end">
+            <af:outputText id="ot77"
+                           binding="#{pageFlowScope.manageCRSBean.hiddenPopupAlign}">
+              <af:showPopupBehavior/>
+            </af:outputText>
+          </af:panelGroupLayout>
           <af:panelGroupLayout id="pgl1" layout="horizontal">
             <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.CRS_NAME}" id="plam2">
               <af:outputText value="#{pageFlowScope.crsName}" id="ot3"/>
