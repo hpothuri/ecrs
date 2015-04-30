@@ -3,6 +3,7 @@ package com.novartis.ecrs.ui.bean;
 
 import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.CrsContentVORowImpl;
+import com.novartis.ecrs.model.view.HierarchyChildVORowImpl;
 import com.novartis.ecrs.ui.constants.ViewConstants;
 import com.novartis.ecrs.ui.utility.ADFUtils;
 import com.novartis.ecrs.ui.utility.ExcelExportUtils;
@@ -51,6 +52,7 @@ import oracle.binding.OperationBinding;
 import oracle.javatools.resourcebundle.BundleFactory;
 
 import oracle.jbo.Row;
+import oracle.jbo.RowIterator;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.ViewObject;
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
@@ -110,6 +112,8 @@ public class ManageCRSBean implements Serializable {
     private RichPopup copyPopup;
     private RichPanelGroupLayout copyPanel;
     private RichPopup pendingPopup;
+    private RichTable copyRiskDefTable;
+    private String currentStatus;
 
     public ManageCRSBean() {
         super();
@@ -289,6 +293,7 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}",
                            ModelConstants.STATUS_CURRENT);
         }
+        setCurrentStatus((String)ADFUtils.evaluateEL("#{bindings.ReleaseStatus.inputValue}"));
         DCBindingContainer bc = ADFUtils.getDCBindingContainer();
         OperationBinding ob = bc.getOperationBinding("filterCRSContent");
         ob.getParamsMap().put("userInRole", loggedInUserRole);
@@ -1403,9 +1408,9 @@ public class ManageCRSBean implements Serializable {
         }
         
         ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
-        Long riskId = (Long)ADFUtils.evaluateEL("#{row.CrsRiskId}");
+        Long riskId = (Long)ADFUtils.evaluateEL("#{copyRow.CrsRiskId}");
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
-        String databaseList = (String)ADFUtils.evaluateEL("#{row.DatabaseList}");
+        String databaseList = (String)ADFUtils.evaluateEL("#{copyRow.DatabaseList}");
         List<String> dbList = new ArrayList<String>();
         if(databaseList != null){
             String split[] = databaseList.split(",");
@@ -1414,7 +1419,7 @@ public class ManageCRSBean implements Serializable {
             }
         }
         setSelDatabases(dbList);
-        String riskPurposeList = (String)ADFUtils.evaluateEL("#{row.RiskPurposeList}");
+        String riskPurposeList = (String)ADFUtils.evaluateEL("#{copyRow.RiskPurposeList}");
         List<String> rpList = new ArrayList<String>();
         if(riskPurposeList != null){
             if(riskPurposeList.endsWith(",")){
@@ -1486,5 +1491,31 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.showPopup(copyPopup);
         if(copyPanel != null)
             copyPanel.setVisible(Boolean.FALSE);
+    }
+
+    public void deleteCopiedRiskDefs(ActionEvent actionEvent) {
+        RowKeySet rowKeySet = (RowKeySet)copyRiskDefTable.getSelectedRowKeys();
+        CollectionModel cm = (CollectionModel)copyRiskDefTable.getValue();
+        for (Object facesTreeRowKey : rowKeySet) {
+            cm.setRowKey(facesTreeRowKey);
+            JUCtrlHierNodeBinding rowData = (JUCtrlHierNodeBinding)cm.getRowData();
+            rowData.getRow().remove();
+        }
+    }
+
+    public void setCopyRiskDefTable(RichTable copyRiskDefTable) {
+        this.copyRiskDefTable = copyRiskDefTable;
+    }
+
+    public RichTable getCopyRiskDefTable() {
+        return copyRiskDefTable;
+    }
+
+    public void setCurrentStatus(String currentStatus) {
+        this.currentStatus = currentStatus;
+    }
+
+    public String getCurrentStatus() {
+        return currentStatus;
     }
 }

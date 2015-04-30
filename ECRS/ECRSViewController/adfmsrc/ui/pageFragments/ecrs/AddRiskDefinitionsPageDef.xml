@@ -17,6 +17,9 @@
     <iterator Binds="HierarchyChildVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
               id="HierarchyChildVOIterator"/>
     <iterator Binds="CopyCrsRiskVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CopyCrsRiskVOIterator"/>
+    <iterator Binds="CrsRiskBaseVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsRiskBaseVOIterator"/>
+    <searchRegion Binds="CrsRiskBaseVOIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer" id="CrsRiskBaseVOQuery"/>
   </executables>
   <bindings>
     <tree IterBinding="CrsRiskVOIterator" id="CrsRiskVO">
@@ -446,5 +449,129 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
+    <tree IterBinding="CrsRiskBaseVOIterator" id="CrsRiskBaseVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.riskdefs.CrsRiskBaseVO" Name="CrsRiskBaseVO0">
+        <AttrNames>
+          <Item Value="SafetyTopicOfInterest"/>
+          <Item Value="RiskPurposeSpFlag" Binds="RiskPurposeSpFlag2"/>
+          <Item Value="RiskPurposeDsFlag" Binds="RiskPurposeDsFlag2"/>
+          <Item Value="RiskPurposeRmFlag" Binds="RiskPurposeRmFlag2"/>
+          <Item Value="RiskPurposePsFlag" Binds="RiskPurposePsFlag2"/>
+          <Item Value="RiskPurposeIbFlag" Binds="RiskPurposeIbFlag2"/>
+          <Item Value="RiskPurposeCdFlag" Binds="RiskPurposeCdFlag2"/>
+          <Item Value="RiskPurposeOsFlag" Binds="RiskPurposeOsFlag2"/>
+          <Item Value="RiskPurposeMiFlag" Binds="RiskPurposeMiFlag2"/>
+          <Item Value="RiskPurposeErFlag" Binds="RiskPurposeErFlag2"/>
+          <Item Value="SocTerm"/>
+          <Item Value="DatabaseList"/>
+          <Item Value="DataDomain"/>
+          <Item Value="MeddraTerm"/>
+          <Item Value="MeddraLevel"/>
+          <Item Value="MeddraQualifier"/>
+          <Item Value="SearchCriteriaDetails"/>
+          <Item Value="MqmComment"/>
+          <Item Value="CrsEffectiveDtDef"/>
+          <Item Value="CrsEffectiveDtRel"/>
+          <Item Value="CrsId"/>
+          <Item Value="CrsRiskDefnId"/>
+          <Item Value="CrsRiskId"/>
+          <Item Value="MeddraCode"/>
+          <Item Value="MeddraDict"/>
+          <Item Value="MeddraExtension"/>
+          <Item Value="MeddraVersion"/>
+          <Item Value="MeddraVersionDate"/>
+          <Item Value="NonMeddraComponentComment"/>
+          <Item Value="RiskPurposeList"/>
+          <Item Value="SocDictContentEntryTs"/>
+          <Item Value="SocDictContentId"/>
+          <Item Value="TmsDictContentEntryTs"/>
+          <Item Value="TmsDictContentId"/>
+          <Item Value="TmsEndTs"/>
+          <Item Value="TmsUpdateFlag"/>
+          <Item Value="TmsUpdateFlagDt"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="CrsRiskBaseVOIterator" id="RiskPurposeSpFlag2" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeSpFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskBaseVOIterator" id="RiskPurposeDsFlag2" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeDsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskBaseVOIterator" id="RiskPurposeRmFlag2" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeRmFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskBaseVOIterator" id="RiskPurposePsFlag2" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposePsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskBaseVOIterator" id="RiskPurposeIbFlag2" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeIbFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskBaseVOIterator" id="RiskPurposeCdFlag2" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeCdFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskBaseVOIterator" id="RiskPurposeOsFlag2" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeOsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskBaseVOIterator" id="RiskPurposeMiFlag2" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeMiFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsRiskBaseVOIterator" id="RiskPurposeErFlag2" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RiskPurposeErFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
   </bindings>
 </pageDefinition>

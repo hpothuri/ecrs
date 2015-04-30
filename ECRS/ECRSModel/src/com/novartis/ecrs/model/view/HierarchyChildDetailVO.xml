@@ -8,9 +8,11 @@
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  UseGlueCode="false">
+  UseGlueCode="false"
+  ComponentClass="com.novartis.ecrs.model.view.HierarchyChildDetailVOImpl">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Coll|VarAccess"/>
   </DesignTime>
   <Properties>
     <SchemaBasedProperties>
@@ -19,7 +21,7 @@
     </SchemaBasedProperties>
   </Properties>
   <Variable
-    Name="bContentId"
+    Name="Bind_DictContentId"
     Kind="where"
     Type="java.lang.String"/>
   <SQLQuery><![CDATA[SELECT DISTINCT prikey,
@@ -46,7 +48,7 @@
         CHILD_EXISTS
      
 FROM TABLE (HIERARCHY_PKG.GET_HIERARCHY(
-	i_dict_content_id => :bContentId, 
+	i_dict_content_id => :Bind_DictContentId, 
 	--i_group_names => :activationGroup,
         i_group_names => smq_codelist_pkg.meddra_ag_nm || ',' || 
                             smq_codelist_pkg.cmq_draft_ag_nm || ',' ||

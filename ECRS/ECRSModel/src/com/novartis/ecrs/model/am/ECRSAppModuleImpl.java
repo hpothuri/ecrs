@@ -4,6 +4,7 @@ package com.novartis.ecrs.model.am;
 import com.novartis.ecrs.model.am.common.ECRSAppModule;
 import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.ECrsSearchVORowImpl;
+import com.novartis.ecrs.model.view.HierarchyChildDetailVOImpl;
 import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RolesTransientVOImpl;
@@ -624,5 +625,13 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getRetiredNmqCmqPrevUsedReport() {
         return (ViewObjectImpl)findViewObject("RetiredNmqCmqPrevUsedReport");
+    }
+
+    /**
+     * Container's getter for CrsRiskBaseVO.
+     * @return CrsRiskBaseVO
+     */
+    public ViewObjectImpl getCrsRiskBaseVO() {
+        return (ViewObjectImpl)findViewObject("CrsRiskBaseVO");
     }
 }

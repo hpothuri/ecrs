@@ -62,6 +62,14 @@
     </DesignTime>
   </Containee>
   <Containee
+    Name="riskdefs"
+    PackageName="com.novartis.ecrs.model.view.riskdefs"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_VO" Value="true"/>
+    </DesignTime>
+  </Containee>
+  <Containee
     Name="trans"
     PackageName="com.novartis.ecrs.model.view.trans"
     ObjectType="JboPackage">

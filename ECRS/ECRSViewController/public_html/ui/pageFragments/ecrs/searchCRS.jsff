@@ -36,7 +36,7 @@
                                   label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
                                   shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
                                   id="it8" contentStyle="width:170px;"
-                                  disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
+                                  disabled="#{pageFlowScope.manageCRSBean.inboxDisable}" required="true">
                 <af:selectItem label="CURRENT" id="si8" value="C"/>
                 <af:selectItem label="PENDING" id="si9" value="P"/>
               </af:selectOneChoice>

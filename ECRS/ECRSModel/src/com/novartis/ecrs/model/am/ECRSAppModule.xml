@@ -105,6 +105,9 @@
   <ViewUsage
     Name="RetiredNmqCmqPrevUsedReport"
     ViewObjectName="com.novartis.ecrs.model.view.report.RetiredNmqCmqprevUsedReport"/>
+  <ViewUsage
+    Name="CrsRiskBaseVO"
+    ViewObjectName="com.novartis.ecrs.model.view.riskdefs.CrsRiskBaseVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"
