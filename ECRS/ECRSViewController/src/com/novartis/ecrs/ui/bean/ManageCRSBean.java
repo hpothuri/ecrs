@@ -907,6 +907,23 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void onClickHierarchySearch(ActionEvent actionEvent) {
+        clickHierarchy();
+        RichPopup.PopupHints hints = new RichPopup.PopupHints();
+        hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN_ID, this.getHiddenPopupAlign());
+        hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN, RichPopup.PopupHints.AlignTypes.ALIGN_END_BEFORE);
+        hierPopup.show(hints);
+//        ADFUtils.showPopup(hierPopup);
+    }
+    
+    public void onClickCopyHierarchySearch(ActionEvent actionEvent) {
+        clickHierarchy();
+        RichPopup.PopupHints hints = new RichPopup.PopupHints();
+        hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN_ID, this.getCopyRiskDefTable());
+        hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN, RichPopup.PopupHints.AlignTypes.ALIGN_END_AFTER);
+        hierPopup.show(hints);
+    }
+    
+    private void clickHierarchy(){
         DCIteratorBinding iter = ADFUtils.findIterator("HierarchySearchVOIterator");
         ViewObject hierVO = iter.getViewObject();
         hierVO.executeEmptyRowSet();
@@ -919,11 +936,6 @@ public class ManageCRSBean implements Serializable {
         setContentId(null);
         if(childTreeTable != null)
             childTreeTable.setVisible(false);
-        RichPopup.PopupHints hints = new RichPopup.PopupHints();
-        hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN_ID, this.getHiddenPopupAlign());
-        hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN, RichPopup.PopupHints.AlignTypes.ALIGN_END_BEFORE);
-        hierPopup.show(hints);
-//        ADFUtils.showPopup(hierPopup);
     }
 
     public void setHierPopup(RichPopup hierPopup) {

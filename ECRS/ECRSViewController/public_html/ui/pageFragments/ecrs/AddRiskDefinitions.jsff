@@ -871,7 +871,7 @@
                                     actionListener="#{pageFlowScope.manageCRSBean.saveRiskDefs}" partialSubmit="true"/>
                   <af:commandButton text="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" id="cb19"
                                     icon="/images/hierarchy.gif"
-                                    actionListener="#{pageFlowScope.manageCRSBean.onClickHierarchySearch}"
+                                    actionListener="#{pageFlowScope.manageCRSBean.onClickCopyHierarchySearch}"
                                     partialSubmit="true"/>
                 </af:toolbar>
               </f:facet>
