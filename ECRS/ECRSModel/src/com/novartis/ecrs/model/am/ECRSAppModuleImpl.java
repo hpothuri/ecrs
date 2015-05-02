@@ -4,21 +4,34 @@ package com.novartis.ecrs.model.am;
 import com.novartis.ecrs.model.am.common.ECRSAppModule;
 import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.ECrsSearchVORowImpl;
+import com.novartis.ecrs.model.view.HierarchyChildDetailVOImpl;
 import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RolesTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.StateTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.UserRolesTransientVOImpl;
 
+import java.sql.Types;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
+import java.util.Map;
+
+import oracle.adf.share.ADFContext;
+
+import oracle.jbo.JboException;
 import oracle.jbo.Row;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.ViewObject;
 import oracle.jbo.server.ApplicationModuleImpl;
+import oracle.jbo.server.DBTransaction;
 import oracle.jbo.server.ViewLinkImpl;
 import oracle.jbo.server.ViewObjectImpl;
+
+import oracle.jdbc.OracleCallableStatement;
 
 
 // ---------------------------------------------------------------------
@@ -653,7 +666,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public ViewObjectImpl getCrsRiskBaseVO() {
         return (ViewObjectImpl)findViewObject("CrsRiskBaseVO");
     }
-
+     
     /**
      * Container's getter for CrsContentBaseVO1.
      * @return CrsContentBaseVO1
@@ -666,10 +679,38 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      * Refresh repository by calling crs_tms_sync function call.
      * Blue ball will be shown on the UI if TMS_UPDATE_FLAG is Y
      */
-    public void refreshRepository(Long crsId){
+    public boolean refreshRepository(Long crsId) {
         //Execute the function call.
-        
-        //Reexecute the VO
-        initRiskRelation(crsId, "P");
+        DBTransaction txn = getDBTransaction();
+        OracleCallableStatement cstmt = null;
+        String cs = null;
+        String returnCode = null;
+        if (crsId != null) {
+            cs = "{?=call CRS_UI_TMS_UTILS.CRS_TMS_SYNC (?)}";
+            cstmt = (OracleCallableStatement)txn.createCallableStatement(cs, DBTransaction.DEFAULT);
+            try {
+                cstmt.registerOutParameter(1, Types.VARCHAR);
+                cstmt.setNUMBER(2, new oracle.jbo.domain.Number(crsId));
+                cstmt.execute();
+                returnCode = cstmt.getString(1);
+
+                if ("0".equalsIgnoreCase(returnCode)) {
+                    //Reexecute the VO
+                    initRiskRelation(crsId, "P");
+                    return true;
+                } else
+                    return false;
+            } catch (Exception e) {
+                return false;
+            } finally {
+                try {
+                    if (cstmt != null && !cstmt.isClosed())
+                        cstmt.close();
+                } catch (Exception e) {
+                    throw new JboException(e);
+                }
+            }
+        } else
+            return true;
     }
 }

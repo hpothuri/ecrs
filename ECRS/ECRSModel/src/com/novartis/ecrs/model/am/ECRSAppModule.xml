@@ -125,6 +125,39 @@
     Reversed="false"/>
   <ClientInterface>
     <Method
+      Name="copyCurrentRiskRelation"
+      MethodName="copyCurrentRiskRelation">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="srcRiskId"
+        Type="java.lang.Long"/>
+      <Parameter
+        Name="destCrsId"
+        Type="java.lang.Long"/>
+    </Method>
+    <Method
+      Name="copyRoutineDefinition"
+      MethodName="copyRoutineDefinition">
+      <Return
+        Type="void"/>
+      <Parameter
+        Name="crsId"
+        Type="java.lang.Long"/>
+    </Method>
+    <Method
+      Name="deleteCrs"
+      MethodName="deleteCrs">
+      <Return
+        Type="void"/>
+    </Method>
+    <Method
+      Name="fetchDatabases"
+      MethodName="fetchDatabases">
+      <Return
+        Type="java.util.List"/>
+    </Method>
+    <Method
       Name="fetchDesignees"
       MethodName="fetchDesignees">
       <Return
@@ -146,39 +179,6 @@
         Type="boolean"/>
     </Method>
     <Method
-      Name="copyRoutineDefinition"
-      MethodName="copyRoutineDefinition">
-      <Return
-        Type="void"/>
-      <Parameter
-        Name="crsId"
-        Type="java.lang.Long"/>
-    </Method>
-    <Method
-      Name="fetchDatabases"
-      MethodName="fetchDatabases">
-      <Return
-        Type="java.util.List"/>
-    </Method>
-    <Method
-      Name="deleteCrs"
-      MethodName="deleteCrs">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="copyCurrentRiskRelation"
-      MethodName="copyCurrentRiskRelation">
-      <Return
-        Type="void"/>
-      <Parameter
-        Name="srcRiskId"
-        Type="java.lang.Long"/>
-      <Parameter
-        Name="destCrsId"
-        Type="java.lang.Long"/>
-    </Method>
-    <Method
       Name="initRiskRelation"
       MethodName="initRiskRelation">
       <Return
@@ -194,7 +194,7 @@
       Name="refreshRepository"
       MethodName="refreshRepository">
       <Return
-        Type="void"/>
+        Type="boolean"/>
       <Parameter
         Name="crsId"
         Type="java.lang.Long"/>
