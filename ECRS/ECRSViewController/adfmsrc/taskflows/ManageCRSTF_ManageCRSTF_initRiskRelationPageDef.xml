@@ -5,6 +5,8 @@
   <executables>
     <variableIterator id="variables"/>
     <iterator Binds="CrsContentVO" RangeSize="10" DataControl="ECRSAppModuleDataControl" id="CrsContentVOIterator"/>
+    <iterator Binds="CrsContentBaseVO" RangeSize="10" DataControl="ECRSAppModuleDataControl"
+              id="CrsContentBaseVOIterator"/>
   </executables>
   <bindings>
     <methodAction id="initRiskRelation" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
@@ -22,6 +24,16 @@
     <attributeValues IterBinding="CrsContentVOIterator" id="CrsId">
       <AttrNames>
         <Item Value="CrsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="CrsIdBase">
+      <AttrNames>
+        <Item Value="CrsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="CrsNameBase">
+      <AttrNames>
+        <Item Value="CrsName"/>
       </AttrNames>
     </attributeValues>
   </bindings>

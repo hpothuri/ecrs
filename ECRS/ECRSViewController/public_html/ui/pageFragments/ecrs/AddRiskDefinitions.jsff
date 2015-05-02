@@ -33,6 +33,9 @@
                                   icon="/images/Create.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.addRiskDefinition}" partialSubmit="true"
                                   visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+                <af:commandButton text="#{ecrsviewcontrollerBundle.REFRESH_REPOSITORY}" id="cb22"
+                                  icon="/images/database-refresh-icon.png"
+                                  actionListener="#{pageFlowScope.manageCRSBean.refreshRepository}"/>
               </af:toolbar>
             </f:facet>
             <af:table value="#{bindings.CrsRiskVO.collectionModel}" var="row" rows="#{bindings.CrsRiskVO.rangeSize}"
@@ -132,8 +135,12 @@
               <af:column id="c23" headerText="#{ecrsviewcontrollerBundle.CRS_DEFINTION}">
                 <af:column sortProperty="#{bindings.CrsRiskVO.hints.MeddraTerm.name}" filterable="true"
                            headerText="#{bindings.CrsRiskVO.hints.MeddraTerm.label}" id="c14" width="200">
-                  <af:outputText value="#{row.MeddraTerm}" shortDesc="#{bindings.CrsRiskVO.hints.MeddraTerm.tooltip}"
-                                 id="ot14"/>
+                  <af:panelGroupLayout id="pgl9">
+                    <af:image source="/images/BlueBall.gif" id="i6"
+                              visible="#{pageFlowScope.manageCRSBean.repoRefreshed and row.TmsUpdateFlag eq 'Y'}"/>
+                    <af:outputText value="#{row.MeddraTerm}" shortDesc="#{bindings.CrsRiskVO.hints.MeddraTerm.tooltip}"
+                                   id="ot14"/>
+                  </af:panelGroupLayout>
                 </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskVO.hints.MeddraLevel.name}" filterable="true" sortable="true"
                            headerText="#{bindings.CrsRiskVO.hints.MeddraLevel.label}" id="c15" width="50">
@@ -578,10 +585,11 @@
           <af:dragSource actions="COPY" defaultAction="COPY" discriminant="copyRows"/>
         </af:table>
         <af:treeTable value="#{bindings.HierarchyChildVO.treeModel}" var="node"
-                      selectionListener="#{bindings.HierarchyChildVO.treeModel.makeCurrent}" rowSelection="single"
+                      selectionListener="#{bindings.HierarchyChildVO.treeModel.makeCurrent}" rowSelection="multiple"
                       id="tt1" styleClass="AFStretchWidth" visible="false"
                       binding="#{pageFlowScope.manageCRSBean.childTreeTable}" initiallyExpanded="true"
-                      contentDelivery="immediate">
+                      contentDelivery="immediate"
+                      selectedRowKeys="#{bindings.HierarchySearchVO.treeModel.selectedRow}">
           <f:facet name="nodeStamp">
             <af:column id="c33" width="150">
               <af:outputText value="#{node.Term}" id="ot19"/>
@@ -644,7 +652,8 @@
         <af:panelGroupLayout id="pgl4" layout="vertical">
           <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_OF_INTEREST}" id="plam6">
             <af:inputText label="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_OF_INTEREST}" id="it3" simple="true"
-                          value="#{pageFlowScope.manageCRSBean.safetyTopicOfInterest}" autoSubmit="true"/>
+                          value="#{pageFlowScope.manageCRSBean.safetyTopicOfInterest}" autoSubmit="true"
+                          binding="#{pageFlowScope.manageCRSBean.stoiBinding}"/>
             <f:facet name="end">
               <af:commandButton text="#{ecrsviewcontrollerBundle.SEARCH}" id="cb17"
                                 actionListener="#{pageFlowScope.manageCRSBean.searchCrs}" immediate="true"
@@ -659,95 +668,96 @@
                     selectionListener="#{bindings.CopyCrsRiskVO.collectionModel.makeCurrent}" rowSelection="single"
                     id="t7" styleClass="AFStretchWidth">
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.SafetyTopicOfInterest.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.SafetyTopicOfInterest.label}" id="c38">
+                       headerText="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_OF_INTEREST}" id="c38">
               <af:commandLink shortDesc="#{bindings.CopyCrsRiskVO.hints.SafetyTopicOfInterest.tooltip}" id="cl1"
                               text="#{copyRow.SafetyTopicOfInterest}" partialSubmit="true"
                               actionListener="#{pageFlowScope.manageCRSBean.copyCrsRiskRelation}" immediate="true"/>
             </af:column>
             <af:column id="c48" headerText="#{ecrsviewcontrollerBundle.PURPOSE_OF_THE_RISK_DEFINTION}">
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeSpFlag.name}" sortable="true"
-                         headerText="#{bindings.CopyCrsRiskVO.hints.RiskPurposeSpFlag.label}" id="c39" width="20">
+                         headerText="#{ecrsviewcontrollerBundle.SP}" id="c39" width="20">
                 <af:outputText value="#{copyRow.RiskPurposeSpFlag eq 'Y' ? 'X' : ''}" id="ot68"
                                inlineStyle="font-weight:bold;"/>
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeDsFlag.name}" sortable="true"
-                         headerText="#{bindings.CopyCrsRiskVO.hints.RiskPurposeDsFlag.label}" id="c40" width="20">
+                         headerText="#{ecrsviewcontrollerBundle.DS}" id="c40" width="20">
                 <af:outputText value="#{copyRow.RiskPurposeDsFlag eq 'Y' ? 'X' : ''}" id="ot69"
                                inlineStyle="font-weight:bold;"/>
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeRmFlag.name}" sortable="true"
-                         headerText="#{bindings.CopyCrsRiskVO.hints.RiskPurposeRmFlag.label}" id="c41" width="20">
+                         headerText="#{ecrsviewcontrollerBundle.RM}" id="c41" width="20">
                 <af:outputText value="#{copyRow.RiskPurposeRmFlag eq 'Y' ? 'X' : ''}" id="ot70"
                                inlineStyle="font-weight:bold;"/>
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposePsFlag.name}" sortable="true"
-                         headerText="#{bindings.CopyCrsRiskVO.hints.RiskPurposePsFlag.label}" id="c42" width="20">
+                         headerText="#{ecrsviewcontrollerBundle.PS}" id="c42" width="20">
                 <af:outputText value="#{copyRow.RiskPurposePsFlag eq 'Y' ? 'X' : ''}" id="ot71"
                                inlineStyle="font-weight:bold;"/>
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeIbFlag.name}" sortable="true"
-                         headerText="#{bindings.CopyCrsRiskVO.hints.RiskPurposeIbFlag.label}" id="c43" width="20">
+                         headerText="#{ecrsviewcontrollerBundle.IB}" id="c43" width="20">
                 <af:outputText value="#{copyRow.RiskPurposeIbFlag eq 'Y' ? 'X' : ''}" id="ot72"
                                inlineStyle="font-weight:bold;"/>
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeCdFlag.name}" sortable="true"
-                         headerText="#{bindings.CopyCrsRiskVO.hints.RiskPurposeCdFlag.label}" id="c44" width="20">
+                         headerText="#{ecrsviewcontrollerBundle.CD}" id="c44" width="20">
                 <af:outputText value="#{copyRow.RiskPurposeCdFlag eq 'Y' ? 'X' : ''}" id="ot73"
                                inlineStyle="font-weight:bold;"/>
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeOsFlag.name}" sortable="true"
-                         headerText="#{bindings.CopyCrsRiskVO.hints.RiskPurposeOsFlag.label}" id="c45" width="20">
+                         headerText="#{ecrsviewcontrollerBundle.OS}" id="c45" width="20">
                 <af:outputText value="#{copyRow.RiskPurposeOsFlag eq 'Y' ? 'X' : ''}" id="ot74"
                                inlineStyle="font-weight:bold;"/>
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeMiFlag.name}" sortable="true"
-                         headerText="#{bindings.CopyCrsRiskVO.hints.RiskPurposeMiFlag.label}" id="c46" width="20">
+                         headerText="#{ecrsviewcontrollerBundle.MI}" id="c46" width="20">
                 <af:outputText value="#{copyRow.RiskPurposeMiFlag eq 'Y' ? 'X' : ''}" id="ot75"
                                inlineStyle="font-weight:bold;"/>
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeErFlag.name}" sortable="true"
-                         headerText="#{bindings.CopyCrsRiskVO.hints.RiskPurposeErFlag.label}" id="c47" width="20">
+                         headerText="#{ecrsviewcontrollerBundle.ER}" id="c47" width="20">
                 <af:outputText value="#{copyRow.RiskPurposeErFlag eq 'Y' ? 'X' : ''}" id="ot76"
                                inlineStyle="font-weight:bold;"/>
               </af:column>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.SocTerm.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.SocTerm.label}" id="c481">
+                       headerText="#{ecrsviewcontrollerBundle.SOC}" id="c481">
               <af:outputText value="#{copyRow.SocTerm}" shortDesc="#{bindings.CopyCrsRiskVO.hints.SocTerm.tooltip}"
                              id="ot25"/>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.DatabaseList.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.DatabaseList.label}" id="c49">
+                       headerText="#{ecrsviewcontrollerBundle.DATABASE}" id="c49">
               <af:outputText value="#{copyRow.DatabaseList}"
                              shortDesc="#{bindings.CopyCrsRiskVO.hints.DatabaseList.tooltip}" id="ot26"/>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.DataDomain.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.DataDomain.label}" id="c50">
+                       headerText="#{ecrsviewcontrollerBundle.DATA_DOMAIN}" id="c50">
               <af:outputText value="#{copyRow.DataDomain}" shortDesc="#{bindings.CopyCrsRiskVO.hints.DataDomain.tooltip}"
                              id="ot27"/>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraTerm.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.MeddraTerm.label}" id="c51">
+                       headerText="#{ecrsviewcontrollerBundle.MEDDRA_TERM}" id="c51">
               <af:outputText value="#{copyRow.MeddraTerm}" shortDesc="#{bindings.CopyCrsRiskVO.hints.MeddraTerm.tooltip}"
                              id="ot28"/>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraLevel.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.MeddraLevel.label}" id="c52" width="50">
+                       headerText="#{ecrsviewcontrollerBundle.MEDDRA_LEVEL}" id="c52" width="50">
               <af:outputText value="#{copyRow.MeddraLevel}" shortDesc="#{bindings.CopyCrsRiskVO.hints.MeddraLevel.tooltip}"
                              id="ot29"/>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraQualifier.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.MeddraQualifier.label}" id="c485" width="50">
+                       headerText="#{ecrsviewcontrollerBundle.MEDDRA_QUALIFIER}" id="c485" width="50">
               <af:outputText value="#{copyRow.MeddraQualifier}"
                              shortDesc="#{bindings.CopyCrsRiskVO.hints.MeddraQualifier.tooltip}" id="ot30"/>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraCode.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.MeddraCode.label}" id="c53" width="50">
+                       headerText="#{bindings.CopyCrsRiskVO.hints.MeddraCode.label}" id="c53" width="50"
+                       rendered="false">
               <af:outputText value="#{copyRow.MeddraCode}" shortDesc="#{bindings.CopyCrsRiskVO.hints.MeddraCode.tooltip}"
                              id="ot31"/>
             </af:column>
             <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.name}" sortable="true"
-                       headerText="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.label}" id="c54" width="50">
+                       headerText="#{ecrsviewcontrollerBundle.SEARCH_CRITERIA_DETAILS}" id="c54" width="50">
               <af:outputText value="#{copyRow.SearchCriteriaDetails}"
                              shortDesc="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.tooltip}" id="ot32"/>
             </af:column>
@@ -760,27 +770,29 @@
                             columns="#{bindings.SafetyTopicOfInterest.hints.displayWidth}"
                             maximumLength="#{bindings.SafetyTopicOfInterest.hints.precision}"
                             shortDesc="#{bindings.SafetyTopicOfInterest.hints.tooltip}" id="it7" required="true"
-                            contentStyle="width:200px;">
+                            contentStyle="width:200px;" autoSubmit="true">
                 <f:validator binding="#{bindings.SafetyTopicOfInterest.validator}"/>
               </af:inputText>
               <af:selectManyChoice label="#{ecrsviewcontrollerBundle.DATABASE}" id="smc3"
-                                   value="#{pageFlowScope.manageCRSBean.selDatabases}" autoSubmit="true">
+                                   value="#{pageFlowScope.manageCRSBean.selDatabases}" autoSubmit="true"
+                                   binding="#{pageFlowScope.manageCRSBean.copyDBListBinding}">
                 <f:selectItems value="#{pageFlowScope.manageCRSBean.databaseList}" id="si16"/>
               </af:selectManyChoice>
               <af:inputText value="#{bindings.DataDomain.inputValue}" label="#{bindings.DataDomain.hints.label}"
                             required="#{bindings.DataDomain.hints.mandatory}"
                             columns="#{bindings.DataDomain.hints.displayWidth}"
                             maximumLength="#{bindings.DataDomain.hints.precision}"
-                            shortDesc="#{bindings.DataDomain.hints.tooltip}" id="it8">
+                            shortDesc="#{bindings.DataDomain.hints.tooltip}" id="it8" autoSubmit="true">
                 <f:validator binding="#{bindings.DataDomain.validator}"/>
               </af:inputText>
               <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
                                   shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc5" contentStyle="width:200px;"
-                                  required="true">
+                                  required="true" autoSubmit="true">
                 <f:selectItems value="#{bindings.SocTerm.items}" id="si18"/>
               </af:selectOneChoice>
               <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc4"
-                                   value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true">
+                                   value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true"
+                                   binding="#{pageFlowScope.manageCRSBean.copyRPListBinding}">
                 <af:selectItem label="SP" id="si19" value="SP"/>
                 <af:selectItem label="DS" id="si20" value="DS"/>
                 <af:selectItem label="RM" id="si21" value="RM"/>
@@ -799,7 +811,7 @@
                             columns="#{bindings.NonMeddraComponentComment.hints.displayWidth}"
                             maximumLength="#{bindings.NonMeddraComponentComment.hints.precision}"
                             shortDesc="#{bindings.NonMeddraComponentComment.hints.tooltip}" id="it9" rows="3"
-                            contentStyle="width:500px;">
+                            contentStyle="width:500px;" autoSubmit="true">
                 <f:validator binding="#{bindings.NonMeddraComponentComment.validator}"/>
               </af:inputText>
             </af:panelFormLayout>

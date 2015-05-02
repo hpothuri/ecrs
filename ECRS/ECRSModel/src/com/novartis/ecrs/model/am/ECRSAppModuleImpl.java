@@ -296,19 +296,19 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      * Info : Metdod to show the risk definitions (if any) for the selected CRS on load of risk definitions page.
      */
     public void initRiskRelation(Long crsId, String status){
-        if(status != null && "P".equals(status)){
-            ViewObject riskVO = this.getCrsRiskVO();
-            riskVO.setWhereClause("CRS_ID = "+crsId);
-            riskVO.executeQuery();
-            ViewObject riskBaseVO = this.getCrsRiskBaseVO();
-            riskBaseVO.executeEmptyRowSet();
-        }
-        else{
+        if(status != null && "C".equals(status)){
             ViewObject riskBaseVO = this.getCrsRiskBaseVO();
             riskBaseVO.setWhereClause("CRS_ID = "+crsId);
             riskBaseVO.executeQuery();
             ViewObject riskVO = this.getCrsRiskVO();
             riskVO.executeEmptyRowSet();
+        }
+        else{
+            ViewObject riskVO = this.getCrsRiskVO();
+            riskVO.setWhereClause("CRS_ID = "+crsId);
+            riskVO.executeQuery();
+            ViewObject riskBaseVO = this.getCrsRiskBaseVO();
+            riskBaseVO.executeEmptyRowSet();
         }
     }
 
@@ -660,5 +660,16 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getCrsContentBaseVO() {
         return (ViewObjectImpl)findViewObject("CrsContentBaseVO");
+    }
+    
+    /**
+     * Refresh repository by calling crs_tms_sync function call.
+     * Blue ball will be shown on the UI if TMS_UPDATE_FLAG is Y
+     */
+    public void refreshRepository(Long crsId){
+        //Execute the function call.
+        
+        //Reexecute the VO
+        initRiskRelation(crsId, "P");
     }
 }

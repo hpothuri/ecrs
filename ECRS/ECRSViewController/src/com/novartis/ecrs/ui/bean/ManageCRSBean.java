@@ -35,6 +35,7 @@ import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichTable;
 import oracle.adf.view.rich.component.rich.data.RichTreeTable;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
+import oracle.adf.view.rich.component.rich.input.RichSelectManyChoice;
 import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
 import oracle.adf.view.rich.component.rich.layout.RichPanelGroupLayout;
@@ -47,6 +48,8 @@ import oracle.adf.view.rich.dnd.DnDAction;
 import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.event.DropEvent;
 import oracle.adf.view.rich.event.PopupCanceledEvent;
+import oracle.adf.view.rich.util.ResetUtils;
+
 import oracle.adf.view.rich.util.ResetUtils;
 
 import oracle.binding.BindingContainer;
@@ -120,10 +123,14 @@ public class ManageCRSBean implements Serializable {
     private RichPanelLabelAndMessage savedSuccessMessage;
     private RichPanelLabelAndMessage copySuccessMessage;
     private RichOutputText hiddenPopupAlign;
+    private RichInputText stoiBinding;
+    private RichSelectManyChoice copyDBListBinding;
+    private RichSelectManyChoice copyRPListBinding;
     private String searchFacetName;
     private transient UIXSwitcher searchSwitherBinding;
     private String createFacetName;
     private UIXSwitcher createSwitherBinding;
+    private Boolean repoRefreshed;
 
     public ManageCRSBean() {
         super();
@@ -207,7 +214,7 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.setEL("#{bindings.Designee.inputValue}", designees.substring(1));
         } else
             ADFUtils.setEL("#{bindings.Designee.inputValue}",null);
-//        ADFUtils.setEL("#{bindings.CrsName.inputValue}", "Routine");
+//        ADFUtils.setEL("#{bindings.CrsName.inputValue}", "ROUTINE");
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0)
@@ -401,6 +408,10 @@ public class ManageCRSBean implements Serializable {
     public void initRisRel(){
         String crsName = (String)ADFUtils.evaluateEL("#{bindings.CrsName.inputValue}");
         Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
+        if(crsId == null){
+            crsName = (String)ADFUtils.evaluateEL("#{bindings.CrsNameBase.inputValue}");
+            crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsIdBase.inputValue}");
+        }
         ADFUtils.setPageFlowScopeValue("crsId", crsId);
         ADFUtils.setPageFlowScopeValue("crsName", crsName);
         Map params = new HashMap<String, Object>();
@@ -411,6 +422,7 @@ public class ManageCRSBean implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        setRepoRefreshed(Boolean.FALSE);
     }
 
     public void onSelectInbox(ValueChangeEvent vce) {
@@ -647,6 +659,7 @@ public class ManageCRSBean implements Serializable {
         if (oper.getErrors().size() > 0) 
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
         ADFUtils.addPartialTarget(riskDefTable);
+        setRepoRefreshed(Boolean.FALSE);
     }
 
 //    /**
@@ -1430,6 +1443,9 @@ public class ManageCRSBean implements Serializable {
         ViewObject childVO = childIter.getViewObject();
         childVO.setNamedWhereClauseParam("bContentId", ADFUtils.evaluateEL("#{row.ContentId}"));
         childVO.executeQuery();
+        if(childVO.getEstimatedRowCount() > 0){
+            childVO.setCurrentRow(childVO.first());
+        }
         getChildTreeTable().setVisible(Boolean.TRUE);
         
         String qual = (String)ADFUtils.evaluateEL("#{row.Mqcrtev}");
@@ -1466,6 +1482,7 @@ public class ManageCRSBean implements Serializable {
         DCIteratorBinding iter = ADFUtils.findIterator("CopyCrsRiskVOIterator");
         ViewObject crsSearchVO = iter.getViewObject();
         crsSearchVO.setWhereClause("SAFETY_TOPIC_OF_INTEREST like '"+stoi+"'");
+        System.err.println(crsSearchVO.getQuery());
         crsSearchVO.executeQuery();
     }
 
@@ -1494,7 +1511,7 @@ public class ManageCRSBean implements Serializable {
         if(databaseList != null){
             String split[] = databaseList.split(",");
             for(String db : split){
-                dbList.add(db);
+                dbList.add(db.trim());
             }
         }
         setSelDatabases(dbList);
@@ -1506,11 +1523,14 @@ public class ManageCRSBean implements Serializable {
             }
             String split[] = riskPurposeList.split(",");
             for(String rp : split){
-                rpList.add(rp);
+                rpList.add(rp.trim());
             }
         }
         setSelRiskPurposes(rpList);
-        
+        if(copyDBListBinding != null)
+            ResetUtils.reset(copyDBListBinding);
+        if(copyRPListBinding != null)
+            ResetUtils.reset(copyRPListBinding);
         Map params = new HashMap<String, Object>();
         params.put("srcRiskId", riskId);
         params.put("destCrsId", crsId);
@@ -1562,12 +1582,13 @@ public class ManageCRSBean implements Serializable {
     
     public void onClickCopy(ActionEvent actionEvent) {
         setSafetyTopicOfInterest(null);
+        if(stoiBinding != null)
+            ResetUtils.reset(stoiBinding);
         setSelDatabases(null);
         setSelDesigneeList(null);
         DCIteratorBinding iter = ADFUtils.findIterator("CopyCrsRiskVOIterator");
         ViewObject crsSearchVO = iter.getViewObject();
         crsSearchVO.executeEmptyRowSet();
-        setSafetyTopicOfInterest(null);
         ADFUtils.showPopup(copyPopup);
         if(copyPanel != null)
             copyPanel.setVisible(Boolean.FALSE);
@@ -1655,6 +1676,30 @@ public class ManageCRSBean implements Serializable {
         return hiddenPopupAlign;
     }
 
+    public void setStoiBinding(RichInputText stoiBinding) {
+        this.stoiBinding = stoiBinding;
+    }
+
+    public RichInputText getStoiBinding() {
+        return stoiBinding;
+    }
+
+    public void setCopyDBListBinding(RichSelectManyChoice copyDBListBinding) {
+        this.copyDBListBinding = copyDBListBinding;
+    }
+
+    public RichSelectManyChoice getCopyDBListBinding() {
+        return copyDBListBinding;
+    }
+
+    public void setCopyRPListBinding(RichSelectManyChoice copyRPListBinding) {
+        this.copyRPListBinding = copyRPListBinding;
+    }
+
+    public RichSelectManyChoice getCopyRPListBinding() {
+        return copyRPListBinding;
+    }
+
     /**
      * @param searchFacetName
      */
@@ -1738,5 +1783,25 @@ public class ManageCRSBean implements Serializable {
      */
     public UIXSwitcher getCreateSwitherBinding() {
         return createSwitherBinding;
+    }
+
+    public void refreshRepository(ActionEvent actionEvent) {
+        Map params = new HashMap<String, Object>();
+        params.put("crsId", ADFUtils.getPageFlowScopeValue("crsId"));
+        try {
+            ADFUtils.executeAction("refreshRepository", params);
+            setRepoRefreshed(Boolean.TRUE);
+            ADFUtils.addPartialTarget(riskDefTable);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+    }
+
+    public void setRepoRefreshed(Boolean repoRefreshed) {
+        this.repoRefreshed = repoRefreshed;
+    }
+
+    public Boolean getRepoRefreshed() {
+        return repoRefreshed;
     }
 }

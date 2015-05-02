@@ -23,4 +23,6 @@ public interface ECRSAppModule extends ApplicationModule {
     void copyCurrentRiskRelation(Long srcRiskId, Long destCrsId);
 
     void initRiskRelation(Long crsId, String status);
+
+    void refreshRepository(Long crsId);
 }
