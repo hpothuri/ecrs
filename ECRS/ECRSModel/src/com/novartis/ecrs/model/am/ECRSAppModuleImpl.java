@@ -4,7 +4,6 @@ package com.novartis.ecrs.model.am;
 import com.novartis.ecrs.model.am.common.ECRSAppModule;
 import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.ECrsSearchVORowImpl;
-import com.novartis.ecrs.model.view.HierarchyChildDetailVOImpl;
 import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RolesTransientVOImpl;
@@ -144,6 +143,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         ViewObjectImpl searchVO = this.getECrsSearchVO();
         
         //IF INBOX SELECTED - PENDING ONES IN USER'S QUEUE
+        ECrsSearchVORowImpl row = null;
         if (isInboxDisable) {
             whereClause +=
                     "RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING +
@@ -163,7 +163,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         // INBOX NOT SELECTED
         } else {
 
-            ECrsSearchVORowImpl row = (ECrsSearchVORowImpl)searchVO.getCurrentRow();
+            row = (ECrsSearchVORowImpl)searchVO.getCurrentRow();
 
             if (row.getReleaseStatus() != null)
                 whereClause += "RELEASE_STATUS_FLAG = '" + row.getReleaseStatus() + "' AND ";
@@ -209,7 +209,18 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             whereClause =
                     whereClause.substring(0, whereClause.length() - 4) + "";
         
-        ViewObjectImpl crsContentVO = this.getCrsContentVO();
+        ViewObjectImpl crsContentVO = null;
+        if (ModelConstants.STATUS_PENDING.equals(row.getReleaseStatus())) {
+            crsContentVO = this.getCrsContentVO();
+        } else {
+            crsContentVO = this.getCrsContentBaseVO();
+        }
+        crsContentVO.setWhereClause(whereClause);
+        crsContentVO.executeQuery();
+        crsContentVO.setWhereClause(null);
+        crsContentVO.applyViewCriteria(null);
+        
+        
        // crsContentVO.setNestedSelectForFullSql(false);
         //System.out.println("----->"+whereClause);
        // System.out.println("--->>>"+ crsContentVO.getWhereClause());
@@ -217,11 +228,8 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
 //        crsContentVO.applyViewCriteria(null);
 //        crsContentVO.executeQuery();
         //Apply whereClause to crsContentVO
-        crsContentVO.setWhereClause(whereClause);
        // System.out.println("----->"+crsContentVO.getQuery());
-        crsContentVO.executeQuery(); 
-        crsContentVO.setWhereClause(null);
-        crsContentVO.applyViewCriteria(null);
+        
     }
 
     /**
@@ -644,5 +652,13 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getCrsRiskBaseVO() {
         return (ViewObjectImpl)findViewObject("CrsRiskBaseVO");
+    }
+
+    /**
+     * Container's getter for CrsContentBaseVO1.
+     * @return CrsContentBaseVO1
+     */
+    public ViewObjectImpl getCrsContentBaseVO() {
+        return (ViewObjectImpl)findViewObject("CrsContentBaseVO");
     }
 }

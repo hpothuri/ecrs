@@ -3,7 +3,7 @@ package com.novartis.ecrs.ui.bean;
 
 import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.CrsContentVORowImpl;
-import com.novartis.ecrs.model.view.HierarchyChildVORowImpl;
+import com.novartis.ecrs.model.view.base.CrsContentBaseVORowImpl;
 import com.novartis.ecrs.ui.constants.ViewConstants;
 import com.novartis.ecrs.ui.utility.ADFUtils;
 import com.novartis.ecrs.ui.utility.ExcelExportUtils;
@@ -47,6 +47,7 @@ import oracle.adf.view.rich.dnd.DnDAction;
 import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.event.DropEvent;
 import oracle.adf.view.rich.event.PopupCanceledEvent;
+import oracle.adf.view.rich.util.ResetUtils;
 
 import oracle.binding.BindingContainer;
 import oracle.binding.OperationBinding;
@@ -54,7 +55,6 @@ import oracle.binding.OperationBinding;
 import oracle.javatools.resourcebundle.BundleFactory;
 
 import oracle.jbo.Row;
-import oracle.jbo.RowIterator;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.ViewObject;
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
@@ -62,6 +62,7 @@ import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
 import oracle.security.crypto.util.InvalidFormatException;
 
 import org.apache.myfaces.trinidad.component.UIXCollection;
+import org.apache.myfaces.trinidad.component.UIXSwitcher;
 import org.apache.myfaces.trinidad.event.SelectionEvent;
 import org.apache.myfaces.trinidad.model.CollectionModel;
 import org.apache.myfaces.trinidad.model.RowKeySet;
@@ -119,6 +120,10 @@ public class ManageCRSBean implements Serializable {
     private RichPanelLabelAndMessage savedSuccessMessage;
     private RichPanelLabelAndMessage copySuccessMessage;
     private RichOutputText hiddenPopupAlign;
+    private String searchFacetName;
+    private transient UIXSwitcher searchSwitherBinding;
+    private String createFacetName;
+    private UIXSwitcher createSwitherBinding;
 
     public ManageCRSBean() {
         super();
@@ -142,6 +147,13 @@ public class ManageCRSBean implements Serializable {
         if (ADFUtils.evaluateEL("#{pageFlowScope.flowType}") != null) {
             flowType =
                     (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
+            
+            if (ViewConstants.FLOW_TYPE_CREATE.equals(flowType) ||
+                ViewConstants.FLOW_TYPE_UPDATE.equals(flowType)) {
+                setCreateFacetName(ViewConstants.CREATE_UPDATE_COPY_FACET_NAME);
+            } else
+                setCreateFacetName(ViewConstants.CREATE_CURR_BASE_FACET_NAME);
+            
 //            if (ViewConstants.FLOW_TYPE_SEARCH.equals(flowType) ||
 //                ModelConstants.ROLE_BSL.equals(loggedInUserRole))
 //                setBslFacetName("BSL");
@@ -305,6 +317,12 @@ public class ManageCRSBean implements Serializable {
         ob.getParamsMap().put("userName", getUserName());
         ob.getParamsMap().put("isInboxDisable", isInboxDisable());
         ob.execute();
+        if (ModelConstants.STATUS_PENDING.equals(ADFUtils.evaluateEL("#{bindings.ReleaseStatus.inputValue}"))) {
+            setSearchFacetName(ViewConstants.SEARCH_PENDING_STG_FACET_NAME);
+        } else
+            setSearchFacetName(ViewConstants.SEARCH_CURR_BASE_FACET_NAME);
+        
+        ADFUtils.addPartialTarget(getSearchSwitherBinding());
         if (ob.getErrors().size() > 0)
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
                                       FacesMessage.SEVERITY_ERROR);
@@ -321,6 +339,9 @@ public class ManageCRSBean implements Serializable {
         DCIteratorBinding iter = bc.findIteratorBinding("CrsContentVOIterator");
         if (iter.getViewObject() != null)
             iter.getViewObject().executeEmptyRowSet();
+        DCIteratorBinding baseIter = bc.findIteratorBinding("CrsContentBaseVOIterator");
+        if (baseIter.getViewObject() != null)
+            baseIter.getViewObject().executeEmptyRowSet();
     }
 
     /**
@@ -345,6 +366,11 @@ public class ManageCRSBean implements Serializable {
                 }
             }
             setSelDesigneeList(designeeList);
+        }
+        setCreateFacetName(ViewConstants.CREATE_UPDATE_COPY_FACET_NAME);
+        if (getCreateSwitherBinding() != null){
+            ADFUtils.addPartialTarget(getCreateSwitherBinding().getParent());
+            ResetUtils.reset(getCreateSwitherBinding());
         }
     }
 
@@ -1559,43 +1585,158 @@ public class ManageCRSBean implements Serializable {
         }
     }
 
+    /**
+     * @param copyRiskDefTable
+     */
     public void setCopyRiskDefTable(RichTable copyRiskDefTable) {
         this.copyRiskDefTable = copyRiskDefTable;
     }
 
+    /**
+     * @return
+     */
     public RichTable getCopyRiskDefTable() {
         return copyRiskDefTable;
     }
 
+    /**
+     * @param currentStatus
+     */
     public void setCurrentStatus(String currentStatus) {
         this.currentStatus = currentStatus;
     }
 
+    /**
+     * @return
+     */
     public String getCurrentStatus() {
         return currentStatus;
     }
 
+    /**
+     * @param savedSuccessMessage
+     */
     public void setSavedSuccessMessage(RichPanelLabelAndMessage savedSuccessMessage) {
         this.savedSuccessMessage = savedSuccessMessage;
     }
 
+    /**
+     * @return
+     */
     public RichPanelLabelAndMessage getSavedSuccessMessage() {
         return savedSuccessMessage;
     }
 
+    /**
+     * @param copySuccessMessage
+     */
     public void setCopySuccessMessage(RichPanelLabelAndMessage copySuccessMessage) {
         this.copySuccessMessage = copySuccessMessage;
     }
 
+    /**
+     * @return
+     */
     public RichPanelLabelAndMessage getCopySuccessMessage() {
         return copySuccessMessage;
     }
 
+    /**
+     * @param hiddenPopupAlign
+     */
     public void setHiddenPopupAlign(RichOutputText hiddenPopupAlign) {
         this.hiddenPopupAlign = hiddenPopupAlign;
     }
 
+    /**
+     * @return
+     */
     public RichOutputText getHiddenPopupAlign() {
         return hiddenPopupAlign;
+    }
+
+    /**
+     * @param searchFacetName
+     */
+    public void setSearchFacetName(String searchFacetName) {
+        this.searchFacetName = searchFacetName;
+    }
+
+    /**
+     * @return
+     */
+    public String getSearchFacetName() {
+        return searchFacetName;
+    }
+
+    /**
+     * @param searchFacetBinding
+     */
+    public void setSearchSwitherBinding(UIXSwitcher searchSwitherBinding) {
+        this.searchSwitherBinding = searchSwitherBinding;
+    }
+
+    /**
+     * @return
+     */
+    public UIXSwitcher getSearchSwitherBinding() {
+        return searchSwitherBinding;
+    }
+
+    /**
+     * @param selectionEvent
+     */
+    public void baseContentVOSelectionListener(SelectionEvent selectionEvent) {
+        // Add event code here...
+        ADFUtils.invokeEL("#{bindings.CrsContentBaseVO.collectionModel.makeCurrent}", new Class[] {SelectionEvent.class},
+                                 new Object[] { selectionEvent });
+        // get the selected row , by this you can get any attribute of that row
+        CrsContentBaseVORowImpl selectedRow =
+                   (CrsContentBaseVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentBaseVOIterator.currentRow}");
+        setSelectedCrsName(selectedRow.getCrsName());
+        setSelDesigneeList(null);
+        List<String> designeeList = new ArrayList<String>();
+        if (selectedRow.getDesignee() != null) {
+            String[] designeeArray = selectedRow.getDesignee().split("[,]");
+            if (designeeArray.length > 0) {
+                for (int i = 0; i < designeeArray.length; i++) {
+                    designeeList.add(designeeArray[i]);
+                }
+            }
+            setSelDesigneeList(designeeList);
+        }
+        setCreateFacetName(ViewConstants.CREATE_CURR_BASE_FACET_NAME);
+        if (getCreateSwitherBinding() != null) {
+            ADFUtils.addPartialTarget(getCreateSwitherBinding().getParent());
+            ResetUtils.reset(getCreateSwitherBinding());
+        }
+    }
+
+    /**
+     * @param createFacetName
+     */
+    public void setCreateFacetName(String createFacetName) {
+        this.createFacetName = createFacetName;
+    }
+
+    /**
+     * @return
+     */
+    public String getCreateFacetName() {
+        return createFacetName;
+    }
+
+    /**
+     * @param createSwitherBinding
+     */
+    public void setCreateSwitherBinding(UIXSwitcher createSwitherBinding) {
+        this.createSwitherBinding = createSwitherBinding;
+    }
+
+    /**
+     * @return
+     */
+    public UIXSwitcher getCreateSwitherBinding() {
+        return createSwitherBinding;
     }
 }

@@ -1,2 +1,18 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<References xmlns="http://xmlns.oracle.com/adf/jndi"/>
+<References xmlns="http://xmlns.oracle.com/adf/jndi">
+   <Reference name="CRSConn" className="oracle.jdeveloper.db.adapter.DatabaseProvider" credentialStoreKey="CRSConn" xmlns="">
+      <Factory className="oracle.jdeveloper.db.adapter.DatabaseProviderFactory"/>
+      <RefAddresses>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>CRS</Contents>
+         </StringRefAddr>
+         <SecureRefAddr addrType="password"/>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@75.93.239.106:1526:opa46</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+</References>

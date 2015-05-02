@@ -16,93 +16,110 @@
                       id="t1"/>
         </af:panelGroupLayout>
         <af:panelGroupLayout id="pgl5" layout="vertical">
-            <af:panelBox text="#{pageFlowScope.flowType eq 'S' ? ecrsviewcontrollerBundle.DETAILS : ecrsviewcontrollerBundle.ADD_DETAILS} #{pageFlowScope.flowType eq 'U' ? ecrsviewcontrollerBundle.COLON : ''} #{pageFlowScope.flowType eq 'U' ? bindings.CrsName.inputValue  : ''}" id="pb1">
-                <f:facet name="toolbar">
-                    <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}"
-                                      id="cb4"
-                                      actionListener="#{pageFlowScope.manageCRSBean.onClickCreateSave}"
-                                      visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable or (securityContext.userInRole['CRS_MQM'] and bindings.StateId.inputValue eq 2) or (securityContext.userInRole['CRS_TASL'] and bindings.StateId.inputValue eq 4)  || (securityContext.userInRole['CRS_ML'] and bindings.StateId.inputValue eq 5)}"
-                                      disabled="#{!bindings.Commit.enabled}"/>
-                </f:facet>
-                <af:panelGroupLayout id="pgl3" layout="horizontal">
-                    <af:panelFormLayout id="pfl1" maxColumns="3" rows="6"
-                                        labelWidth="140" fieldWidth="200">
-                        <af:selectOneChoice value="#{bindings.CompoundId.inputValue}"
-                                            label="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
-                                            shortDesc="#{bindings.CompoundId.hints.tooltip}"
-                                            id="soc2"
-                                            contentStyle="width:160px;"
-                                            showRequired="true"
-                                            autoSubmit="true"
-                                            valueChangeListener="#{pageFlowScope.manageCRSBean.onCompCodeSelect}"
-                                            readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
-                            <f:selectItems value="#{bindings.CompoundId.items}"
-                                           id="si2"/>
-                        </af:selectOneChoice>
-                        <af:inputText value="#{not empty bindings.CompoundType.inputValue ? bindings.CompoundType.inputValue :  bindings.CrsCompoundType.inputValue}"
-                                      label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
-                                      required="#{bindings.CrsCompoundType.hints.mandatory}"
-                                      shortDesc="#{bindings.CrsCompoundType.hints.tooltip}"
-                                      id="it4" contentStyle="width:160px;"
-                                      autoSubmit="true" readOnly="true"
-                                      columns="#{bindings.CrsCompoundType.hints.displayWidth}"
-                                      maximumLength="#{bindings.CrsCompoundType.hints.precision}"
-                                      partialTriggers="soc2">
-                            <f:validator binding="#{bindings.CrsCompoundType.validator}"/>
-                        </af:inputText>
-                        <af:inputText value="#{bindings.CompoundType.inputValue}"
-                                            label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
-                                            required="true"
-                                            shortDesc="#{bindings.CompoundType.hints.tooltip}"
-                                            id="soc1"
-                                            contentStyle="width:160px;" autoSubmit="true"
-                                      readOnly="true" rendered="false">
-                            <!--<f:selectItems value="#{bindings.CompoundType.items}"
+            <af:switcher id="s1" defaultFacet="updateCopyFacet"
+                         facetName="#{pageFlowScope.manageCRSBean.createFacetName}"
+                         binding="#{pageFlowScope.manageCRSBean.createSwitherBinding}">
+                <f:facet name="updateCopyFacet">
+                    <af:panelGroupLayout id="pgl10" layout="vertical">
+                        <af:panelBox text="#{pageFlowScope.flowType eq 'S' ? ecrsviewcontrollerBundle.DETAILS : ecrsviewcontrollerBundle.ADD_DETAILS} #{pageFlowScope.flowType eq 'U' ? ecrsviewcontrollerBundle.COLON : ''} #{pageFlowScope.flowType eq 'U' ? bindings.CrsName.inputValue  : ''}"
+                                     id="pb1">
+                            <f:facet name="toolbar">
+                                <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}"
+                                                  id="cb4"
+                                                  actionListener="#{pageFlowScope.manageCRSBean.onClickCreateSave}"
+                                                  visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable or (securityContext.userInRole['CRS_MQM'] and bindings.StateId.inputValue eq 2) or (securityContext.userInRole['CRS_TASL'] and bindings.StateId.inputValue eq 4)  || (securityContext.userInRole['CRS_ML'] and bindings.StateId.inputValue eq 5)}"
+                                                  disabled="#{!bindings.Commit.enabled}"/>
+                            </f:facet>
+                            <af:panelGroupLayout id="pgl3" layout="horizontal">
+                                <af:outputText value="update facet" id="ot22"/>
+                                <af:panelFormLayout id="pfl1" maxColumns="3"
+                                                    rows="6" labelWidth="140"
+                                                    fieldWidth="200">
+                                    <af:selectOneChoice value="#{bindings.CompoundId.inputValue}"
+                                                        label="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
+                                                        shortDesc="#{bindings.CompoundId.hints.tooltip}"
+                                                        id="soc2"
+                                                        contentStyle="width:160px;"
+                                                        showRequired="true"
+                                                        autoSubmit="true"
+                                                        valueChangeListener="#{pageFlowScope.manageCRSBean.onCompCodeSelect}"
+                                                        readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
+                                        <f:selectItems value="#{bindings.CompoundId.items}"
+                                                       id="si2"/>
+                                    </af:selectOneChoice>
+                                    <af:inputText value="#{not empty bindings.CompoundType.inputValue ? bindings.CompoundType.inputValue :  bindings.CrsCompoundType.inputValue}"
+                                                  label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
+                                                  required="#{bindings.CrsCompoundType.hints.mandatory}"
+                                                  shortDesc="#{bindings.CrsCompoundType.hints.tooltip}"
+                                                  id="it4"
+                                                  contentStyle="width:160px;"
+                                                  autoSubmit="true"
+                                                  readOnly="true"
+                                                  columns="#{bindings.CrsCompoundType.hints.displayWidth}"
+                                                  maximumLength="#{bindings.CrsCompoundType.hints.precision}"
+                                                  partialTriggers="soc2">
+                                        <f:validator binding="#{bindings.CrsCompoundType.validator}"/>
+                                    </af:inputText>
+                                    <af:inputText value="#{bindings.CompoundType.inputValue}"
+                                                  label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
+                                                  required="true"
+                                                  shortDesc="#{bindings.CompoundType.hints.tooltip}"
+                                                  id="soc1"
+                                                  contentStyle="width:160px;"
+                                                  autoSubmit="true"
+                                                  readOnly="true"
+                                                  rendered="false">
+                                        <!--<f:selectItems value="#{bindings.CompoundType.items}"
                                            id="si1"/>-->
-                        </af:inputText>
-                        <af:inputText value="#{bindings.TradeName.inputValue}"
-                                      label="#{bindings.TradeName.hints.label}"
-                                      required="#{bindings.TradeName.hints.mandatory}"
-                                      columns="#{bindings.TradeName.hints.displayWidth}"
-                                      maximumLength="#{bindings.TradeName.hints.precision}"
-                                      shortDesc="#{bindings.TradeName.hints.tooltip}"
-                                      id="it1" contentStyle="width:150px;"
-                                      readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}"
-                                      autoSubmit="true">
-                            <f:validator binding="#{bindings.TradeName.validator}"/>
-                        </af:inputText>
-                        <af:inputText value="#{bindings.GenericName.inputValue}"
-                                      label="#{bindings.GenericName.hints.label}"
-                                      required="#{bindings.GenericName.hints.mandatory}"
-                                      columns="#{bindings.GenericName.hints.displayWidth}"
-                                      maximumLength="#{bindings.GenericName.hints.precision}"
-                                      shortDesc="#{bindings.GenericName.hints.tooltip}"
-                                      id="it2" contentStyle="width:150px;"
-                                      readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}"
-                                      autoSubmit="true">
-                            <f:validator binding="#{bindings.GenericName.validator}"/>
-                        </af:inputText>
-                        <af:inputText value="#{bindings.Indication.inputValue}"
-                                      label="#{bindings.Indication.hints.label}"
-                                      required="#{bindings.Indication.hints.mandatory}"
-                                      columns="#{bindings.Indication.hints.displayWidth}"
-                                      maximumLength="#{bindings.Indication.hints.precision}"
-                                      shortDesc="#{bindings.Indication.hints.tooltip}"
-                                      id="it3" contentStyle="width:150px;"
-                                      autoSubmit="true"
-                                      readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}"
-                                      valueChangeListener="#{pageFlowScope.manageCRSBean.onChangeIndication}">
-                            <f:validator binding="#{bindings.Indication.validator}"/>
-                        </af:inputText>
-                        <af:selectOneChoice label="#{ecrsviewcontrollerBundle.MARKETED}"
-                                            id="soc8"
-                                            value="#{bindings.IsMarketedFlag.inputValue}"
-                                            required="false"
-                                            readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}">
-                            <af:selectItem label="Yes" value="Y" id="si9"/>
-                            <af:selectItem label="No" value="N" id="si10"/>
-                        </af:selectOneChoice>
-                        <!--<af:switcher id="s8" defaultFacet="nonBSL"
+                                    </af:inputText>
+                                    <af:inputText value="#{bindings.TradeName.inputValue}"
+                                                  label="#{bindings.TradeName.hints.label}"
+                                                  required="#{bindings.TradeName.hints.mandatory}"
+                                                  columns="#{bindings.TradeName.hints.displayWidth}"
+                                                  maximumLength="#{bindings.TradeName.hints.precision}"
+                                                  shortDesc="#{bindings.TradeName.hints.tooltip}"
+                                                  id="it1"
+                                                  contentStyle="width:150px;"
+                                                  readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}"
+                                                  autoSubmit="true">
+                                        <f:validator binding="#{bindings.TradeName.validator}"/>
+                                    </af:inputText>
+                                    <af:inputText value="#{bindings.GenericName.inputValue}"
+                                                  label="#{bindings.GenericName.hints.label}"
+                                                  required="#{bindings.GenericName.hints.mandatory}"
+                                                  columns="#{bindings.GenericName.hints.displayWidth}"
+                                                  maximumLength="#{bindings.GenericName.hints.precision}"
+                                                  shortDesc="#{bindings.GenericName.hints.tooltip}"
+                                                  id="it2"
+                                                  contentStyle="width:150px;"
+                                                  readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}"
+                                                  autoSubmit="true">
+                                        <f:validator binding="#{bindings.GenericName.validator}"/>
+                                    </af:inputText>
+                                    <af:inputText value="#{bindings.Indication.inputValue}"
+                                                  label="#{bindings.Indication.hints.label}"
+                                                  required="#{bindings.Indication.hints.mandatory}"
+                                                  columns="#{bindings.Indication.hints.displayWidth}"
+                                                  maximumLength="#{bindings.Indication.hints.precision}"
+                                                  shortDesc="#{bindings.Indication.hints.tooltip}"
+                                                  id="it3"
+                                                  contentStyle="width:150px;"
+                                                  autoSubmit="true"
+                                                  readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}"
+                                                  valueChangeListener="#{pageFlowScope.manageCRSBean.onChangeIndication}">
+                                        <f:validator binding="#{bindings.Indication.validator}"/>
+                                    </af:inputText>
+                                    <af:selectOneChoice label="#{ecrsviewcontrollerBundle.MARKETED}"
+                                                        id="soc8"
+                                                        value="#{bindings.IsMarketedFlag.inputValue}"
+                                                        required="false"
+                                                        readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}">
+                                        <af:selectItem label="Yes" value="Y"
+                                                       id="si9"/>
+                                        <af:selectItem label="No" value="N"
+                                                       id="si10"/>
+                                    </af:selectOneChoice>
+                                    <!--<af:switcher id="s8" defaultFacet="nonBSL"
                                      facetName="#{pageFlowScope.manageCRSBean.bslFacetName}">
                             <f:facet name="BSL">
                                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.BSL}"
@@ -115,206 +132,399 @@
                                
                             </f:facet>
                         </af:switcher>-->
-                         <af:selectOneChoice value="#{bindings.BslName.inputValue}"
-                                                    label="#{ecrsviewcontrollerBundle.BSL}"
-                                                    required="true"
-                                                    shortDesc="#{bindings.BslName.hints.tooltip}"
-                                                    id="soc3"
-                                                    contentStyle="width:170px;"
-                                                    readOnly="#{!securityContext.userInRole['CRS_ADMIN']}"
-                                             showRequired="true" autoSubmit="true">
-                                    <f:selectItems value="#{bindings.BslName.items}"
-                                                   id="si3"/>
-                                </af:selectOneChoice>
-                        <af:selectManyChoice label="Designee" id="smc2"
-                                             contentStyle="width:150px !important;"
-                                             value="#{pageFlowScope.manageCRSBean.selDesigneeList}"
-                                             readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                             autoSubmit="true">
-                            <f:selectItems value="#{pageFlowScope.manageCRSBean.designeeList}" id="si11"/>
-                        </af:selectManyChoice>
-                        <af:selectOneChoice value="#{bindings.TaslName.inputValue}"
-                                            label="#{ecrsviewcontrollerBundle.CRS_TASL}"
-                                            required="true"
-                                            shortDesc="#{bindings.TaslName.hints.tooltip}"
-                                            id="soc5"
-                                            contentStyle="width:170px;"
-                                            readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                            autoSubmit="true">
-                            <f:selectItems value="#{bindings.TaslName.items}"
-                                           id="si5"/>
-                        </af:selectOneChoice>
-                        <af:selectOneChoice value="#{bindings.MedicalLeadName.inputValue}"
-                                            label="#{ecrsviewcontrollerBundle.CRS_MEDICAL_LEAD}"
-                                            required="true"
-                                            shortDesc="#{bindings.MedicalLeadName.hints.tooltip}"
-                                            id="soc6"
-                                            contentStyle="width:170px;"
-                                            readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                            autoSubmit="true">
-                            <f:selectItems value="#{bindings.MedicalLeadName.items}"
-                                           id="si6"/>
-                        </af:selectOneChoice>
-                        <af:spacer width="10" height="10" id="s5"/>
-                        <af:spacer width="10" height="10" id="s6"/>
-                        <af:selectOneChoice value="#{bindings.StateId.inputValue}"
-                                            label="#{ecrsviewcontrollerBundle.STATE}#{ecrsviewcontrollerBundle.COLON}"
-                                            required="#{bindings.StateId.hints.mandatory}"
-                                            shortDesc="#{bindings.StateId.hints.tooltip}" id="soc4" readOnly="true"
-                                            binding="#{pageFlowScope.manageCRSBean.crsStateSOC}">
-                            <f:selectItems value="#{bindings.StateId.items}" id="si7"/>
-                        </af:selectOneChoice>
-                        <af:selectOneChoice label="#{ecrsviewcontrollerBundle.CRS_STATUS}#{ecrsviewcontrollerBundle.COLON}"
-                                            id="soc7" value="#{bindings.ReleaseStatusFlag.inputValue}" readOnly="true"
-                                            binding="#{pageFlowScope.manageCRSBean.crsStatusSOC}">
-                            <af:selectItem label="Pending" id="si8" value="P"/>
-                            <af:selectItem label="Current" id="si1" value="C"/>
-                        </af:selectOneChoice>
-                        <af:selectBooleanCheckbox label="#{ecrsviewcontrollerBundle.REVIEW__APPROVAL_REQUIRED}"
-                                                  id="sbc1"
-                                                  value="#{bindings.ReviewApproveRequiredFlag1.inputValue}"
-                                                  autoSubmit="true"
-                                                  readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
-                    </af:panelFormLayout>
-                    <af:panelGroupLayout id="pgl7" layout="horizontal" valign="top" rendered="false">
-                        <af:panelGroupLayout id="pgl4" layout="vertical"/>
-                    </af:panelGroupLayout>
-                </af:panelGroupLayout>
-                <af:spacer width="10" height="10" id="s2"/>
-                <af:separator id="s3"/>
-                <af:panelFormLayout id="pgl1" rows="1"
-                                    fieldWidth="200" labelWidth="150">
-                    <af:inputText label="#{ecrsviewcontrollerBundle.CRS_NAME} #{ecrsviewcontrollerBundle.COLON}"
-                                  id="it5" readOnly="true"
-                                  value="#{bindings.CrsName.inputValue}"
-                                  partialTriggers="soc2 it3"/>
-                    <af:inputText label="#{ecrsviewcontrollerBundle.CRS_ID} #{ecrsviewcontrollerBundle.COLON}"
-                                  id="it6" readOnly="true"
-                                  value="#{bindings.CrsId.inputValue &lt; 0 ? '' : bindings.CrsId.inputValue}"/>
-                </af:panelFormLayout>
-            </af:panelBox>
-            <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}" id="pb2"
-                         binding="#{pageFlowScope.manageCRSBean.workflowPanelBox}">
-                <f:facet name="toolbar">
-                    <af:panelGroupLayout id="pgl2"
-                                         visible="#{pageFlowScope.flowType ne 'S'}">
-                        <af:commandButton text="#{ecrsviewcontrollerBundle.DEMOTE_TO_DRAFT}"
-                                          id="cb1"
-                                          disabled="#{bindings.StateId.inputValue eq 1}"
-                                          visible="#{(securityContext.userInRole['CRS_BSL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}" partialSubmit="true"
-                                          inlineStyle="margin-right:10px;">
-                            <af:showPopupBehavior popupId="demtodft" triggerType="action"/>
-                        </af:commandButton>
-                        <af:commandButton text="#{ecrsviewcontrollerBundle.REVIEW}"
-                                          id="cb2"
-                                          visible="#{(securityContext.userInRole['CRS_BSL']  || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"                                         
-                                          disabled="#{bindings.EntityState eq 'NEW' or bindings.StateId.inputValue ne 1}" partialSubmit="true"
-                                          inlineStyle="margin-right:10px;">
-                            <af:showPopupBehavior popupId="review" triggerType="action"/>
-                        </af:commandButton>
-                        <af:commandButton text="#{ecrsviewcontrollerBundle.REVIEWED}"
-                                          id="cb11"
-                                          visible="#{(securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"                                          
-                                          partialSubmit="true" disabled="#{bindings.StateId.inputValue ne 2}"
-                                          inlineStyle="margin-right:10px;">
-                            <af:showPopupBehavior popupId="reviewed" triggerType="action"/>
-                        </af:commandButton>                                          
-                        <af:commandButton text="#{ecrsviewcontrollerBundle.SUBMIT_FOR_TASL_APPROVAL}" id="cb9"
-                                          visible="#{(securityContext.userInRole['CRS_BSL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}" partialSubmit="true"
-                                          disabled="#{bindings.StateId.inputValue ne 3}"
-                                          inlineStyle="margin-right:10px;">
-                            <af:showPopupBehavior popupId="taslRevSubmit" triggerType="action"/>
-                        </af:commandButton>
-                        <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.TASL_APPROVE : ecrsviewcontrollerBundle.APPROVE}" id="cb8"
-                                          disabled="#{bindings.StateId.inputValue ne 4}"
-                                          visible="#{(securityContext.userInRole['CRS_TASL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                          partialSubmit="true"
-                                          inlineStyle="margin-right:10px;">
-                            <af:showPopupBehavior popupId="taslApprove" triggerType="action"/>
-                        </af:commandButton>
-                        <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.ML_APPROVE : ecrsviewcontrollerBundle.APPROVE}" id="cb15"
-                                          disabled="#{bindings.StateId.inputValue ne 5}"
-                                          visible="#{(securityContext.userInRole['CRS_ML'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                          partialSubmit="true"
-                                          inlineStyle="margin-right:10px;">
-                            <af:showPopupBehavior popupId="mlApprv" triggerType="action"/>
-                        </af:commandButton>
-                        <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.TASL_REJECT : ecrsviewcontrollerBundle.REJECT}" id="cb10" partialSubmit="true"
-                                          disabled="#{bindings.StateId.inputValue ne 4}"
-                                          visible="#{(securityContext.userInRole['CRS_TASL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                          inlineStyle="margin-right:10px;">
-                            <af:showPopupBehavior popupId="taslReject" triggerType="action"/>
-                        </af:commandButton>
-                       <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.ML_REJECT : ecrsviewcontrollerBundle.REJECT}" id="cb16" partialSubmit="true"
-                                          disabled="#{bindings.StateId.inputValue ne 5}"
-                                          visible="#{(securityContext.userInRole['CRS_ML'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                          inlineStyle="margin-right:10px;">
-                            <af:showPopupBehavior popupId="mlReject" triggerType="action"/>
-                        </af:commandButton>
-                        <af:commandButton text="#{ecrsviewcontrollerBundle.PUBLISHED}" id="cb14"
-                                          disabled="#{bindings.StateId.inputValue ne 6}"
-                                          visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                          inlineStyle="margin-right:10px;">
-                            <af:showPopupBehavior popupId="publish" triggerType="action"/>
-                        </af:commandButton>
-                        <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE}"
-                                          id="cb3"
-                                          visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}" partialSubmit="true"
-                                          inlineStyle="margin-right:10px;">
-                                          <af:showPopupBehavior popupId="delConfPopup" triggerType="action"/>
-                        </af:commandButton>
-                         <af:commandButton text="#{ecrsviewcontrollerBundle.RETIRE}"
-                                          id="cb12"
-                                          visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'C'}" partialSubmit="true"
-                                           disabled="#{bindings.StateId.inputValue eq 8}"
-                                           actionListener="#{pageFlowScope.manageCRSBean.onClickRetire}">
-                            
-                        </af:commandButton>                                        
-                         
-                         <af:commandButton text="#{ecrsviewcontrollerBundle.REACTIVATE}"
-                                          id="cb13"
-                                          rendered="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'C'}" partialSubmit="true"
-                                           disabled="#{bindings.StateId.inputValue eq 7}"
-                                           actionListener="#{pageFlowScope.manageCRSBean.onClickReactivate}">
-                           
-                        </af:commandButton>                                          
-                        <f:facet name="separator"/>
+                                    <af:selectOneChoice value="#{bindings.BslName.inputValue}"
+                                                        label="#{ecrsviewcontrollerBundle.BSL}"
+                                                        required="true"
+                                                        shortDesc="#{bindings.BslName.hints.tooltip}"
+                                                        id="soc3"
+                                                        contentStyle="width:170px;"
+                                                        readOnly="#{!securityContext.userInRole['CRS_ADMIN']}"
+                                                        showRequired="true"
+                                                        autoSubmit="true">
+                                        <f:selectItems value="#{bindings.BslName.items}"
+                                                       id="si3"/>
+                                    </af:selectOneChoice>
+                                    <af:selectManyChoice label="Designee"
+                                                         id="smc2"
+                                                         contentStyle="width:150px !important;"
+                                                         value="#{pageFlowScope.manageCRSBean.selDesigneeList}"
+                                                         readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                                                         autoSubmit="true">
+                                        <f:selectItems value="#{pageFlowScope.manageCRSBean.designeeList}"
+                                                       id="si11"/>
+                                    </af:selectManyChoice>
+                                    <af:selectOneChoice value="#{bindings.TaslName.inputValue}"
+                                                        label="#{ecrsviewcontrollerBundle.CRS_TASL}"
+                                                        required="true"
+                                                        shortDesc="#{bindings.TaslName.hints.tooltip}"
+                                                        id="soc5"
+                                                        contentStyle="width:170px;"
+                                                        readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                                                        autoSubmit="true">
+                                        <f:selectItems value="#{bindings.TaslName.items}"
+                                                       id="si5"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.MedicalLeadName.inputValue}"
+                                                        label="#{ecrsviewcontrollerBundle.CRS_MEDICAL_LEAD}"
+                                                        required="true"
+                                                        shortDesc="#{bindings.MedicalLeadName.hints.tooltip}"
+                                                        id="soc6"
+                                                        contentStyle="width:170px;"
+                                                        readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                                                        autoSubmit="true">
+                                        <f:selectItems value="#{bindings.MedicalLeadName.items}"
+                                                       id="si6"/>
+                                    </af:selectOneChoice>
+                                    <af:spacer width="10" height="10" id="s5"/>
+                                    <af:spacer width="10" height="10" id="s6"/>
+                                    <af:selectOneChoice value="#{bindings.StateId.inputValue}"
+                                                        label="#{ecrsviewcontrollerBundle.STATE}#{ecrsviewcontrollerBundle.COLON}"
+                                                        required="#{bindings.StateId.hints.mandatory}"
+                                                        shortDesc="#{bindings.StateId.hints.tooltip}"
+                                                        id="soc4"
+                                                        readOnly="true"
+                                                        binding="#{pageFlowScope.manageCRSBean.crsStateSOC}">
+                                        <f:selectItems value="#{bindings.StateId.items}"
+                                                       id="si7"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice label="#{ecrsviewcontrollerBundle.CRS_STATUS}#{ecrsviewcontrollerBundle.COLON}"
+                                                        id="soc7"
+                                                        value="#{bindings.ReleaseStatusFlag.inputValue}"
+                                                        readOnly="true"
+                                                        binding="#{pageFlowScope.manageCRSBean.crsStatusSOC}">
+                                        <af:selectItem label="Pending" id="si8"
+                                                       value="P"/>
+                                        <af:selectItem label="Current" id="si1"
+                                                       value="C"/>
+                                    </af:selectOneChoice>
+                                    <af:selectBooleanCheckbox label="#{ecrsviewcontrollerBundle.REVIEW__APPROVAL_REQUIRED}"
+                                                              id="sbc1"
+                                                              value="#{bindings.ReviewApproveRequiredFlag1.inputValue}"
+                                                              autoSubmit="true"
+                                                              readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+                                </af:panelFormLayout>
+                                <af:panelGroupLayout id="pgl7"
+                                                     layout="horizontal"
+                                                     valign="top"
+                                                     rendered="false">
+                                    <af:panelGroupLayout id="pgl4"
+                                                         layout="vertical"/>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                            <af:spacer width="10" height="10" id="s2"/>
+                            <af:separator id="s3"/>
+                            <af:panelFormLayout id="pgl1" rows="1"
+                                                fieldWidth="200"
+                                                labelWidth="150">
+                                <af:inputText label="#{ecrsviewcontrollerBundle.CRS_NAME} #{ecrsviewcontrollerBundle.COLON}"
+                                              id="it5" readOnly="true"
+                                              value="#{bindings.CrsName.inputValue}"
+                                              partialTriggers="soc2 it3"/>
+                                <af:inputText label="#{ecrsviewcontrollerBundle.CRS_ID} #{ecrsviewcontrollerBundle.COLON}"
+                                              id="it6" readOnly="true"
+                                              value="#{bindings.CrsId.inputValue &lt; 0 ? '' : bindings.CrsId.inputValue}"/>
+                            </af:panelFormLayout>
+                        </af:panelBox>
+                        <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}"
+                                     id="pb2"
+                                     binding="#{pageFlowScope.manageCRSBean.workflowPanelBox}">
+                            <f:facet name="toolbar">
+                                <af:panelGroupLayout id="pgl2"
+                                                     visible="#{pageFlowScope.flowType ne 'S'}">
+                                    <af:commandButton text="#{ecrsviewcontrollerBundle.DEMOTE_TO_DRAFT}"
+                                                      id="cb1"
+                                                      disabled="#{bindings.StateId.inputValue eq 1}"
+                                                      visible="#{(securityContext.userInRole['CRS_BSL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                                      partialSubmit="true"
+                                                      inlineStyle="margin-right:10px;">
+                                        <af:showPopupBehavior popupId="demtodft"
+                                                              triggerType="action"/>
+                                    </af:commandButton>
+                                    <af:commandButton text="#{ecrsviewcontrollerBundle.REVIEW}"
+                                                      id="cb2"
+                                                      visible="#{(securityContext.userInRole['CRS_BSL']  || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                                      disabled="#{bindings.EntityState eq 'NEW' or bindings.StateId.inputValue ne 1}"
+                                                      partialSubmit="true"
+                                                      inlineStyle="margin-right:10px;">
+                                        <af:showPopupBehavior popupId="review"
+                                                              triggerType="action"/>
+                                    </af:commandButton>
+                                    <af:commandButton text="#{ecrsviewcontrollerBundle.REVIEWED}"
+                                                      id="cb11"
+                                                      visible="#{(securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                                      partialSubmit="true"
+                                                      disabled="#{bindings.StateId.inputValue ne 2}"
+                                                      inlineStyle="margin-right:10px;">
+                                        <af:showPopupBehavior popupId="reviewed"
+                                                              triggerType="action"/>
+                                    </af:commandButton>
+                                    <af:commandButton text="#{ecrsviewcontrollerBundle.SUBMIT_FOR_TASL_APPROVAL}"
+                                                      id="cb9"
+                                                      visible="#{(securityContext.userInRole['CRS_BSL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                                      partialSubmit="true"
+                                                      disabled="#{bindings.StateId.inputValue ne 3}"
+                                                      inlineStyle="margin-right:10px;">
+                                        <af:showPopupBehavior popupId="taslRevSubmit"
+                                                              triggerType="action"/>
+                                    </af:commandButton>
+                                    <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.TASL_APPROVE : ecrsviewcontrollerBundle.APPROVE}"
+                                                      id="cb8"
+                                                      disabled="#{bindings.StateId.inputValue ne 4}"
+                                                      visible="#{(securityContext.userInRole['CRS_TASL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                                      partialSubmit="true"
+                                                      inlineStyle="margin-right:10px;">
+                                        <af:showPopupBehavior popupId="taslApprove"
+                                                              triggerType="action"/>
+                                    </af:commandButton>
+                                    <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.ML_APPROVE : ecrsviewcontrollerBundle.APPROVE}"
+                                                      id="cb15"
+                                                      disabled="#{bindings.StateId.inputValue ne 5}"
+                                                      visible="#{(securityContext.userInRole['CRS_ML'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                                      partialSubmit="true"
+                                                      inlineStyle="margin-right:10px;">
+                                        <af:showPopupBehavior popupId="mlApprv"
+                                                              triggerType="action"/>
+                                    </af:commandButton>
+                                    <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.TASL_REJECT : ecrsviewcontrollerBundle.REJECT}"
+                                                      id="cb10"
+                                                      partialSubmit="true"
+                                                      disabled="#{bindings.StateId.inputValue ne 4}"
+                                                      visible="#{(securityContext.userInRole['CRS_TASL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                                      inlineStyle="margin-right:10px;">
+                                        <af:showPopupBehavior popupId="taslReject"
+                                                              triggerType="action"/>
+                                    </af:commandButton>
+                                    <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.ML_REJECT : ecrsviewcontrollerBundle.REJECT}"
+                                                      id="cb16"
+                                                      partialSubmit="true"
+                                                      disabled="#{bindings.StateId.inputValue ne 5}"
+                                                      visible="#{(securityContext.userInRole['CRS_ML'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                                      inlineStyle="margin-right:10px;">
+                                        <af:showPopupBehavior popupId="mlReject"
+                                                              triggerType="action"/>
+                                    </af:commandButton>
+                                    <af:commandButton text="#{ecrsviewcontrollerBundle.PUBLISHED}"
+                                                      id="cb14"
+                                                      disabled="#{bindings.StateId.inputValue ne 6}"
+                                                      visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                                      inlineStyle="margin-right:10px;">
+                                        <af:showPopupBehavior popupId="publish"
+                                                              triggerType="action"/>
+                                    </af:commandButton>
+                                    <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE}"
+                                                      id="cb3"
+                                                      visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                                      partialSubmit="true"
+                                                      inlineStyle="margin-right:10px;">
+                                        <af:showPopupBehavior popupId="delConfPopup"
+                                                              triggerType="action"/>
+                                    </af:commandButton>
+                                    <af:commandButton text="#{ecrsviewcontrollerBundle.RETIRE}"
+                                                      id="cb12"
+                                                      visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'C'}"
+                                                      partialSubmit="true"
+                                                      disabled="#{bindings.StateId.inputValue eq 8}"
+                                                      actionListener="#{pageFlowScope.manageCRSBean.onClickRetire}"/>
+                                    <af:commandButton text="#{ecrsviewcontrollerBundle.REACTIVATE}"
+                                                      id="cb13"
+                                                      rendered="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'C'}"
+                                                      partialSubmit="true"
+                                                      disabled="#{bindings.StateId.inputValue eq 7}"
+                                                      actionListener="#{pageFlowScope.manageCRSBean.onClickReactivate}"/>
+                                    <f:facet name="separator"/>
+                                </af:panelGroupLayout>
+                            </f:facet>
+                            <af:panelFormLayout id="pfl2"
+                                                styleClass="AFStretchWidth"
+                                                rows="3" maxColumns="1"
+                                                fieldWidth="90%"
+                                                labelWidth="10%"
+                                                partialTriggers="cb11 cb9 cb8 cb10">
+                                <af:inputText value="#{bindings.MqmComment.inputValue}"
+                                              required="#{bindings.MqmComment.hints.mandatory}"
+                                              columns="100"
+                                              maximumLength="#{bindings.MqmComment.hints.precision}"
+                                              shortDesc="#{bindings.MqmComment.hints.tooltip}"
+                                              id="it7"
+                                              styleClass="AFStretchWidth"
+                                              label="#{ecrsviewcontrollerBundle.MQM_COMMENT}"
+                                              rows="3" contentStyle="width:75%;"
+                                              disabled="#{!((securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN']) and bindings.StateId.inputValue eq 2)}"
+                                              visible="#{securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_MQM']}">
+                                    <f:validator binding="#{bindings.MqmComment.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.TaslRejectComment.inputValue}"
+                                              columns="100"
+                                              maximumLength="#{bindings.TaslRejectComment.hints.precision}"
+                                              shortDesc="#{bindings.TaslRejectComment.hints.tooltip}"
+                                              id="it8"
+                                              label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}"
+                                              rows="3" contentStyle="width:75%;"
+                                              styleClass="AFStretchWidth"
+                                              autoSubmit="true" disabled="true">
+                                    <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.MedicalLeadRejectComment.inputValue}"
+                                              columns="100"
+                                              maximumLength="#{bindings.MedicalLeadRejectComment.hints.precision}"
+                                              shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}"
+                                              id="it9"
+                                              label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}"
+                                              rows="3" contentStyle="width:75%;"
+                                              styleClass="AFStretchWidth"
+                                              autoSubmit="true" disabled="true">
+                                    <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </af:panelBox>
                     </af:panelGroupLayout>
                 </f:facet>
-                <af:panelFormLayout id="pfl2" styleClass="AFStretchWidth" rows="3" maxColumns="1" fieldWidth="90%"
-                                    labelWidth="10%"
-                                    partialTriggers="cb11 cb9 cb8 cb10">
-                    <af:inputText value="#{bindings.MqmComment.inputValue}"
-                                  required="#{bindings.MqmComment.hints.mandatory}"
-                                  columns="100"
-                                  maximumLength="#{bindings.MqmComment.hints.precision}"
-                                  shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it7"
-                                  styleClass="AFStretchWidth"
-                                  label="#{ecrsviewcontrollerBundle.MQM_COMMENT}" rows="3" contentStyle="width:75%;"
-                                  disabled="#{!((securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN']) and bindings.StateId.inputValue eq 2)}"
-                                  visible="#{securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_MQM']}">
-                        <f:validator binding="#{bindings.MqmComment.validator}"/>
-                    </af:inputText>
-                    <af:inputText value="#{bindings.TaslRejectComment.inputValue}"
-                                  columns="100"
-                                  maximumLength="#{bindings.TaslRejectComment.hints.precision}"
-                                  shortDesc="#{bindings.TaslRejectComment.hints.tooltip}" id="it8"
-                                  label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}" rows="3"
-                                  contentStyle="width:75%;" styleClass="AFStretchWidth" autoSubmit="true"
-                                  disabled="true">
-                        <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
-                    </af:inputText>
-                    <af:inputText value="#{bindings.MedicalLeadRejectComment.inputValue}"
-                                  columns="100"
-                                  maximumLength="#{bindings.MedicalLeadRejectComment.hints.precision}"
-                                  shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}" id="it9"
-                                  label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}" rows="3"
-                                  contentStyle="width:75%;" styleClass="AFStretchWidth" autoSubmit="true"
-                                  disabled="true">
-                        <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
-                    </af:inputText>
-                </af:panelFormLayout>
-            </af:panelBox>
+                <f:facet name="currBaseReadOnlyFacet">
+                    <af:panelGroupLayout id="pgl11" layout="vertical">
+                        <af:panelBox text="#{pageFlowScope.flowType eq 'S' ? ecrsviewcontrollerBundle.DETAILS : ecrsviewcontrollerBundle.ADD_DETAILS} #{pageFlowScope.flowType eq 'U' ? ecrsviewcontrollerBundle.COLON : ''} #{pageFlowScope.flowType eq 'U' ? bindings.CrsName.inputValue  : ''}"
+                                     id="pb3">
+                            <f:facet name="toolbar"/>
+                            <af:panelGroupLayout id="pgl12" layout="horizontal">
+                                <af:panelFormLayout id="pfl3" maxColumns="3"
+                                                    rows="6" labelWidth="140"
+                                                    fieldWidth="200">
+                                    <af:inputText value="#{bindings.CrsCompoundCodeBase.inputValue}"
+                                                  label="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
+                                                  shortDesc="#{bindings.CompoundId.hints.tooltip}"
+                                                  id="inp9" readOnly="true"/>
+                                    <af:inputText value="#{bindings.CrsCompoundTypeBase.inputValue}"
+                                                  label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
+                                                  shortDesc="#{bindings.CrsCompoundTypeBase.hints.tooltip}"
+                                                  id="it12"
+                                                  contentStyle="width:160px;"
+                                                  readOnly="true"
+                                                  columns="#{bindings.CrsCompoundTypeBase.hints.displayWidth}"></af:inputText>
+                                    <af:inputText value="#{bindings.TradeNameBase.inputValue}"
+                                                  label="#{bindings.TradeNameBase.hints.label}"
+                                                  shortDesc="#{bindings.TradeNameBase.hints.tooltip}"
+                                                  id="it14"
+                                                  contentStyle="width:150px;"
+                                                  readOnly="true"/>
+                                    <af:inputText value="#{bindings.GenericNameBase.inputValue}"
+                                                  label="#{bindings.GenericNameBase.hints.label}"
+                                                  shortDesc="#{bindings.GenericNameBase.hints.tooltip}"
+                                                  id="it15"
+                                                  contentStyle="width:150px;"
+                                                  readOnly="true"/>
+                                    <af:inputText value="#{bindings.IndicationBase.inputValue}"
+                                                  label="#{bindings.IndicationBase.hints.label}"
+                                                  shortDesc="#{bindings.IndicationBase.hints.tooltip}"
+                                                  id="it16"
+                                                  contentStyle="width:150px;"
+                                                  readOnly="true"/>
+                                    <af:inputText label="#{ecrsviewcontrollerBundle.MARKETED}"
+                                                  id="soc10"
+                                                  value="#{bindings.IsMarketedFlagBase.inputValue}"
+                                                  readOnly="true"/>
+                                    <af:inputText value="#{bindings.BslNameBase.inputValue}"
+                                                  label="#{ecrsviewcontrollerBundle.BSL}"
+                                                  shortDesc="#{bindings.BslNameBase.hints.tooltip}"
+                                                  id="soc11"
+                                                  contentStyle="width:170px;"
+                                                  readOnly="true"/>
+                                    <af:inputText label="Designee" id="smc1"
+                                                  contentStyle="width:150px !important;"
+                                                  value="#{bindings.DesigneeBase.inputValue}"
+                                                  readOnly="true"/>
+                                    <af:inputText value="#{bindings.TaslNameBase.inputValue}"
+                                                  label="#{ecrsviewcontrollerBundle.CRS_TASL}"
+                                                  shortDesc="#{bindings.TaslNameBase.hints.tooltip}"
+                                                  id="soc12"
+                                                  contentStyle="width:170px;"
+                                                  readOnly="true"/>
+                                    <af:inputText value="#{bindings.MedicalLeadNameBase.inputValue}"
+                                                        label="#{ecrsviewcontrollerBundle.CRS_MEDICAL_LEAD}"
+                                                        shortDesc="#{bindings.MedicalLeadNameBase.hints.tooltip}"
+                                                        id="soc13"
+                                                        contentStyle="width:170px;"
+                                                        readOnly="true"/>
+                                    <af:spacer width="10" height="10" id="s10"/>
+                                    <af:spacer width="10" height="10" id="s11"/>
+                                    <af:inputText value="#{bindings.StateNameBase.inputValue}"
+                                                        label="#{ecrsviewcontrollerBundle.STATE}#{ecrsviewcontrollerBundle.COLON}"
+                                                        shortDesc="#{bindings.StateId.hints.tooltip}"
+                                                        id="soc14"
+                                                        readOnly="true"/>
+                                    <af:inputText label="#{ecrsviewcontrollerBundle.CRS_STATUS}#{ecrsviewcontrollerBundle.COLON}"
+                                                        id="soc15"
+                                                        value="#{bindings.ReleaseStatusFlagBase.inputValue}"
+                                                        readOnly="true"/>
+                                    <af:spacer width="10" height="10"
+                                               id="sp23"/>
+                                </af:panelFormLayout>
+                                <af:panelGroupLayout id="pgl13"
+                                                     layout="horizontal"
+                                                     valign="top"
+                                                     rendered="false">
+                                    <af:panelGroupLayout id="pgl14"
+                                                         layout="vertical"/>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                            <af:spacer width="10" height="10" id="s12"/>
+                            <af:separator id="s13"/>
+                            <af:panelFormLayout id="pfl4" rows="1"
+                                                fieldWidth="200"
+                                                labelWidth="150">
+                                <af:inputText label="#{ecrsviewcontrollerBundle.CRS_NAME} #{ecrsviewcontrollerBundle.COLON}"
+                                              id="it17" readOnly="true"
+                                              value="#{bindings.CrsNameBase.inputValue}"/>
+                                <af:inputText label="#{ecrsviewcontrollerBundle.CRS_ID} #{ecrsviewcontrollerBundle.COLON}"
+                                              id="it18" readOnly="true"
+                                              value="#{bindings.CrsIdBase.inputValue}"/>
+                            </af:panelFormLayout>
+                        </af:panelBox>
+                        <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}"
+                                     id="pb4">
+                            <f:facet name="toolbar"/>
+                            <af:panelFormLayout id="pfl5"
+                                                styleClass="AFStretchWidth"
+                                                rows="3" maxColumns="1"
+                                                fieldWidth="90%"
+                                                labelWidth="10%"
+                                                partialTriggers="cb11 cb9 cb8 cb10">
+                                <af:inputText value="#{bindings.MqmCommentBase.inputValue}"
+                                              columns="100"
+                                              maximumLength="#{bindings.MqmComment.hints.precision}"
+                                              shortDesc="#{bindings.MqmComment.hints.tooltip}"
+                                              id="it19"
+                                              styleClass="AFStretchWidth"
+                                              label="#{ecrsviewcontrollerBundle.MQM_COMMENT}"
+                                              rows="3" contentStyle="width:75%;"
+                                              readOnly="true">
+                                    <f:validator binding="#{bindings.MqmComment.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.TaslRejectCommentBase.inputValue}"
+                                              columns="100"
+                                              maximumLength="#{bindings.TaslRejectComment.hints.precision}"
+                                              shortDesc="#{bindings.TaslRejectComment.hints.tooltip}"
+                                              id="it20"
+                                              label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}"
+                                              rows="3" contentStyle="width:75%;"
+                                              styleClass="AFStretchWidth"
+                                              readOnly="true">
+                                    <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.MedicalLeadRejectCommentBase.inputValue}"
+                                              columns="100"
+                                              maximumLength="#{bindings.MedicalLeadRejectComment.hints.precision}"
+                                              shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}"
+                                              id="it21"
+                                              label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}"
+                                              rows="3" contentStyle="width:75%;"
+                                              styleClass="AFStretchWidth"
+                                              readOnly="true">
+                                    <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </af:panelBox>
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:switcher>
             <af:panelGroupLayout id="pgl6" layout="horizontal">
                 <af:commandButton text="#{ecrsviewcontrollerBundle.BACK}"
                                   id="cb5"

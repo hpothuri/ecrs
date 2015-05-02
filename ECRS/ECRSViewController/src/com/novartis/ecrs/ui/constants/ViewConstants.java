@@ -12,4 +12,8 @@ public class ViewConstants {
     public static final String FLOW_TYPE_CREATE = "C";
     public static final String FLOW_TYPE_UPDATE = "U";
     public static final String FLOW_TYPE_SEARCH = "S";
+    public static final String SEARCH_CURR_BASE_FACET_NAME = "current_base";
+    public static final String SEARCH_PENDING_STG_FACET_NAME = "pending_stg";
+    public static final String CREATE_CURR_BASE_FACET_NAME = "currBaseReadOnlyFacet";
+    public static final String CREATE_UPDATE_COPY_FACET_NAME = "updateCopyFacet";
 }

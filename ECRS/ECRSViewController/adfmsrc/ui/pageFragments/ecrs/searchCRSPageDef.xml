@@ -9,6 +9,9 @@
               DataControl="ECRSAppModuleDataControl" id="ECrsSearchVOIterator"/>
     <iterator Binds="CrsContentVO" RangeSize="25"
               DataControl="ECRSAppModuleDataControl" id="CrsContentVOIterator"/>
+    <iterator Binds="CrsContentBaseVO" RangeSize="25"
+              DataControl="ECRSAppModuleDataControl"
+              id="CrsContentBaseVOIterator"/>
   </executables>
   <bindings>
     <list IterBinding="ECrsSearchVOIterator" StaticList="false"
@@ -96,5 +99,26 @@
     </methodAction>
     <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
             RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <tree IterBinding="CrsContentBaseVOIterator" id="CrsContentBaseVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.base.CrsContentBaseVO"
+                      Name="CrsContentBaseVO0">
+        <AttrNames>
+          <Item Value="CrsId"/>
+          <Item Value="CrsName"/>
+          <Item Value="StateId"/>
+          <Item Value="CompoundId"/>
+          <Item Value="GenericName"/>
+          <Item Value="TradeName"/>
+          <Item Value="Indication"/>
+          <Item Value="IsMarketedFlag"/>
+          <Item Value="Designee"/>
+          <Item Value="BslName"/>
+          <Item Value="TaslName"/>
+          <Item Value="MedicalLeadName"/>
+          <Item Value="StateName"/>
+          <Item Value="CrsCompoundCode"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
   </bindings>
 </pageDefinition>

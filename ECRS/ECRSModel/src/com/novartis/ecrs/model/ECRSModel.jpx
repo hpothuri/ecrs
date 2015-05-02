@@ -46,6 +46,14 @@
     </DesignTime>
   </Containee>
   <Containee
+    Name="base"
+    PackageName="com.novartis.ecrs.model.view.base"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_VO" Value="true"/>
+    </DesignTime>
+  </Containee>
+  <Containee
     Name="link"
     PackageName="com.novartis.ecrs.model.view.link"
     ObjectType="JboPackage">

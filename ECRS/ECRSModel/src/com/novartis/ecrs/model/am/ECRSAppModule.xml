@@ -108,6 +108,9 @@
   <ViewUsage
     Name="CrsRiskBaseVO"
     ViewObjectName="com.novartis.ecrs.model.view.riskdefs.CrsRiskBaseVO"/>
+  <ViewUsage
+    Name="CrsContentBaseVO"
+    ViewObjectName="com.novartis.ecrs.model.view.base.CrsContentBaseVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

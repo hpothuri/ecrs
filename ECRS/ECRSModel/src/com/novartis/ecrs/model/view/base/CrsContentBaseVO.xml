@@ -8,9 +8,12 @@
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  UseGlueCode="false">
+  UseGlueCode="false"
+  RowClass="com.novartis.ecrs.model.view.base.CrsContentBaseVORowImpl">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isCodegen" Value="true"/>
   </DesignTime>
   <Properties>
     <SchemaBasedProperties>
@@ -39,11 +42,18 @@
     CrsContentEO.REVIEW_APPROVE_REQUIRED_FLAG, 
     CrsContentEO.UI_VERSION_NUMBER, 
     CrsCompoundEO.COMPOUND_TYPE AS CRS_COMPOUND_TYPE, 
-    CrsCompoundEO.COMPOUND_CODE AS CRS_COMPOUND_CODE 
-FROM CRS_CONTENT CrsContentEO,CRS_COMPOUNDS CrsCompoundEO 
+    CrsCompoundEO.COMPOUND_CODE AS CRS_COMPOUND_CODE, 
+    CrsStatesEO.STATE_NAME STATE_NAME 
+FROM 
+    CRS_CONTENT CrsContentEO, 
+    CRS_COMPOUNDS CrsCompoundEO, 
+    CRS_STATES CrsStatesEO
 WHERE 
-    CrsContentEO.COMPOUND_ID(+) = CrsCompoundEO.COMPOUND_ID
-ORDER BY CRS_ID DESC]]></SQLQuery>
+    CrsContentEO.COMPOUND_ID = CrsCompoundEO.COMPOUND_ID 
+AND 
+    CrsContentEO.STATE_ID = CrsStatesEO.STATE_ID 
+ORDER BY 
+    CRS_ID DESC]]></SQLQuery>
   <ViewAttribute
     Name="CrsId"
     IsUpdateable="false"
@@ -53,7 +63,14 @@ ORDER BY CRS_ID DESC]]></SQLQuery>
     ColumnType="LONGINT"
     AliasName="CRS_ID"
     Expression="CRS_ID"
-    SQLType="NUMERIC"/>
+    SQLType="NUMERIC">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="CRS_ID"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ViewAttribute
     Name="CrsName"
     IsUpdateable="false"
@@ -68,6 +85,12 @@ ORDER BY CRS_ID DESC]]></SQLQuery>
     <DesignTime>
       <Attr Name="_DisplaySize" Value="65"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="CRS_NAME"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="StateId"
@@ -80,7 +103,7 @@ ORDER BY CRS_ID DESC]]></SQLQuery>
     ColumnType="NUMBER"
     AliasName="STATE_ID"
     Expression="STATE_ID"
-    SQLType="NUMERIC"/>
+    SQLType="INTEGER"/>
   <ViewAttribute
     Name="CompoundId"
     IsUpdateable="false"
@@ -92,7 +115,7 @@ ORDER BY CRS_ID DESC]]></SQLQuery>
     ColumnType="NUMBER"
     AliasName="COMPOUND_ID"
     Expression="COMPOUND_ID"
-    SQLType="NUMERIC"/>
+    SQLType="INTEGER"/>
   <ViewAttribute
     Name="GenericName"
     IsUpdateable="false"
@@ -309,7 +332,7 @@ ORDER BY CRS_ID DESC]]></SQLQuery>
     ColumnType="NUMBER"
     AliasName="UI_VERSION_NUMBER"
     Expression="UI_VERSION_NUMBER"
-    SQLType="NUMERIC"/>
+    SQLType="INTEGER"/>
   <ViewAttribute
     Name="CrsCompoundType"
     IsUpdateable="false"
@@ -335,6 +358,21 @@ ORDER BY CRS_ID DESC]]></SQLQuery>
     ColumnType="VARCHAR2"
     AliasName="CRS_COMPOUND_CODE"
     Expression="CRS_COMPOUND_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StateName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="15"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATE_NAME"
+    Expression="STATE_NAME"
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="15"/>

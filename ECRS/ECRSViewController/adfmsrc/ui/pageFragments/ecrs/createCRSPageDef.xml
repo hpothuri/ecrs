@@ -7,6 +7,9 @@
     <variableIterator id="variables"/>
     <iterator Binds="CrsContentVO" RangeSize="25"
               DataControl="ECRSAppModuleDataControl" id="CrsContentVOIterator"/>
+    <iterator Binds="CrsContentBaseVO" RangeSize="10"
+              DataControl="ECRSAppModuleDataControl"
+              id="CrsContentBaseVOIterator"/>
   </executables>
   <bindings>
     <list IterBinding="CrsContentVOIterator" StaticList="false"
@@ -148,5 +151,104 @@
                   MethodName="deleteCrs" IsViewObjectMethod="false"/>
     <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
             RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="CrsIdBase">
+      <AttrNames>
+        <Item Value="CrsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="CrsNameBase">
+      <AttrNames>
+        <Item Value="CrsName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="StateNameBase">
+      <AttrNames>
+        <Item Value="StateName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator"
+                     id="CrsCompoundCodeBase">
+      <AttrNames>
+        <Item Value="CrsCompoundCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator"
+                     id="GenericNameBase">
+      <AttrNames>
+        <Item Value="GenericName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="TradeNameBase">
+      <AttrNames>
+        <Item Value="TradeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="IndicationBase">
+      <AttrNames>
+        <Item Value="Indication"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator"
+                     id="IsMarketedFlagBase">
+      <AttrNames>
+        <Item Value="IsMarketedFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator"
+                     id="ReleaseStatusFlagBase">
+      <AttrNames>
+        <Item Value="ReleaseStatusFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="BslNameBase">
+      <AttrNames>
+        <Item Value="BslName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="DesigneeBase">
+      <AttrNames>
+        <Item Value="Designee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="MqmCommentBase">
+      <AttrNames>
+        <Item Value="MqmComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="TaslNameBase">
+      <AttrNames>
+        <Item Value="TaslName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator"
+                     id="TaslRejectCommentBase">
+      <AttrNames>
+        <Item Value="TaslRejectComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator"
+                     id="MedicalLeadNameBase">
+      <AttrNames>
+        <Item Value="MedicalLeadName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator"
+                     id="ReviewApproveRequiredFlagBase">
+      <AttrNames>
+        <Item Value="ReviewApproveRequiredFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator"
+                     id="CrsCompoundTypeBase">
+      <AttrNames>
+        <Item Value="CrsCompoundType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator"
+                     id="MedicalLeadRejectCommentBase">
+      <AttrNames>
+        <Item Value="MedicalLeadRejectComment"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>
