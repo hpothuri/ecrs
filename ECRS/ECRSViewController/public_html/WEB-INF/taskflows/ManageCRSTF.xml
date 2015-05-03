@@ -25,6 +25,7 @@
       <page>/ui/pageFragments/ecrs/createCRS.jsff</page>
       <train-stop>
        <display-name id="__14">#{pageFlowScope.flowType eq 'S' ? 'Details' : 'Add Details'}</display-name>
+        <outcome>initCreateUpdateCrs</outcome>
       </train-stop>
     </view>
     <view id="RiskDef">
@@ -63,6 +64,12 @@
       <method>#{pageFlowScope.manageCRSBean.initRisRel}</method>
       <outcome>
         <fixed-outcome>intiated</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="initializeCreateUpdateCrs">
+      <method>#{pageFlowScope.manageCRSBean.initializeCreateUpdateCRS}</method>
+      <outcome>
+        <fixed-outcome>createUpdate</fixed-outcome>
       </outcome>
     </method-call>
     <train/>
@@ -104,6 +111,10 @@
         <from-outcome>initRiskRel</from-outcome>
         <to-activity-id>initRiskRelation</to-activity-id>
       </control-flow-case>
+      <control-flow-case id="__24">
+        <from-outcome>initCreateUpdateCrs</from-outcome>
+        <to-activity-id>initializeCreateUpdateCrs</to-activity-id>
+      </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__19">
       <from-activity-id>initRiskRelation</from-activity-id>
@@ -124,6 +135,13 @@
       <control-flow-case id="__23">
         <from-outcome>home</from-outcome>
         <to-activity-id>home</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__25">
+      <from-activity-id>initializeCreateUpdateCrs</from-activity-id>
+      <control-flow-case id="__26">
+        <from-outcome>createUpdate</from-outcome>
+        <to-activity-id>create</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

@@ -49,9 +49,6 @@ import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.event.DropEvent;
 import oracle.adf.view.rich.event.PopupCanceledEvent;
 import oracle.adf.view.rich.util.ResetUtils;
-
-import oracle.adf.view.rich.util.ResetUtils;
-
 import oracle.binding.BindingContainer;
 import oracle.binding.OperationBinding;
 
@@ -113,24 +110,25 @@ public class ManageCRSBean implements Serializable {
     private String contentId;
     private String childScope;
     private RichTreeTable childTreeTable;
-    private RichPopup parentError;
+    private transient RichPopup parentError;
     private String safetyTopicOfInterest;
-    private RichPopup copyPopup;
-    private RichPanelGroupLayout copyPanel;
-    private RichPopup pendingPopup;
-    private RichTable copyRiskDefTable;
-    private String currentStatus;
-    private RichPanelLabelAndMessage savedSuccessMessage;
-    private RichPanelLabelAndMessage copySuccessMessage;
-    private RichOutputText hiddenPopupAlign;
-    private RichInputText stoiBinding;
-    private RichSelectManyChoice copyDBListBinding;
-    private RichSelectManyChoice copyRPListBinding;
-    private String searchFacetName;
+    private transient RichPopup copyPopup;
+    private transient RichPanelGroupLayout copyPanel;
+    private transient RichPopup pendingPopup;
+    private transient RichTable copyRiskDefTable;
+ //   private String currentStatus;
+    private transient RichPanelLabelAndMessage savedSuccessMessage;
+    private transient RichPanelLabelAndMessage copySuccessMessage;
+    private transient RichOutputText hiddenPopupAlign;
+    private transient RichInputText stoiBinding;
+    private transient RichSelectManyChoice copyDBListBinding;
+    private transient RichSelectManyChoice copyRPListBinding;
+   // private String searchFacetName;
     private transient UIXSwitcher searchSwitherBinding;
-    private String createFacetName;
-    private UIXSwitcher createSwitherBinding;
+  //  private String createFacetName;
+  //  private transient UIXSwitcher createSwitherBinding;
     private Boolean repoRefreshed;
+    private String baseOrStaging=ModelConstants.BASE_FACET;
 
     public ManageCRSBean() {
         super();
@@ -155,12 +153,12 @@ public class ManageCRSBean implements Serializable {
             flowType =
                     (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
             
-            if (ViewConstants.FLOW_TYPE_CREATE.equals(flowType) ||
-                ViewConstants.FLOW_TYPE_UPDATE.equals(flowType)) {
-                setCreateFacetName(ViewConstants.CREATE_UPDATE_COPY_FACET_NAME);
-            } else
-                setCreateFacetName(ViewConstants.CREATE_CURR_BASE_FACET_NAME);
-            
+//            if (ViewConstants.FLOW_TYPE_CREATE.equals(flowType) ||
+//                ViewConstants.FLOW_TYPE_UPDATE.equals(flowType)) {
+//                setCreateFacetName(ViewConstants.CREATE_UPDATE_COPY_FACET_NAME);
+//            } else
+//                setCreateFacetName(ViewConstants.CURRENT_BASE_FACET_NAME);
+//            
 //            if (ViewConstants.FLOW_TYPE_SEARCH.equals(flowType) ||
 //                ModelConstants.ROLE_BSL.equals(loggedInUserRole))
 //                setBslFacetName("BSL");
@@ -317,17 +315,18 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}",
                            ModelConstants.STATUS_CURRENT);
         }
-        setCurrentStatus((String)ADFUtils.evaluateEL("#{bindings.ReleaseStatus.inputValue}"));
+       
         DCBindingContainer bc = ADFUtils.getDCBindingContainer();
         OperationBinding ob = bc.getOperationBinding("filterCRSContent");
         ob.getParamsMap().put("userInRole", loggedInUserRole);
         ob.getParamsMap().put("userName", getUserName());
         ob.getParamsMap().put("isInboxDisable", isInboxDisable());
         ob.execute();
+        
         if (ModelConstants.STATUS_PENDING.equals(ADFUtils.evaluateEL("#{bindings.ReleaseStatus.inputValue}"))) {
-            setSearchFacetName(ViewConstants.SEARCH_PENDING_STG_FACET_NAME);
+            setBaseOrStaging(ModelConstants.STAGING_FACET);
         } else
-            setSearchFacetName(ViewConstants.SEARCH_CURR_BASE_FACET_NAME);
+            setBaseOrStaging(ModelConstants.BASE_FACET);
         
         ADFUtils.addPartialTarget(getSearchSwitherBinding());
         if (ob.getErrors().size() > 0)
@@ -374,11 +373,11 @@ public class ManageCRSBean implements Serializable {
             }
             setSelDesigneeList(designeeList);
         }
-        setCreateFacetName(ViewConstants.CREATE_UPDATE_COPY_FACET_NAME);
-        if (getCreateSwitherBinding() != null){
-            ADFUtils.addPartialTarget(getCreateSwitherBinding().getParent());
-            ResetUtils.reset(getCreateSwitherBinding());
-        }
+//        setCreateFacetName(ViewConstants.CREATE_UPDATE_COPY_FACET_NAME);
+//        if (getCreateSwitherBinding() != null){
+//            ADFUtils.addPartialTarget(getCreateSwitherBinding().getParent());
+//            ResetUtils.reset(getCreateSwitherBinding());
+//        }
     }
 
     /**
@@ -416,7 +415,7 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.setPageFlowScopeValue("crsName", crsName);
         Map params = new HashMap<String, Object>();
         params.put("crsId", crsId);
-        params.put("status", getCurrentStatus());
+        params.put("status", getBaseOrStaging());
         try {
             ADFUtils.executeAction("initRiskRelation", params);
         } catch (Exception e) {
@@ -654,7 +653,7 @@ public class ManageCRSBean implements Serializable {
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
         OperationBinding oper = ADFUtils.findOperation("initRiskRelation");
         oper.getParamsMap().put("crsId", crsId);
-        oper.getParamsMap().put("status", getCurrentStatus());
+        oper.getParamsMap().put("status", getBaseOrStaging());
         oper.execute();
         if (oper.getErrors().size() > 0) 
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
@@ -1410,7 +1409,7 @@ public class ManageCRSBean implements Serializable {
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
         OperationBinding oper1 = ADFUtils.findOperation("initRiskRelation");
         oper1.getParamsMap().put("crsId", crsId);
-        oper1.getParamsMap().put("status", getCurrentStatus());
+        oper1.getParamsMap().put("status", getBaseOrStaging());
         oper1.execute();
         if (oper1.getErrors().size() > 0) 
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
@@ -1620,19 +1619,19 @@ public class ManageCRSBean implements Serializable {
         return copyRiskDefTable;
     }
 
-    /**
-     * @param currentStatus
-     */
-    public void setCurrentStatus(String currentStatus) {
-        this.currentStatus = currentStatus;
-    }
-
-    /**
-     * @return
-     */
-    public String getCurrentStatus() {
-        return currentStatus;
-    }
+//    /**
+//     * @param currentStatus
+//     */
+//    public void setCurrentStatus(String currentStatus) {
+//        this.currentStatus = currentStatus;
+//    }
+//
+//    /**
+//     * @return
+//     */
+//    public String getCurrentStatus() {
+//        return currentStatus;
+//    }
 
     /**
      * @param savedSuccessMessage
@@ -1700,19 +1699,19 @@ public class ManageCRSBean implements Serializable {
         return copyRPListBinding;
     }
 
-    /**
-     * @param searchFacetName
-     */
-    public void setSearchFacetName(String searchFacetName) {
-        this.searchFacetName = searchFacetName;
-    }
-
-    /**
-     * @return
-     */
-    public String getSearchFacetName() {
-        return searchFacetName;
-    }
+//    /**
+//     * @param searchFacetName
+//     */
+//    public void setSearchFacetName(String searchFacetName) {
+//        this.searchFacetName = searchFacetName;
+//    }
+//
+//    /**
+//     * @return
+//     */
+//    public String getSearchFacetName() {
+//        return searchFacetName;
+//    }
 
     /**
      * @param searchFacetBinding
@@ -1750,40 +1749,40 @@ public class ManageCRSBean implements Serializable {
             }
             setSelDesigneeList(designeeList);
         }
-        setCreateFacetName(ViewConstants.CREATE_CURR_BASE_FACET_NAME);
-        if (getCreateSwitherBinding() != null) {
-            ADFUtils.addPartialTarget(getCreateSwitherBinding().getParent());
-            ResetUtils.reset(getCreateSwitherBinding());
-        }
+//        setCreateFacetName(ViewConstants.CURRENT_BASE_FACET_NAME);
+//        if (getCreateSwitherBinding() != null) {
+//            ADFUtils.addPartialTarget(getCreateSwitherBinding().getParent());
+//            ResetUtils.reset(getCreateSwitherBinding());
+//        }
     }
 
-    /**
-     * @param createFacetName
-     */
-    public void setCreateFacetName(String createFacetName) {
-        this.createFacetName = createFacetName;
-    }
+//    /**
+//     * @param createFacetName
+//     */
+//    public void setCreateFacetName(String createFacetName) {
+//        this.createFacetName = createFacetName;
+//    }
+//
+//    /**
+//     * @return
+//     */
+//    public String getCreateFacetName() {
+//        return createFacetName;
+//    }
 
-    /**
-     * @return
-     */
-    public String getCreateFacetName() {
-        return createFacetName;
-    }
-
-    /**
-     * @param createSwitherBinding
-     */
-    public void setCreateSwitherBinding(UIXSwitcher createSwitherBinding) {
-        this.createSwitherBinding = createSwitherBinding;
-    }
-
-    /**
-     * @return
-     */
-    public UIXSwitcher getCreateSwitherBinding() {
-        return createSwitherBinding;
-    }
+//    /**
+//     * @param createSwitherBinding
+//     */
+//    public void setCreateSwitherBinding(UIXSwitcher createSwitherBinding) {
+//        this.createSwitherBinding = createSwitherBinding;
+//    }
+//
+//    /**
+//     * @return
+//     */
+//    public UIXSwitcher getCreateSwitherBinding() {
+//        return createSwitherBinding;
+//    }
 
     public void refreshRepository(ActionEvent actionEvent) {
         Map params = new HashMap<String, Object>();
@@ -1803,5 +1802,18 @@ public class ManageCRSBean implements Serializable {
 
     public Boolean getRepoRefreshed() {
         return repoRefreshed;
+    }
+
+
+    public void initializeCreateUpdateCRS() {
+        // Add event code here...
+    }
+
+    public void setBaseOrStaging(String baseOrStaging) {
+        this.baseOrStaging = baseOrStaging;
+    }
+
+    public String getBaseOrStaging() {
+        return baseOrStaging;
     }
 }

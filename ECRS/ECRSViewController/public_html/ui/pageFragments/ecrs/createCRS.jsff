@@ -16,10 +16,9 @@
                       id="t1"/>
         </af:panelGroupLayout>
         <af:panelGroupLayout id="pgl5" layout="vertical">
-            <af:switcher id="s1" defaultFacet="updateCopyFacet"
-                         facetName="#{pageFlowScope.manageCRSBean.createFacetName}"
-                         binding="#{pageFlowScope.manageCRSBean.createSwitherBinding}">
-                <f:facet name="updateCopyFacet">
+            <af:switcher id="s1" defaultFacet="BASE"
+                         facetName="#{pageFlowScope.manageCRSBean.baseOrStaging}">
+                <f:facet name="STAGING">
                     <af:panelGroupLayout id="pgl10" layout="vertical">
                         <af:panelBox text="#{pageFlowScope.flowType eq 'S' ? ecrsviewcontrollerBundle.DETAILS : ecrsviewcontrollerBundle.ADD_DETAILS} #{pageFlowScope.flowType eq 'U' ? ecrsviewcontrollerBundle.COLON : ''} #{pageFlowScope.flowType eq 'U' ? bindings.CrsName.inputValue  : ''}"
                                      id="pb1">
@@ -31,7 +30,7 @@
                                                   disabled="#{!bindings.Commit.enabled}"/>
                             </f:facet>
                             <af:panelGroupLayout id="pgl3" layout="horizontal">
-                                <af:outputText value="update facet" id="ot22"/>
+                                
                                 <af:panelFormLayout id="pfl1" maxColumns="3"
                                                     rows="6" labelWidth="140"
                                                     fieldWidth="200">
@@ -379,7 +378,7 @@
                         </af:panelBox>
                     </af:panelGroupLayout>
                 </f:facet>
-                <f:facet name="currBaseReadOnlyFacet">
+                <f:facet name="BASE">
                     <af:panelGroupLayout id="pgl11" layout="vertical">
                         <af:panelBox text="#{pageFlowScope.flowType eq 'S' ? ecrsviewcontrollerBundle.DETAILS : ecrsviewcontrollerBundle.ADD_DETAILS} #{pageFlowScope.flowType eq 'U' ? ecrsviewcontrollerBundle.COLON : ''} #{pageFlowScope.flowType eq 'U' ? bindings.CrsName.inputValue  : ''}"
                                      id="pb3">

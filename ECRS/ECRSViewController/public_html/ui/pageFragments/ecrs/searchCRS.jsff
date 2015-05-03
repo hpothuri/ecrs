@@ -154,10 +154,10 @@
           </f:facet>
         </af:panelGroupLayout>
       </af:panelBox>
-      <af:switcher id="s5" defaultFacet="current_base"
-                   facetName="#{pageFlowScope.manageCRSBean.searchFacetName}"
+      <af:switcher id="s5" defaultFacet="BASE"
+                   facetName="#{pageFlowScope.manageCRSBean.baseOrStaging}"
                    binding="#{pageFlowScope.manageCRSBean.searchSwitherBinding}">
-        <f:facet name="current_base">
+        <f:facet name="BASE">
           <af:table value="#{bindings.CrsContentBaseVO.collectionModel}"
                     var="row" rows="#{bindings.CrsContentBaseVO.rangeSize}"
                     emptyText="#{bindings.CrsContentBaseVO.viewable ? 'No data to display.' : 'Access Denied.'}"
@@ -268,7 +268,7 @@
             </af:column>
           </af:table>
         </f:facet>
-        <f:facet name="pending_stg">
+        <f:facet name="STAGING">
           <af:table value="#{bindings.CrsContentVO.collectionModel}" var="row"
                     rows="#{bindings.CrsContentVO.rangeSize}"
                     emptyText="#{bindings.CrsContentVO.viewable ? 'No data to display.' : 'Access Denied.'}"

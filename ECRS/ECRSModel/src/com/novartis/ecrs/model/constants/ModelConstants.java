@@ -27,5 +27,7 @@ public class ModelConstants {
     
     public static final String REVIEW_REQD_YES = "Y";
     public static final String REVIEW_REQD_NO = "N";
-    
+        
+    public static final String BASE_FACET = "BASE";
+    public static final String STAGING_FACET = "STAGING";
 }

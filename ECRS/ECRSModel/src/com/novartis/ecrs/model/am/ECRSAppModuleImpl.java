@@ -224,9 +224,11 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         
         ViewObjectImpl crsContentVO = null;
         if (ModelConstants.STATUS_PENDING.equals(row.getReleaseStatus())) {
-            crsContentVO = this.getCrsContentVO();
+            crsContentVO = this.getCrsContentVO();           
+            this.getCrsContentBaseVO().executeEmptyRowSet();
         } else {
-            crsContentVO = this.getCrsContentBaseVO();
+            crsContentVO = this.getCrsContentBaseVO();          
+            this.getCrsContentVO().executeEmptyRowSet();
         }
         crsContentVO.setWhereClause(whereClause);
         crsContentVO.executeQuery();
@@ -309,7 +311,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      * Info : Metdod to show the risk definitions (if any) for the selected CRS on load of risk definitions page.
      */
     public void initRiskRelation(Long crsId, String status){
-        if(status != null && "C".equals(status)){
+        if(status != null && ModelConstants.BASE_FACET.equals(status)){
             ViewObject riskBaseVO = this.getCrsRiskBaseVO();
             riskBaseVO.setWhereClause("CRS_ID = "+crsId);
             riskBaseVO.executeQuery();
