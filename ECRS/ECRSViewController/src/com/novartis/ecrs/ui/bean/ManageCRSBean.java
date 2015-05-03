@@ -49,6 +49,7 @@ import oracle.adf.view.rich.event.DialogEvent;
 import oracle.adf.view.rich.event.DropEvent;
 import oracle.adf.view.rich.event.PopupCanceledEvent;
 import oracle.adf.view.rich.util.ResetUtils;
+
 import oracle.binding.BindingContainer;
 import oracle.binding.OperationBinding;
 
@@ -153,11 +154,11 @@ public class ManageCRSBean implements Serializable {
             flowType =
                     (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
             
-//            if (ViewConstants.FLOW_TYPE_CREATE.equals(flowType) ||
-//                ViewConstants.FLOW_TYPE_UPDATE.equals(flowType)) {
-//                setCreateFacetName(ViewConstants.CREATE_UPDATE_COPY_FACET_NAME);
-//            } else
-//                setCreateFacetName(ViewConstants.CURRENT_BASE_FACET_NAME);
+            if (ViewConstants.FLOW_TYPE_CREATE.equals(flowType) ||
+                ViewConstants.FLOW_TYPE_UPDATE.equals(flowType)) {
+                setBaseOrStaging(ModelConstants.STAGING_FACET);
+            } else
+                setBaseOrStaging(ModelConstants.BASE_FACET);
 //            
 //            if (ViewConstants.FLOW_TYPE_SEARCH.equals(flowType) ||
 //                ModelConstants.ROLE_BSL.equals(loggedInUserRole))
@@ -488,6 +489,16 @@ public class ManageCRSBean implements Serializable {
                 ModelConstants.ROLE_BSL.equals(loggedInUserRole))
                 ADFUtils.setEL("#{bindings.BslName.inputValue}",
                                getUserName());
+            String crsCompCode =
+                (String)ADFUtils.evaluateEL("#{bindings.CrsCompoundCode.inputValue}");
+            String compCode =
+                (String)ADFUtils.evaluateEL("#{bindings.CompoundCode.inputValue}");
+            String indication =
+                (String)ADFUtils.evaluateEL("#{bindings.Indication.inputValue}");
+            ADFUtils.setEL("#{bindings.CrsName.inputValue}",
+                           (compCode != null ? compCode : crsCompCode) + " " +
+                           (indication != null ? indication : ""));
+
         }
     }
 
