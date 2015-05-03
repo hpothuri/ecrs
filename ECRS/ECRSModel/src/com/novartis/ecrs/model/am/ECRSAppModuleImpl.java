@@ -777,26 +777,29 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public boolean retireCrs(Long pCRSId,String pReasonForChange) {
         //Execute the function call.
+        ViewObjectImpl baseVO = this.getCrsContentBaseVO();
         DBTransaction txn = getDBTransaction();
         OracleCallableStatement cstmt = null;
         String cs = null;
         String returnCode = null;
         if (pCRSId != null) {
-            cs = "{?=call activate_crs (?,?)}";
+            cs = "{?=call CRS_UI_TMS_UTILS.retire_crs (?,?)}";
             cstmt = (OracleCallableStatement)txn.createCallableStatement(cs, DBTransaction.DEFAULT);
             try {
                 cstmt.registerOutParameter(1, Types.VARCHAR);
-                cstmt.setNUMBER(1, new oracle.jbo.domain.Number(pCRSId));
-                cstmt.setString(2, pReasonForChange);
+                cstmt.setNUMBER(2, new oracle.jbo.domain.Number(pCRSId));
+                cstmt.setString(3, pReasonForChange);
                 cstmt.execute();
                 returnCode = cstmt.getString(1);
 
                 if ("0".equalsIgnoreCase(returnCode)) {
                     //Reexecute the VO
+                    baseVO.executeQuery();
                     return true;
                 } else
                     return false;
             } catch (Exception e) {
+               // e.printStackTrace();
                 return false;
             } finally {
                 try {
@@ -815,26 +818,28 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public boolean reactivateCrs(Long pCRSId,String pReasonForChange) {
         //Execute the function call.
+        ViewObjectImpl baseVO = this.getCrsContentBaseVO();
         DBTransaction txn = getDBTransaction();
         OracleCallableStatement cstmt = null;
         String cs = null;
         String returnCode = null;
         if (pCRSId != null) {
-            cs = "{?=call activate_crs (?,?)}";
+            cs = "{?=call CRS_UI_TMS_UTILS.reactivate_crs (?,?)}";
             cstmt = (OracleCallableStatement)txn.createCallableStatement(cs, DBTransaction.DEFAULT);
             try {
                 cstmt.registerOutParameter(1, Types.VARCHAR);
-                cstmt.setNUMBER(1, new oracle.jbo.domain.Number(pCRSId));
-                cstmt.setString(2, pReasonForChange);
+                cstmt.setNUMBER(2, new oracle.jbo.domain.Number(pCRSId));
+                cstmt.setString(3, pReasonForChange);
                 cstmt.execute();
                 returnCode = cstmt.getString(1);
-
                 if ("0".equalsIgnoreCase(returnCode)) {
                     //Reexecute the VO
+                    baseVO.executeQuery();
                     return true;
                 } else
                     return false;
             } catch (Exception e) {
+               // e.printStackTrace();
                 return false;
             } finally {
                 try {

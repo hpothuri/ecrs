@@ -126,6 +126,7 @@ public class ManageCRSBean implements Serializable {
     private transient UIXSwitcher searchSwitherBinding;
     private Boolean repoRefreshed;
     private String baseOrStaging=ModelConstants.BASE_FACET;
+    private RichTable searchBaseTableBinding;
 
     public ManageCRSBean() {
         super();
@@ -313,9 +314,11 @@ public class ManageCRSBean implements Serializable {
         
         if (ModelConstants.STATUS_PENDING.equals(ADFUtils.evaluateEL("#{bindings.ReleaseStatus.inputValue}"))) {
             setBaseOrStaging(ModelConstants.STAGING_FACET);
-        } else
+        } else{
             setBaseOrStaging(ModelConstants.BASE_FACET);
-        
+            getSearchBaseTableBinding().resetStampState();
+            ADFUtils.addPartialTarget(getSearchBaseTableBinding());
+        }
         ADFUtils.addPartialTarget(getSearchSwitherBinding());
         if (ob.getErrors().size() > 0)
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
@@ -1723,5 +1726,61 @@ public class ManageCRSBean implements Serializable {
 
     public String getBaseOrStaging() {
         return baseOrStaging;
+    }
+
+    /**
+     * @param actionEvent
+     */
+    public void reactivateCRS(ActionEvent actionEvent) {
+        // Add event code here...
+        CrsContentBaseVORowImpl row =
+            (CrsContentBaseVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentBaseVOIterator.currentRow}");
+        if(row.getCrsId()!=null){
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("pCRSId", row.getCrsId());
+            params.put("pReasonForChange", "RSN CHNGE");
+            try {
+                ADFUtils.executeAction("reactivateCrs", params);
+                getSearchBaseTableBinding().resetStampState();
+                ADFUtils.addPartialTarget(getSearchBaseTableBinding());
+            } catch (Exception e) {
+                e.printStackTrace();
+            } 
+        }
+    }
+
+    /**
+     * @param actionEvent
+     */
+    public void retireCRS(ActionEvent actionEvent) {
+        // Add event code here...
+        CrsContentBaseVORowImpl row =
+            (CrsContentBaseVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentBaseVOIterator.currentRow}");
+        if(row.getCrsId()!=null){
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("pCRSId", row.getCrsId());
+            params.put("pReasonForChange", "RSN CHNGE");
+            try {
+                ADFUtils.executeAction("retireCrs", params);
+                getSearchBaseTableBinding().resetStampState();
+                ADFUtils.addPartialTarget(getSearchBaseTableBinding());
+            } catch (Exception e) {
+                e.printStackTrace();
+            } 
+        }
+    }
+
+    /**
+     * @param searchBaseTableBinding
+     */
+    public void setSearchBaseTableBinding(RichTable searchBaseTableBinding) {
+        this.searchBaseTableBinding = searchBaseTableBinding;
+    }
+
+    /**
+     * @return
+     */
+    public RichTable getSearchBaseTableBinding() {
+        return searchBaseTableBinding;
     }
 }

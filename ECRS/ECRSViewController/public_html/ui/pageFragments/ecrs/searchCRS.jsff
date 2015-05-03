@@ -166,7 +166,8 @@
                     columnStretching="column:c14" rowSelection="single"
                     selectionListener="#{pageFlowScope.manageCRSBean.baseContentVOSelectionListener}"
                     inlineStyle="min-height:300px;" autoHeightRows="15"
-                    styleClass="AFStretchWidth" contentDelivery="immediate">
+                    styleClass="AFStretchWidth" contentDelivery="immediate"
+                    binding="#{pageFlowScope.manageCRSBean.searchBaseTableBinding}">
             <af:column sortProperty="#{bindings.CrsContentBaseVO.hints.CrsId.name}"
                        sortable="false"
                        headerText="#{bindings.CrsContentBaseVO.hints.CrsId.label}"
@@ -265,6 +266,24 @@
               <af:outputText value="#{row.MedicalLeadName}"
                              shortDesc="#{bindings.CrsContentBaseVO.hints.MedicalLeadName.tooltip}"
                              id="ot21"/>
+            </af:column>
+            <af:column headerText="#{ecrsviewcontrollerBundle.ACTION}"
+                       id="c26" rendered="#{pageFlowScope.flowType ne 'S'}">
+              <af:switcher id="s6"
+                           facetName="#{row.StateId eq 8 ?  'RETIRE' : 'REACTIVATE'}"
+                           defaultFacet="RETIRE">
+                <f:facet name="REACTIVATE">
+                  <af:commandButton text="#{ecrsviewcontrollerBundle.REACTIVATE}"
+                                    id="cb2"
+                                    actionListener="#{pageFlowScope.manageCRSBean.reactivateCRS}"/>
+                </f:facet>
+                <f:facet name="RETIRE">
+                  <af:commandButton text="#{ecrsviewcontrollerBundle.RETIRE}"
+                                    id="cb3"
+                                    actionListener="#{pageFlowScope.manageCRSBean.retireCRS}"
+                                    partialSubmit="false"/>
+                </f:facet>
+              </af:switcher>
             </af:column>
           </af:table>
         </f:facet>
