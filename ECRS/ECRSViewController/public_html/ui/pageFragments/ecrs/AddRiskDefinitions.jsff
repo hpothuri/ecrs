@@ -593,15 +593,13 @@
           </af:column>
           <af:dragSource actions="COPY" defaultAction="COPY" discriminant="copyRows"/>
         </af:table>
-        <af:treeTable value="#{bindings.HierarchyChildVO.treeModel}" var="node"
-                      selectionListener="#{bindings.HierarchyChildVO.treeModel.makeCurrent}" rowSelection="multiple"
-                      id="tt1" styleClass="AFStretchWidth" visible="false"
+        <af:treeTable value="#{pageFlowScope.manageCRSBean.hierChildTreeModel}" var="node" rowSelection="multiple"
+                      id="tt1" styleClass="AFStretchWidth"
                       binding="#{pageFlowScope.manageCRSBean.childTreeTable}" initiallyExpanded="true"
-                      contentDelivery="immediate"
-                      selectedRowKeys="#{bindings.HierarchySearchVO.treeModel.selectedRow}">
+                      contentDelivery="immediate" visible="false">
           <f:facet name="nodeStamp">
             <af:column id="c33" width="150">
-              <af:outputText value="#{node.Term}" id="ot19"/>
+              <af:outputText value="#{node.term}" id="ot19"/>
             </af:column>
           </f:facet>
           <f:facet name="pathStamp">
@@ -609,10 +607,10 @@
           </f:facet>
           <af:column id="c34" headerText="#{ecrsviewcontrollerBundle.HIERARCHY_DETAILS}">
             <af:column id="c35" headerText="#{ecrsviewcontrollerBundle.CODE}">
-              <af:outputText value="#{node.DictContentCode}" id="ot24"/>
+              <af:outputText value="#{node.dictContentCode}" id="ot24"/>
             </af:column>
             <af:column id="c36" headerText="#{ecrsviewcontrollerBundle.LEVEL}">
-              <af:outputText value="#{node.LevelName}" id="ot22"/>
+              <af:outputText value="#{node.levelName}" id="ot22"/>
             </af:column>
             <af:column id="c37" headerText="#{ecrsviewcontrollerBundle.SCOPE}">
               <af:outputText value="#{pageFlowScope.manageCRSBean.childScope}" id="ot23"/>

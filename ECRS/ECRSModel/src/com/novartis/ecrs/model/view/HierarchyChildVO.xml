@@ -147,8 +147,8 @@ ORDER BY SORT_ORDER]]></SQLQuery>
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Type="java.math.BigDecimal"
-    ColumnType="NUMBER"
+    Type="java.lang.Long"
+    ColumnType="LONGINT"
     AliasName="LEVEL"
     Expression="LEVEL"
     SQLType="NUMERIC">

@@ -574,5 +574,10 @@
         <Item Value="N"/>
       </ValueList>
     </button>
+    <methodAction id="refreshRepository" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="refreshRepository" IsViewObjectMethod="false">
+      <NamedData NDName="crsId" NDType="java.lang.Long"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

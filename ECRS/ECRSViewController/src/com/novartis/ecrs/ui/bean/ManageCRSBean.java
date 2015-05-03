@@ -3,6 +3,7 @@ package com.novartis.ecrs.ui.bean;
 
 import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.CrsContentVORowImpl;
+import com.novartis.ecrs.model.view.HierarchyChildVORowImpl;
 import com.novartis.ecrs.model.view.base.CrsContentBaseVORowImpl;
 import com.novartis.ecrs.ui.constants.ViewConstants;
 import com.novartis.ecrs.ui.utility.ADFUtils;
@@ -56,6 +57,7 @@ import oracle.binding.OperationBinding;
 import oracle.javatools.resourcebundle.BundleFactory;
 
 import oracle.jbo.Row;
+import oracle.jbo.RowIterator;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.ViewObject;
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
@@ -65,6 +67,7 @@ import oracle.security.crypto.util.InvalidFormatException;
 import org.apache.myfaces.trinidad.component.UIXCollection;
 import org.apache.myfaces.trinidad.component.UIXSwitcher;
 import org.apache.myfaces.trinidad.event.SelectionEvent;
+import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
 import org.apache.myfaces.trinidad.model.CollectionModel;
 import org.apache.myfaces.trinidad.model.RowKeySet;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -126,6 +129,8 @@ public class ManageCRSBean implements Serializable {
     private transient UIXSwitcher searchSwitherBinding;
     private Boolean repoRefreshed;
     private String baseOrStaging=ModelConstants.BASE_FACET;
+    private ChildPropertyTreeModel hierChildTreeModel;
+    private List<HierarchyChildUIBean> hierChildList;
     private RichTable searchBaseTableBinding;
 
     public ManageCRSBean() {
@@ -943,10 +948,10 @@ public class ManageCRSBean implements Serializable {
     }
 
     public DnDAction dragDropListener(DropEvent dropEvent) {
-        
+
         DCIteratorBinding riskDefIter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
         ViewObject riskDefVO = riskDefIter.getViewObject();
-        
+
         UIXCollection dragTable = (UIXCollection)dropEvent.getDragComponent();
         RichTable dropTable = (RichTable)dropEvent.getDropComponent();
         String dragNodeVO = null;
@@ -954,110 +959,110 @@ public class ManageCRSBean implements Serializable {
         DataFlavor<RowKeySet> df = DataFlavor.getDataFlavor(RowKeySet.class, "copyRows");
         RowKeySet rks = t.getData(df);
         Iterator iter = rks.iterator();
-        
+
         Object dragCurrentRowKey = dragTable.getRowKey();
         Row dragRow = null;
         while (iter.hasNext()) {
             List key = (List)iter.next();
             dragTable.setRowKey(key);
-            JUCtrlHierNodeBinding rowBinding = (JUCtrlHierNodeBinding)dragTable.getRowData();
-            dragRow = rowBinding.getRow();
-            dragNodeVO = dragRow.getStructureDef().getDefName();
-            if (("HierarchyChildDetailVO".equalsIgnoreCase(dragNodeVO))) {
-                String term = (String)dragRow.getAttribute("Term");
-                String code = (String)dragRow.getAttribute("DictContentCode");
-                String level = (String)dragRow.getAttribute("LevelName");
-                String dict = (String)dragRow.getAttribute("DictShortName");
-                String version = (String)dragRow.getAttribute("DictContentAltCode");
-                
-                if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
-                    Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
-                    if (rows.length > 0) {
-                        ADFUtils.showPopup(meddraError);
-                        dragTable.setRowKey(dragCurrentRowKey);
-                        AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
-                        AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
-                        return DnDAction.NONE;
-                    }
+            Object dataObj = dragTable.getRowData();
+            if (dataObj instanceof HierarchyChildUIBean) {
+                HierarchyChildUIBean selRow = (HierarchyChildUIBean)dragTable.getRowData();
+                if(selRow.getLevelName().equals(new Long(0))){
+                    ADFUtils.showPopup(parentError);
+                    dragTable.setRowKey(dragCurrentRowKey);
+                    AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                    AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                    return DnDAction.NONE;
                 }
-                
-                Row riskDefRow = riskDefVO.createRow();
-                riskDefRow.setAttribute("MeddraCode", code);
-                riskDefRow.setAttribute("MeddraLevel", level);
-                riskDefRow.setAttribute("MeddraTerm", term);
-                riskDefRow.setAttribute("MeddraDict", dict);
-                riskDefRow.setAttribute("MeddraVersion", version != null ? version : ADFUtils.getPageFlowScopeValue("childVersion"));
-                riskDefRow.setAttribute("MeddraVersionDate", ADFUtils.getPageFlowScopeValue("childDate"));
-                
-                if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
-                    if (term != null && term.contains("NMQ"))
-                        riskDefRow.setAttribute("MeddraExtension", "NMQ");
-                    else if (term != null && term.contains("CMQ"))
-                        riskDefRow.setAttribute("MeddraExtension", "CMQ");
-                    else if (term != null && term.contains("SMQ"))
-                        riskDefRow.setAttribute("MeddraExtension", "SMQ");
-                    else
+                else{
+                    String version = selRow.getDictContentAltCode();
+                    String dict = selRow.getDictShortName();
+                    if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
+                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
+                        if (rows.length > 0) {
+                            ADFUtils.showPopup(meddraError);
+                            dragTable.setRowKey(dragCurrentRowKey);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                            return DnDAction.NONE;
+                        }
+                    }
+                    Row riskDefRow = riskDefVO.createRow();
+                    riskDefRow.setAttribute("MeddraCode", selRow.getDictContentCode());
+                    riskDefRow.setAttribute("MeddraLevel", selRow.getLevelName());
+                    riskDefRow.setAttribute("MeddraTerm", selRow.getTerm());
+                    riskDefRow.setAttribute("MeddraDict", selRow.getDictShortName());
+                    riskDefRow.setAttribute("MeddraVersion",
+                                            version != null ? version : ADFUtils.getPageFlowScopeValue("childVersion"));
+                    riskDefRow.setAttribute("MeddraVersionDate", ADFUtils.getPageFlowScopeValue("childDate"));
+
+                    if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
+                        if (term != null && term.contains("NMQ"))
+                            riskDefRow.setAttribute("MeddraExtension", "NMQ");
+                        else if (term != null && term.contains("CMQ"))
+                            riskDefRow.setAttribute("MeddraExtension", "CMQ");
+                        else if (term != null && term.contains("SMQ"))
+                            riskDefRow.setAttribute("MeddraExtension", "SMQ");
+                        else
+                            riskDefRow.setAttribute("MeddraExtension", level);
+                    } else
                         riskDefRow.setAttribute("MeddraExtension", level);
-                } else
-                    riskDefRow.setAttribute("MeddraExtension", level);
-                
-             
-                riskDefRow.setAttribute("MeddraQualifier", getChildScope());
-                //                meddra_qualifier IN ('BROAD','NARROW','CHILD NARROW')
-                riskDefVO.insertRow(riskDefRow);
-            }
-            else if("HierarchySearchVO".equalsIgnoreCase(dragNodeVO)){
-                String term = (String)dragRow.getAttribute("Mqterm");
-                String code = (String)dragRow.getAttribute("Mqcode");
-                String level = (String)dragRow.getAttribute("Mqlevel");
-                String qual = (String)dragRow.getAttribute("Mqcrtev");
-                String dict = (String)dragRow.getAttribute("DictNm");
-                String version = (String)dragRow.getAttribute("Version");
-                
-                if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
-                    Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
-                    if (rows.length > 0) {
-                        ADFUtils.showPopup(meddraError);
-                        dragTable.setRowKey(dragCurrentRowKey);
-                        AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
-                        AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
-                        return DnDAction.NONE;
-                    }
+
+
+                    riskDefRow.setAttribute("MeddraQualifier", getChildScope());
+                    riskDefVO.insertRow(riskDefRow);
                 }
-                
-                Row riskDefRow = riskDefVO.createRow();
-                riskDefRow.setAttribute("MeddraCode", code);
-                riskDefRow.setAttribute("MeddraLevel", level);
-                riskDefRow.setAttribute("MeddraTerm", term);
-                riskDefRow.setAttribute("MeddraDict", dict);
-                riskDefRow.setAttribute("MeddraVersion", version);
-                riskDefRow.setAttribute("MeddraVersionDate", dragRow.getAttribute("Dates"));
-                
-                if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
-                    if (term != null && term.contains("NMQ"))
-                        riskDefRow.setAttribute("MeddraExtension", "NMQ");
-                    else if (term != null && term.contains("CMQ"))
-                        riskDefRow.setAttribute("MeddraExtension", "CMQ");
-                    else if (term != null && term.contains("SMQ"))
-                        riskDefRow.setAttribute("MeddraExtension", "SMQ");
-                } else
-                    riskDefRow.setAttribute("MeddraExtension", level);
-                
-                if(qual != null && qual.contains("Y_BROAD"))
-                    riskDefRow.setAttribute("MeddraQualifier", "BROAD");
-                else if(qual != null && qual.contains("Y_NARROW"))
-                    riskDefRow.setAttribute("MeddraQualifier", "NARROW");
-                else
-                    riskDefRow.setAttribute("MeddraQualifier", "CHILD NARROW");
-//                meddra_qualifier IN ('BROAD','NARROW','CHILD NARROW')
-                riskDefVO.insertRow(riskDefRow);
-            }
-            else{
-                ADFUtils.showPopup(parentError);
-                dragTable.setRowKey(dragCurrentRowKey);
-                AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
-                AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
-                return DnDAction.NONE;
+            } else {
+                JUCtrlHierNodeBinding rowBinding = (JUCtrlHierNodeBinding)dragTable.getRowData();
+                dragRow = rowBinding.getRow();
+                dragNodeVO = dragRow.getStructureDef().getDefName();
+                if ("HierarchySearchVO".equalsIgnoreCase(dragNodeVO)) {
+                    String term = (String)dragRow.getAttribute("Mqterm");
+                    String code = (String)dragRow.getAttribute("Mqcode");
+                    String level = (String)dragRow.getAttribute("Mqlevel");
+                    String qual = (String)dragRow.getAttribute("Mqcrtev");
+                    String dict = (String)dragRow.getAttribute("DictNm");
+                    String version = (String)dragRow.getAttribute("Version");
+
+                    if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
+                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
+                        if (rows.length > 0) {
+                            ADFUtils.showPopup(meddraError);
+                            dragTable.setRowKey(dragCurrentRowKey);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                            return DnDAction.NONE;
+                        }
+                    }
+
+                    Row riskDefRow = riskDefVO.createRow();
+                    riskDefRow.setAttribute("MeddraCode", code);
+                    riskDefRow.setAttribute("MeddraLevel", level);
+                    riskDefRow.setAttribute("MeddraTerm", term);
+                    riskDefRow.setAttribute("MeddraDict", dict);
+                    riskDefRow.setAttribute("MeddraVersion", version);
+                    riskDefRow.setAttribute("MeddraVersionDate", dragRow.getAttribute("Dates"));
+
+                    if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
+                        if (term != null && term.contains("NMQ"))
+                            riskDefRow.setAttribute("MeddraExtension", "NMQ");
+                        else if (term != null && term.contains("CMQ"))
+                            riskDefRow.setAttribute("MeddraExtension", "CMQ");
+                        else if (term != null && term.contains("SMQ"))
+                            riskDefRow.setAttribute("MeddraExtension", "SMQ");
+                    } else
+                        riskDefRow.setAttribute("MeddraExtension", level);
+
+                    if (qual != null && qual.contains("Y_BROAD"))
+                        riskDefRow.setAttribute("MeddraQualifier", "BROAD");
+                    else if (qual != null && qual.contains("Y_NARROW"))
+                        riskDefRow.setAttribute("MeddraQualifier", "NARROW");
+                    else
+                        riskDefRow.setAttribute("MeddraQualifier", "CHILD NARROW");
+                    //                meddra_qualifier IN ('BROAD','NARROW','CHILD NARROW')
+                    riskDefVO.insertRow(riskDefRow);
+                }
             }
         }
         dragTable.setRowKey(dragCurrentRowKey);
@@ -1401,8 +1406,20 @@ public class ManageCRSBean implements Serializable {
         childVO.setNamedWhereClauseParam("bContentId", ADFUtils.evaluateEL("#{row.ContentId}"));
         childVO.executeQuery();
         if(childVO.getEstimatedRowCount() > 0){
+            HierarchyChildUIBean parRow = new HierarchyChildUIBean(childVO.first());
             childVO.setCurrentRow(childVO.first());
+            HierarchyChildVORowImpl parVORow = (HierarchyChildVORowImpl)childVO.first();
+            RowIterator rs = parVORow.getHierarchyChildDetailVO();
+            List<HierarchyChildUIBean> childRows = new ArrayList<HierarchyChildUIBean>();
+            while(rs.hasNext()){
+                Row childRow = rs.next();
+                childRows.add(new HierarchyChildUIBean(childRow));                
+            }
+            parRow.setChildren(childRows);
+            hierChildList = new ArrayList<HierarchyChildUIBean>();
+            hierChildList.add(parRow);
         }
+        hierChildTreeModel = new ChildPropertyTreeModel(hierChildList, "children");
         getChildTreeTable().setVisible(Boolean.TRUE);
         
         String qual = (String)ADFUtils.evaluateEL("#{row.Mqcrtev}");
@@ -1726,6 +1743,22 @@ public class ManageCRSBean implements Serializable {
 
     public String getBaseOrStaging() {
         return baseOrStaging;
+    }
+
+    public void setHierChildTreeModel(ChildPropertyTreeModel hierChildTreeModel) {
+        this.hierChildTreeModel = hierChildTreeModel;
+    }
+
+    public ChildPropertyTreeModel getHierChildTreeModel() {
+        return hierChildTreeModel;
+    }
+
+    public void setHierChildList(List<HierarchyChildUIBean> hierChildList) {
+        this.hierChildList = hierChildList;
+    }
+
+    public List<HierarchyChildUIBean> getHierChildList() {
+        return hierChildList;
     }
 
     /**

@@ -72,7 +72,7 @@ public class HierarchyChildVORowImpl extends ViewRowImpl {
             }
 
             public void put(HierarchyChildVORowImpl obj, Object value) {
-                obj.setLevel((BigDecimal)value);
+                obj.setLevel((Long)value);
             }
         }
         ,
@@ -263,6 +263,7 @@ public class HierarchyChildVORowImpl extends ViewRowImpl {
         }
     }
 
+
     public static final int PRIKEY = AttributesEnum.Prikey.index();
     public static final int PARENT = AttributesEnum.Parent.index();
     public static final int DICTCONTENTID = AttributesEnum.DictContentId.index();
@@ -376,15 +377,15 @@ public class HierarchyChildVORowImpl extends ViewRowImpl {
      * Gets the attribute value for the calculated attribute Level.
      * @return the Level
      */
-    public BigDecimal getLevel() {
-        return (BigDecimal) getAttributeInternal(LEVEL);
+    public Long getLevel() {
+        return (Long) getAttributeInternal(LEVEL);
     }
 
     /**
      * Sets <code>value</code> as the attribute value for the calculated attribute Level.
      * @param value value to set the  Level
      */
-    public void setLevel(BigDecimal value) {
+    public void setLevel(Long value) {
         setAttributeInternal(LEVEL, value);
     }
 
