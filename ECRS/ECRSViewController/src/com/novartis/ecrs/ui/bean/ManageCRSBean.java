@@ -1706,11 +1706,11 @@ public class ManageCRSBean implements Serializable {
         bc.findIteratorBinding("");
         
         // if found - show faces message that the CRS already in update process
+        // page should be on search page only
         
-        
-        // if NOT found - call MODIDY_CRS
-        
+        // if NOT found - call MODIDY_CRS        
         // if PL/SQL call return value is success - set current row of staging table to CRS ID
+        // page should navigate to add details page
         
         // set mode to staging
         setBaseOrStaging(ModelConstants.STAGING_FACET);
