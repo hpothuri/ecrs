@@ -30,4 +30,7 @@ public class ModelConstants {
         
     public static final String BASE_FACET = "BASE";
     public static final String STAGING_FACET = "STAGING";
+    
+    public static final String PLSQL_CALL_SUCCESS ="0";
+    public static final String PLSQL_CALL_FAILURE ="-1";
 }

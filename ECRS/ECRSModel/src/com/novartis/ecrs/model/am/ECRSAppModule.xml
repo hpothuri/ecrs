@@ -125,6 +125,18 @@
     Reversed="false"/>
   <ClientInterface>
     <Method
+      Name="activateCrs"
+      MethodName="activateCrs">
+      <Return
+        Type="boolean"/>
+      <Parameter
+        Name="pCRSId"
+        Type="java.lang.Long"/>
+      <Parameter
+        Name="pReasonForChange"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
       Name="copyCurrentRiskRelation"
       MethodName="copyCurrentRiskRelation">
       <Return
@@ -191,31 +203,10 @@
         Type="java.lang.String"/>
     </Method>
     <Method
-      Name="refreshRepository"
-      MethodName="refreshRepository">
-      <Return
-        Type="boolean"/>
-      <Parameter
-        Name="crsId"
-        Type="java.lang.Long"/>
-    </Method>
-    <Method
-      Name="activateCrs"
-      MethodName="activateCrs">
-      <Return
-        Type="boolean"/>
-      <Parameter
-        Name="pCRSId"
-        Type="java.lang.Long"/>
-      <Parameter
-        Name="pReasonForChange"
-        Type="java.lang.String"/>
-    </Method>
-    <Method
       Name="modifyCrs"
       MethodName="modifyCrs">
       <Return
-        Type="boolean"/>
+        Type="java.lang.String"/>
       <Parameter
         Name="pCRSId"
         Type="java.lang.Long"/>
@@ -234,6 +225,15 @@
       <Parameter
         Name="pReasonForChange"
         Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="refreshRepository"
+      MethodName="refreshRepository">
+      <Return
+        Type="boolean"/>
+      <Parameter
+        Name="crsId"
+        Type="java.lang.Long"/>
     </Method>
     <Method
       Name="retireCrs"

@@ -4,6 +4,7 @@ package com.novartis.ecrs.model.am;
 import com.novartis.ecrs.model.am.common.ECRSAppModule;
 import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.ECrsSearchVORowImpl;
+import com.novartis.ecrs.model.view.HierarchyChildDetailVOImpl;
 import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RolesTransientVOImpl;
@@ -227,16 +228,6 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         crsContentVO.executeQuery();
         crsContentVO.setWhereClause(null);
         crsContentVO.applyViewCriteria(null);
-        
-        
-       // crsContentVO.setNestedSelectForFullSql(false);
-        //System.out.println("----->"+whereClause);
-       // System.out.println("--->>>"+ crsContentVO.getWhereClause());
-//        crsContentVO.setWhereClause(null);
-//        crsContentVO.applyViewCriteria(null);
-//        crsContentVO.executeQuery();
-        //Apply whereClause to crsContentVO
-       // System.out.println("----->"+crsContentVO.getQuery());
         
     }
 
@@ -750,29 +741,24 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     /**
      * Activate crs_tms_sync function call.
      */
-    public boolean modifyCrs(Long pCRSId,String pReasonForChange) {
+    public String modifyCrs(Long pCRSId,String pReasonForChange) {
         //Execute the function call.
         DBTransaction txn = getDBTransaction();
         OracleCallableStatement cstmt = null;
         String cs = null;
-        String returnCode = null;
+        String returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
         if (pCRSId != null) {
-            cs = "{?=call activate_crs (?,?)}";
+            cs = "{?=call CRS_UI_TMS_UTILS.MODIFY_CRS(?,?)}";
             cstmt = (OracleCallableStatement)txn.createCallableStatement(cs, DBTransaction.DEFAULT);
             try {
                 cstmt.registerOutParameter(1, Types.VARCHAR);
-                cstmt.setNUMBER(1, new oracle.jbo.domain.Number(pCRSId));
-                cstmt.setString(2, pReasonForChange);
+                cstmt.setNUMBER(2, new oracle.jbo.domain.Number(pCRSId));
+                cstmt.setString(3, pReasonForChange);
                 cstmt.execute();
-                returnCode = cstmt.getString(1);
+                returnMessage = cstmt.getString(1);
 
-                if ("0".equalsIgnoreCase(returnCode)) {
-                    //Reexecute the VO
-                    return true;
-                } else
-                    return false;
             } catch (Exception e) {
-                return false;
+                returnMessage = ModelConstants.PLSQL_CALL_FAILURE;                
             } finally {
                 try {
                     if (cstmt != null && !cstmt.isClosed())
@@ -782,7 +768,8 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 }
             }
         } else
-            return true;
+            returnMessage = ModelConstants.PLSQL_CALL_SUCCESS;
+        return returnMessage;
     }
     
     /**
