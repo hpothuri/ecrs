@@ -23,4 +23,12 @@ public interface ECRSAppModule extends ApplicationModule {
     void initRiskRelation(Long crsId, String status);
 
     boolean refreshRepository(Long crsId);
+
+    boolean activateCrs(Long pCRSId, String pReasonForChange);
+
+    boolean modifyCrs(Long pCRSId, String pReasonForChange);
+
+    boolean reactivateCrs(Long pCRSId, String pReasonForChange);
+
+    boolean retireCrs(Long pCRSId, String pReasonForChange);
 }

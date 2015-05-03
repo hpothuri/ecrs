@@ -18,6 +18,13 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
     public ECRSAppModuleClient() {
     }
 
+
+    public boolean activateCrs(Long pCRSId, String pReasonForChange) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"activateCrs",new String [] {"java.lang.Long","java.lang.String"},new Object[] {pCRSId, pReasonForChange});
+        return ((Boolean)_ret).booleanValue();
+    }
+
     public void copyCurrentRiskRelation(Long srcRiskId, Long destCrsId) {
         Object _ret =
             this.riInvokeExportedMethod(this,"copyCurrentRiskRelation",new String [] {"java.lang.Long","java.lang.Long"},new Object[] {srcRiskId, destCrsId});
@@ -25,7 +32,8 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
     }
 
     public void copyRoutineDefinition(Long crsId) {
-        Object _ret = this.riInvokeExportedMethod(this,"copyRoutineDefinition",new String [] {"java.lang.Long"},new Object[] {crsId});
+        Object _ret =
+            this.riInvokeExportedMethod(this,"copyRoutineDefinition",new String [] {"java.lang.Long"},new Object[] {crsId});
         return;
     }
 
@@ -44,7 +52,8 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return (List)_ret;
     }
 
-    public void filterCRSContent(String userInRole, String userName, boolean isInboxDisable) {
+    public void filterCRSContent(String userInRole, String userName,
+                                 boolean isInboxDisable) {
         Object _ret =
             this.riInvokeExportedMethod(this,"filterCRSContent",new String [] {"java.lang.String","java.lang.String","boolean"},new Object[] {userInRole, userName, new Boolean(isInboxDisable)});
         return;
@@ -56,8 +65,27 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return;
     }
 
+    public boolean modifyCrs(Long pCRSId, String pReasonForChange) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"modifyCrs",new String [] {"java.lang.Long","java.lang.String"},new Object[] {pCRSId, pReasonForChange});
+        return ((Boolean)_ret).booleanValue();
+    }
+
+    public boolean reactivateCrs(Long pCRSId, String pReasonForChange) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"reactivateCrs",new String [] {"java.lang.Long","java.lang.String"},new Object[] {pCRSId, pReasonForChange});
+        return ((Boolean)_ret).booleanValue();
+    }
+
     public boolean refreshRepository(Long crsId) {
-        Object _ret = this.riInvokeExportedMethod(this,"refreshRepository",new String [] {"java.lang.Long"},new Object[] {crsId});
+        Object _ret =
+            this.riInvokeExportedMethod(this,"refreshRepository",new String [] {"java.lang.Long"},new Object[] {crsId});
+        return ((Boolean)_ret).booleanValue();
+    }
+
+    public boolean retireCrs(Long pCRSId, String pReasonForChange) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"retireCrs",new String [] {"java.lang.Long","java.lang.String"},new Object[] {pCRSId, pReasonForChange});
         return ((Boolean)_ret).booleanValue();
     }
 }
