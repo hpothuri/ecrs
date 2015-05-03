@@ -110,24 +110,20 @@ public class ManageCRSBean implements Serializable {
     private List<SelectItem> levelItems;
     private String contentId;
     private String childScope;
-    private RichTreeTable childTreeTable;
+    private transient RichTreeTable childTreeTable;
     private transient RichPopup parentError;
     private String safetyTopicOfInterest;
     private transient RichPopup copyPopup;
     private transient RichPanelGroupLayout copyPanel;
     private transient RichPopup pendingPopup;
     private transient RichTable copyRiskDefTable;
- //   private String currentStatus;
     private transient RichPanelLabelAndMessage savedSuccessMessage;
     private transient RichPanelLabelAndMessage copySuccessMessage;
     private transient RichOutputText hiddenPopupAlign;
     private transient RichInputText stoiBinding;
     private transient RichSelectManyChoice copyDBListBinding;
     private transient RichSelectManyChoice copyRPListBinding;
-   // private String searchFacetName;
     private transient UIXSwitcher searchSwitherBinding;
-  //  private String createFacetName;
-  //  private transient UIXSwitcher createSwitherBinding;
     private Boolean repoRefreshed;
     private String baseOrStaging=ModelConstants.BASE_FACET;
 
@@ -135,13 +131,16 @@ public class ManageCRSBean implements Serializable {
         super();
         getUserRole();
         getCrsFlowType();
+        if (ViewConstants.FLOW_TYPE_CREATE.equals(flowType) ||
+            ViewConstants.FLOW_TYPE_UPDATE.equals(flowType)) {
+            setBaseOrStaging(ModelConstants.STAGING_FACET);
+        } else
+            setBaseOrStaging(ModelConstants.BASE_FACET);
     }
     
     private String flowType;
     private boolean inboxDisable;
     private String loggedInUserRole;
- //   private String bslFacetName;
-    //private String relStatusForAnonymous ;
     private String userName;
     
     /**
@@ -153,18 +152,6 @@ public class ManageCRSBean implements Serializable {
         if (ADFUtils.evaluateEL("#{pageFlowScope.flowType}") != null) {
             flowType =
                     (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
-            
-            if (ViewConstants.FLOW_TYPE_CREATE.equals(flowType) ||
-                ViewConstants.FLOW_TYPE_UPDATE.equals(flowType)) {
-                setBaseOrStaging(ModelConstants.STAGING_FACET);
-            } else
-                setBaseOrStaging(ModelConstants.BASE_FACET);
-//            
-//            if (ViewConstants.FLOW_TYPE_SEARCH.equals(flowType) ||
-//                ModelConstants.ROLE_BSL.equals(loggedInUserRole))
-//                setBslFacetName("BSL");
-//            else
-//                setBslFacetName("nonBSL");
         }
     }
 
@@ -374,11 +361,6 @@ public class ManageCRSBean implements Serializable {
             }
             setSelDesigneeList(designeeList);
         }
-//        setCreateFacetName(ViewConstants.CREATE_UPDATE_COPY_FACET_NAME);
-//        if (getCreateSwitherBinding() != null){
-//            ADFUtils.addPartialTarget(getCreateSwitherBinding().getParent());
-//            ResetUtils.reset(getCreateSwitherBinding());
-//        }
     }
 
     /**
@@ -475,8 +457,7 @@ public class ManageCRSBean implements Serializable {
         // Add event code here...
         if (vce != null) {
             vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
-            if (vce.getNewValue() != null &&
-                !vce.getNewValue().equals(vce.getOldValue()) &&
+            if (vce.getNewValue() != null && !vce.getNewValue().equals(vce.getOldValue()) &&
                 ViewConstants.NON_COMPOUND_ROUTINE.equals(ADFUtils.evaluateEL("#{bindings.CompoundCode.inputValue}"))) {
                 ADFUtils.setEL("#{bindings.TradeName.inputValue}", null);
                 ADFUtils.setEL("#{bindings.GenericName.inputValue}", null);
@@ -484,21 +465,12 @@ public class ManageCRSBean implements Serializable {
                 //TODO make this enable when isMarketedFlag null
                 ADFUtils.setEL("#{bindings.IsMarketedFlag.inputValue}", "N");
             }
-            //set logged in user name to bsl binding
-            if (ViewConstants.FLOW_TYPE_CREATE.equals(flowType) &&
-                ModelConstants.ROLE_BSL.equals(loggedInUserRole))
-                ADFUtils.setEL("#{bindings.BslName.inputValue}",
-                               getUserName());
-            String crsCompCode =
-                (String)ADFUtils.evaluateEL("#{bindings.CrsCompoundCode.inputValue}");
-            String compCode =
-                (String)ADFUtils.evaluateEL("#{bindings.CompoundCode.inputValue}");
-            String indication =
-                (String)ADFUtils.evaluateEL("#{bindings.Indication.inputValue}");
-            ADFUtils.setEL("#{bindings.CrsName.inputValue}",
-                           (compCode != null ? compCode : crsCompCode) + " " +
-                           (indication != null ? indication : ""));
 
+            String crsCompCode = (String)ADFUtils.evaluateEL("#{bindings.CrsCompoundCode.inputValue}");
+            String compCode = (String)ADFUtils.evaluateEL("#{bindings.CompoundCode.inputValue}");
+            String indication = (String)ADFUtils.evaluateEL("#{bindings.Indication.inputValue}");
+            ADFUtils.setEL("#{bindings.CrsName.inputValue}",
+                           (compCode != null ? compCode : crsCompCode) + " " + (indication != null ? indication : ""));
         }
     }
 
@@ -671,34 +643,6 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.addPartialTarget(riskDefTable);
         setRepoRefreshed(Boolean.FALSE);
     }
-
-//    /**
-//     * @param bslFacetName
-//     */
-//    public void setBslFacetName(String bslFacetName) {
-//        this.bslFacetName = bslFacetName;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    public String getBslFacetName() {
-//        return bslFacetName;
-//    }
-
-//    /**
-//     * @param relStatusForAnonymous
-//     */
-//    public void setRelStatusForAnonymous(String relStatusForAnonymous) {
-//        this.relStatusForAnonymous = relStatusForAnonymous;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    public String getRelStatusForAnonymous() {
-//        return relStatusForAnonymous;
-//    }
 
     /**
      * @param userName
@@ -1630,20 +1574,6 @@ public class ManageCRSBean implements Serializable {
         return copyRiskDefTable;
     }
 
-//    /**
-//     * @param currentStatus
-//     */
-//    public void setCurrentStatus(String currentStatus) {
-//        this.currentStatus = currentStatus;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    public String getCurrentStatus() {
-//        return currentStatus;
-//    }
-
     /**
      * @param savedSuccessMessage
      */
@@ -1710,20 +1640,6 @@ public class ManageCRSBean implements Serializable {
         return copyRPListBinding;
     }
 
-//    /**
-//     * @param searchFacetName
-//     */
-//    public void setSearchFacetName(String searchFacetName) {
-//        this.searchFacetName = searchFacetName;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    public String getSearchFacetName() {
-//        return searchFacetName;
-//    }
-
     /**
      * @param searchFacetBinding
      */
@@ -1760,40 +1676,7 @@ public class ManageCRSBean implements Serializable {
             }
             setSelDesigneeList(designeeList);
         }
-//        setCreateFacetName(ViewConstants.CURRENT_BASE_FACET_NAME);
-//        if (getCreateSwitherBinding() != null) {
-//            ADFUtils.addPartialTarget(getCreateSwitherBinding().getParent());
-//            ResetUtils.reset(getCreateSwitherBinding());
-//        }
     }
-
-//    /**
-//     * @param createFacetName
-//     */
-//    public void setCreateFacetName(String createFacetName) {
-//        this.createFacetName = createFacetName;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    public String getCreateFacetName() {
-//        return createFacetName;
-//    }
-
-//    /**
-//     * @param createSwitherBinding
-//     */
-//    public void setCreateSwitherBinding(UIXSwitcher createSwitherBinding) {
-//        this.createSwitherBinding = createSwitherBinding;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    public UIXSwitcher getCreateSwitherBinding() {
-//        return createSwitherBinding;
-//    }
 
     public void refreshRepository(ActionEvent actionEvent) {
         Map params = new HashMap<String, Object>();
@@ -1817,7 +1700,21 @@ public class ManageCRSBean implements Serializable {
 
 
     public void initializeCreateUpdateCRS() {
-        // Add event code here...
+        // chk if there exists a CRS in staging table with the same as selected CRS in base table
+        if(ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType())) {
+        DCBindingContainer bc =  ADFUtils.findBindingContainerByName(ViewConstants.PAGE_DEF_SEARCH);
+        bc.findIteratorBinding("");
+        
+        // if found - show faces message that the CRS already in update process
+        
+        
+        // if NOT found - call MODIDY_CRS
+        
+        // if PL/SQL call return value is success - set current row of staging table to CRS ID
+        
+        // set mode to staging
+        setBaseOrStaging(ModelConstants.STAGING_FACET);
+        }
     }
 
     public void setBaseOrStaging(String baseOrStaging) {
