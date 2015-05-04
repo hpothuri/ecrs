@@ -111,6 +111,9 @@
   <ViewUsage
     Name="CrsContentBaseVO"
     ViewObjectName="com.novartis.ecrs.model.view.base.CrsContentBaseVO"/>
+  <ViewUsage
+    Name="FetchCrsContentBaseVO"
+    ViewObjectName="com.novartis.ecrs.model.view.base.CrsContentBaseVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

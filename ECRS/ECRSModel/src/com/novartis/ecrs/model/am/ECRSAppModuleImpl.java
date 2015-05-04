@@ -376,7 +376,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public void copyRoutineDefinition(Long crsId){
         ViewObject relationVO = this.getCrsRiskRelationVO();
         ViewObject definitionVO = this.getCrsRiskDefinitionsVO();
-        ViewObjectImpl crsContentVO = this.getFetchCrsContentVO();
+        ViewObjectImpl crsContentVO = this.getFetchCrsContentBaseVO();
         crsContentVO.setWhereClause("CRS_NAME = 'ROUTINE'");
         crsContentVO.executeQuery(); 
         crsContentVO.setWhereClause(null);
@@ -384,7 +384,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         if(crsContentVO.getEstimatedRowCount() > 0){
             Row crsRow = crsContentVO.first();
             Long srcCrsId = (Long)crsRow.getAttribute("CrsId");
-            ViewObject crsRiskVO = this.getCrsRiskVO();
+            ViewObject crsRiskVO = this.getCrsRiskBaseVO();
             crsRiskVO.setWhereClause("CRS_ID = "+srcCrsId);
             crsRiskVO.setSortBy("CrsRiskId asc");
             crsRiskVO.executeQuery();
@@ -851,5 +851,13 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             }
         } else
             return true;
+    }
+
+    /**
+     * Container's getter for FetchCrsContentBaseVO.
+     * @return FetchCrsContentBaseVO
+     */
+    public ViewObjectImpl getFetchCrsContentBaseVO() {
+        return (ViewObjectImpl)findViewObject("FetchCrsContentBaseVO");
     }
 }
