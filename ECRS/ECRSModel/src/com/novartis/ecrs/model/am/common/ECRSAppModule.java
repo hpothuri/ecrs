@@ -31,4 +31,6 @@ public interface ECRSAppModule extends ApplicationModule {
     boolean refreshRepository(Long crsId);
 
     boolean retireCrs(Long pCRSId, String pReasonForChange);
+
+    boolean findByCrsFromStg(Long pCrsId);
 }

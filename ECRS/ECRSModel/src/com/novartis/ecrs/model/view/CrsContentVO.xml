@@ -18,6 +18,10 @@
     <Attr Name="_isCodegen" Value="true"/>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
+  <Variable
+    Name="pCrsId"
+    Kind="viewcriteria"
+    Type="java.lang.Long"/>
   <ViewAccessor
     Name="CrsCompoundVA"
     ViewObjectName="com.novartis.ecrs.model.view.CrsCompoundVO">
@@ -492,6 +496,42 @@ WHERE
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR"/>
+  <ViewCriteria
+    Name="findByCrsId"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsContentVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="CrsContentVOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="CrsId"
+        ViewAttribute="CrsId"
+        Operator="="
+        Conjunction="AND"
+        Value=":pCrsId"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>

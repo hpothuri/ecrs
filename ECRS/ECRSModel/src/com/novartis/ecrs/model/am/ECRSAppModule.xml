@@ -250,5 +250,14 @@
         Name="pReasonForChange"
         Type="java.lang.String"/>
     </Method>
+    <Method
+      Name="findByCrsFromStg"
+      MethodName="findByCrsFromStg">
+      <Return
+        Type="boolean"/>
+      <Parameter
+        Name="pCrsId"
+        Type="java.lang.Long"/>
+    </Method>
   </ClientInterface>
 </AppModule>

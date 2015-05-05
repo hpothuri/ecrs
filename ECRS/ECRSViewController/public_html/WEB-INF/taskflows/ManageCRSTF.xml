@@ -69,7 +69,7 @@
     <method-call id="initializeCreateUpdateCrs">
       <method>#{pageFlowScope.manageCRSBean.initializeCreateUpdateCRS}</method>
       <outcome>
-        <fixed-outcome>createUpdate</fixed-outcome>
+        <to-string/>
       </outcome>
     </method-call>
     <train/>
@@ -142,6 +142,10 @@
       <control-flow-case id="__26">
         <from-outcome>createUpdate</from-outcome>
         <to-activity-id>create</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__27">
+        <from-outcome>toSearch</from-outcome>
+        <to-activity-id>serach</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

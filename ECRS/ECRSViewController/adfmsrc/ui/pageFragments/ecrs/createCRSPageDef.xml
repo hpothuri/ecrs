@@ -250,5 +250,12 @@
         <Item Value="MedicalLeadRejectComment"/>
       </AttrNames>
     </attributeValues>
+    <action IterBinding="CrsContentVOIterator" id="setCurrentRowWithKeyValue"
+            InstanceName="ECRSAppModuleDataControl.CrsContentVO"
+            DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDValue="#{pageFlowScope.crsId}"
+                 NDType="java.lang.String"/>
+    </action>
   </bindings>
 </pageDefinition>

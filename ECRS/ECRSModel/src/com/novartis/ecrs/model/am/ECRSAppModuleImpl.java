@@ -19,6 +19,7 @@ import java.util.List;
 import oracle.jbo.JboException;
 import oracle.jbo.Row;
 import oracle.jbo.RowSetIterator;
+import oracle.jbo.ViewCriteria;
 import oracle.jbo.ViewObject;
 import oracle.jbo.server.ApplicationModuleImpl;
 import oracle.jbo.server.DBTransaction;
@@ -859,5 +860,24 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getFetchCrsContentBaseVO() {
         return (ViewObjectImpl)findViewObject("FetchCrsContentBaseVO");
+    }
+
+    /**
+     * Return true if crsid found in staging VO
+     * @param pCrsId
+     * @return
+     */
+    public boolean findByCrsFromStg(Long pCrsId){
+        ViewObjectImpl stgVO = this.getCrsContentVO();
+        ViewCriteria vc = stgVO.getViewCriteria("findByCrsId");
+        stgVO.setNamedWhereClauseParam("pCrsId", pCrsId);
+        stgVO.applyViewCriteria(vc);
+        stgVO.executeQuery();
+
+        if (stgVO.first() != null &&
+            pCrsId.equals(stgVO.first().getAttribute("CrsId"))) {
+            return true;
+        }
+        return false;
     }
 }
