@@ -448,4 +448,25 @@
       </f:facet>
     </af:panelGroupLayout>
   </af:panelHeader>
+  <af:popup childCreation="deferred" autoCancel="disabled" id="p2"
+            binding="#{pageFlowScope.manageCRSBean.modifyReasonChngPopup}">
+    <af:dialog id="d2" title="#{ecrsviewcontrollerBundle.REASON_FOR_CHANGE}"
+               binding="#{pageFlowScope.manageCRSBean.reasonChangePopup}"
+               dialogListener="#{pageFlowScope.manageCRSBean.reasonChngeDialogListener}">
+      <f:facet name="buttonBar"/>
+      <af:inputText label="#{ecrsviewcontrollerBundle.ENTER_REASON_FOR_CHANGE}#{ecrsviewcontrollerBundle.COLON}"
+                    id="it9"/>
+      <af:spacer width="10" height="10" id="s9"/>
+    </af:dialog>
+  </af:popup>
+  <af:popup childCreation="deferred" autoCancel="disabled" id="p1">
+    <af:dialog id="d1" title="#{ecrsviewcontrollerBundle.REASON_FOR_CHANGE}"
+               binding="#{pageFlowScope.manageCRSBean.reasonChangePopup}"
+               dialogListener="#{pageFlowScope.manageCRSBean.reasonChngeDialogListener}">
+      <f:facet name="buttonBar"/>
+      <af:inputText label="#{ecrsviewcontrollerBundle.ENTER_REASON_FOR_CHANGE}#{ecrsviewcontrollerBundle.COLON}"
+                    id="it1"/>
+      <af:spacer width="10" height="10" id="s7"/>
+    </af:dialog>
+  </af:popup>
 </jsp:root>

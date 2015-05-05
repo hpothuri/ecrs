@@ -32,6 +32,7 @@ import oracle.adf.model.BindingContext;
 import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.adf.share.ADFContext;
+import oracle.adf.view.rich.component.rich.RichDialog;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichTable;
 import oracle.adf.view.rich.component.rich.data.RichTreeTable;
@@ -132,6 +133,8 @@ public class ManageCRSBean implements Serializable {
     private ChildPropertyTreeModel hierChildTreeModel;
     private List<HierarchyChildUIBean> hierChildList;
     private RichTable searchBaseTableBinding;
+    private RichDialog reasonChangePopup;
+    private RichPopup modifyReasonChngPopup;
 
     public ManageCRSBean() {
         super();
@@ -1195,8 +1198,12 @@ public class ManageCRSBean implements Serializable {
         InputStream imageInputStream = excUtils.getImageInpStream();
         try {
             //create sheet
-            DCIteratorBinding iter =
-                ADFUtils.findIterator("CrsRiskVOIterator");
+            DCIteratorBinding iter = null;
+            if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
+                iter = ADFUtils.findIterator("CrsRiskBaseVOIterator");
+            } else
+                iter = ADFUtils.findIterator("CrsRiskVOIterator");
+
             RowSetIterator rowSet = null;
             int rowStartIndex = 8;
             int cellStartIndex = 0;
@@ -1899,5 +1906,25 @@ public class ManageCRSBean implements Serializable {
      */
     public RichTable getSearchBaseTableBinding() {
         return searchBaseTableBinding;
+    }
+
+    public void setReasonChangePopup(RichDialog reasonChangePopup) {
+        this.reasonChangePopup = reasonChangePopup;
+    }
+
+    public RichDialog getReasonChangePopup() {
+        return reasonChangePopup;
+    }
+
+    public void reasonChngeDialogListener(DialogEvent dialogEvent) {
+        // Add event code here...
+    }
+
+    public void setModifyReasonChngPopup(RichPopup modifyReasonChngPopup) {
+        this.modifyReasonChngPopup = modifyReasonChngPopup;
+    }
+
+    public RichPopup getModifyReasonChngPopup() {
+        return modifyReasonChngPopup;
     }
 }
