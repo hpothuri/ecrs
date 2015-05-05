@@ -740,7 +740,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     }
     
     /**
-     * Activate crs_tms_sync function call.
+     * MODIFY_CRS function call.
      */
     public String modifyCrs(Long pCRSId,String pReasonForChange) {
         //Execute the function call.

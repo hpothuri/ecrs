@@ -20,9 +20,9 @@
       <af:panelBox text="#{ecrsviewcontrollerBundle.SEARCH}" id="pb1">
         <f:facet name="toolbar"/>
         <af:panelFormLayout id="pfl1" maxColumns="3" rows="4" labelWidth="120">
-          <af:switcher id="s8" defaultFacet="loggedIn"
-                       facetName="#{securityContext.userInRole['anonymous'] ? 'notLoggedIn' : 'loggedIn'}">
-            <f:facet name="notLoggedIn">
+          <af:switcher id="s8" defaultFacet="CURRENT_ONLY"
+                       facetName="#{securityContext.userInRole['anonymous'] || (pageFlowScope.flowType eq 'U' and (securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_TASL'] or securityContext.userInRole['CRS_ML'])) ? 'CURRENT_ONLY' : 'BOTH'}">
+            <f:facet name="CURRENT_ONLY">
               <af:selectOneChoice
                                   label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
                                   shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
@@ -31,7 +31,7 @@
                 <af:selectItem label="CURRENT" id="si12" value="C"/>
               </af:selectOneChoice>
             </f:facet>
-            <f:facet name="loggedIn">
+            <f:facet name="BOTH">
               <af:selectOneChoice value="#{bindings.ReleaseStatus.inputValue}"
                                   label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
                                   shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
@@ -268,7 +268,8 @@
                              id="ot21"/>
             </af:column>
             <af:column headerText="#{ecrsviewcontrollerBundle.ACTION}"
-                       id="c26" rendered="#{pageFlowScope.flowType ne 'S'}">
+                       id="c26"
+                       rendered="#{pageFlowScope.flowType eq 'U' and (securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN'])}" align="center" width="80">
               <af:switcher id="s6"
                            facetName="#{row.StateId eq 8 ?  'RETIRE' : 'REACTIVATE'}"
                            defaultFacet="RETIRE">

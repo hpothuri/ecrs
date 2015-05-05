@@ -305,11 +305,13 @@ public class ManageCRSBean implements Serializable {
     public void onClickSearch(ActionEvent actionEvent) {
         // TODO get user name
         //set release staus to binding
-        if ("anonymous".equals(userName)) {
-            ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}",
-                           ModelConstants.STATUS_CURRENT);
+        if ("anonymous".equals(userName) ||
+            (ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType()) && (ModelConstants.ROLE_ML.equals(loggedInUserRole) ||
+                                                                      ModelConstants.ROLE_MQM.equals(loggedInUserRole) ||
+                                                                      ModelConstants.ROLE_TASL.equals(loggedInUserRole)))) {
+            ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}", ModelConstants.STATUS_CURRENT);
         }
-       
+
         DCBindingContainer bc = ADFUtils.getDCBindingContainer();
         OperationBinding ob = bc.getOperationBinding("filterCRSContent");
         ob.getParamsMap().put("userInRole", loggedInUserRole);
@@ -1722,78 +1724,101 @@ public class ManageCRSBean implements Serializable {
     public String initializeCreateUpdateCRS() {
         // chk if there exists a CRS in staging table with the same as selected CRS in base table
         if (ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType())) {
-            boolean isException = Boolean.FALSE;
-            DCBindingContainer bc =
-                ADFUtils.findBindingContainerByName(ViewConstants.PAGE_DEF_SEARCH);
-            DCIteratorBinding iter =
-                bc.findIteratorBinding("CrsContentBaseVOIterator");
-            Long crsId = null;
-            if (iter.getCurrentRow() != null) {
-                crsId = (Long)iter.getCurrentRow().getAttribute("CrsId");
-            }
-            //invoke vc on stg table with this crs id
-            boolean isCrsFound = Boolean.FALSE;
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("pCrsId", crsId);
-            try {
-                OperationBinding op =
-                    ADFUtils.getOperBindFromPageDef(ViewConstants.PAGE_DEF_SEARCH,
-                                                    "findByCrsFromStg");
-                op.getParamsMap().put("pCrsId", crsId);
-                isCrsFound = (Boolean)op.execute();
-            } catch (Exception e) {
-                isException = Boolean.TRUE;
-                e.printStackTrace();
-            }
-            // if found - show faces message that the CRS already in update process
-            if (isCrsFound) {
-                ADFUtils.showFacesMessage("The selected CRS is already in update process",
-                                          FacesMessage.SEVERITY_ERROR);
-                // page should be on search page only
-                return "toSearch";
-            }
-            // if NOT found - call MODIDY_CRS
-            String resultMsg = null;
-            try {
-                OperationBinding op =
-                    ADFUtils.getOperBindFromPageDef(ViewConstants.PAGE_DEF_SEARCH,
-                                                    "modifyCrs");
-                op.getParamsMap().put("pCrsId", crsId);
-                op.getParamsMap().put("pReasonForChange", "Rsn chnge");
-                resultMsg = (String)op.execute();
-            } catch (Exception e) {
-                isException = Boolean.TRUE;
-                e.printStackTrace();
-            }
-            // if PL/SQL call return value is success - set current row of staging table to CRS ID
-            if (ModelConstants.PLSQL_CALL_SUCCESS.equals(resultMsg)) {
-                //set the staging table to current crs id
-                ADFUtils.setEL("#{pageFlowScope.crsId}", crsId);
-                // page should navigate to add details page
-                try {
-                    OperationBinding op1 =
-                        ADFUtils.getOperBindFromPageDef(ViewConstants.PAGE_DEF_CREATE,
-                                                        "setCurrentRowWithKeyValue");
-                    op1.execute();
-                    if (op1.getErrors() != null &&
-                        op1.getErrors().size() > 0) {
-                        isException = Boolean.TRUE;
+
+            if (ModelConstants.STATUS_CURRENT.equals(ADFUtils.evaluateEL("#{bindings.ReleaseStatus.inputValue}"))) {
+
+                DCBindingContainer bc = ADFUtils.findBindingContainerByName(ViewConstants.PAGE_DEF_SEARCH);
+                DCIteratorBinding iter = bc.findIteratorBinding("CrsContentBaseVOIterator");
+                Long crsId = null;
+                if (iter.getCurrentRow() != null) {
+                    crsId = (Long)iter.getCurrentRow().getAttribute("CrsId");
+
+                    //invoke vc on stg table with this crs id
+                    boolean isCrsFound = Boolean.FALSE;
+                    Map<String, Object> params = new HashMap<String, Object>();
+                    params.put("pCrsId", crsId);
+                    OperationBinding op =
+                        ADFUtils.getOperBindFromPageDef(ViewConstants.PAGE_DEF_SEARCH, "findByCrsFromStg");
+                    op.getParamsMap().put("pCrsId", crsId);
+                    isCrsFound = (Boolean)op.execute();
+
+                    if (op.getErrors() != null && op.getErrors().size() > 0) {
+                        ADFUtils.showFacesMessage("An Internal Error occured,Please try again later.",
+                                                  FacesMessage.SEVERITY_ERROR);
+                        setBaseOrStaging(ModelConstants.BASE_FACET);
+                        return "toSearch";
+                    } else {
+
+                        // if found - show faces message that the CRS already in update process
+                        if (isCrsFound) {
+                            ADFUtils.showFacesMessage("The selected CRS is already in update process",
+                                                      FacesMessage.SEVERITY_INFO);
+                            setBaseOrStaging(ModelConstants.BASE_FACET);
+                            return "toSearch";
+
+                        } else {
+                            // if NOT found - call MODIDY_CRS
+                            String resultMsg = null;
+
+                            op = ADFUtils.getOperBindFromPageDef(ViewConstants.PAGE_DEF_SEARCH, "modifyCrs");
+                            op.getParamsMap().put("pCRSId", crsId);
+                            op.getParamsMap().put("pReasonForChange", "Rsn chnge");
+                            resultMsg = (String)op.execute();
+
+                            if (op.getErrors() != null && op.getErrors().size() > 0) {
+                                ADFUtils.showFacesMessage("An Internal Error occured,Please try again later.",
+                                                          FacesMessage.SEVERITY_ERROR);
+                                setBaseOrStaging(ModelConstants.BASE_FACET);
+                                return "toSearch";
+
+                            } else {
+                                // if PL/SQL call return value is success - set current row of staging table to CRS ID
+                                if (ModelConstants.PLSQL_CALL_SUCCESS.equals(resultMsg)) {
+                                    //set the staging table to current crs id
+                                    bc.findIteratorBinding("CrsContentVOIterator").getViewObject().applyViewCriteria(null);
+                                    bc.findIteratorBinding("CrsContentVOIterator").executeQuery();
+                                    ADFUtils.setEL("#{pageFlowScope.crsId}", crsId);
+
+                                    // page should navigate to add details page
+                                    op =
+ ADFUtils.getOperBindFromPageDef(ViewConstants.PAGE_DEF_CREATE, "setCurrentRowWithKeyValue");
+                                    op.execute();
+                                    if (op.getErrors() != null && op.getErrors().size() > 0) {
+                                        ADFUtils.showFacesMessage("An Internal Error occured,Please try again later.",
+                                                                  FacesMessage.SEVERITY_ERROR);
+                                        setBaseOrStaging(ModelConstants.BASE_FACET);
+                                        return "toSearch";
+
+                                    } else {
+                                        // set mode to staging
+                                        setBaseOrStaging(ModelConstants.STAGING_FACET);
+                                        return "createUpdate";
+                                    }
+
+                                } else {
+                                    setBaseOrStaging(ModelConstants.BASE_FACET);
+                                    ADFUtils.showFacesMessage(resultMsg, FacesMessage.SEVERITY_ERROR);
+                                    return "toSearch";
+                                }
+                            }
+                        }
                     }
-                } catch (Exception e) {
-                    isException = Boolean.TRUE;
-                    e.printStackTrace();
+
+                } else {
+                    ADFUtils.showFacesMessage("Please select a row to update before navigating.",
+                                              FacesMessage.SEVERITY_INFO);
+                    setBaseOrStaging(ModelConstants.BASE_FACET);
+                    return "toSearch";
                 }
-                // set mode to staging
+
+            // if PENDING search - simply navigate to next 
+            } else {
                 setBaseOrStaging(ModelConstants.STAGING_FACET);
-            }
-            if (isException) {
-                ADFUtils.showFacesMessage("An Internal Error occured,Please try again later.",
-                                          FacesMessage.SEVERITY_ERROR);
-                return "toSearch";
-            } else
                 return "createUpdate";
-        }
-        return "toSearch";
+            }
+
+        } else
+            return "createUpdate";
     }
 
     public void setBaseOrStaging(String baseOrStaging) {
