@@ -120,6 +120,23 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
+    <methodAction id="findByCrsFromStg"
+                  InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="findByCrsFromStg" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.findByCrsFromStg_ECRSAppModuleDataControl_dataProvider_findByCrsFromStg_result">
+      <NamedData NDName="pCrsId" NDType="java.lang.Long"/>
+    </methodAction>
+    <methodAction id="modifyCrs"
+                  InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="modifyCrs" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.modifyCrs_ECRSAppModuleDataControl_dataProvider_modifyCrs_result">
+      <NamedData NDName="pCRSId" NDType="java.lang.Long"/>
+      <NamedData NDName="pReasonForChange" NDType="java.lang.String"/>
+    </methodAction>
     <methodAction id="reactivateCrs"
                   InstanceName="data.ECRSAppModuleDataControl.dataProvider"
                   DataControl="ECRSAppModuleDataControl"
@@ -135,23 +152,6 @@
                   RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="retireCrs" IsViewObjectMethod="false"
                   ReturnName="data.ECRSAppModuleDataControl.methodResults.retireCrs_ECRSAppModuleDataControl_dataProvider_retireCrs_result">
-      <NamedData NDName="pCRSId" NDType="java.lang.Long"/>
-      <NamedData NDName="pReasonForChange" NDType="java.lang.String"/>
-    </methodAction>
-    <methodAction id="findByCrsFromStg"
-                  InstanceName="data.ECRSAppModuleDataControl.dataProvider"
-                  DataControl="ECRSAppModuleDataControl"
-                  RequiresUpdateModel="true" Action="invokeMethod"
-                  MethodName="findByCrsFromStg" IsViewObjectMethod="false"
-                  ReturnName="data.ECRSAppModuleDataControl.methodResults.findByCrsFromStg_ECRSAppModuleDataControl_dataProvider_findByCrsFromStg_result">
-      <NamedData NDName="pCrsId" NDType="java.lang.Long"/>
-    </methodAction>
-    <methodAction id="modifyCrs"
-                  InstanceName="data.ECRSAppModuleDataControl.dataProvider"
-                  DataControl="ECRSAppModuleDataControl"
-                  RequiresUpdateModel="true" Action="invokeMethod"
-                  MethodName="modifyCrs" IsViewObjectMethod="false"
-                  ReturnName="data.ECRSAppModuleDataControl.methodResults.modifyCrs_ECRSAppModuleDataControl_dataProvider_modifyCrs_result">
       <NamedData NDName="pCRSId" NDType="java.lang.Long"/>
       <NamedData NDName="pReasonForChange" NDType="java.lang.String"/>
     </methodAction>

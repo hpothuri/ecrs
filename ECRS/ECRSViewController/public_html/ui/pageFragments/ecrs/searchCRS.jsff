@@ -459,14 +459,64 @@
       <af:spacer width="10" height="10" id="s9"/>
     </af:dialog>
   </af:popup>
-  <af:popup childCreation="deferred" autoCancel="disabled" id="p1">
-    <af:dialog id="d1" title="#{ecrsviewcontrollerBundle.REASON_FOR_CHANGE}"
-               binding="#{pageFlowScope.manageCRSBean.reasonChangePopup}"
-               dialogListener="#{pageFlowScope.manageCRSBean.reasonChngeDialogListener}">
+  <af:popup childCreation="deferred" autoCancel="disabled" id="retire"
+            binding="#{pageFlowScope.manageCRSBean.reactivatePopupBinding}">
+    <af:dialog id="d18"
+               title="#{ecrsviewcontrollerBundle.REACTIVATE_CONFIRMATION}"
+               titleIconSource="/images/warning.png" closeIconVisible="false"
+               type="yesNo"
+               dialogListener="#{pageFlowScope.manageCRSBean.reactivateConfirmDialogListener}"
+               inlineStyle="width:400px">
       <f:facet name="buttonBar"/>
-      <af:inputText label="#{ecrsviewcontrollerBundle.ENTER_REASON_FOR_CHANGE}#{ecrsviewcontrollerBundle.COLON}"
-                    id="it1"/>
-      <af:spacer width="10" height="10" id="s7"/>
+      <af:panelGroupLayout id="pgl9" layout="vertical">
+        <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_REACTIVA}"
+                       id="ot234"/>
+        <f:facet name="separator">
+          <af:spacer width="10" height="20" id="s349"/>
+        </f:facet>
+        <af:inputText columns="40" id="it11"
+                      label="#{ecrsviewcontrollerBundle.REASON_FOR_CHANGE}"
+                      rows="2" autoSubmit="true"
+                      showRequired="true"
+                      value="#{pageFlowScope.manageCRSBean.reasonForChange}"
+                      required="true"></af:inputText>
+      </af:panelGroupLayout>
+    </af:dialog>
+  </af:popup>
+  <af:popup childCreation="deferred" autoCancel="disabled" id="reactivte"
+            binding="#{pageFlowScope.manageCRSBean.retirePopupBinding}">
+    <af:dialog id="d184" title="#{ecrsviewcontrollerBundle.RETIRE_CONFIRMATION}"
+               titleIconSource="/images/warning.png" closeIconVisible="false"
+               type="yesNo"
+               dialogListener="#{pageFlowScope.manageCRSBean.retireConfirmDialogListener}"
+               inlineStyle="width:400px;">
+      <f:facet name="buttonBar"/>
+      <af:panelGroupLayout id="pgl3" layout="vertical">
+        <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_RETIRE_T}"
+                       id="ot834"/>
+        <f:facet name="separator">
+          <af:spacer width="10" height="20" id="s10"/>
+        </f:facet>
+        <af:inputText columns="40" id="it114"
+                      label="#{ecrsviewcontrollerBundle.REASON_FOR_CHANGE}"
+                      rows="2" autoSubmit="true"
+                      value="#{pageFlowScope.manageCRSBean.reasonForChange}"
+                      required="true"></af:inputText>
+      </af:panelGroupLayout>
+    </af:dialog>
+  </af:popup>
+  <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+            binding="#{pageFlowScope.manageCRSBean.errorPLSqlPopup}">
+    <af:dialog id="d1" title="#{ecrsviewcontrollerBundle.ERROR}"
+               titleIconSource="/images/error.png" inlineStyle="width:350px;">
+      <f:facet name="buttonBar"/>
+      <af:panelGroupLayout id="pgl4" layout="vertical">
+        <af:outputText value="#{ecrsviewcontrollerBundle.AN_INTERNAL_ERROR_OCCURED__PLE}" id="ot22"/>
+        <f:facet name="separator">
+          <af:spacer width="10" height="10" id="s7"/>
+        </f:facet>
+        <af:outputText value="#{pageFlowScope.plsqlerror}" id="ot23"/>
+      </af:panelGroupLayout>
     </af:dialog>
   </af:popup>
 </jsp:root>

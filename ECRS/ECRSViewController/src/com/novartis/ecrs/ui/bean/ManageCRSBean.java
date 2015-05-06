@@ -132,9 +132,14 @@ public class ManageCRSBean implements Serializable {
     private String baseOrStaging=ModelConstants.BASE_FACET;
     private ChildPropertyTreeModel hierChildTreeModel;
     private List<HierarchyChildUIBean> hierChildList;
-    private RichTable searchBaseTableBinding;
-    private RichDialog reasonChangePopup;
-    private RichPopup modifyReasonChngPopup;
+    private transient RichTable searchBaseTableBinding;
+    private transient RichDialog reasonChangePopup;
+    private transient RichPopup modifyReasonChngPopup;
+    private transient RichInputText retireReactvteReasonPopup;
+    private transient RichPopup reactivatePopupBinding;
+    private transient RichPopup retirePopupBinding;
+    private String reasonForChange;
+    private transient RichPopup errorPLSqlPopup;
 
     public ManageCRSBean() {
         super();
@@ -1857,20 +1862,8 @@ public class ManageCRSBean implements Serializable {
      */
     public void reactivateCRS(ActionEvent actionEvent) {
         // Add event code here...
-        CrsContentBaseVORowImpl row =
-            (CrsContentBaseVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentBaseVOIterator.currentRow}");
-        if(row.getCrsId()!=null){
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("pCRSId", row.getCrsId());
-            params.put("pReasonForChange", "RSN CHNGE");
-            try {
-                ADFUtils.executeAction("reactivateCrs", params);
-                getSearchBaseTableBinding().resetStampState();
-                ADFUtils.addPartialTarget(getSearchBaseTableBinding());
-            } catch (Exception e) {
-                e.printStackTrace();
-            } 
-        }
+        setReasonForChange(null);
+        ADFUtils.showPopup(getReactivatePopupBinding());
     }
 
     /**
@@ -1878,20 +1871,8 @@ public class ManageCRSBean implements Serializable {
      */
     public void retireCRS(ActionEvent actionEvent) {
         // Add event code here...
-        CrsContentBaseVORowImpl row =
-            (CrsContentBaseVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentBaseVOIterator.currentRow}");
-        if(row.getCrsId()!=null){
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("pCRSId", row.getCrsId());
-            params.put("pReasonForChange", "RSN CHNGE");
-            try {
-                ADFUtils.executeAction("retireCrs", params);
-                getSearchBaseTableBinding().resetStampState();
-                ADFUtils.addPartialTarget(getSearchBaseTableBinding());
-            } catch (Exception e) {
-                e.printStackTrace();
-            } 
-        }
+        setReasonForChange(null);
+        ADFUtils.showPopup(getRetirePopupBinding());
     }
 
     /**
@@ -1920,11 +1901,144 @@ public class ManageCRSBean implements Serializable {
         // Add event code here...
     }
 
+    /**
+     * @param modifyReasonChngPopup
+     */
     public void setModifyReasonChngPopup(RichPopup modifyReasonChngPopup) {
         this.modifyReasonChngPopup = modifyReasonChngPopup;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getModifyReasonChngPopup() {
         return modifyReasonChngPopup;
+    }
+
+    /**
+     * @param retireReactvteReasonPopup
+     */
+    public void setRetireReactvteReasonPopup(RichInputText retireReactvteReasonPopup) {
+        this.retireReactvteReasonPopup = retireReactvteReasonPopup;
+    }
+
+    /**
+     * @return
+     */
+    public RichInputText getRetireReactvteReasonPopup() {
+        return retireReactvteReasonPopup;
+    }
+
+    /**
+     * @param dialogEvent
+     */
+    public void retireConfirmDialogListener(DialogEvent dialogEvent) {
+        // Add event code here...
+        if (DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
+            CrsContentBaseVORowImpl row =
+                (CrsContentBaseVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentBaseVOIterator.currentRow}");
+            if (row.getCrsId() != null) {
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("pCRSId", row.getCrsId());
+                params.put("pReasonForChange", getReasonForChange());
+                try {
+                    String msg =
+                        (String)ADFUtils.executeAction("retireCrs", params);
+                    if (!ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
+                        ADFUtils.setEL("#{pageFlowScope.plsqlerror}", msg);
+                        ADFUtils.showPopup(getErrorPLSqlPopup());
+                    }
+                    getSearchBaseTableBinding().resetStampState();
+                    ADFUtils.addPartialTarget(getSearchBaseTableBinding());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * @param dialogEvent
+     */
+    public void reactivateConfirmDialogListener(DialogEvent dialogEvent) {
+        // Add event code here...
+        if (DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
+            CrsContentBaseVORowImpl row =
+                (CrsContentBaseVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentBaseVOIterator.currentRow}");
+            if (row.getCrsId() != null) {
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("pCRSId", row.getCrsId());
+                params.put("pReasonForChange", getReasonForChange());
+                try {
+                    String msg =
+                        (String)ADFUtils.executeAction("reactivateCrs",
+                                                       params);
+                    if (!ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
+                        ADFUtils.setEL("#{pageFlowScope.plsqlerror}", msg);
+                        ADFUtils.showPopup(getErrorPLSqlPopup());
+                    }
+                    getSearchBaseTableBinding().resetStampState();
+                    ADFUtils.addPartialTarget(getSearchBaseTableBinding());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * @param reactivatePopupBinding
+     */
+    public void setReactivatePopupBinding(RichPopup reactivatePopupBinding) {
+        this.reactivatePopupBinding = reactivatePopupBinding;
+    }
+
+    /**
+     * @return
+     */
+    public RichPopup getReactivatePopupBinding() {
+        return reactivatePopupBinding;
+    }
+
+    /**
+     * @param retirePopupBinding
+     */
+    public void setRetirePopupBinding(RichPopup retirePopupBinding) {
+        this.retirePopupBinding = retirePopupBinding;
+    }
+
+    /**
+     * @return
+     */
+    public RichPopup getRetirePopupBinding() {
+        return retirePopupBinding;
+    }
+
+    /**
+     * @param reasonForChange
+     */
+    public void setReasonForChange(String reasonForChange) {
+        this.reasonForChange = reasonForChange;
+    }
+
+    /**
+     * @return
+     */
+    public String getReasonForChange() {
+        return reasonForChange;
+    }
+
+    /**
+     * @param errorPLSqlPopup
+     */
+    public void setErrorPLSqlPopup(RichPopup errorPLSqlPopup) {
+        this.errorPLSqlPopup = errorPLSqlPopup;
+    }
+
+    /**
+     * @return
+     */
+    public RichPopup getErrorPLSqlPopup() {
+        return errorPLSqlPopup;
     }
 }

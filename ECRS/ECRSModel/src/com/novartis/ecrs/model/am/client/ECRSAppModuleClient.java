@@ -77,10 +77,10 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return (String)_ret;
     }
 
-    public boolean reactivateCrs(Long pCRSId, String pReasonForChange) {
+    public String reactivateCrs(Long pCRSId, String pReasonForChange) {
         Object _ret =
             this.riInvokeExportedMethod(this,"reactivateCrs",new String [] {"java.lang.Long","java.lang.String"},new Object[] {pCRSId, pReasonForChange});
-        return ((Boolean)_ret).booleanValue();
+        return (String)_ret;
     }
 
     public boolean refreshRepository(Long crsId) {
@@ -89,9 +89,9 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return ((Boolean)_ret).booleanValue();
     }
 
-    public boolean retireCrs(Long pCRSId, String pReasonForChange) {
+    public String retireCrs(Long pCRSId, String pReasonForChange) {
         Object _ret =
             this.riInvokeExportedMethod(this,"retireCrs",new String [] {"java.lang.Long","java.lang.String"},new Object[] {pCRSId, pReasonForChange});
-        return ((Boolean)_ret).booleanValue();
+        return (String)_ret;
     }
 }

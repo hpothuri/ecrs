@@ -4,7 +4,6 @@ package com.novartis.ecrs.model.am;
 import com.novartis.ecrs.model.am.common.ECRSAppModule;
 import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.ECrsSearchVORowImpl;
-import com.novartis.ecrs.model.view.HierarchyChildDetailVOImpl;
 import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RolesTransientVOImpl;
@@ -776,13 +775,14 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     /**
      * Activate crs_tms_sync function call.
      */
-    public boolean retireCrs(Long pCRSId,String pReasonForChange) {
+    public String retireCrs(Long pCRSId,String pReasonForChange) {
         //Execute the function call.
         ViewObjectImpl baseVO = this.getCrsContentBaseVO();
         DBTransaction txn = getDBTransaction();
         OracleCallableStatement cstmt = null;
         String cs = null;
         String returnCode = null;
+        String returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
         if (pCRSId != null) {
             cs = "{?=call CRS_UI_TMS_UTILS.retire_crs (?,?)}";
             cstmt = (OracleCallableStatement)txn.createCallableStatement(cs, DBTransaction.DEFAULT);
@@ -791,17 +791,11 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 cstmt.setNUMBER(2, new oracle.jbo.domain.Number(pCRSId));
                 cstmt.setString(3, pReasonForChange);
                 cstmt.execute();
-                returnCode = cstmt.getString(1);
-
-                if ("0".equalsIgnoreCase(returnCode)) {
-                    //Reexecute the VO
-                    baseVO.executeQuery();
-                    return true;
-                } else
-                    return false;
+                returnMessage = cstmt.getString(1);
+                
             } catch (Exception e) {
                // e.printStackTrace();
-                return false;
+                returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
             } finally {
                 try {
                     if (cstmt != null && !cstmt.isClosed())
@@ -811,19 +805,21 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 }
             }
         } else
-            return true;
+            returnMessage = ModelConstants.PLSQL_CALL_SUCCESS;
+       return returnMessage;
     }
     
     /**
      * Activate crs_tms_sync function call.
      */
-    public boolean reactivateCrs(Long pCRSId,String pReasonForChange) {
+    public String reactivateCrs(Long pCRSId,String pReasonForChange) {
         //Execute the function call.
         ViewObjectImpl baseVO = this.getCrsContentBaseVO();
         DBTransaction txn = getDBTransaction();
         OracleCallableStatement cstmt = null;
         String cs = null;
         String returnCode = null;
+        String returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
         if (pCRSId != null) {
             cs = "{?=call CRS_UI_TMS_UTILS.reactivate_crs (?,?)}";
             cstmt = (OracleCallableStatement)txn.createCallableStatement(cs, DBTransaction.DEFAULT);
@@ -832,16 +828,11 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 cstmt.setNUMBER(2, new oracle.jbo.domain.Number(pCRSId));
                 cstmt.setString(3, pReasonForChange);
                 cstmt.execute();
-                returnCode = cstmt.getString(1);
-                if ("0".equalsIgnoreCase(returnCode)) {
-                    //Reexecute the VO
-                    baseVO.executeQuery();
-                    return true;
-                } else
-                    return false;
+                returnMessage = cstmt.getString(1);
+                
             } catch (Exception e) {
                // e.printStackTrace();
-                return false;
+               returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
             } finally {
                 try {
                     if (cstmt != null && !cstmt.isClosed())
@@ -851,7 +842,8 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 }
             }
         } else
-            return true;
+           returnMessage = ModelConstants.PLSQL_CALL_SUCCESS;
+        return returnMessage;
     }
 
     /**

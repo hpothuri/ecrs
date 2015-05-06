@@ -218,18 +218,6 @@
         Type="java.lang.String"/>
     </Method>
     <Method
-      Name="reactivateCrs"
-      MethodName="reactivateCrs">
-      <Return
-        Type="boolean"/>
-      <Parameter
-        Name="pCRSId"
-        Type="java.lang.Long"/>
-      <Parameter
-        Name="pReasonForChange"
-        Type="java.lang.String"/>
-    </Method>
-    <Method
       Name="refreshRepository"
       MethodName="refreshRepository">
       <Return
@@ -239,10 +227,19 @@
         Type="java.lang.Long"/>
     </Method>
     <Method
-      Name="retireCrs"
-      MethodName="retireCrs">
+      Name="findByCrsFromStg"
+      MethodName="findByCrsFromStg">
       <Return
         Type="boolean"/>
+      <Parameter
+        Name="pCrsId"
+        Type="java.lang.Long"/>
+    </Method>
+    <Method
+      Name="reactivateCrs"
+      MethodName="reactivateCrs">
+      <Return
+        Type="java.lang.String"/>
       <Parameter
         Name="pCRSId"
         Type="java.lang.Long"/>
@@ -251,13 +248,16 @@
         Type="java.lang.String"/>
     </Method>
     <Method
-      Name="findByCrsFromStg"
-      MethodName="findByCrsFromStg">
+      Name="retireCrs"
+      MethodName="retireCrs">
       <Return
-        Type="boolean"/>
+        Type="java.lang.String"/>
       <Parameter
-        Name="pCrsId"
+        Name="pCRSId"
         Type="java.lang.Long"/>
+      <Parameter
+        Name="pReasonForChange"
+        Type="java.lang.String"/>
     </Method>
   </ClientInterface>
 </AppModule>
