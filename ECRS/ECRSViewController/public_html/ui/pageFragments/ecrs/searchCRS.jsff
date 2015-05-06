@@ -274,15 +274,19 @@
                            facetName="#{row.StateId eq 8 ?  'RETIRE' : 'REACTIVATE'}"
                            defaultFacet="RETIRE">
                 <f:facet name="REACTIVATE">
-                  <af:commandButton text="#{ecrsviewcontrollerBundle.REACTIVATE}"
+                  <af:commandImageLink
                                     id="cb2"
-                                    actionListener="#{pageFlowScope.manageCRSBean.reactivateCRS}"/>
+                                    actionListener="#{pageFlowScope.manageCRSBean.reactivateCRS}"
+                                       shortDesc="#{ecrsviewcontrollerBundle.REACTIVATE}"
+                                       icon="/images/reactivate.png"/>
                 </f:facet>
                 <f:facet name="RETIRE">
-                  <af:commandButton text="#{ecrsviewcontrollerBundle.RETIRE}"
+                  <af:commandImageLink
                                     id="cb3"
                                     actionListener="#{pageFlowScope.manageCRSBean.retireCRS}"
-                                    partialSubmit="false"/>
+                                    partialSubmit="false"
+                                       icon="/images/retire.png"
+                                       shortDesc="#{ecrsviewcontrollerBundle.RETIRE}"/>
                 </f:facet>
               </af:switcher>
             </af:column>
@@ -448,15 +452,39 @@
       </f:facet>
     </af:panelGroupLayout>
   </af:panelHeader>
-  <af:popup childCreation="deferred" autoCancel="disabled" id="p2"
-            binding="#{pageFlowScope.manageCRSBean.modifyReasonChngPopup}">
-    <af:dialog id="d2" title="#{ecrsviewcontrollerBundle.REASON_FOR_CHANGE}"
-               binding="#{pageFlowScope.manageCRSBean.reasonChangePopup}"
-               dialogListener="#{pageFlowScope.manageCRSBean.reasonChngeDialogListener}">
-      <f:facet name="buttonBar"/>
-      <af:inputText label="#{ecrsviewcontrollerBundle.ENTER_REASON_FOR_CHANGE}#{ecrsviewcontrollerBundle.COLON}"
-                    id="it9"/>
-      <af:spacer width="10" height="10" id="s9"/>
+  <af:popup childCreation="deferred" id="p2"
+            binding="#{pageFlowScope.manageCRSBean.modifyReasonChngPopup}"
+            autoCancel="disabled">
+    <af:dialog id="d148"
+               title="#{ecrsviewcontrollerBundle.MODIFY_CRS_CONFIRMATION}"
+               titleIconSource="/images/warning.png" closeIconVisible="false"
+               type="none"
+               inlineStyle="width:400px">
+      <af:panelGroupLayout id="pg4l9" layout="vertical">
+        <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_MODIFY}"
+                       id="ot254"/>
+        <f:facet name="separator">
+          <af:spacer width="10" height="20" id="s49"/>
+        </f:facet>
+        <af:inputText columns="40" id="it211"
+                      label="#{ecrsviewcontrollerBundle.REASON_FOR_CHANGE}"
+                      rows="2" autoSubmit="true" showRequired="true"
+                      value="#{pageFlowScope.manageCRSBean.reasonForChange}"
+                      required="true"></af:inputText>
+      </af:panelGroupLayout>
+      <f:facet name="buttonBar">
+        <af:panelGroupLayout id="pgl5" layout="horizontal"
+                             styleClass="AFStretchWidth" halign="end">
+          <af:commandButton text="#{ecrsviewcontrollerBundle.YES}" id="cb4"
+                            action="#{pageFlowScope.manageCRSBean.onClickModifyCrs}"
+                            partialSubmit="true"/>
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="s9"/>
+          </f:facet>
+          <af:commandButton text="#{ecrsviewcontrollerBundle.NO}" id="cb5" immediate="true"
+                            action="#{pageFlowScope.manageCRSBean.cancelModifyCrs}"/>
+        </af:panelGroupLayout>
+      </f:facet>
     </af:dialog>
   </af:popup>
   <af:popup childCreation="deferred" autoCancel="disabled" id="retire"

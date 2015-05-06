@@ -19,10 +19,10 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
     }
 
 
-    public boolean activateCrs(Long pCRSId, String pReasonForChange) {
+    public String activateCrs(Long pCRSId, String pReasonForChange) {
         Object _ret =
             this.riInvokeExportedMethod(this,"activateCrs",new String [] {"java.lang.Long","java.lang.String"},new Object[] {pCRSId, pReasonForChange});
-        return ((Boolean)_ret).booleanValue();
+        return (String)_ret;
     }
 
     public void copyCurrentRiskRelation(Long srcRiskId, Long destCrsId) {

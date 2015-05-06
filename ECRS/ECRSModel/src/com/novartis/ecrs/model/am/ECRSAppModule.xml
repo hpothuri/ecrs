@@ -128,18 +128,6 @@
     Reversed="false"/>
   <ClientInterface>
     <Method
-      Name="activateCrs"
-      MethodName="activateCrs">
-      <Return
-        Type="boolean"/>
-      <Parameter
-        Name="pCRSId"
-        Type="java.lang.Long"/>
-      <Parameter
-        Name="pReasonForChange"
-        Type="java.lang.String"/>
-    </Method>
-    <Method
       Name="copyCurrentRiskRelation"
       MethodName="copyCurrentRiskRelation">
       <Return
@@ -250,6 +238,18 @@
     <Method
       Name="retireCrs"
       MethodName="retireCrs">
+      <Return
+        Type="java.lang.String"/>
+      <Parameter
+        Name="pCRSId"
+        Type="java.lang.Long"/>
+      <Parameter
+        Name="pReasonForChange"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="activateCrs"
+      MethodName="activateCrs">
       <Return
         Type="java.lang.String"/>
       <Parameter

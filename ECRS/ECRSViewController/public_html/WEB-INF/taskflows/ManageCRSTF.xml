@@ -115,6 +115,14 @@
         <from-outcome>initCreateUpdateCrs</from-outcome>
         <to-activity-id>initializeCreateUpdateCrs</to-activity-id>
       </control-flow-case>
+      <control-flow-case id="__26">
+        <from-outcome>navToCreate</from-outcome>
+        <to-activity-id>create</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__29">
+        <from-outcome>navToSearch</from-outcome>
+        <to-activity-id>serach</to-activity-id>
+      </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__19">
       <from-activity-id>initRiskRelation</from-activity-id>
@@ -139,13 +147,13 @@
     </control-flow-rule>
     <control-flow-rule id="__25">
       <from-activity-id>initializeCreateUpdateCrs</from-activity-id>
-      <control-flow-case id="__26">
-        <from-outcome>createUpdate</from-outcome>
-        <to-activity-id>create</to-activity-id>
-      </control-flow-case>
       <control-flow-case id="__27">
         <from-outcome>toSearch</from-outcome>
         <to-activity-id>serach</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__28">
+        <from-outcome>createUpdateCRS</from-outcome>
+        <to-activity-id>create</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

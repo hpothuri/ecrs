@@ -8,7 +8,6 @@ import oracle.jbo.ApplicationModule;
 // ---    Sun May 03 13:34:24 IST 2015
 // ---------------------------------------------------------------------
 public interface ECRSAppModule extends ApplicationModule {
-    boolean activateCrs(Long pCRSId, String pReasonForChange);
 
     void copyCurrentRiskRelation(Long srcRiskId, Long destCrsId);
 
@@ -35,4 +34,6 @@ public interface ECRSAppModule extends ApplicationModule {
     String reactivateCrs(Long pCRSId, String pReasonForChange);
 
     String retireCrs(Long pCRSId, String pReasonForChange);
+
+    String activateCrs(Long pCRSId, String pReasonForChange);
 }

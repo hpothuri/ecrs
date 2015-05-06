@@ -318,18 +318,6 @@
                                         <af:showPopupBehavior popupId="delConfPopup"
                                                               triggerType="action"/>
                                     </af:commandButton>
-                                    <af:commandButton text="#{ecrsviewcontrollerBundle.RETIRE}"
-                                                      id="cb12"
-                                                      visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'C'}"
-                                                      partialSubmit="true"
-                                                      disabled="#{bindings.StateId.inputValue eq 8}"
-                                                      actionListener="#{pageFlowScope.manageCRSBean.onClickRetire}"/>
-                                    <af:commandButton text="#{ecrsviewcontrollerBundle.REACTIVATE}"
-                                                      id="cb13"
-                                                      rendered="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'C'}"
-                                                      partialSubmit="true"
-                                                      disabled="#{bindings.StateId.inputValue eq 7}"
-                                                      actionListener="#{pageFlowScope.manageCRSBean.onClickReactivate}"/>
                                     <f:facet name="separator"/>
                                 </af:panelGroupLayout>
                             </f:facet>

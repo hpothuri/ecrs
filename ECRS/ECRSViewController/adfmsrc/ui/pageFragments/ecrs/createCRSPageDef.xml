@@ -257,5 +257,14 @@
       <NamedData NDName="rowKey" NDValue="#{pageFlowScope.crsId}"
                  NDType="java.lang.String"/>
     </action>
+    <methodAction id="activateCrs"
+                  InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="activateCrs" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.activateCrs_ECRSAppModuleDataControl_dataProvider_activateCrs_result">
+      <NamedData NDName="pCRSId" NDType="java.lang.Long"/>
+      <NamedData NDName="pReasonForChange" NDType="java.lang.String"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

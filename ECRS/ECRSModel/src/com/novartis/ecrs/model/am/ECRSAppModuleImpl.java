@@ -703,12 +703,12 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     /**
      * Activate crs_tms_sync function call.
      */
-    public boolean activateCrs(Long pCRSId,String pReasonForChange) {
+    public String activateCrs(Long pCRSId,String pReasonForChange) {
         //Execute the function call.
         DBTransaction txn = getDBTransaction();
         OracleCallableStatement cstmt = null;
         String cs = null;
-        String returnCode = null;
+        String returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
         if (pCRSId != null) {
             cs = "{?=call activate_crs (?,?)}";
             cstmt = (OracleCallableStatement)txn.createCallableStatement(cs, DBTransaction.DEFAULT);
@@ -717,15 +717,10 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 cstmt.setNUMBER(1, new oracle.jbo.domain.Number(pCRSId));
                 cstmt.setString(2, pReasonForChange);
                 cstmt.execute();
-                returnCode = cstmt.getString(1);
+                returnMessage = cstmt.getString(1);
 
-                if ("0".equalsIgnoreCase(returnCode)) {
-                    //Reexecute the VO
-                    return true;
-                } else
-                    return false;
             } catch (Exception e) {
-                return false;
+                returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
             } finally {
                 try {
                     if (cstmt != null && !cstmt.isClosed())
@@ -735,7 +730,8 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 }
             }
         } else
-            return true;
+            returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
+        return returnMessage;
     }
     
     /**
