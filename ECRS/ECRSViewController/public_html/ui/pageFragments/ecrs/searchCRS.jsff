@@ -436,7 +436,7 @@
                                   actionListener="#{bindings.Rollback.execute}"/>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}"
                                          id="plam1">
-          <af:outputText value="#{ecrsviewcontrollerBundle.DICIONARY_CURR_VERSION_NO}" id="ot8"/>
+          <af:outputText value="#{sessionScope.dictVersion}" id="ot8"/>
         </af:panelLabelAndMessage>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}#{ecrsviewcontrollerBundle.COLON}"
                                          id="plam2">

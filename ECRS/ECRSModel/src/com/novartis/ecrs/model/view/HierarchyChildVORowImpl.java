@@ -2,6 +2,8 @@ package com.novartis.ecrs.model.view;
 
 import java.math.BigDecimal;
 
+import java.sql.Timestamp;
+
 import oracle.jbo.RowIterator;
 import oracle.jbo.server.AttributeDefImpl;
 import oracle.jbo.server.ViewRowImpl;
@@ -226,6 +228,26 @@ public class HierarchyChildVORowImpl extends ViewRowImpl {
             }
         }
         ,
+        DictContentEntryTs {
+            public Object get(HierarchyChildVORowImpl obj) {
+                return obj.getDictContentEntryTs();
+            }
+
+            public void put(HierarchyChildVORowImpl obj, Object value) {
+                obj.setDictContentEntryTs((Timestamp)value);
+            }
+        }
+        ,
+        CEndTs {
+            public Object get(HierarchyChildVORowImpl obj) {
+                return obj.getCEndTs();
+            }
+
+            public void put(HierarchyChildVORowImpl obj, Object value) {
+                obj.setCEndTs((Timestamp)value);
+            }
+        }
+        ,
         HierarchyChildDetailVO {
             public Object get(HierarchyChildVORowImpl obj) {
                 return obj.getHierarchyChildDetailVO();
@@ -285,6 +307,8 @@ public class HierarchyChildVORowImpl extends ViewRowImpl {
     public static final int PRIMLINKFLAG = AttributesEnum.PrimLinkFlag.index();
     public static final int SORTORDER = AttributesEnum.SortOrder.index();
     public static final int CHILDEXISTS = AttributesEnum.ChildExists.index();
+    public static final int DICTCONTENTENTRYTS = AttributesEnum.DictContentEntryTs.index();
+    public static final int CENDTS = AttributesEnum.CEndTs.index();
     public static final int HIERARCHYCHILDDETAILVO = AttributesEnum.HierarchyChildDetailVO.index();
 
     /**
@@ -627,6 +651,38 @@ public class HierarchyChildVORowImpl extends ViewRowImpl {
      */
     public void setChildExists(String value) {
         setAttributeInternal(CHILDEXISTS, value);
+    }
+
+    /**
+     * Gets the attribute value for the calculated attribute DictContentEntryTs.
+     * @return the DictContentEntryTs
+     */
+    public Timestamp getDictContentEntryTs() {
+        return (Timestamp) getAttributeInternal(DICTCONTENTENTRYTS);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for the calculated attribute DictContentEntryTs.
+     * @param value value to set the  DictContentEntryTs
+     */
+    public void setDictContentEntryTs(Timestamp value) {
+        setAttributeInternal(DICTCONTENTENTRYTS, value);
+    }
+
+    /**
+     * Gets the attribute value for the calculated attribute CEndTs.
+     * @return the CEndTs
+     */
+    public Timestamp getCEndTs() {
+        return (Timestamp) getAttributeInternal(CENDTS);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for the calculated attribute CEndTs.
+     * @param value value to set the  CEndTs
+     */
+    public void setCEndTs(Timestamp value) {
+        setAttributeInternal(CENDTS, value);
     }
 
     /**

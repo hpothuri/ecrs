@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1252" ?>
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="ManageCRSTF">
-    <default-activity>crsFlowRouter</default-activity>
+    <default-activity>initManageCrs</default-activity>
     <input-parameter-definition id="__4">
       <name>flowType</name>
       <value>#{pageFlowScope.flowType}</value>
@@ -70,6 +70,12 @@
       <method>#{pageFlowScope.manageCRSBean.initializeCreateUpdateCRS}</method>
       <outcome>
         <to-string/>
+      </outcome>
+    </method-call>
+    <method-call id="initManageCrs">
+      <method>#{pageFlowScope.manageCRSBean.initManageCrs}</method>
+      <outcome>
+        <fixed-outcome>init</fixed-outcome>
       </outcome>
     </method-call>
     <train/>
@@ -154,6 +160,13 @@
       <control-flow-case id="__28">
         <from-outcome>createUpdateCRS</from-outcome>
         <to-activity-id>create</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__28">
+      <from-activity-id>initManageCrs</from-activity-id>
+      <control-flow-case id="__29">
+        <from-outcome>init</from-outcome>
+        <to-activity-id>crsFlowRouter</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

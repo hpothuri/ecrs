@@ -140,6 +140,15 @@ public class ManageCRSBean implements Serializable {
     private transient RichPopup retirePopupBinding;
     private String reasonForChange;
     private transient RichPopup errorPLSqlPopup;
+    private String filterBy1;
+    private String filterBy2;
+    private String filterBy3;
+    private String filterValue1;
+    private String filterValue2;
+    private String filterValue3;
+    private String filterCri1="OR";
+    private String filterCri2="OR";
+    private RichPopup advancedFilterPopup;
 
     public ManageCRSBean() {
         super();
@@ -547,15 +556,15 @@ public class ManageCRSBean implements Serializable {
     public void editRiskDefinition(ActionEvent actionEvent) {
         ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
         Long riskId = (Long)ADFUtils.evaluateEL("#{row.CrsRiskId}");
-        String databaseList = (String)ADFUtils.evaluateEL("#{row.DatabaseList}");
-        List<String> dbList = new ArrayList<String>();
-        if(databaseList != null){
-            String split[] = databaseList.split(",");
-            for(String db : split){
-                dbList.add(db);
-            }
-        }
-        setSelDatabases(dbList);
+//        String databaseList = (String)ADFUtils.evaluateEL("#{row.DatabaseList}");
+//        List<String> dbList = new ArrayList<String>();
+//        if(databaseList != null){
+//            String split[] = databaseList.split(",");
+//            for(String db : split){
+//                dbList.add(db);
+//            }
+//        }
+//        setSelDatabases(dbList);
         String riskPurposeList = (String)ADFUtils.evaluateEL("#{row.RiskPurposeList}");
         List<String> rpList = new ArrayList<String>();
         if(riskPurposeList != null){
@@ -598,14 +607,14 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void saveRiskDefs(ActionEvent actionEvent) {
-        if(selDatabases != null && selDatabases.size() > 0){
-            String databases = "";
-            for(String db : selDatabases){
-                databases = databases + "," + db;
-            }
-            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}", databases.substring(1));
-        } else
-            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}",null);
+//        if(selDatabases != null && selDatabases.size() > 0){
+//            String databases = "";
+//            for(String db : selDatabases){
+//                databases = databases + "," + db;
+//            }
+//            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}", databases.substring(1));
+//        } else
+//            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}",null);
         
         if(selRiskPurposes != null && selRiskPurposes.size() > 0){
             String riskPurposes = "";
@@ -1010,6 +1019,9 @@ public class ManageCRSBean implements Serializable {
 
 
                     riskDefRow.setAttribute("MeddraQualifier", getChildScope());
+                    riskDefRow.setAttribute("TmsDictContentEntryTs", selRow.getTmsDictContentEntryTs());
+                    riskDefRow.setAttribute("TmsDictContentId", selRow.getTmsDictContentId());
+                    riskDefRow.setAttribute("TmsEndTs", selRow.getTmsEndTs());
                     riskDefVO.insertRow(riskDefRow);
                 }
             } else {
@@ -1042,7 +1054,9 @@ public class ManageCRSBean implements Serializable {
                     riskDefRow.setAttribute("MeddraDict", dict);
                     riskDefRow.setAttribute("MeddraVersion", version);
                     riskDefRow.setAttribute("MeddraVersionDate", dragRow.getAttribute("Dates"));
-
+                    riskDefRow.setAttribute("TmsDictContentEntryTs", dragRow.getAttribute("DictContentEntryTs"));
+                    riskDefRow.setAttribute("TmsDictContentId", dragRow.getAttribute("DictContentId"));
+                    riskDefRow.setAttribute("TmsEndTs", dragRow.getAttribute("EndTs"));
                     if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
                         if (term != null && term.contains("NMQ"))
                             riskDefRow.setAttribute("MeddraExtension", "NMQ");
@@ -1483,15 +1497,15 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
         Long riskId = (Long)ADFUtils.evaluateEL("#{copyRow.CrsRiskId}");
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
-        String databaseList = (String)ADFUtils.evaluateEL("#{copyRow.DatabaseList}");
-        List<String> dbList = new ArrayList<String>();
-        if(databaseList != null){
-            String split[] = databaseList.split(",");
-            for(String db : split){
-                dbList.add(db.trim());
-            }
-        }
-        setSelDatabases(dbList);
+//        String databaseList = (String)ADFUtils.evaluateEL("#{copyRow.DatabaseList}");
+//        List<String> dbList = new ArrayList<String>();
+//        if(databaseList != null){
+//            String split[] = databaseList.split(",");
+//            for(String db : split){
+//                dbList.add(db.trim());
+//            }
+//        }
+//        setSelDatabases(dbList);
         String riskPurposeList = (String)ADFUtils.evaluateEL("#{copyRow.RiskPurposeList}");
         List<String> rpList = new ArrayList<String>();
         if(riskPurposeList != null){
@@ -1504,8 +1518,8 @@ public class ManageCRSBean implements Serializable {
             }
         }
         setSelRiskPurposes(rpList);
-        if(copyDBListBinding != null)
-            ResetUtils.reset(copyDBListBinding);
+//        if(copyDBListBinding != null)
+//            ResetUtils.reset(copyDBListBinding);
         if(copyRPListBinding != null)
             ResetUtils.reset(copyRPListBinding);
         Map params = new HashMap<String, Object>();
@@ -2040,5 +2054,139 @@ public class ManageCRSBean implements Serializable {
         // Add event code here...
         ADFUtils.closeDialog(getModifyReasonChngPopup());
         return "navToSearch";
+    }
+
+    public void refreshRepoInPopup(ActionEvent actionEvent) {
+        Map params = new HashMap<String, Object>();
+        params.put("crsId", ADFUtils.getPageFlowScopeValue("crsId"));
+        try {
+            ADFUtils.executeAction("refreshRepository", params);
+            setRepoRefreshed(Boolean.TRUE);
+            ADFUtils.addPartialTarget(riskDefTable);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isCrsFieldsUpdatable1() {
+        return crsFieldsUpdatable;
+    }
+
+    public void setFilterBy1(String filterBy1) {
+        this.filterBy1 = filterBy1;
+    }
+
+    public String getFilterBy1() {
+        return filterBy1;
+    }
+
+    public void setFilterBy2(String filterBy2) {
+        this.filterBy2 = filterBy2;
+    }
+
+    public String getFilterBy2() {
+        return filterBy2;
+    }
+
+    public void setFilterBy3(String filterBy3) {
+        this.filterBy3 = filterBy3;
+    }
+
+    public String getFilterBy3() {
+        return filterBy3;
+    }
+
+    public void setFilterValue1(String filterValue1) {
+        this.filterValue1 = filterValue1;
+    }
+
+    public String getFilterValue1() {
+        return filterValue1;
+    }
+
+    public void setFilterValue2(String filterValue2) {
+        this.filterValue2 = filterValue2;
+    }
+
+    public String getFilterValue2() {
+        return filterValue2;
+    }
+
+    public void setFilterValue3(String filterValue3) {
+        this.filterValue3 = filterValue3;
+    }
+
+    public String getFilterValue3() {
+        return filterValue3;
+    }
+
+    public void setFilterCri1(String filterCri1) {
+        this.filterCri1 = filterCri1;
+    }
+
+    public String getFilterCri1() {
+        return filterCri1;
+    }
+
+    public void setFilterCri2(String filterCri2) {
+        this.filterCri2 = filterCri2;
+    }
+
+    public String getFilterCri2() {
+        return filterCri2;
+    }
+
+    public void onOkFilter(ActionEvent actionEvent) {
+        DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskVOIterator");
+        ViewObject riskVO = iter.getViewObject();
+        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
+        StringBuilder whereClause = new StringBuilder("CRS_ID = "+crsId);
+        if(filterBy1 != null && filterValue1 != null)
+            whereClause.append(" AND ("+filterBy1 + " LIKE '"+filterValue1+"' ");
+        if(filterBy2 != null && filterValue2 != null)
+            whereClause.append(filterCri1 + " " + filterBy2 + " LIKE '"+filterValue2+"' ");
+        if(filterBy3 != null && filterValue3 != null)
+            whereClause.append(filterCri2 + " " + filterBy3 + " LIKE '"+filterValue3+"' ");  
+        if(filterBy1 != null && filterValue1 != null)
+            whereClause.append(")");
+        riskVO.setWhereClause(whereClause.toString());
+        System.err.println(riskVO.getQuery());
+        riskVO.executeQuery();
+        advancedFilterPopup.hide();
+    }
+    
+    public void initManageCrs(){
+        String dictVersion = (String)ADFUtils.getSessionScopeValue("dictVersion");
+        if(dictVersion == null){
+            OperationBinding oper = ADFUtils.findOperation("fetchDictionaryVersion");
+            dictVersion = (String)oper.execute();  
+            ADFUtils.setSessionScopeValue("dictVersion", dictVersion);
+        }
+    }
+
+    public void setAdvancedFilterPopup(RichPopup advancedFilterPopup) {
+        this.advancedFilterPopup = advancedFilterPopup;
+    }
+
+    public RichPopup getAdvancedFilterPopup() {
+        return advancedFilterPopup;
+    }
+
+    public void clearFilters(ActionEvent actionEvent) {
+        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
+        OperationBinding oper = ADFUtils.findOperation("initRiskRelation");
+        oper.getParamsMap().put("crsId", crsId);
+        oper.getParamsMap().put("status", getBaseOrStaging());
+        oper.execute();
+        if (oper.getErrors().size() > 0) 
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        setFilterBy1(null);
+        setFilterBy2(null);
+        setFilterBy3(null);
+        setFilterValue1(null);
+        setFilterValue2(null);
+        setFilterValue3(null);
+        setFilterCri1("OR");
+        setFilterCri2("OR");
     }
 }

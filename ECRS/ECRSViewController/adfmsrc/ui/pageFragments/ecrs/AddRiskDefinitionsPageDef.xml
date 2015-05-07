@@ -44,7 +44,6 @@
           <Item Value="MqmComment"/>
           <Item Value="NonMeddraComponentComment"/>
           <Item Value="CrsRiskId"/>
-          <Item Value="DatabaseList"/>
           <Item Value="CrsId"/>
           <Item Value="CrsRiskDefnId"/>
           <Item Value="MeddraCode"/>
@@ -70,11 +69,6 @@
         <Item Value="SafetyTopicOfInterest"/>
       </AttrNames>
     </attributeValues>
-    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="DataDomain">
-      <AttrNames>
-        <Item Value="DataDomain"/>
-      </AttrNames>
-    </attributeValues>
     <attributeValues IterBinding="CrsRiskRelationVOIterator" id="MqmComment">
       <AttrNames>
         <Item Value="MqmComment"/>
@@ -93,6 +87,7 @@
           <Item Value="MeddraQualifier"/>
           <Item Value="MeddraCode"/>
           <Item Value="SearchCriteriaDetails"/>
+          <Item Value="TmsUpdateFlag"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -119,11 +114,6 @@
       <NamedData NDName="crsId" NDType="java.lang.Long"/>
       <NamedData NDName="status" NDType="java.lang.String"/>
     </methodAction>
-    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="DatabaseList">
-      <AttrNames>
-        <Item Value="DatabaseList"/>
-      </AttrNames>
-    </attributeValues>
     <attributeValues IterBinding="CrsRiskRelationVOIterator" id="RiskPurposeList">
       <AttrNames>
         <Item Value="RiskPurposeList"/>
@@ -225,6 +215,9 @@
           <Item Value="Version"/>
           <Item Value="Dates"/>
           <Item Value="ContentId"/>
+          <Item Value="DictContentEntryTs"/>
+          <Item Value="DictContentId"/>
+          <Item Value="EndTs"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -248,7 +241,6 @@
           <Item Value="CrsId"/>
           <Item Value="CrsRiskId"/>
           <Item Value="DataDomain"/>
-          <Item Value="DatabaseList"/>
           <Item Value="MqmComment"/>
           <Item Value="NonMeddraComponentComment"/>
           <Item Value="RiskPurposeCdFlag" Binds="RiskPurposeCdFlag1"/>
@@ -419,6 +411,8 @@
           <Item Value="TermPath"/>
           <Item Value="Termscp"/>
           <Item Value="Termweig"/>
+          <Item Value="CEndTs"/>
+          <Item Value="DictContentEntryTs"/>
         </AttrNames>
         <Accessors>
           <Item Value="HierarchyChildDetailVO"/>
@@ -447,6 +441,8 @@
           <Item Value="TermPath"/>
           <Item Value="Termscp"/>
           <Item Value="Termweig"/>
+          <Item Value="CEndTs"/>
+          <Item Value="DictContentEntryTs"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -579,5 +575,12 @@
                   MethodName="refreshRepository" IsViewObjectMethod="false">
       <NamedData NDName="crsId" NDType="java.lang.Long"/>
     </methodAction>
+    <attributeValues IterBinding="CrsRiskDefinitionsVOIterator" id="SearchCriteriaDetails">
+      <AttrNames>
+        <Item Value="SearchCriteriaDetails"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CrsRiskRelationVOIterator" StaticList="false" Uses="LOV_DomainId" id="DomainId"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
   </bindings>
 </pageDefinition>

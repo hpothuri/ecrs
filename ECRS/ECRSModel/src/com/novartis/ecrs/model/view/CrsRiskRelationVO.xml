@@ -22,6 +22,10 @@
     Name="SocLOVO"
     ViewObjectName="com.novartis.ecrs.model.lov.SocLOVO"
     RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="DomainLOVVA"
+    ViewObjectName="com.novartis.ecrs.model.lov.DomainLOVVO"
+    RowLevelBinds="true"/>
   <ListBinding
     Name="LOV_SocTerm"
     ListVOName="SocLOVO"
@@ -45,9 +49,25 @@
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
+  <ListBinding
+    Name="LOV_DomainId"
+    ListVOName="DomainLOVVA"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="DomainId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="DomainId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DomainName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
   <SQLQuery><![CDATA[SELECT CrsRiskRelationsEO.CRS_ID, 
        CrsRiskRelationsEO.CRS_RISK_ID, 
-       CrsRiskRelationsEO.DATA_DOMAIN, 
        CrsRiskRelationsEO.MQM_COMMENT, 
        CrsRiskRelationsEO.NON_MEDDRA_COMPONENT_COMMENT, 
        CrsRiskRelationsEO.SAFETY_TOPIC_OF_INTEREST, 
@@ -55,9 +75,13 @@
        CrsRiskRelationsEO.SOC_DICT_CONTENT_ID, 
        CrsRiskRelationsEO.SOC_TERM, 
        CrsRiskRelationsEO.UI_VERSION_NUMBER, 
-       CrsRiskRelationsEO.DATABASE_LIST, 
        CrsRiskRelationsEO.RISK_PURPOSE_LIST, 
-       CrsRiskRelationsEO.CRS_EFFECTIVE_DT
+       CrsRiskRelationsEO.CRS_EFFECTIVE_DT,
+       CrsRiskRelationsEO.DOMAIN_ID,
+       CrsRiskRelationsEO.CREATED_BY,
+       CrsRiskRelationsEO.CREATION_TS,
+       CrsRiskRelationsEO.MODIFIED_BY,
+       CrsRiskRelationsEO.MODIFICATION_TS
 FROM CRS_RISK_RELATIONS_STG CrsRiskRelationsEO]]></SQLQuery>
   <EntityUsage
     Name="CrsRiskRelationsEO"
@@ -76,20 +100,6 @@ FROM CRS_RISK_RELATIONS_STG CrsRiskRelationsEO]]></SQLQuery>
     EntityAttrName="CrsRiskId"
     EntityUsage="CrsRiskRelationsEO"
     AliasName="CRS_RISK_ID"/>
-  <ViewAttribute
-    Name="DataDomain"
-    IsNotNull="true"
-    PrecisionRule="true"
-    EntityAttrName="DataDomain"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="DATA_DOMAIN">
-    <Properties>
-      <SchemaBasedProperties>
-        <LABEL
-          ResId="com.novartis.ecrs.model.view.CrsRiskRelationVO.DataDomain_LABEL"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </ViewAttribute>
   <ViewAttribute
     Name="MqmComment"
     PrecisionRule="true"
@@ -167,13 +177,6 @@ FROM CRS_RISK_RELATIONS_STG CrsRiskRelationsEO]]></SQLQuery>
     EntityUsage="CrsRiskRelationsEO"
     AliasName="UI_VERSION_NUMBER"/>
   <ViewAttribute
-    Name="DatabaseList"
-    IsNotNull="true"
-    PrecisionRule="true"
-    EntityAttrName="DatabaseList"
-    EntityUsage="CrsRiskRelationsEO"
-    AliasName="DATABASE_LIST"/>
-  <ViewAttribute
     Name="RiskPurposeList"
     IsUnique="true"
     IsNotNull="true"
@@ -189,6 +192,48 @@ FROM CRS_RISK_RELATIONS_STG CrsRiskRelationsEO]]></SQLQuery>
     EntityAttrName="CrsEffectiveDt"
     EntityUsage="CrsRiskRelationsEO"
     AliasName="CRS_EFFECTIVE_DT"/>
+  <ViewAttribute
+    Name="DomainId"
+    IsUnique="true"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="DomainId"
+    EntityUsage="CrsRiskRelationsEO"
+    AliasName="DOMAIN_ID"
+    LOVName="LOV_DomainId">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="CrsRiskRelationsEO"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="CreationTs"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreationTs"
+    EntityUsage="CrsRiskRelationsEO"
+    AliasName="CREATION_TS"/>
+  <ViewAttribute
+    Name="ModifiedBy"
+    PrecisionRule="true"
+    EntityAttrName="ModifiedBy"
+    EntityUsage="CrsRiskRelationsEO"
+    AliasName="MODIFIED_BY"/>
+  <ViewAttribute
+    Name="ModificationTs"
+    PrecisionRule="true"
+    EntityAttrName="ModificationTs"
+    EntityUsage="CrsRiskRelationsEO"
+    AliasName="MODIFICATION_TS"/>
   <ViewLinkAccessor
     Name="CrsRiskDefinitionsVO"
     ViewLink="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

@@ -34,7 +34,13 @@
        CrsRiskDefinitionsEO.TMS_UPDATE_FLAG_DT, 
        CrsRiskDefinitionsEO.MEDDRA_DICT, 
        CrsRiskDefinitionsEO.MEDDRA_EXTENSION, 
-       CrsRiskDefinitionsEO.CRS_EFFECTIVE_DT
+       CrsRiskDefinitionsEO.CRS_EFFECTIVE_DT,
+       CrsRiskDefinitionsEO.CREATED_BY,
+       CrsRiskDefinitionsEO.UI_VERSION_NUMBER,
+       CrsRiskDefinitionsEO.CREATION_TS,
+       CrsRiskDefinitionsEO.MODIFIED_BY,
+       CrsRiskDefinitionsEO.MODIFICATION_TS,
+       CrsRiskDefinitionsEO.MEDDRA_QUALIFIER_UPD_FLAG
 FROM CRS_RISK_DEFINITIONS_STG CrsRiskDefinitionsEO]]></SQLQuery>
   <EntityUsage
     Name="CrsRiskDefinitionsEO"
@@ -141,8 +147,7 @@ FROM CRS_RISK_DEFINITIONS_STG CrsRiskDefinitionsEO]]></SQLQuery>
     PrecisionRule="true"
     EntityAttrName="TmsDictContentEntryTs"
     EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="TMS_DICT_CONTENT_ENTRY_TS"
-    IsUpdateable="false"/>
+    AliasName="TMS_DICT_CONTENT_ENTRY_TS"/>
   <ViewAttribute
     Name="TmsDictContentId"
     IsNotNull="true"
@@ -156,8 +161,7 @@ FROM CRS_RISK_DEFINITIONS_STG CrsRiskDefinitionsEO]]></SQLQuery>
     PrecisionRule="true"
     EntityAttrName="TmsEndTs"
     EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="TMS_END_TS"
-    IsUpdateable="false"/>
+    AliasName="TMS_END_TS"/>
   <ViewAttribute
     Name="TmsUpdateFlag"
     IsNotNull="true"
@@ -195,6 +199,49 @@ FROM CRS_RISK_DEFINITIONS_STG CrsRiskDefinitionsEO]]></SQLQuery>
     EntityAttrName="CrsEffectiveDt"
     EntityUsage="CrsRiskDefinitionsEO"
     AliasName="CRS_EFFECTIVE_DT"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsUpdateable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="CrsRiskDefinitionsEO"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="UiVersionNumber"
+    PrecisionRule="true"
+    EntityAttrName="UiVersionNumber"
+    EntityUsage="CrsRiskDefinitionsEO"
+    AliasName="UI_VERSION_NUMBER"/>
+  <ViewAttribute
+    Name="CreationTs"
+    IsUpdateable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreationTs"
+    EntityUsage="CrsRiskDefinitionsEO"
+    AliasName="CREATION_TS"/>
+  <ViewAttribute
+    Name="ModifiedBy"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="ModifiedBy"
+    EntityUsage="CrsRiskDefinitionsEO"
+    AliasName="MODIFIED_BY"/>
+  <ViewAttribute
+    Name="ModificationTs"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="ModificationTs"
+    EntityUsage="CrsRiskDefinitionsEO"
+    AliasName="MODIFICATION_TS"/>
+  <ViewAttribute
+    Name="MeddraQualifierUpdFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="MeddraQualifierUpdFlag"
+    EntityUsage="CrsRiskDefinitionsEO"
+    AliasName="MEDDRA_QUALIFIER_UPD_FLAG"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>

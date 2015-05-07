@@ -244,7 +244,57 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskRelationsEOImpl obj, Object value) {
-                obj.setCrsEffectiveDt((Timestamp)value);
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ,
+        DomainId {
+            public Object get(CrsRiskRelationsEOImpl obj) {
+                return obj.getDomainId();
+            }
+
+            public void put(CrsRiskRelationsEOImpl obj, Object value) {
+                obj.setDomainId((Integer)value);
+            }
+        }
+        ,
+        CreatedBy {
+            public Object get(CrsRiskRelationsEOImpl obj) {
+                return obj.getCreatedBy();
+            }
+
+            public void put(CrsRiskRelationsEOImpl obj, Object value) {
+                obj.setCreatedBy((String)value);
+            }
+        }
+        ,
+        CreationTs {
+            public Object get(CrsRiskRelationsEOImpl obj) {
+                return obj.getCreationTs();
+            }
+
+            public void put(CrsRiskRelationsEOImpl obj, Object value) {
+                obj.setCreationTs((Timestamp)value);
+            }
+        }
+        ,
+        ModifiedBy {
+            public Object get(CrsRiskRelationsEOImpl obj) {
+                return obj.getModifiedBy();
+            }
+
+            public void put(CrsRiskRelationsEOImpl obj, Object value) {
+                obj.setModifiedBy((String)value);
+            }
+        }
+        ,
+        ModificationTs {
+            public Object get(CrsRiskRelationsEOImpl obj) {
+                return obj.getModificationTs();
+            }
+
+            public void put(CrsRiskRelationsEOImpl obj, Object value) {
+                obj.setModificationTs((Timestamp)value);
             }
         }
         ,
@@ -309,6 +359,11 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
     public static final int DATABASELIST = AttributesEnum.DatabaseList.index();
     public static final int UIVERSIONNUMBER = AttributesEnum.UiVersionNumber.index();
     public static final int CRSEFFECTIVEDT = AttributesEnum.CrsEffectiveDt.index();
+    public static final int DOMAINID = AttributesEnum.DomainId.index();
+    public static final int CREATEDBY = AttributesEnum.CreatedBy.index();
+    public static final int CREATIONTS = AttributesEnum.CreationTs.index();
+    public static final int MODIFIEDBY = AttributesEnum.ModifiedBy.index();
+    public static final int MODIFICATIONTS = AttributesEnum.ModificationTs.index();
     public static final int CRSCONTENTEO = AttributesEnum.CrsContentEO.index();
 
     /**
@@ -678,12 +733,85 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(CRSEFFECTIVEDT);
     }
 
+
     /**
-     * Sets <code>value</code> as the attribute value for CrsEffectiveDt.
-     * @param value value to set the CrsEffectiveDt
+     * Gets the attribute value for DomainId, using the alias name DomainId.
+     * @return the value of DomainId
      */
-    public void setCrsEffectiveDt(Timestamp value) {
-        setAttributeInternal(CRSEFFECTIVEDT, value);
+    public Integer getDomainId() {
+        return (Integer)getAttributeInternal(DOMAINID);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for DomainId.
+     * @param value value to set the DomainId
+     */
+    public void setDomainId(Integer value) {
+        setAttributeInternal(DOMAINID, value);
+    }
+
+    /**
+     * Gets the attribute value for CreatedBy, using the alias name CreatedBy.
+     * @return the value of CreatedBy
+     */
+    public String getCreatedBy() {
+        return (String)getAttributeInternal(CREATEDBY);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for CreatedBy.
+     * @param value value to set the CreatedBy
+     */
+    public void setCreatedBy(String value) {
+        setAttributeInternal(CREATEDBY, value);
+    }
+
+    /**
+     * Gets the attribute value for CreationTs, using the alias name CreationTs.
+     * @return the value of CreationTs
+     */
+    public Timestamp getCreationTs() {
+        return (Timestamp)getAttributeInternal(CREATIONTS);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for CreationTs.
+     * @param value value to set the CreationTs
+     */
+    public void setCreationTs(Timestamp value) {
+        setAttributeInternal(CREATIONTS, value);
+    }
+
+    /**
+     * Gets the attribute value for ModifiedBy, using the alias name ModifiedBy.
+     * @return the value of ModifiedBy
+     */
+    public String getModifiedBy() {
+        return (String)getAttributeInternal(MODIFIEDBY);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ModifiedBy.
+     * @param value value to set the ModifiedBy
+     */
+    public void setModifiedBy(String value) {
+        setAttributeInternal(MODIFIEDBY, value);
+    }
+
+    /**
+     * Gets the attribute value for ModificationTs, using the alias name ModificationTs.
+     * @return the value of ModificationTs
+     */
+    public Timestamp getModificationTs() {
+        return (Timestamp)getAttributeInternal(MODIFICATIONTS);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ModificationTs.
+     * @param value value to set the ModificationTs
+     */
+    public void setModificationTs(Timestamp value) {
+        setAttributeInternal(MODIFICATIONTS, value);
     }
 
     /**

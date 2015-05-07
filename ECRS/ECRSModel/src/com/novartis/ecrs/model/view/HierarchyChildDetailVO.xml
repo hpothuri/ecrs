@@ -45,8 +45,9 @@
 	TERM_PATH, 
 	PRIM_LINK_FLAG,
         SORT_ORDER,
-        CHILD_EXISTS
-     
+        CHILD_EXISTS,
+        DICT_CONTENT_ENTRY_TS,
+        C_END_TS    
 FROM TABLE (HIERARCHY_PKG.GET_HIERARCHY(
 	i_dict_content_id => :Bind_DictContentId, 
 	--i_group_names => :activationGroup,
@@ -371,6 +372,34 @@ ORDER BY SORT_ORDER]]></SQLQuery>
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="4"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DictContentEntryTs"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="DICT_CONTENT_ENTRY_TS"
+    Expression="DICT_CONTENT_ENTRY_TS"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CEndTs"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="C_END_TS"
+    Expression="C_END_TS"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
     </DesignTime>
   </ViewAttribute>
   <ResourceBundle>

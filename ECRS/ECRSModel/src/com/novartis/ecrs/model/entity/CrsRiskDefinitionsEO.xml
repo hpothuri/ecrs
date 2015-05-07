@@ -132,8 +132,7 @@
     SQLType="NUMERIC"
     Type="java.lang.Long"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_DEFINITIONS_STG"
-    DefaultValue="1"/>
+    TableName="CRS_RISK_DEFINITIONS_STG"/>
   <Attribute
     Name="TmsDictContentEntryTs"
     IsNotNull="true"
@@ -141,8 +140,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS_RISK_DEFINITIONS_STG"
-    HistoryColumn="DateHistory"/>
+    TableName="CRS_RISK_DEFINITIONS_STG"/>
   <Attribute
     Name="TmsEndTs"
     IsNotNull="true"
@@ -150,8 +148,7 @@
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS_RISK_DEFINITIONS_STG"
-    HistoryColumn="DateHistory"/>
+    TableName="CRS_RISK_DEFINITIONS_STG"/>
   <Attribute
     Name="TmsUpdateFlag"
     IsNotNull="true"
@@ -233,40 +230,130 @@
     ColumnType="DATE"
     TableName="CRS_RISK_DEFINITIONS_STG"
     HistoryColumn="DateHistory"/>
-  <Key
-    Name="CrsRiskDefnChkQual">
+  <Attribute
+    Name="MeddraQualifierUpdFlag"
+    IsNotNull="true"
+    Precision="1"
+    ColumnName="MEDDRA_QUALIFIER_UPD_FLAG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS_STG"
+    DefaultValue="N">
     <DesignTime>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_CHK_QUAL"/>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CrsQualifier1"
+    Precision="15"
+    ColumnName="CRS_QUALIFIER"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS_STG">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CreatedBy"
+    IsNotNull="true"
+    Precision="30"
+    ColumnName="CREATED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS_STG"
+    IsUpdateable="while_insert"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CreationTs"
+    IsNotNull="true"
+    ColumnName="CREATION_TS"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="DATE"
+    TableName="CRS_RISK_DEFINITIONS_STG"
+    IsUpdateable="while_insert"
+    HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="ModifiedBy"
+    Precision="30"
+    ColumnName="MODIFIED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS_STG"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ModificationTs"
+    ColumnName="MODIFICATION_TS"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="DATE"
+    TableName="CRS_RISK_DEFINITIONS_STG"
+    HistoryColumn="DateHistory"/>
+  <Key
+    Name="CrsRiskDefnStgChkCrsqual">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_STG_CHK_CRSQUAL"/>
+      <Attr Name="_checkCondition" Value="CRS_QUALIFIER IN ('BROAD', 'NARROW', 'CHILD NARROW')"/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="CrsRiskDefnStgChkQual">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_STG_CHK_QUAL"/>
       <Attr Name="_checkCondition" Value="MEDDRA_QUALIFIER IN ('BROAD', 'NARROW', 'CHILD NARROW')"/>
       <Attr Name="_isCheck" Value="true"/>
     </DesignTime>
     <AttrArray Name="Attributes"/>
   </Key>
   <Key
-    Name="CrsRiskDefnChkUpd">
+    Name="CrsRiskDefnStgChkUpd">
     <DesignTime>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_CHK_UPD"/>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_STG_CHK_UPD"/>
       <Attr Name="_checkCondition" Value="TMS_UPDATE_FLAG IN ('N', 'Y')"/>
       <Attr Name="_isCheck" Value="true"/>
     </DesignTime>
     <AttrArray Name="Attributes"/>
   </Key>
   <Key
-    Name="CrsRiskDefnIdxIdPk"
+    Name="CrsRiskDefnStgChkUpdFlag">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_STG_CHK_UPD_FLAG"/>
+      <Attr Name="_checkCondition" Value="MEDDRA_QUALIFIER_UPD_FLAG IN ('N', 'Y')"/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="CrsRiskDefnStgIdxIdPk"
     PrimaryKey="true">
     <DesignTime>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_IDX_ID_PK"/>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_STG_IDX_ID_PK"/>
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO.CrsRiskDefnId"/>
     </AttrArray>
   </Key>
   <Key
-    Name="CrsRiskDefnIdxRiskidFk">
+    Name="CrsRiskDefnStgIdxRskidFk">
     <DesignTime>
+      <Attr Name="_referencedKey" Value="CRS_RISK_REL_STG_IDX_ID_PK"/>
       <Attr Name="_isForeign" Value="true"/>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_IDX_RISKID_FK"/>
-      <Attr Name="_referencedKey" Value="CRS_RISK_RELATIONS_IDX_ID_PK"/>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_DEFN_STG_IDX_RSKID_FK"/>
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskDefinitionsEO.CrsRiskId"/>

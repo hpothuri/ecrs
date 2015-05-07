@@ -94,7 +94,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setAttributeInternal(index(), value);
+                obj.setMeddraVersionDate((Timestamp)value);
             }
         }
         ,
@@ -124,7 +124,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setAttributeInternal(index(), value);
+                obj.setTmsDictContentEntryTs((Timestamp)value);
             }
         }
         ,
@@ -134,7 +134,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setAttributeInternal(index(), value);
+                obj.setTmsEndTs((Timestamp)value);
             }
         }
         ,
@@ -204,7 +204,67 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setCrsEffectiveDt((Timestamp)value);
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ,
+        MeddraQualifierUpdFlag {
+            public Object get(CrsRiskDefinitionsEOImpl obj) {
+                return obj.getMeddraQualifierUpdFlag();
+            }
+
+            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
+                obj.setMeddraQualifierUpdFlag((String)value);
+            }
+        }
+        ,
+        CrsQualifier1 {
+            public Object get(CrsRiskDefinitionsEOImpl obj) {
+                return obj.getCrsQualifier1();
+            }
+
+            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
+                obj.setCrsQualifier1((String)value);
+            }
+        }
+        ,
+        CreatedBy {
+            public Object get(CrsRiskDefinitionsEOImpl obj) {
+                return obj.getCreatedBy();
+            }
+
+            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
+                obj.setCreatedBy((String)value);
+            }
+        }
+        ,
+        CreationTs {
+            public Object get(CrsRiskDefinitionsEOImpl obj) {
+                return obj.getCreationTs();
+            }
+
+            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
+                obj.setCreationTs((Timestamp)value);
+            }
+        }
+        ,
+        ModifiedBy {
+            public Object get(CrsRiskDefinitionsEOImpl obj) {
+                return obj.getModifiedBy();
+            }
+
+            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
+                obj.setModifiedBy((String)value);
+            }
+        }
+        ,
+        ModificationTs {
+            public Object get(CrsRiskDefinitionsEOImpl obj) {
+                return obj.getModificationTs();
+            }
+
+            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
+                obj.setModificationTs((Timestamp)value);
             }
         }
         ;
@@ -255,6 +315,12 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
     public static final int MEDDRADICT = AttributesEnum.MeddraDict.index();
     public static final int MEDDRAEXTENSION = AttributesEnum.MeddraExtension.index();
     public static final int CRSEFFECTIVEDT = AttributesEnum.CrsEffectiveDt.index();
+    public static final int MEDDRAQUALIFIERUPDFLAG = AttributesEnum.MeddraQualifierUpdFlag.index();
+    public static final int CRSQUALIFIER1 = AttributesEnum.CrsQualifier1.index();
+    public static final int CREATEDBY = AttributesEnum.CreatedBy.index();
+    public static final int CREATIONTS = AttributesEnum.CreationTs.index();
+    public static final int MODIFIEDBY = AttributesEnum.ModifiedBy.index();
+    public static final int MODIFICATIONTS = AttributesEnum.ModificationTs.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -392,6 +458,14 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
 
 
     /**
+     * Sets <code>value</code> as the attribute value for MeddraVersionDate.
+     * @param value value to set the MeddraVersionDate
+     */
+    public void setMeddraVersionDate(Timestamp value) {
+        setAttributeInternal(MEDDRAVERSIONDATE, value);
+    }
+
+    /**
      * Gets the attribute value for SearchCriteriaDetails, using the alias name SearchCriteriaDetails.
      * @return the value of SearchCriteriaDetails
      */
@@ -433,6 +507,14 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
 
 
     /**
+     * Sets <code>value</code> as the attribute value for TmsDictContentEntryTs.
+     * @param value value to set the TmsDictContentEntryTs
+     */
+    public void setTmsDictContentEntryTs(Timestamp value) {
+        setAttributeInternal(TMSDICTCONTENTENTRYTS, value);
+    }
+
+    /**
      * Gets the attribute value for TmsEndTs, using the alias name TmsEndTs.
      * @return the value of TmsEndTs
      */
@@ -440,6 +522,14 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(TMSENDTS);
     }
 
+
+    /**
+     * Sets <code>value</code> as the attribute value for TmsEndTs.
+     * @param value value to set the TmsEndTs
+     */
+    public void setTmsEndTs(Timestamp value) {
+        setAttributeInternal(TMSENDTS, value);
+    }
 
     /**
      * Gets the attribute value for TmsUpdateFlag, using the alias name TmsUpdateFlag.
@@ -531,12 +621,101 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(CRSEFFECTIVEDT);
     }
 
+
     /**
-     * Sets <code>value</code> as the attribute value for CrsEffectiveDt.
-     * @param value value to set the CrsEffectiveDt
+     * Gets the attribute value for MeddraQualifierUpdFlag, using the alias name MeddraQualifierUpdFlag.
+     * @return the value of MeddraQualifierUpdFlag
      */
-    public void setCrsEffectiveDt(Timestamp value) {
-        setAttributeInternal(CRSEFFECTIVEDT, value);
+    public String getMeddraQualifierUpdFlag() {
+        return (String)getAttributeInternal(MEDDRAQUALIFIERUPDFLAG);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for MeddraQualifierUpdFlag.
+     * @param value value to set the MeddraQualifierUpdFlag
+     */
+    public void setMeddraQualifierUpdFlag(String value) {
+        setAttributeInternal(MEDDRAQUALIFIERUPDFLAG, value);
+    }
+
+    /**
+     * Gets the attribute value for CrsQualifier1, using the alias name CrsQualifier1.
+     * @return the value of CrsQualifier1
+     */
+    public String getCrsQualifier1() {
+        return (String)getAttributeInternal(CRSQUALIFIER1);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for CrsQualifier1.
+     * @param value value to set the CrsQualifier1
+     */
+    public void setCrsQualifier1(String value) {
+        setAttributeInternal(CRSQUALIFIER1, value);
+    }
+
+    /**
+     * Gets the attribute value for CreatedBy, using the alias name CreatedBy.
+     * @return the value of CreatedBy
+     */
+    public String getCreatedBy() {
+        return (String)getAttributeInternal(CREATEDBY);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for CreatedBy.
+     * @param value value to set the CreatedBy
+     */
+    public void setCreatedBy(String value) {
+        setAttributeInternal(CREATEDBY, value);
+    }
+
+    /**
+     * Gets the attribute value for CreationTs, using the alias name CreationTs.
+     * @return the value of CreationTs
+     */
+    public Timestamp getCreationTs() {
+        return (Timestamp)getAttributeInternal(CREATIONTS);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for CreationTs.
+     * @param value value to set the CreationTs
+     */
+    public void setCreationTs(Timestamp value) {
+        setAttributeInternal(CREATIONTS, value);
+    }
+
+    /**
+     * Gets the attribute value for ModifiedBy, using the alias name ModifiedBy.
+     * @return the value of ModifiedBy
+     */
+    public String getModifiedBy() {
+        return (String)getAttributeInternal(MODIFIEDBY);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ModifiedBy.
+     * @param value value to set the ModifiedBy
+     */
+    public void setModifiedBy(String value) {
+        setAttributeInternal(MODIFIEDBY, value);
+    }
+
+    /**
+     * Gets the attribute value for ModificationTs, using the alias name ModificationTs.
+     * @return the value of ModificationTs
+     */
+    public Timestamp getModificationTs() {
+        return (Timestamp)getAttributeInternal(MODIFICATIONTS);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ModificationTs.
+     * @param value value to set the ModificationTs
+     */
+    public void setModificationTs(Timestamp value) {
+        setAttributeInternal(MODIFICATIONTS, value);
     }
 
     /**

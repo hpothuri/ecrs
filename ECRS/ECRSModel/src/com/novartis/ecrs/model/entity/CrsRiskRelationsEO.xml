@@ -190,13 +190,13 @@
     IsPersistent="false"/>
   <Attribute
     Name="DataDomain"
-    IsNotNull="true"
     Precision="30"
-    ColumnName="DATA_DOMAIN"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="VARCHAR"
     Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS_STG">
+    ColumnType="$none$"
+    IsQueriable="false"
+    IsPersistent="false">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="30"/>
     </DesignTime>
@@ -232,8 +232,7 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS_STG"
-    IsNotNull="true">
+    TableName="CRS_RISK_RELATIONS_STG">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="300"/>
     </DesignTime>
@@ -246,16 +245,14 @@
     SQLType="NUMERIC"
     Type="java.lang.Long"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_RELATIONS_STG"
-    IsNotNull="true"/>
+    TableName="CRS_RISK_RELATIONS_STG"/>
   <Attribute
     Name="SocDictContentEntryTs"
     ColumnName="SOC_DICT_CONTENT_ENTRY_TS"
     SQLType="DATE"
     Type="oracle.jbo.domain.Timestamp"
     ColumnType="DATE"
-    TableName="CRS_RISK_RELATIONS_STG"
-    IsNotNull="true"/>
+    TableName="CRS_RISK_RELATIONS_STG"/>
   <Attribute
     Name="RiskPurposeList"
     IsUnique="true"
@@ -272,13 +269,13 @@
   </Attribute>
   <Attribute
     Name="DatabaseList"
-    IsNotNull="true"
     Precision="40"
-    ColumnName="DATABASE_LIST"
+    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
     SQLType="VARCHAR"
     Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="CRS_RISK_RELATIONS_STG">
+    ColumnType="$none$"
+    IsQueriable="false"
+    IsPersistent="false">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="40"/>
     </DesignTime>
@@ -303,6 +300,63 @@
     ColumnType="DATE"
     TableName="CRS_RISK_RELATIONS_STG"
     HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="DomainId"
+    IsUnique="true"
+    IsNotNull="true"
+    Precision="5"
+    Scale="0"
+    ColumnName="DOMAIN_ID"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="CRS_RISK_RELATIONS_STG"/>
+  <Attribute
+    Name="CreatedBy"
+    IsNotNull="true"
+    Precision="30"
+    ColumnName="CREATED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_RELATIONS_STG"
+    IsUpdateable="while_insert"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CreationTs"
+    IsNotNull="true"
+    ColumnName="CREATION_TS"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="DATE"
+    TableName="CRS_RISK_RELATIONS_STG"
+    IsUpdateable="while_insert"
+    HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="ModifiedBy"
+    Precision="30"
+    ColumnName="MODIFIED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_RELATIONS_STG"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ModificationTs"
+    ColumnName="MODIFICATION_TS"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="DATE"
+    TableName="CRS_RISK_RELATIONS_STG"
+    HistoryColumn="DateHistory"/>
   <AccessorAttribute
     Name="CrsContentEO"
     Association="com.novartis.ecrs.model.entity.assoc.CrsRiskRelationsIdxCrsFkAssoc"
@@ -311,79 +365,48 @@
     Type="com.novartis.ecrs.model.entity.CrsContentEOImpl"
     IsUpdateable="true"/>
   <Key
-    Name="CrsRiskRelationsChkDom">
-    <DesignTime>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_CHK_DOM"/>
-      <Attr Name="_checkCondition" Value="DATA_DOMAIN IN ('MEDDRA', 'OTHER')"/>
-      <Attr Name="_isCheck" Value="true"/>
-    </DesignTime>
-    <AttrArray Name="Attributes"/>
-  </Key>
-  <Key
-    Name="CrsRiskRelationsIdxIdPk"
+    Name="CrsRiskRelStgIdxIdPk"
     PrimaryKey="true">
     <DesignTime>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_IDX_ID_PK"/>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_REL_STG_IDX_ID_PK"/>
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.CrsRiskId"/>
     </AttrArray>
   </Key>
   <Key
-    Name="CrsRiskRelationsIdxUk1">
+    Name="CrsRiskRelStgIdxUk1">
     <DesignTime>
       <Attr Name="_isUnique" Value="true"/>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_IDX_UK1"/>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_REL_STG_IDX_UK1"/>
+      <Attr Name="_isDisabledConstraint" Value="true"/>
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.SafetyTopicOfInterest"/>
+      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.RiskPurposeList"/>
+      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.DomainId"/>
     </AttrArray>
   </Key>
   <Key
-    Name="CrsRiskRelationsSocDictContentEntryTsCheck">
+    Name="CrsRiskRelStgIdxCrsFk">
     <DesignTime>
-      <Attr Name="_isNotNull" Value="true"/>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_SOC_DICT_CO"/>
-      <Attr Name="_checkCondition" Value='"SOC_DICT_CONTENT_ENTRY_TS" IS NOT NULL'/>
-      <Attr Name="_isCheck" Value="true"/>
-    </DesignTime>
-    <AttrArray Name="Attributes">
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.SocDictContentEntryTs"/>
-    </AttrArray>
-  </Key>
-  <Key
-    Name="CrsRiskRelationsSocDictContentIdCheck">
-    <DesignTime>
-      <Attr Name="_isNotNull" Value="true"/>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_SOC_DICT_CO"/>
-      <Attr Name="_checkCondition" Value='"SOC_DICT_CONTENT_ID" IS NOT NULL'/>
-      <Attr Name="_isCheck" Value="true"/>
-    </DesignTime>
-    <AttrArray Name="Attributes">
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.SocDictContentId"/>
-    </AttrArray>
-  </Key>
-  <Key
-    Name="CrsRiskRelationsSocTermCheck">
-    <DesignTime>
-      <Attr Name="_isNotNull" Value="true"/>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_SOC_TERM_CH"/>
-      <Attr Name="_checkCondition" Value='"SOC_TERM" IS NOT NULL'/>
-      <Attr Name="_isCheck" Value="true"/>
-    </DesignTime>
-    <AttrArray Name="Attributes">
-      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.SocTerm"/>
-    </AttrArray>
-  </Key>
-  <Key
-    Name="CrsRiskRelationsIdxCrsFk">
-    <DesignTime>
-      <Attr Name="_referencedKey" Value="CRS_CONTENT_IDX_PK"/>
+      <Attr Name="_referencedKey" Value="CRS_CON_STG_IDX_PK"/>
       <Attr Name="_isForeign" Value="true"/>
-      <Attr Name="_DBObjectName" Value="CRS_RISK_RELATIONS_IDX_CRS_FK"/>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_REL_STG_IDX_CRS_FK"/>
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.CrsId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="CrsRiskRelStgIdxDomFk">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="CRS_DOMAINS_IDX_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="CRS_RISK_REL_STG_IDX_DOM_FK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.DomainId"/>
     </AttrArray>
   </Key>
 </Entity>

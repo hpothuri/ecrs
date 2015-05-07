@@ -114,6 +114,12 @@
   <ViewUsage
     Name="FetchCrsContentBaseVO"
     ViewObjectName="com.novartis.ecrs.model.view.base.CrsContentBaseVO"/>
+  <ViewUsage
+    Name="DictionaryVO"
+    ViewObjectName="com.novartis.ecrs.model.view.DictionaryVO"/>
+  <ViewUsage
+    Name="DomainVO"
+    ViewObjectName="com.novartis.ecrs.model.lov.DomainLOVVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"
@@ -257,6 +263,12 @@
         Type="java.lang.Long"/>
       <Parameter
         Name="pReasonForChange"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="fetchDictionaryVersion"
+      MethodName="fetchDictionaryVersion">
+      <Return
         Type="java.lang.String"/>
     </Method>
   </ClientInterface>

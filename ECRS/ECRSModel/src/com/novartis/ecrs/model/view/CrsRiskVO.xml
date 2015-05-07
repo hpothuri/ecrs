@@ -20,8 +20,8 @@
   </Properties>
   <SQLQuery><![CDATA[SELECT CRS_ID,
 CRS_RISK_ID,
-DATA_DOMAIN,
-DATABASE_LIST,
+DOMAIN_NAME DATA_DOMAIN,
+--DATABASE_LIST,
 MQM_COMMENT,
 NON_MEDDRA_COMPONENT_COMMENT,
 RISK_PURPOSE_CD_FLAG, 
@@ -102,27 +102,6 @@ FROM CRS_RISK_RELATIONS_STG_FLAT_VW]]></SQLQuery>
       <SchemaBasedProperties>
         <LABEL
           ResId="com.novartis.ecrs.model.view.CrsRiskVO.DataDomain_LABEL"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </ViewAttribute>
-  <ViewAttribute
-    Name="DatabaseList"
-    IsUpdateable="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Precision="40"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    AliasName="DATABASE_LIST"
-    Expression="DATABASE_LIST"
-    SQLType="VARCHAR">
-    <DesignTime>
-      <Attr Name="_DisplaySize" Value="40"/>
-    </DesignTime>
-    <Properties>
-      <SchemaBasedProperties>
-        <LABEL
-          ResId="com.novartis.ecrs.model.view.CrsRiskVO.DatabaseList_LABEL"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

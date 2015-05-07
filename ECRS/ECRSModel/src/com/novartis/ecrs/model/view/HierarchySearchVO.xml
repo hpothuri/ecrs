@@ -39,7 +39,10 @@
   || TO_CHAR(DATES, 'yyyymmddhh24miss') PRIKEY,
   REGEXP_SUBSTR(mqlevel,'\d{1}') querylevel,
   REPLACE(MQGROUP, '|', ',') MQGROUP_F,
-  results.*
+  results.*,
+  C.DICT_CONTENT_ID,
+C.DICT_CONTENT_ENTRY_TS,
+C.END_ts
 FROM TABLE
 ( NMAT_UI_PKG.F_SEARCH_RESULT
 ( PCONTENTID => NULL,
@@ -64,8 +67,18 @@ PUSERROLE => 'USER',
 PLEVEL => :pLevel, 
 PMODE => 5,
 PAPPROVE => '%',
-PSVIRTUALDICTIONARYNAME => 'CURRENT' )) RESULTS
-WHERE 1 = 1
+PSVIRTUALDICTIONARYNAME => 'CURRENT' )) RESULTS,
+TMS.TMS_DICT_CONTENTS C,
+TMS.TMS_DEF_DICTIONARIES D,
+TMS.TMS_DEF_LEVELS       L,
+CRS_DICT_VERSIONS_VW     V
+WHERE V.DICT_ID = D.DEF_DICTIONARY_ID 
+AND L.SHORT_NAME = RESULTS.LEVEL_NM
+AND d.short_name = RESULTS.DICT_NM
+AND D.DEF_DICTIONARY_ID = L.DEF_DICTIONARY_ID 
+AND L.DEF_LEVEL_ID = C.DEF_LEVEL_ID 
+AND TO_CHAR(C.END_TS,'DD-MON-YYYY') = '15-AUG-3501'
+AND RESULTS.CONTENT_ID = C.DICT_CONTENT_ID
 ORDER BY MQTERM]]></SQLQuery>
   <ViewAttribute
     Name="Rnum"
@@ -539,6 +552,53 @@ ORDER BY MQTERM]]></SQLQuery>
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DictContentId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="10"
+    Scale="0"
+    Type="java.lang.Long"
+    ColumnType="NUMBER"
+    AliasName="DICT_CONTENT_ID"
+    Expression="DICT_CONTENT_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DictContentEntryTs"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="DICT_CONTENT_ENTRY_TS"
+    Expression="DICT_CONTENT_ENTRY_TS"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="EndTs"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="END_TS"
+    Expression="END_TS"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
     </DesignTime>
   </ViewAttribute>
   <ResourceBundle>

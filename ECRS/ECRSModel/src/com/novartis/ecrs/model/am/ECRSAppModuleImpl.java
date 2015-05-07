@@ -4,6 +4,7 @@ package com.novartis.ecrs.model.am;
 import com.novartis.ecrs.model.am.common.ECRSAppModule;
 import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.ECrsSearchVORowImpl;
+import com.novartis.ecrs.model.view.HierarchyChildDetailVOImpl;
 import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RolesTransientVOImpl;
@@ -398,8 +399,9 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         crsRiskId = (Long)row.getAttribute("CrsRiskId");
                         Row relationRow = relationVO.createRow();
                         relationRow.setAttribute("CrsId", crsId);
-                        relationRow.setAttribute("DataDomain", row.getAttribute("DataDomain"));
-                        relationRow.setAttribute("DatabaseList", row.getAttribute("DatabaseList"));                        
+//                        relationRow.setAttribute("DataDomain", row.getAttribute("DataDomain"));
+//                        relationRow.setAttribute("DatabaseList", row.getAttribute("DatabaseList"));
+                        relationRow.setAttribute("DomainId", fetchDomainIdFromName("DomainName"));
                         String riskPurposeList = (String)row.getAttribute("RiskPurposeList");
                         if(riskPurposeList != null && riskPurposeList.endsWith(",")){
                             riskPurposeList = riskPurposeList.substring(0,riskPurposeList.length()-1);
@@ -422,9 +424,9 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
                         definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
                         definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
-//                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
-//                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
-//                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
+                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
+                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
+                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
 //                        definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
 //                        definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
                         definitionVO.insertRow(definitionRow);
@@ -440,9 +442,9 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
                         definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
                         definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
-//                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
-//                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
-//                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
+                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
+                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
+                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
 //                        definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
 //                        definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
                         definitionVO.insertRow(definitionRow); 
@@ -560,8 +562,9 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     crsRiskId = (Long)row.getAttribute("CrsRiskId");
                     Row relationRow = relationVO.createRow();
                     relationRow.setAttribute("CrsId", destCrsId);
-                    relationRow.setAttribute("DataDomain", row.getAttribute("DataDomain"));
-                    relationRow.setAttribute("DatabaseList", row.getAttribute("DatabaseList"));
+//                    relationRow.setAttribute("DataDomain", row.getAttribute("DataDomain"));
+                    relationRow.setAttribute("DomainId", fetchDomainIdFromName((String)row.getAttribute("DataDomain")));
+//                    relationRow.setAttribute("DatabaseList", row.getAttribute("DatabaseList"));
                     String riskPurposeList = (String)row.getAttribute("RiskPurposeList");
                     if (riskPurposeList != null && riskPurposeList.endsWith(",")) {
                         riskPurposeList = riskPurposeList.substring(0, riskPurposeList.length() - 1);
@@ -584,9 +587,9 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
                     definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
                     definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
-//                    definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
-//                    definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
-//                    definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
+                    definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
+                    definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
+                    definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
 //                    definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
 //                    definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
                     definitionVO.insertRow(definitionRow);
@@ -602,9 +605,9 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
                     definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
                     definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
-//                    definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
-//                    definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
-//                    definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
+                    definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
+                    definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
+                    definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
 //                    definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
 //                    definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
                     definitionVO.insertRow(definitionRow);
@@ -867,5 +870,42 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             return true;
         }
         return false;
+    }
+
+    /**
+     * Container's getter for DictionaryVO.
+     * @return DictionaryVO
+     */
+    public ViewObjectImpl getDictionaryVO() {
+        return (ViewObjectImpl)findViewObject("DictionaryVO");
+    }
+    
+    public String fetchDictionaryVersion(){
+        String version = "";
+        ViewObject dictVO = getDictionaryVO();
+        dictVO.executeQuery();
+        if(dictVO.getEstimatedRowCount() > 0){
+            version = (String)dictVO.first().getAttribute("DictVersion");
+        }
+        return version;
+    }
+    
+    private Integer fetchDomainIdFromName(String domainName){
+        Integer domainId = 0;
+        ViewObject domainVO = this.getDomainVO();
+        domainVO.setWhereClause("DOMAIN_NAME = '"+domainName+"'");
+        domainVO.executeQuery();
+        if(domainVO.getEstimatedRowCount() > 0){
+            domainId = (Integer)domainVO.first().getAttribute("DomainId");
+        }
+        return domainId;
+    }
+
+    /**
+     * Container's getter for DomainVO.
+     * @return DomainVO
+     */
+    public ViewObjectImpl getDomainVO() {
+        return (ViewObjectImpl)findViewObject("DomainVO");
     }
 }

@@ -1,5 +1,7 @@
 package com.novartis.ecrs.ui.bean;
 
+import java.sql.Timestamp;
+
 import java.util.List;
 
 import oracle.jbo.Row;
@@ -15,6 +17,9 @@ public class HierarchyChildUIBean {
     private String dictShortName;
     private String dictContentAltCode;
     private Long level;
+    private Timestamp tmsDictContentEntryTs;
+    private Long tmsDictContentId;
+    private Timestamp tmsEndTs;
     private List<HierarchyChildUIBean> children;
     
     public HierarchyChildUIBean(Row row){
@@ -24,6 +29,9 @@ public class HierarchyChildUIBean {
         this.dictShortName = (String)row.getAttribute("DictShortName");
         this.dictContentAltCode = (String)row.getAttribute("DictContentAltCode");
         this.level = (Long)row.getAttribute("Level");
+        this.tmsDictContentEntryTs = (Timestamp)row.getAttribute("DictContentEntryTs");
+        this.tmsDictContentId = new Long((String)row.getAttribute("DictContentId"));
+        this.tmsEndTs = (Timestamp)row.getAttribute("CEndTs");;
     }
 
     public void setTerm(String term) {
@@ -80,5 +88,29 @@ public class HierarchyChildUIBean {
 
     public Long getLevel() {
         return level;
+    }
+
+    public void setTmsDictContentEntryTs(Timestamp tmsDictContentEntryTs) {
+        this.tmsDictContentEntryTs = tmsDictContentEntryTs;
+    }
+
+    public Timestamp getTmsDictContentEntryTs() {
+        return tmsDictContentEntryTs;
+    }
+
+    public void setTmsDictContentId(Long tmsDictContentId) {
+        this.tmsDictContentId = tmsDictContentId;
+    }
+
+    public Long getTmsDictContentId() {
+        return tmsDictContentId;
+    }
+
+    public void setTmsEndTs(Timestamp tmsEndTs) {
+        this.tmsEndTs = tmsEndTs;
+    }
+
+    public Timestamp getTmsEndTs() {
+        return tmsEndTs;
     }
 }

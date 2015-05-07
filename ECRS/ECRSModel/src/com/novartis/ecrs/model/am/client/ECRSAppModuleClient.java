@@ -32,8 +32,7 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
     }
 
     public void copyRoutineDefinition(Long crsId) {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"copyRoutineDefinition",new String [] {"java.lang.Long"},new Object[] {crsId});
+        Object _ret = this.riInvokeExportedMethod(this,"copyRoutineDefinition",new String [] {"java.lang.Long"},new Object[] {crsId});
         return;
     }
 
@@ -52,16 +51,19 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return (List)_ret;
     }
 
-    public void filterCRSContent(String userInRole, String userName,
-                                 boolean isInboxDisable) {
+    public String fetchDictionaryVersion() {
+        Object _ret = this.riInvokeExportedMethod(this,"fetchDictionaryVersion",null,null);
+        return (String)_ret;
+    }
+
+    public void filterCRSContent(String userInRole, String userName, boolean isInboxDisable) {
         Object _ret =
             this.riInvokeExportedMethod(this,"filterCRSContent",new String [] {"java.lang.String","java.lang.String","boolean"},new Object[] {userInRole, userName, new Boolean(isInboxDisable)});
         return;
     }
 
     public boolean findByCrsFromStg(Long pCrsId) {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"findByCrsFromStg",new String [] {"java.lang.Long"},new Object[] {pCrsId});
+        Object _ret = this.riInvokeExportedMethod(this,"findByCrsFromStg",new String [] {"java.lang.Long"},new Object[] {pCrsId});
         return ((Boolean)_ret).booleanValue();
     }
 
@@ -84,8 +86,7 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
     }
 
     public boolean refreshRepository(Long crsId) {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"refreshRepository",new String [] {"java.lang.Long"},new Object[] {crsId});
+        Object _ret = this.riInvokeExportedMethod(this,"refreshRepository",new String [] {"java.lang.Long"},new Object[] {crsId});
         return ((Boolean)_ret).booleanValue();
     }
 

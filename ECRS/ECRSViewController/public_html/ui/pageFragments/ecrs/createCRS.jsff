@@ -526,7 +526,7 @@
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}"
                                          id="plam1">
                     <af:outputText id="ot2"
-                                   value="#{ecrsviewcontrollerBundle.DICIONARY_CURR_VERSION_NO}"/>
+                                   value="#{sessionScope.dictVersion}"/>
                 </af:panelLabelAndMessage>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}#{ecrsviewcontrollerBundle.COLON}"
                                          id="plam2">

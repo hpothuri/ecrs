@@ -36,4 +36,6 @@ public interface ECRSAppModule extends ApplicationModule {
     String retireCrs(Long pCRSId, String pReasonForChange);
 
     String activateCrs(Long pCRSId, String pReasonForChange);
+
+    String fetchDictionaryVersion();
 }
