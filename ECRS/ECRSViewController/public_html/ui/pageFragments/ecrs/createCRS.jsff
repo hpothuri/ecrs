@@ -307,6 +307,8 @@
                                                       disabled="#{bindings.StateId.inputValue ne 6}"
                                                       visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
                                                       inlineStyle="margin-right:10px;">
+                                        <af:setActionListener from="#{''}"
+                                                              to="#{pageFlowScope.manageCRSBean.reasonForChange}"/>
                                         <af:showPopupBehavior popupId="publish"
                                                               triggerType="action"/>
                                     </af:commandButton>
@@ -619,8 +621,10 @@
             <af:dialog id="d9" title="#{ecrsviewcontrollerBundle.INFO}"
                        titleIconSource="/images/info_icon.png"
                        closeIconVisible="false" type="ok">
-                <f:facet name="buttonBar"/>
                 <af:outputText value="#{ecrsviewcontrollerBundle.THE_CRS_HAS_BEEN_PUBLISHED}" id="ot11"/>
+                <f:facet name="buttonBar">
+                    <af:commandButton text="#{ecrsviewcontrollerBundle.OK}" id="cb12" action="navToSearch"/>
+                </f:facet>
             </af:dialog>
         </af:popup>
         <af:popup childCreation="deferred" autoCancel="disabled" id="p9"
@@ -747,8 +751,17 @@
                        closeIconVisible="false" type="yesNo"
                        dialogListener="#{pageFlowScope.manageCRSBean.processPublishDialog}">
                 <f:facet name="buttonBar"/>
-                <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_PUBLISH_}"
-                               id="ot21"/>
+                <af:panelGroupLayout id="pgl15" layout="vertical">
+                    <af:outputText value="#{ecrsviewcontrollerBundle.DO_YOU_REALLY_WANT_TO_PUBLISH_}" id="ot21"/>
+                    <af:inputText columns="40" id="it211"
+                      label="#{ecrsviewcontrollerBundle.REASON_FOR_CHANGE}"
+                      rows="2" autoSubmit="true" showRequired="true"
+                      value="#{pageFlowScope.manageCRSBean.reasonForChange}"
+                      required="true"></af:inputText>
+                    <f:facet name="separator">
+                        <af:spacer width="10" height="20" id="s14"/>
+                    </f:facet>
+                </af:panelGroupLayout>
             </af:dialog>
         </af:popup>
     </af:panelHeader>

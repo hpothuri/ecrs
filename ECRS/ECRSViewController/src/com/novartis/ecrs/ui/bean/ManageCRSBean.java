@@ -322,12 +322,13 @@ public class ManageCRSBean implements Serializable {
     public void onClickSearch(ActionEvent actionEvent) {
         // TODO get user name
         //set release staus to binding
-        if ("anonymous".equals(userName) ||
-            (ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType()) && (ModelConstants.ROLE_ML.equals(loggedInUserRole) ||
-                                                                      ModelConstants.ROLE_MQM.equals(loggedInUserRole) ||
-                                                                      ModelConstants.ROLE_TASL.equals(loggedInUserRole)))) {
+        if ("anonymous".equals(userName))
             ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}", ModelConstants.STATUS_CURRENT);
-        }
+        else if (ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType()) &&
+                 (ModelConstants.ROLE_ML.equals(loggedInUserRole) ||
+                  ModelConstants.ROLE_MQM.equals(loggedInUserRole) ||
+                  ModelConstants.ROLE_TASL.equals(loggedInUserRole)))
+            ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}", ModelConstants.STATUS_PENDING);
 
         DCBindingContainer bc = ADFUtils.getDCBindingContainer();
         OperationBinding ob = bc.getOperationBinding("filterCRSContent");
@@ -823,8 +824,27 @@ public class ManageCRSBean implements Serializable {
     /** APPROVED to PUBLISHED */ 
      public void processPublishDialog(DialogEvent dialogEvent) {
          // Add event code here...
-         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
-             processStateChange(ModelConstants.STATE_PUBLISHED, getCrsPublishPopupBinding());
+        if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
+            OperationBinding op = ADFUtils.findOperation("activateCrs");
+            Map params = op.getParamsMap();
+            params.put("pCRSId", ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}"));
+            params.put("pReasonForChange", getReasonForChange());
+            String msg = (String)op.execute();
+
+            if (op.getErrors() != null && op.getErrors().size() > 0) {
+                ADFUtils.showFacesMessage("An internal error has occured. Please contact the Administrator",
+                                          FacesMessage.SEVERITY_ERROR);
+            } else {
+
+                // if NOT a success
+                if (!ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
+                    ADFUtils.showFacesMessage("<html> <body> <p> An internal error has occured. Please contact the Administrator </p> <p>"+msg+"</p> </body> </html>",
+                                              FacesMessage.SEVERITY_ERROR);
+                    // if success - show popup which on ack takes user to search page
+                } else
+                    ADFUtils.showPopup(getCrsPublishPopupBinding());
+            }
+        }
      }
     
     private void processStateChange(Integer newState, RichPopup infoPopup) {
