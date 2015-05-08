@@ -120,6 +120,12 @@
   <ViewUsage
     Name="DomainVO"
     ViewObjectName="com.novartis.ecrs.model.lov.DomainLOVVO"/>
+  <ViewUsage
+    Name="DomainsTransientVO"
+    ViewObjectName="com.novartis.ecrs.model.view.trans.DomainsTransientVO"/>
+  <ViewUsage
+    Name="CrsDomainsVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsDomainsVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

@@ -48,7 +48,9 @@
         SORT_ORDER,
         CHILD_EXISTS,
         DICT_CONTENT_ENTRY_TS,
-        C_END_TS
+        C_END_TS,
+        CRS_UI_TMS_UTILS.DERIVE_QUALIFIER(DICT_CONTENT_REF_ID, 'N') QUAL,
+        CRS_UI_TMS_UTILS.DERIVE_QUALIFIER(dict_content_ref_id, 'Y') QUAL_FLAG 
 FROM TABLE (HIERARCHY_PKG.GET_HIERARCHY(
 	i_dict_content_id => :bContentId, 
 	--i_group_names => :activationGroup,
@@ -403,6 +405,36 @@ ORDER BY SORT_ORDER]]></SQLQuery>
     SQLType="DATE">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Qual"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="4000"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="QUAL"
+    Expression="QUAL"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="4000"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="QualFlag"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="4000"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="QUAL_FLAG"
+    Expression="QUAL_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="4000"/>
     </DesignTime>
   </ViewAttribute>
   <ViewLinkAccessor

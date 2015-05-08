@@ -39,19 +39,6 @@
     ColumnType="NUMBER"
     TableName="CRS_RISK_DEFINITIONS_STG"/>
   <Attribute
-    Name="CrsQualifier"
-    Precision="15"
-    ColumnName="&quot;Synchronize:Fix_SQL&quot;"
-    SQLType="VARCHAR"
-    Type="java.lang.String"
-    ColumnType="$none$"
-    IsQueriable="false"
-    IsPersistent="false">
-    <DesignTime>
-      <Attr Name="_DisplaySize" Value="15"/>
-    </DesignTime>
-  </Attribute>
-  <Attribute
     Name="MeddraLevel"
     IsNotNull="true"
     Precision="5"
@@ -238,22 +225,9 @@
     SQLType="VARCHAR"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    TableName="CRS_RISK_DEFINITIONS_STG"
-    DefaultValue="N">
-    <DesignTime>
-      <Attr Name="_DisplaySize" Value="1"/>
-    </DesignTime>
-  </Attribute>
-  <Attribute
-    Name="CrsQualifier1"
-    Precision="15"
-    ColumnName="CRS_QUALIFIER"
-    SQLType="VARCHAR"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
     TableName="CRS_RISK_DEFINITIONS_STG">
     <DesignTime>
-      <Attr Name="_DisplaySize" Value="15"/>
+      <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
   </Attribute>
   <Attribute
@@ -302,6 +276,18 @@
     ColumnType="DATE"
     TableName="CRS_RISK_DEFINITIONS_STG"
     HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="CrsQualifier"
+    Precision="15"
+    ColumnName="CRS_QUALIFIER"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_DEFINITIONS_STG">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
+  </Attribute>
   <Key
     Name="CrsRiskDefnStgChkCrsqual">
     <DesignTime>

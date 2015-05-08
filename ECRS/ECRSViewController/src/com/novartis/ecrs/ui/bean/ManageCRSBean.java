@@ -1021,8 +1021,7 @@ public class ManageCRSBean implements Serializable {
                     riskDefRow.setAttribute("MeddraLevel", selRow.getLevelName());
                     riskDefRow.setAttribute("MeddraTerm", selRow.getTerm());
                     riskDefRow.setAttribute("MeddraDict", selRow.getDictShortName());
-                    riskDefRow.setAttribute("MeddraVersion",
-                                            version != null ? version : ADFUtils.getPageFlowScopeValue("childVersion"));
+                    riskDefRow.setAttribute("MeddraVersion", ADFUtils.getPageFlowScopeValue("childVersion"));
                     riskDefRow.setAttribute("MeddraVersionDate", ADFUtils.getPageFlowScopeValue("childDate"));
 
                     if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
@@ -1038,10 +1037,12 @@ public class ManageCRSBean implements Serializable {
                         riskDefRow.setAttribute("MeddraExtension", level);
 
 
-                    riskDefRow.setAttribute("MeddraQualifier", getChildScope());
+//                    riskDefRow.setAttribute("MeddraQualifier", getChildScope());
                     riskDefRow.setAttribute("TmsDictContentEntryTs", selRow.getTmsDictContentEntryTs());
                     riskDefRow.setAttribute("TmsDictContentId", selRow.getTmsDictContentId());
                     riskDefRow.setAttribute("TmsEndTs", selRow.getTmsEndTs());
+                    riskDefRow.setAttribute("MeddraQualifier", selRow.getQual());
+                    riskDefRow.setAttribute("MeddraQualifierUpdFlag", selRow.getQualFlag());
                     riskDefVO.insertRow(riskDefRow);
                 }
             } else {
@@ -1054,7 +1055,7 @@ public class ManageCRSBean implements Serializable {
                     String level = (String)dragRow.getAttribute("Mqlevel");
                     String qual = (String)dragRow.getAttribute("Mqcrtev");
                     String dict = (String)dragRow.getAttribute("DictNm");
-                    String version = (String)dragRow.getAttribute("Version");
+                    String version = (String)dragRow.getAttribute("DictVersion");
 
                     if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
                         Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
@@ -1073,7 +1074,7 @@ public class ManageCRSBean implements Serializable {
                     riskDefRow.setAttribute("MeddraTerm", term);
                     riskDefRow.setAttribute("MeddraDict", dict);
                     riskDefRow.setAttribute("MeddraVersion", version);
-                    riskDefRow.setAttribute("MeddraVersionDate", dragRow.getAttribute("Dates"));
+                    riskDefRow.setAttribute("MeddraVersionDate", dragRow.getAttribute("DictVersionDate"));
                     riskDefRow.setAttribute("TmsDictContentEntryTs", dragRow.getAttribute("DictContentEntryTs"));
                     riskDefRow.setAttribute("TmsDictContentId", dragRow.getAttribute("DictContentId"));
                     riskDefRow.setAttribute("TmsEndTs", dragRow.getAttribute("EndTs"));
@@ -1087,13 +1088,13 @@ public class ManageCRSBean implements Serializable {
                     } else
                         riskDefRow.setAttribute("MeddraExtension", level);
 
-                    if (qual != null && qual.contains("Y_BROAD"))
-                        riskDefRow.setAttribute("MeddraQualifier", "BROAD");
-                    else if (qual != null && qual.contains("Y_NARROW"))
-                        riskDefRow.setAttribute("MeddraQualifier", "NARROW");
-                    else
-                        riskDefRow.setAttribute("MeddraQualifier", "CHILD NARROW");
+               
+                    riskDefRow.setAttribute("MeddraQualifier", dragRow.getAttribute("Qual"));
+                    riskDefRow.setAttribute("CrsQualifier", dragRow.getAttribute("Qual"));
                     //                meddra_qualifier IN ('BROAD','NARROW','CHILD NARROW')
+                    
+                    riskDefRow.setAttribute("MeddraQualifierUpdFlag", dragRow.getAttribute("QualFlag"));
+                
                     riskDefVO.insertRow(riskDefRow);
                 }
             }
@@ -1459,16 +1460,9 @@ public class ManageCRSBean implements Serializable {
         hierChildTreeModel = new ChildPropertyTreeModel(hierChildList, "children");
         getChildTreeTable().setVisible(Boolean.TRUE);
         
-        String qual = (String)ADFUtils.evaluateEL("#{row.Mqcrtev}");
-        ADFUtils.setPageFlowScopeValue("childVersion", ADFUtils.evaluateEL("#{row.Version}"));
-        ADFUtils.setPageFlowScopeValue("childDate", ADFUtils.evaluateEL("#{row.Dates}"));
+        ADFUtils.setPageFlowScopeValue("childVersion", ADFUtils.evaluateEL("#{row.DictVersion}"));
+        ADFUtils.setPageFlowScopeValue("childDate", ADFUtils.evaluateEL("#{row.DictVersionDate}"));
         
-        if(qual != null && qual.contains("Y_BROAD"))
-            setChildScope("BROAD");
-        else if(qual != null && qual.contains("Y_NARROW"))
-            setChildScope("NARROW");
-        else
-            setChildScope("CHILD NARROW");
         ADFUtils.addPartialTarget(getChildTreeTable());
     }
 

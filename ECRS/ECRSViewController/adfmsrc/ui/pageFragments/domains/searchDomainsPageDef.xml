@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="searchDomainsPageDef"
+                Package="ui.pageFragments.domains">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="DomainsTransientVO" RangeSize="25" DataControl="ECRSAppModuleDataControl"
+              id="DomainsTransientVOIterator"/>
+    <iterator Binds="CrsDomainsVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsDomainsVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="DomainsTransientVOIterator" id="DomainName">
+      <AttrNames>
+        <Item Value="DomainName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="DomainsTransientVOIterator" id="DomainId">
+      <AttrNames>
+        <Item Value="DomainId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="CrsDomainsVOIterator" id="CrsDomainsVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsDomainsVO" Name="CrsDomainsVO0">
+        <AttrNames>
+          <Item Value="ActiveFlag"/>
+          <Item Value="DomainDesc"/>
+          <Item Value="DomainId"/>
+          <Item Value="DomainName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="CrsDomainsVOIterator" id="CreateInsert" InstanceName="ECRSAppModuleDataControl.CrsDomainsVO"
+            DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

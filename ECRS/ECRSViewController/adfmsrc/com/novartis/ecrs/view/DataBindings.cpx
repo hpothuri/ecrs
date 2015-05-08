@@ -69,6 +69,11 @@
           usageId="com_novartis_ecrs_view_RetiredNMQsCMQsReportPageDef"/>
     <page path="/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF@initManageCrs"
           usageId="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_initManageCrsPageDef"/>
+    <page path="/WEB-INF/taskflows/ManageDomainsTF.xml#ManageDomainsTF@CreateInsert"
+          usageId="com_novartis_ecrs_view_ManageDomainsTF_ManageDomainsTF_CreateInsertPageDef"/>
+    <page path="/ui/pageFragments/domains/searchDomains.jsff" usageId="com_novartis_ecrs_view_searchDomainsPageDef"/>
+    <page path="/ui/pageFragments/domains/domainDetails.jsff" usageId="com_novartis_ecrs_view_domainDetailsPageDef"/>
+    <page path="/pages/ManageDomains.jspx" usageId="com_novartis_ecrs_view_ManageDomainsPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -127,6 +132,11 @@
           path="pages.reports.RetiredNMQsCMQsReportPageDef"/>
     <page id="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_initManageCrsPageDef"
           path="taskflows.ManageCRSTF_ManageCRSTF_initManageCrsPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageDomainsTF_ManageDomainsTF_CreateInsertPageDef"
+          path="taskflows.ManageDomainsTF_ManageDomainsTF_CreateInsertPageDef"/>
+    <page id="com_novartis_ecrs_view_searchDomainsPageDef" path="ui.pageFragments.domains.searchDomainsPageDef"/>
+    <page id="com_novartis_ecrs_view_domainDetailsPageDef" path="ui.pageFragments.domains.domainDetailsPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageDomainsPageDef" path="pages.ManageDomainsPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

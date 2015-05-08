@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="domainDetailsPageDef"
+                Package="ui.pageFragments.domains">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="CrsDomainsVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsDomainsVOIterator"/>
+    <iterator Binds="DomainsTransientVO" RangeSize="10" DataControl="ECRSAppModuleDataControl"
+              id="DomainsTransientVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="CrsDomainsVOIterator" id="DomainId">
+      <AttrNames>
+        <Item Value="DomainId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsDomainsVOIterator" id="DomainName">
+      <AttrNames>
+        <Item Value="DomainName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsDomainsVOIterator" id="DomainDesc">
+      <AttrNames>
+        <Item Value="DomainDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsDomainsVOIterator" id="ActiveFlag">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action IterBinding="DomainsTransientVOIterator" id="CreateInsert"
+            InstanceName="ECRSAppModuleDataControl.DomainsTransientVO" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

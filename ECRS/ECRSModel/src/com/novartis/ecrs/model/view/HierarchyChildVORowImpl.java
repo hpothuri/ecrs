@@ -248,6 +248,26 @@ public class HierarchyChildVORowImpl extends ViewRowImpl {
             }
         }
         ,
+        Qual {
+            public Object get(HierarchyChildVORowImpl obj) {
+                return obj.getQual();
+            }
+
+            public void put(HierarchyChildVORowImpl obj, Object value) {
+                obj.setQual((String)value);
+            }
+        }
+        ,
+        QualFlag {
+            public Object get(HierarchyChildVORowImpl obj) {
+                return obj.getQualFlag();
+            }
+
+            public void put(HierarchyChildVORowImpl obj, Object value) {
+                obj.setQualFlag((String)value);
+            }
+        }
+        ,
         HierarchyChildDetailVO {
             public Object get(HierarchyChildVORowImpl obj) {
                 return obj.getHierarchyChildDetailVO();
@@ -309,6 +329,8 @@ public class HierarchyChildVORowImpl extends ViewRowImpl {
     public static final int CHILDEXISTS = AttributesEnum.ChildExists.index();
     public static final int DICTCONTENTENTRYTS = AttributesEnum.DictContentEntryTs.index();
     public static final int CENDTS = AttributesEnum.CEndTs.index();
+    public static final int QUAL = AttributesEnum.Qual.index();
+    public static final int QUALFLAG = AttributesEnum.QualFlag.index();
     public static final int HIERARCHYCHILDDETAILVO = AttributesEnum.HierarchyChildDetailVO.index();
 
     /**
@@ -683,6 +705,38 @@ public class HierarchyChildVORowImpl extends ViewRowImpl {
      */
     public void setCEndTs(Timestamp value) {
         setAttributeInternal(CENDTS, value);
+    }
+
+    /**
+     * Gets the attribute value for the calculated attribute Qual.
+     * @return the Qual
+     */
+    public String getQual() {
+        return (String) getAttributeInternal(QUAL);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for the calculated attribute Qual.
+     * @param value value to set the  Qual
+     */
+    public void setQual(String value) {
+        setAttributeInternal(QUAL, value);
+    }
+
+    /**
+     * Gets the attribute value for the calculated attribute QualFlag.
+     * @return the QualFlag
+     */
+    public String getQualFlag() {
+        return (String) getAttributeInternal(QUALFLAG);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for the calculated attribute QualFlag.
+     * @param value value to set the  QualFlag
+     */
+    public void setQualFlag(String value) {
+        setAttributeInternal(QUALFLAG, value);
     }
 
     /**

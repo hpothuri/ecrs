@@ -6,6 +6,7 @@ import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.ECrsSearchVORowImpl;
 import com.novartis.ecrs.model.view.HierarchyChildDetailVOImpl;
 import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
+import com.novartis.ecrs.model.view.trans.DomainsTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RolesTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.StateTransientVOImpl;
@@ -907,5 +908,21 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getDomainVO() {
         return (ViewObjectImpl)findViewObject("DomainVO");
+    }
+
+    /**
+     * Container's getter for DomainsTransientVO.
+     * @return DomainsTransientVO
+     */
+    public DomainsTransientVOImpl getDomainsTransientVO() {
+        return (DomainsTransientVOImpl)findViewObject("DomainsTransientVO");
+    }
+
+    /**
+     * Container's getter for CrsDomainsVO.
+     * @return CrsDomainsVO
+     */
+    public ViewObjectImpl getCrsDomainsVO() {
+        return (ViewObjectImpl)findViewObject("CrsDomainsVO");
     }
 }

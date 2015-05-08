@@ -38,16 +38,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
         }
         ,
-        CrsQualifier {
-            public Object get(CrsRiskDefinitionsEOImpl obj) {
-                return obj.getCrsQualifier();
-            }
-
-            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setCrsQualifier((String)value);
-            }
-        }
-        ,
         MeddraLevel {
             public Object get(CrsRiskDefinitionsEOImpl obj) {
                 return obj.getMeddraLevel();
@@ -218,23 +208,13 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
         }
         ,
-        CrsQualifier1 {
-            public Object get(CrsRiskDefinitionsEOImpl obj) {
-                return obj.getCrsQualifier1();
-            }
-
-            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setCrsQualifier1((String)value);
-            }
-        }
-        ,
         CreatedBy {
             public Object get(CrsRiskDefinitionsEOImpl obj) {
                 return obj.getCreatedBy();
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setCreatedBy((String)value);
+                obj.setAttributeInternal(index(), value);
             }
         }
         ,
@@ -244,7 +224,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setCreationTs((Timestamp)value);
+                obj.setAttributeInternal(index(), value);
             }
         }
         ,
@@ -254,7 +234,7 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setModifiedBy((String)value);
+                obj.setAttributeInternal(index(), value);
             }
         }
         ,
@@ -264,7 +244,17 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setModificationTs((Timestamp)value);
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ,
+        CrsQualifier {
+            public Object get(CrsRiskDefinitionsEOImpl obj) {
+                return obj.getCrsQualifier();
+            }
+
+            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
+                obj.setCrsQualifier((String)value);
             }
         }
         ;
@@ -298,7 +288,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
 
     public static final int CRSRISKDEFNID = AttributesEnum.CrsRiskDefnId.index();
     public static final int CRSRISKID = AttributesEnum.CrsRiskId.index();
-    public static final int CRSQUALIFIER = AttributesEnum.CrsQualifier.index();
     public static final int MEDDRALEVEL = AttributesEnum.MeddraLevel.index();
     public static final int MEDDRACODE = AttributesEnum.MeddraCode.index();
     public static final int MEDDRATERM = AttributesEnum.MeddraTerm.index();
@@ -316,11 +305,11 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
     public static final int MEDDRAEXTENSION = AttributesEnum.MeddraExtension.index();
     public static final int CRSEFFECTIVEDT = AttributesEnum.CrsEffectiveDt.index();
     public static final int MEDDRAQUALIFIERUPDFLAG = AttributesEnum.MeddraQualifierUpdFlag.index();
-    public static final int CRSQUALIFIER1 = AttributesEnum.CrsQualifier1.index();
     public static final int CREATEDBY = AttributesEnum.CreatedBy.index();
     public static final int CREATIONTS = AttributesEnum.CreationTs.index();
     public static final int MODIFIEDBY = AttributesEnum.ModifiedBy.index();
     public static final int MODIFICATIONTS = AttributesEnum.ModificationTs.index();
+    public static final int CRSQUALIFIER = AttributesEnum.CrsQualifier.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -368,21 +357,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         setAttributeInternal(CRSRISKID, value);
     }
 
-    /**
-     * Gets the attribute value for CrsQualifier, using the alias name CrsQualifier.
-     * @return the value of CrsQualifier
-     */
-    public String getCrsQualifier() {
-        return (String)getAttributeInternal(CRSQUALIFIER);
-    }
-
-    /**
-     * Sets <code>value</code> as the attribute value for CrsQualifier.
-     * @param value value to set the CrsQualifier
-     */
-    public void setCrsQualifier(String value) {
-        setAttributeInternal(CRSQUALIFIER, value);
-    }
 
     /**
      * Gets the attribute value for MeddraLevel, using the alias name MeddraLevel.
@@ -638,21 +612,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         setAttributeInternal(MEDDRAQUALIFIERUPDFLAG, value);
     }
 
-    /**
-     * Gets the attribute value for CrsQualifier1, using the alias name CrsQualifier1.
-     * @return the value of CrsQualifier1
-     */
-    public String getCrsQualifier1() {
-        return (String)getAttributeInternal(CRSQUALIFIER1);
-    }
-
-    /**
-     * Sets <code>value</code> as the attribute value for CrsQualifier1.
-     * @param value value to set the CrsQualifier1
-     */
-    public void setCrsQualifier1(String value) {
-        setAttributeInternal(CRSQUALIFIER1, value);
-    }
 
     /**
      * Gets the attribute value for CreatedBy, using the alias name CreatedBy.
@@ -662,13 +621,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return (String)getAttributeInternal(CREATEDBY);
     }
 
-    /**
-     * Sets <code>value</code> as the attribute value for CreatedBy.
-     * @param value value to set the CreatedBy
-     */
-    public void setCreatedBy(String value) {
-        setAttributeInternal(CREATEDBY, value);
-    }
 
     /**
      * Gets the attribute value for CreationTs, using the alias name CreationTs.
@@ -678,13 +630,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(CREATIONTS);
     }
 
-    /**
-     * Sets <code>value</code> as the attribute value for CreationTs.
-     * @param value value to set the CreationTs
-     */
-    public void setCreationTs(Timestamp value) {
-        setAttributeInternal(CREATIONTS, value);
-    }
 
     /**
      * Gets the attribute value for ModifiedBy, using the alias name ModifiedBy.
@@ -694,13 +639,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return (String)getAttributeInternal(MODIFIEDBY);
     }
 
-    /**
-     * Sets <code>value</code> as the attribute value for ModifiedBy.
-     * @param value value to set the ModifiedBy
-     */
-    public void setModifiedBy(String value) {
-        setAttributeInternal(MODIFIEDBY, value);
-    }
 
     /**
      * Gets the attribute value for ModificationTs, using the alias name ModificationTs.
@@ -710,12 +648,21 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(MODIFICATIONTS);
     }
 
+
     /**
-     * Sets <code>value</code> as the attribute value for ModificationTs.
-     * @param value value to set the ModificationTs
+     * Gets the attribute value for CrsQualifier, using the alias name CrsQualifier.
+     * @return the value of CrsQualifier
      */
-    public void setModificationTs(Timestamp value) {
-        setAttributeInternal(MODIFICATIONTS, value);
+    public String getCrsQualifier() {
+        return (String)getAttributeInternal(CRSQUALIFIER);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for CrsQualifier.
+     * @param value value to set the CrsQualifier
+     */
+    public void setCrsQualifier(String value) {
+        setAttributeInternal(CRSQUALIFIER, value);
     }
 
     /**

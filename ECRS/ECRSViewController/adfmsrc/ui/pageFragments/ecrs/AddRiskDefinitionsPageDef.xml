@@ -88,6 +88,7 @@
           <Item Value="MeddraCode"/>
           <Item Value="SearchCriteriaDetails"/>
           <Item Value="TmsUpdateFlag"/>
+          <Item Value="CrsQualifier"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -218,6 +219,10 @@
           <Item Value="DictContentEntryTs"/>
           <Item Value="DictContentId"/>
           <Item Value="EndTs"/>
+          <Item Value="Qual"/>
+          <Item Value="QualFlag"/>
+          <Item Value="DictVersionDate"/>
+          <Item Value="DictVersion"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -384,6 +389,7 @@
           <Item Value="MeddraDict"/>
           <Item Value="MeddraExtension"/>
           <Item Value="CrsEffectiveDt"/>
+          <Item Value="CrsQualifier"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

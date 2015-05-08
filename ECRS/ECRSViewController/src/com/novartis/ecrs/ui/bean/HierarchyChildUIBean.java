@@ -20,6 +20,8 @@ public class HierarchyChildUIBean {
     private Timestamp tmsDictContentEntryTs;
     private Long tmsDictContentId;
     private Timestamp tmsEndTs;
+    private String qual;
+    private String qualFlag;
     private List<HierarchyChildUIBean> children;
     
     public HierarchyChildUIBean(Row row){
@@ -31,7 +33,9 @@ public class HierarchyChildUIBean {
         this.level = (Long)row.getAttribute("Level");
         this.tmsDictContentEntryTs = (Timestamp)row.getAttribute("DictContentEntryTs");
         this.tmsDictContentId = new Long((String)row.getAttribute("DictContentId"));
-        this.tmsEndTs = (Timestamp)row.getAttribute("CEndTs");;
+        this.tmsEndTs = (Timestamp)row.getAttribute("CEndTs");
+        this.qual = (String)row.getAttribute("Qual");
+        this.qualFlag = (String)row.getAttribute("QualFlag");
     }
 
     public void setTerm(String term) {
@@ -112,5 +116,21 @@ public class HierarchyChildUIBean {
 
     public Timestamp getTmsEndTs() {
         return tmsEndTs;
+    }
+
+    public void setQual(String qual) {
+        this.qual = qual;
+    }
+
+    public String getQual() {
+        return qual;
+    }
+
+    public void setQualFlag(String qualFlag) {
+        this.qualFlag = qualFlag;
+    }
+
+    public String getQualFlag() {
+        return qualFlag;
     }
 }

@@ -95,6 +95,8 @@
                                                 inlineStyle="font-weight: bold;"/>
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.USER_ROLES}" id="pt_gmi5"
                                                 action="userRoles" immediate="true" inlineStyle="font-weight: bold;"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.DOMAINS}" id="pt_cmi8"
+                                                action="domains" inlineStyle="font-weight: bold;"/>
                         </af:menu>
                     </af:menuBar>
                     <af:separator id="s1"/>

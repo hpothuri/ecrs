@@ -364,6 +364,13 @@
     AssociationOtherEnd="com.novartis.ecrs.model.entity.assoc.CrsRiskRelationsIdxCrsFkAssoc.CrsRiskRelationsEO"
     Type="com.novartis.ecrs.model.entity.CrsContentEOImpl"
     IsUpdateable="true"/>
+  <AccessorAttribute
+    Name="CrsDomainsEO"
+    Association="com.novartis.ecrs.model.entity.assoc.CrsRiskRelStgIdxDomFkAssoc"
+    AssociationEnd="com.novartis.ecrs.model.entity.assoc.CrsRiskRelStgIdxDomFkAssoc.CrsDomainsEO"
+    AssociationOtherEnd="com.novartis.ecrs.model.entity.assoc.CrsRiskRelStgIdxDomFkAssoc.CrsRiskRelationsEO"
+    Type="oracle.jbo.server.EntityImpl"
+    IsUpdateable="true"/>
   <Key
     Name="CrsRiskRelStgIdxIdPk"
     PrimaryKey="true">

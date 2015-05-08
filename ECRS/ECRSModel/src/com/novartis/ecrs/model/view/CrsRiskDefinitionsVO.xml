@@ -40,7 +40,8 @@
        CrsRiskDefinitionsEO.CREATION_TS,
        CrsRiskDefinitionsEO.MODIFIED_BY,
        CrsRiskDefinitionsEO.MODIFICATION_TS,
-       CrsRiskDefinitionsEO.MEDDRA_QUALIFIER_UPD_FLAG
+       CrsRiskDefinitionsEO.MEDDRA_QUALIFIER_UPD_FLAG,
+       CrsRiskDefinitionsEO.CRS_QUALIFIER
 FROM CRS_RISK_DEFINITIONS_STG CrsRiskDefinitionsEO]]></SQLQuery>
   <EntityUsage
     Name="CrsRiskDefinitionsEO"
@@ -242,6 +243,12 @@ FROM CRS_RISK_DEFINITIONS_STG CrsRiskDefinitionsEO]]></SQLQuery>
     EntityAttrName="MeddraQualifierUpdFlag"
     EntityUsage="CrsRiskDefinitionsEO"
     AliasName="MEDDRA_QUALIFIER_UPD_FLAG"/>
+  <ViewAttribute
+    Name="CrsQualifier"
+    PrecisionRule="true"
+    EntityAttrName="CrsQualifier"
+    EntityUsage="CrsRiskDefinitionsEO"
+    AliasName="CRS_QUALIFIER"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>

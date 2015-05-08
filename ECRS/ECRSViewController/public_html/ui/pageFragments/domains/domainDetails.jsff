@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+  <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
+  <af:panelGroupLayout id="pgl1" layout="scroll">
+    <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="t1"/>
+    <af:panelHeader text="#{ecrsviewcontrollerBundle.DOMAIN_DETAILS}" id="ph1" size="1" inlineStyle="padding:5px;">
+      <f:facet name="context"/>
+      <f:facet name="menuBar"/>
+      <f:facet name="toolbar"/>
+      <f:facet name="legend"/>
+      <f:facet name="info"/>
+      <af:panelGroupLayout id="pgl2" layout="horizontal" styleClass="AFStretchWidth" halign="end">
+        <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb1"
+                          action="#{pageFlowScope.domainsBean.onSave}"/>
+        <af:commandButton text="Back" id="cb2" action="#{pageFlowScope.domainsBean.onClickBack}" immediate="true"/>
+        <f:facet name="separator">
+          <af:spacer width="10" height="10" id="s1"/>
+        </f:facet>
+      </af:panelGroupLayout>
+      <af:panelFormLayout id="pfl1">
+        <af:inputText value="#{bindings.DomainName.inputValue}" label="#{ecrsviewcontrollerBundle.DOMAIN_NAME}"
+                      required="#{bindings.DomainName.hints.mandatory}"
+                      columns="#{bindings.DomainName.hints.displayWidth}"
+                      maximumLength="#{bindings.DomainName.hints.precision}"
+                      shortDesc="#{bindings.DomainName.hints.tooltip}" id="it2">
+          <f:validator binding="#{bindings.DomainName.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.DomainDesc.inputValue}" label="#{ecrsviewcontrollerBundle.DOMAIN_DESCRIPTION}"
+                      required="#{bindings.DomainDesc.hints.mandatory}"
+                      columns="#{bindings.DomainDesc.hints.displayWidth}"
+                      maximumLength="#{bindings.DomainDesc.hints.precision}"
+                      shortDesc="#{bindings.DomainDesc.hints.tooltip}" id="it3">
+          <f:validator binding="#{bindings.DomainDesc.validator}"/>
+        </af:inputText>
+        <af:selectOneChoice label="#{ecrsviewcontrollerBundle.ACTIVE_FLAG}" id="soc1"
+                            value="#{bindings.ActiveFlag.inputValue}">
+          <af:selectItem label="Y" value="Y" id="si1"/>
+          <af:selectItem label="N" value="N" id="si2"/>
+        </af:selectOneChoice>
+        <af:inputText value="#{bindings.DomainId.inputValue == -1 ? '' : bindings.DomainId.inputValue}" label="#{ecrsviewcontrollerBundle.DOMAIN_ID}"
+                      required="#{bindings.DomainId.hints.mandatory}" columns="#{bindings.DomainId.hints.displayWidth}"
+                      maximumLength="#{bindings.DomainId.hints.precision}"
+                      shortDesc="#{bindings.DomainId.hints.tooltip}" id="it1" readOnly="true">
+          <f:validator binding="#{bindings.DomainId.validator}"/>
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.DomainId.format}"/>
+        </af:inputText>
+      </af:panelFormLayout>
+    </af:panelHeader>
+  </af:panelGroupLayout>
+</jsp:root>

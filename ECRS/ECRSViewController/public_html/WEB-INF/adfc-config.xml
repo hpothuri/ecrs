@@ -48,6 +48,9 @@
   <view id="RetiredNMQsCMQsReport">
     <page>/pages/reports/RetiredNMQsCMQsReport.jspx</page>
   </view>
+  <view id="ManageDomains">
+    <page>/pages/ManageDomains.jspx</page>
+  </view>
   <control-flow-rule id="__2">
     <from-activity-id>*</from-activity-id>
     <control-flow-case id="__3">
@@ -113,6 +116,10 @@
     <control-flow-case id="__17">
       <from-outcome>retiredNmq</from-outcome>
       <to-activity-id>RetiredNMQsCMQsReport</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__20">
+      <from-outcome>domains</from-outcome>
+      <to-activity-id>ManageDomains</to-activity-id>
     </control-flow-case>
   </control-flow-rule>
   <managed-bean id="__1">

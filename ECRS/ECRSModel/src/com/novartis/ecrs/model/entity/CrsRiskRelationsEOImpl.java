@@ -264,7 +264,7 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskRelationsEOImpl obj, Object value) {
-                obj.setCreatedBy((String)value);
+                obj.setAttributeInternal(index(), value);
             }
         }
         ,
@@ -274,7 +274,7 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskRelationsEOImpl obj, Object value) {
-                obj.setCreationTs((Timestamp)value);
+                obj.setAttributeInternal(index(), value);
             }
         }
         ,
@@ -284,7 +284,7 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskRelationsEOImpl obj, Object value) {
-                obj.setModifiedBy((String)value);
+                obj.setAttributeInternal(index(), value);
             }
         }
         ,
@@ -294,7 +294,7 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
             }
 
             public void put(CrsRiskRelationsEOImpl obj, Object value) {
-                obj.setModificationTs((Timestamp)value);
+                obj.setAttributeInternal(index(), value);
             }
         }
         ,
@@ -305,6 +305,16 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
 
             public void put(CrsRiskRelationsEOImpl obj, Object value) {
                 obj.setCrsContentEO((CrsContentEOImpl)value);
+            }
+        }
+        ,
+        CrsDomainsEO {
+            public Object get(CrsRiskRelationsEOImpl obj) {
+                return obj.getCrsDomainsEO();
+            }
+
+            public void put(CrsRiskRelationsEOImpl obj, Object value) {
+                obj.setCrsDomainsEO((EntityImpl)value);
             }
         }
         ;
@@ -365,6 +375,7 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
     public static final int MODIFIEDBY = AttributesEnum.ModifiedBy.index();
     public static final int MODIFICATIONTS = AttributesEnum.ModificationTs.index();
     public static final int CRSCONTENTEO = AttributesEnum.CrsContentEO.index();
+    public static final int CRSDOMAINSEO = AttributesEnum.CrsDomainsEO.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -758,13 +769,6 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
         return (String)getAttributeInternal(CREATEDBY);
     }
 
-    /**
-     * Sets <code>value</code> as the attribute value for CreatedBy.
-     * @param value value to set the CreatedBy
-     */
-    public void setCreatedBy(String value) {
-        setAttributeInternal(CREATEDBY, value);
-    }
 
     /**
      * Gets the attribute value for CreationTs, using the alias name CreationTs.
@@ -774,13 +778,6 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(CREATIONTS);
     }
 
-    /**
-     * Sets <code>value</code> as the attribute value for CreationTs.
-     * @param value value to set the CreationTs
-     */
-    public void setCreationTs(Timestamp value) {
-        setAttributeInternal(CREATIONTS, value);
-    }
 
     /**
      * Gets the attribute value for ModifiedBy, using the alias name ModifiedBy.
@@ -790,13 +787,6 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
         return (String)getAttributeInternal(MODIFIEDBY);
     }
 
-    /**
-     * Sets <code>value</code> as the attribute value for ModifiedBy.
-     * @param value value to set the ModifiedBy
-     */
-    public void setModifiedBy(String value) {
-        setAttributeInternal(MODIFIEDBY, value);
-    }
 
     /**
      * Gets the attribute value for ModificationTs, using the alias name ModificationTs.
@@ -806,13 +796,6 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(MODIFICATIONTS);
     }
 
-    /**
-     * Sets <code>value</code> as the attribute value for ModificationTs.
-     * @param value value to set the ModificationTs
-     */
-    public void setModificationTs(Timestamp value) {
-        setAttributeInternal(MODIFICATIONTS, value);
-    }
 
     /**
      * getAttrInvokeAccessor: generated method. Do not modify.
@@ -857,6 +840,20 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
      */
     public void setCrsContentEO(CrsContentEOImpl value) {
         setAttributeInternal(CRSCONTENTEO, value);
+    }
+
+    /**
+     * @return the associated entity oracle.jbo.server.EntityImpl.
+     */
+    public EntityImpl getCrsDomainsEO() {
+        return (EntityImpl)getAttributeInternal(CRSDOMAINSEO);
+    }
+
+    /**
+     * Sets <code>value</code> as the associated entity oracle.jbo.server.EntityImpl.
+     */
+    public void setCrsDomainsEO(EntityImpl value) {
+        setAttributeInternal(CRSDOMAINSEO, value);
     }
 
     /**

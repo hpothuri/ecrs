@@ -244,6 +244,16 @@
                 <name>/WEB-INF/taskflows/CompoundsTF.xml#CompoundsTF</name>
                 <actions>view</actions>
               </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.ManageDomainsPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.controller.security.TaskFlowPermission</class>
+                <name>/WEB-INF/taskflows/ManageDomainsTF.xml#ManageDomainsTF</name>
+                <actions>view</actions>
+              </permission>
             </permissions>
           </grant>
           <grant>
