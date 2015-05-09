@@ -339,7 +339,8 @@
                                               label="#{ecrsviewcontrollerBundle.MQM_COMMENT}"
                                               rows="3" contentStyle="width:75%;"
                                               disabled="#{!((securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN']) and bindings.StateId.inputValue eq 2)}"
-                                              visible="#{securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_MQM']}">
+                                              visible="#{securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_MQM']}"
+                                              autoSubmit="true">
                                     <f:validator binding="#{bindings.MqmComment.validator}"/>
                                 </af:inputText>
                                 <af:inputText value="#{bindings.TaslRejectComment.inputValue}"
