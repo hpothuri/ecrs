@@ -543,7 +543,8 @@
     </af:dialog>
   </af:popup>
   <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
-            binding="#{pageFlowScope.manageCRSBean.errorPLSqlPopup}">
+            binding="#{pageFlowScope.manageCRSBean.errorPLSqlPopup}"
+            contentDelivery="lazyUncached">
     <af:dialog id="d1" title="#{ecrsviewcontrollerBundle.ERROR}"
                titleIconSource="/images/error.png" inlineStyle="width:350px;">
       <f:facet name="buttonBar"/>

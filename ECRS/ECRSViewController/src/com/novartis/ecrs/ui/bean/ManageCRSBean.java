@@ -1270,8 +1270,8 @@ public class ManageCRSBean implements Serializable {
                           rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.RiskPurposeErFlag_LABEL"));
             columnMap.put("SocTerm",
                           rsBundle.getString("SOC_AS_ASSIGNED_TO_THE_ADR"));
-            columnMap.put("DatabaseList",
-                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.DatabaseId_LABEL"));
+//            columnMap.put("DatabaseList",
+//                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.DatabaseId_LABEL"));
             columnMap.put("DataDomain",
                           rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.DataDomain_LABEL"));
             columnMap.put("MeddraTerm", rsBundle.getString("MEDDRA_TERM"));
@@ -1753,7 +1753,8 @@ public class ManageCRSBean implements Serializable {
 
     public String initializeCreateUpdateCRS() {
         // chk if there exists a CRS in staging table with the same as selected CRS in base table
-        if (ModelConstants.BASE_FACET.equals(getBaseOrStaging()) &&
+        if (!"anonymous".equals(userName) &&
+            ModelConstants.BASE_FACET.equals(getBaseOrStaging()) &&
             ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType())) {
             setReasonForChange(null);
             ADFUtils.showPopup(getModifyReasonChngPopup());
@@ -2012,12 +2013,11 @@ public class ManageCRSBean implements Serializable {
                     resultMsg = (String)op.execute();
 
                     if (op.getErrors() != null && op.getErrors().size() > 0) {
-                        ADFUtils.showFacesMessage("An Internal Error occured,Please try again later.",
-                                                  FacesMessage.SEVERITY_ERROR);
+                        ADFUtils.setEL("#{pageFlowScope.plsqlerror}", resultMsg);
+                        ADFUtils.showPopup(getErrorPLSqlPopup());
                         setBaseOrStaging(ModelConstants.BASE_FACET);
                         ADFUtils.closeDialog(getModifyReasonChngPopup());
                         return "navToSearch";
-
                     } else {
                         // if PL/SQL call return value is success - set current row of staging table to CRS ID
                         if (ModelConstants.PLSQL_CALL_SUCCESS.equals(resultMsg)) {
@@ -2046,8 +2046,8 @@ public class ManageCRSBean implements Serializable {
                             }
                         } else {
                             setBaseOrStaging(ModelConstants.BASE_FACET);
-                            ADFUtils.showFacesMessage(resultMsg,
-                                                      FacesMessage.SEVERITY_ERROR);
+                            ADFUtils.setEL("#{pageFlowScope.plsqlerror}", resultMsg);
+                            ADFUtils.showPopup(getErrorPLSqlPopup());
                             ADFUtils.closeDialog(getModifyReasonChngPopup());
                             return "navToSearch";
                         }

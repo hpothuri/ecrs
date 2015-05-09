@@ -792,7 +792,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 cstmt.setString(3, pReasonForChange);
                 cstmt.execute();
                 returnMessage = cstmt.getString(1);
-                
+                baseVO.executeQuery();
             } catch (Exception e) {
                // e.printStackTrace();
                 returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
@@ -829,7 +829,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 cstmt.setString(3, pReasonForChange);
                 cstmt.execute();
                 returnMessage = cstmt.getString(1);
-                
+                baseVO.executeQuery();
             } catch (Exception e) {
                // e.printStackTrace();
                returnMessage = ModelConstants.PLSQL_CALL_FAILURE;

@@ -620,7 +620,7 @@
                   binding="#{pageFlowScope.manageCRSBean.crsPublishPopupBinding}">
             <af:dialog id="d9" title="#{ecrsviewcontrollerBundle.INFO}"
                        titleIconSource="/images/info_icon.png"
-                       closeIconVisible="false" type="ok">
+                       closeIconVisible="false" type="none">
                 <af:outputText value="#{ecrsviewcontrollerBundle.THE_CRS_HAS_BEEN_PUBLISHED}" id="ot11"/>
                 <f:facet name="buttonBar">
                     <af:commandButton text="#{ecrsviewcontrollerBundle.OK}" id="cb12" action="navToSearch"/>
