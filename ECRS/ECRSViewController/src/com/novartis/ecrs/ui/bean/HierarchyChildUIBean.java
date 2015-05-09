@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
 import oracle.jbo.Row;
 
 public class HierarchyChildUIBean {
@@ -28,7 +30,11 @@ public class HierarchyChildUIBean {
         this.term = (String)row.getAttribute("Term");
         this.dictContentCode = (String)row.getAttribute("DictContentCode");
         this.levelName = (String)row.getAttribute("LevelName");
-        this.dictShortName = (String)row.getAttribute("DictShortName");
+        if(this.levelName != null && ("SOC".equalsIgnoreCase(this.levelName.trim()) || "PT".equalsIgnoreCase(this.levelName.trim()) || "HLGT".equalsIgnoreCase(this.levelName.trim()) || "HLT".equalsIgnoreCase(this.levelName.trim())))
+            this.dictShortName = "NMATMED";
+        else
+            this.dictShortName = "NMATSMQ";
+//        this.dictShortName = (String)row.getAttribute("DictShortName");
         this.dictContentAltCode = (String)row.getAttribute("DictContentAltCode");
         this.level = (Long)row.getAttribute("Level");
         this.tmsDictContentEntryTs = (Timestamp)row.getAttribute("DictContentEntryTs");

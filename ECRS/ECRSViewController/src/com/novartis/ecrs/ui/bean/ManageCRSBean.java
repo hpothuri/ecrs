@@ -1025,16 +1025,16 @@ public class ManageCRSBean implements Serializable {
                     riskDefRow.setAttribute("MeddraVersionDate", ADFUtils.getPageFlowScopeValue("childDate"));
 
                     if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
-                        if (term != null && term.contains("NMQ"))
+                        if (selRow.getTerm() != null && selRow.getTerm().contains("NMQ"))
                             riskDefRow.setAttribute("MeddraExtension", "NMQ");
-                        else if (term != null && term.contains("CMQ"))
+                        else if (selRow.getTerm() != null && selRow.getTerm().contains("CMQ"))
                             riskDefRow.setAttribute("MeddraExtension", "CMQ");
-                        else if (term != null && term.contains("SMQ"))
+                        else if (selRow.getTerm() != null && selRow.getTerm().contains("SMQ"))
                             riskDefRow.setAttribute("MeddraExtension", "SMQ");
                         else
-                            riskDefRow.setAttribute("MeddraExtension", level);
+                            riskDefRow.setAttribute("MeddraExtension", selRow.getLevelName());
                     } else
-                        riskDefRow.setAttribute("MeddraExtension", level);
+                        riskDefRow.setAttribute("MeddraExtension", selRow.getLevelName());
 
 
 //                    riskDefRow.setAttribute("MeddraQualifier", getChildScope());
@@ -1043,6 +1043,7 @@ public class ManageCRSBean implements Serializable {
                     riskDefRow.setAttribute("TmsEndTs", selRow.getTmsEndTs());
                     riskDefRow.setAttribute("MeddraQualifier", selRow.getQual());
                     riskDefRow.setAttribute("MeddraQualifierUpdFlag", selRow.getQualFlag());
+                    riskDefRow.setAttribute("CrsQualifier", selRow.getQual());
                     riskDefVO.insertRow(riskDefRow);
                 }
             } else {

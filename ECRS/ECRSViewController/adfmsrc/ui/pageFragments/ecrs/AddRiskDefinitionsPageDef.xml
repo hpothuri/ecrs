@@ -89,6 +89,7 @@
           <Item Value="SearchCriteriaDetails"/>
           <Item Value="TmsUpdateFlag"/>
           <Item Value="CrsQualifier"/>
+          <Item Value="MeddraQualifierUpdFlag"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -390,6 +391,7 @@
           <Item Value="MeddraExtension"/>
           <Item Value="CrsEffectiveDt"/>
           <Item Value="CrsQualifier"/>
+          <Item Value="MeddraQualifierUpdFlag"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

@@ -109,7 +109,7 @@
       <property
          name="fromOutcome">riskPurpose</property>
       <property
-         name="sdm:polyPoints">L66,432.0,160.94824,286.6963,277.44824,T50</property>
+         name="sdm:polyPoints">L72,432.0,164.44824,286.6963,277.44824,T50</property>
    </ControlFlowCase>
    <View
       id="View11">
@@ -134,7 +134,7 @@
       <property
          name="fromOutcome">compound</property>
       <property
-         name="sdm:polyPoints">L45,428.5118,146.94824,247.03516,186.44824,R50</property>
+         name="sdm:polyPoints">L50,428.60788,150.44824,247.03516,186.44824,R50</property>
    </ControlFlowCase>
    <View
       id="View13">
@@ -184,7 +184,7 @@
       <property
          name="fromOutcome">create</property>
       <property
-         name="sdm:polyPoints">L34,432.0,139.94824,290.5,60.448242,B50</property>
+         name="sdm:polyPoints">L28,432.0,136.44824,290.5,60.448242,B50</property>
    </ControlFlowCase>
    <View
       id="View17">
@@ -334,7 +334,7 @@
       <property
          name="fromOutcome">meddraComponents</property>
       <property
-         name="sdm:polyPoints">L55,429.82574,153.94824,149.36816,318.44824,T50</property>
+         name="sdm:polyPoints">L66,429.9195,160.94824,149.36816,318.44824,T50</property>
    </ControlFlowCase>
    <View
       id="View29">
@@ -409,6 +409,31 @@
       <property
          name="fromOutcome">retiredNmq</property>
       <property
-         name="sdm:polyPoints">L39,430.94855,143.44824,156.34668,116.44824,R50</property>
+         name="sdm:polyPoints">L45,430.22086,146.94824,156.34668,116.44824,R50</property>
+   </ControlFlowCase>
+   <View
+      id="View36">
+      <property
+         name="activityId">ManageDomains</property>
+      <property
+         name="page">/pages/ManageDomains.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>ManageDomains&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">32.79883</property>
+      <property
+         name="x">182.35742</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase37"
+      from="WildcardControlFlowRule2"
+      to="View36">
+      <property
+         name="fromOutcome">domains</property>
+      <property
+         name="sdm:polyPoints">L34,430.78473,139.94824,182.35742,86.44824,B50</property>
    </ControlFlowCase>
 </SDM>

@@ -491,13 +491,13 @@
               </af:column>
               <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.name}" sortable="false"
                          headerText="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.label}" id="c26">
-                <af:inputText value="#{row.bindings.MeddraQualifier.inputValue}"
+                <af:inputText value="#{row.bindings.CrsQualifier.inputValue}"
                               label="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.label}"
                               required="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.mandatory}"
                               columns="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.displayWidth}"
                               maximumLength="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.precision}"
                               shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.tooltip}" id="it18"
-                              readOnly="true">
+                              readOnly="#{row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}">
                   <f:validator binding="#{row.bindings.MeddraQualifier.validator}"/>
                 </af:inputText>
               </af:column>
@@ -902,8 +902,10 @@
                 </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraQualifier.name}" sortable="false"
                            headerText="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraQualifier.label}" id="c57">
-                  <af:outputText value="#{row.MeddraQualifier}"
-                                 shortDesc="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraQualifier.tooltip}" id="ot35"/>
+                  <af:outputText value="#{row.CrsQualifier}"
+                                 shortDesc="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraQualifier.tooltip}" id="ot35"
+                                 rendered="false"/>
+                  <af:inputText id="it8" value="#{row.CrsQualifier}" readOnly="#{row.MeddraQualifierUpdFlag ne 'Y'}"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraCode.name}" sortable="false"
                            headerText="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraCode.label}" id="c58">
