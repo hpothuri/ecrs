@@ -468,7 +468,6 @@
           <Item Value="RiskPurposeMiFlag" Binds="RiskPurposeMiFlag2"/>
           <Item Value="RiskPurposeErFlag" Binds="RiskPurposeErFlag2"/>
           <Item Value="SocTerm"/>
-          <Item Value="DatabaseList"/>
           <Item Value="DataDomain"/>
           <Item Value="MeddraTerm"/>
           <Item Value="MeddraLevel"/>
