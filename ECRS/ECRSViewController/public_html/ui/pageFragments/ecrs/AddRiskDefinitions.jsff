@@ -407,15 +407,15 @@
             <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc2"
                                  value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true"
                                  readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}" required="true">
-              <af:selectItem label="SP" id="si4" value="SP"/>
-              <af:selectItem label="DS" id="si5" value="DS"/>
-              <af:selectItem label="RM" id="si6" value="RM"/>
-              <af:selectItem label="PS" id="si7" value="PS"/>
-              <af:selectItem label="CD" id="si8" value="CD"/>
-              <af:selectItem label="IB" id="si9" value="IB"/>
-              <af:selectItem label="OS" id="si10" value="OS"/>
-              <af:selectItem label="MI" id="si11" value="MI"/>
-              <af:selectItem label="ER" id="si12" value="ER"/>
+              <af:selectItem label="SP (SPP)" id="si4" value="SP"/>
+              <af:selectItem label="DS (DSUR)" id="si5" value="DS"/>
+              <af:selectItem label="RM (RMP)" id="si6" value="RM"/>
+              <af:selectItem label="PS (PSUR)" id="si7" value="PS"/>
+              <af:selectItem label="CD (CDS)" id="si8" value="CD"/>
+              <af:selectItem label="IB (Expected in (IB))" id="si9" value="IB"/>
+              <af:selectItem label="OS (Other Search)" id="si10" value="OS"/>
+              <af:selectItem label="MI (Missing Information)" id="si11" value="MI"/>
+              <af:selectItem label="ER (Expediting Rules)" id="si12" value="ER"/>
             </af:selectManyChoice>
           </af:panelFormLayout>
           <af:panelFormLayout id="pfl3">
@@ -847,15 +847,15 @@
               <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc4"
                                    value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true"
                                    binding="#{pageFlowScope.manageCRSBean.copyRPListBinding}">
-                <af:selectItem label="SP" id="si19" value="SP"/>
-                <af:selectItem label="DS" id="si20" value="DS"/>
-                <af:selectItem label="RM" id="si21" value="RM"/>
-                <af:selectItem label="PS" id="si22" value="PS"/>
-                <af:selectItem label="CD" id="si23" value="CD"/>
-                <af:selectItem label="IB" id="si24" value="IB"/>
-                <af:selectItem label="OS" id="si25" value="OS"/>
-                <af:selectItem label="MI" id="si26" value="MI"/>
-                <af:selectItem label="ER" id="si27" value="ER"/>
+                <af:selectItem label="SP (SPP)" id="si1" value="SP"/>
+                <af:selectItem label="DS (DSUR)" id="si2" value="DS"/>
+                <af:selectItem label="RM (RMP)" id="si3" value="RM"/>
+                <af:selectItem label="PS (PSUR)" id="si16" value="PS"/>
+                <af:selectItem label="CD (CDS)" id="si19" value="CD"/>
+                <af:selectItem label="IB (Expected in (IB))" id="si20" value="IB"/>
+                <af:selectItem label="OS (Other Search)" id="si21" value="OS"/>
+                <af:selectItem label="MI (Missing Information)" id="si22" value="MI"/>
+                <af:selectItem label="ER (Expediting Rules)" id="si23" value="ER"/>
               </af:selectManyChoice>
             </af:panelFormLayout>
             <af:panelFormLayout id="pfl5">
