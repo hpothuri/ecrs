@@ -4,7 +4,6 @@ package com.novartis.ecrs.model.am;
 import com.novartis.ecrs.model.am.common.ECRSAppModule;
 import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.view.ECrsSearchVORowImpl;
-import com.novartis.ecrs.model.view.HierarchyChildDetailVOImpl;
 import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.DomainsTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
@@ -153,24 +152,24 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         
         //IF INBOX SELECTED - PENDING ONES IN USER'S QUEUE
         ECrsSearchVORowImpl row = null;
-        if (isInboxDisable) {
-            whereClause +=
-                    "RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING +
-            "' AND ";
-            
-            //if user role is MQM - set state = 2 and 3 , TASL - SET State = 4 , ML - set state = 5
-            // set appropriate column names
-            if (ModelConstants.ROLE_MQM.equals(userInRole))
-                whereClause += "STATE_ID IN (2,3)";
-            else if (ModelConstants.ROLE_TASL.equals(userInRole))
-                whereClause += "STATE_ID = 4 AND TASL_NAME ='"+userName+"'";
-            else if (ModelConstants.ROLE_ML.equals(userInRole))
-                whereClause += "STATE_ID = 5 AND MEDICAL_LEAD_NAME ='"+userName+"'";          
-            else if (ModelConstants.ROLE_BSL.equals(userInRole))
-                whereClause += "STATE_ID NOT IN (2,4,5) AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')";     
-
-        // INBOX NOT SELECTED
-        } else {
+//        if (isInboxDisable) {
+//            whereClause +=
+//                    "RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING +
+//            "' AND ";
+//            
+//            //if user role is MQM - set state = 2 and 3 , TASL - SET State = 4 , ML - set state = 5
+//            // set appropriate column names
+//            if (ModelConstants.ROLE_MQM.equals(userInRole))
+//                whereClause += "STATE_ID IN (2,3)";
+//            else if (ModelConstants.ROLE_TASL.equals(userInRole))
+//                whereClause += "STATE_ID = 4 AND TASL_NAME ='"+userName+"'";
+//            else if (ModelConstants.ROLE_ML.equals(userInRole))
+//                whereClause += "STATE_ID = 5 AND MEDICAL_LEAD_NAME ='"+userName+"'";          
+//            else if (ModelConstants.ROLE_BSL.equals(userInRole))
+//                whereClause += "STATE_ID NOT IN (2,4,5) AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')";     
+//
+//        // INBOX NOT SELECTED
+//        } else {
 
             row = (ECrsSearchVORowImpl)searchVO.getCurrentRow();
 
@@ -212,7 +211,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 5 AND MEDICAL_LEAD_NAME ='"+userName+"') OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
             if (ModelConstants.ROLE_BSL.equals(userInRole))
                 whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID NOT IN (2,4,5) AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
-        }
+//        }
         
         if (whereClause.endsWith("AND "))
             whereClause =

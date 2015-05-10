@@ -275,15 +275,6 @@
                                         <af:showPopupBehavior popupId="taslApprove"
                                                               triggerType="action"/>
                                     </af:commandButton>
-                                    <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.ML_APPROVE : ecrsviewcontrollerBundle.APPROVE}"
-                                                      id="cb15"
-                                                      disabled="#{bindings.StateId.inputValue ne 5}"
-                                                      visible="#{(securityContext.userInRole['CRS_ML'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      partialSubmit="true"
-                                                      inlineStyle="margin-right:10px;">
-                                        <af:showPopupBehavior popupId="mlApprv"
-                                                              triggerType="action"/>
-                                    </af:commandButton>
                                     <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.TASL_REJECT : ecrsviewcontrollerBundle.REJECT}"
                                                       id="cb10"
                                                       partialSubmit="true"
@@ -291,6 +282,15 @@
                                                       visible="#{(securityContext.userInRole['CRS_TASL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
                                                       inlineStyle="margin-right:10px;">
                                         <af:showPopupBehavior popupId="taslReject"
+                                                              triggerType="action"/>
+                                    </af:commandButton>
+                                    <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.ML_APPROVE : ecrsviewcontrollerBundle.APPROVE}"
+                                                      id="cb15"
+                                                      disabled="#{bindings.StateId.inputValue ne 5}"
+                                                      visible="#{(securityContext.userInRole['CRS_ML'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
+                                                      partialSubmit="true"
+                                                      inlineStyle="margin-right:10px;">
+                                        <af:showPopupBehavior popupId="mlApprv"
                                                               triggerType="action"/>
                                     </af:commandButton>
                                     <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.ML_REJECT : ecrsviewcontrollerBundle.REJECT}"
@@ -624,7 +624,8 @@
                        closeIconVisible="false" type="none">
                 <af:outputText value="#{ecrsviewcontrollerBundle.THE_CRS_HAS_BEEN_PUBLISHED}" id="ot11"/>
                 <f:facet name="buttonBar">
-                    <af:commandButton text="#{ecrsviewcontrollerBundle.OK}" id="cb12" action="navToSearch"/>
+                    <af:commandButton text="#{ecrsviewcontrollerBundle.OK}" id="cb12"
+                                      action="reloadSearch"/>
                 </f:facet>
             </af:dialog>
         </af:popup>

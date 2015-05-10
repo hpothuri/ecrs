@@ -149,6 +149,8 @@ public class ManageCRSBean implements Serializable {
     private String filterCri1="OR";
     private String filterCri2="OR";
     private RichPopup advancedFilterPopup;
+    private transient RichTable searchStagingTableBinding;
+    private String currReleaseStatus = ViewConstants.REL_STATUS_PENDING;
 
     public ManageCRSBean() {
         super();
@@ -330,6 +332,8 @@ public class ManageCRSBean implements Serializable {
                   ModelConstants.ROLE_TASL.equals(loggedInUserRole)))
             ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}", ModelConstants.STATUS_PENDING);
 
+        ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}", getCurrReleaseStatus());
+ 
         DCBindingContainer bc = ADFUtils.getDCBindingContainer();
         OperationBinding ob = bc.getOperationBinding("filterCRSContent");
         ob.getParamsMap().put("userInRole", loggedInUserRole);
@@ -498,7 +502,7 @@ public class ManageCRSBean implements Serializable {
             String compCode = (String)ADFUtils.evaluateEL("#{bindings.CompoundCode.inputValue}");
             String indication = (String)ADFUtils.evaluateEL("#{bindings.Indication.inputValue}");
             ADFUtils.setEL("#{bindings.CrsName.inputValue}",
-                           (compCode != null ? compCode : crsCompCode) + " " + (indication != null ? indication : ""));
+                           (compCode != null ? compCode : crsCompCode) + (indication != null ? (" "+indication) : ""));
         }
     }
 
@@ -1951,6 +1955,8 @@ public class ManageCRSBean implements Serializable {
      * @return
      */
     public String getReasonForChange() {
+        if(!ViewConstants.isNotEmpty(reasonForChange))
+            reasonForChange = ViewConstants.REASON_DEFAULT_VALUE;
         return reasonForChange;
     }
 
@@ -2203,5 +2209,53 @@ public class ManageCRSBean implements Serializable {
         setFilterValue3(null);
         setFilterCri1("OR");
         setFilterCri2("OR");
+    }
+
+    /**
+     * Reload the iteractors on search page.
+     */
+    public void reloadSearchResults() {
+        // Add event code here...
+        ADFUtils.closeDialog(getCrsPublishPopupBinding());
+        DCBindingContainer bc =
+            ADFUtils.findBindingContainerByName(ViewConstants.PAGE_DEF_SEARCH);
+        if (bc != null) {
+            DCIteratorBinding stgIter =
+                bc.findIteratorBinding("CrsContentVOIterator");
+            if (stgIter != null) {
+                stgIter.executeQuery();
+            }
+            DCIteratorBinding baseIter =
+                bc.findIteratorBinding("CrsContentBaseVOIterator");
+            if (baseIter != null) {
+                baseIter.executeQuery();
+            }
+            if (getSearchBaseTableBinding() != null)
+                getSearchBaseTableBinding().resetStampState();
+            if (getSearchStagingTableBinding() != null)
+                getSearchStagingTableBinding().resetStampState();
+        }
+    }
+
+    /**
+     * @param searchStagingTableBinding
+     */
+    public void setSearchStagingTableBinding(RichTable searchStagingTableBinding) {
+        this.searchStagingTableBinding = searchStagingTableBinding;
+    }
+
+    /**
+     * @return
+     */
+    public RichTable getSearchStagingTableBinding() {
+        return searchStagingTableBinding;
+    }
+
+    public void setCurrReleaseStatus(String currReleaseStatus) {
+        this.currReleaseStatus = currReleaseStatus;
+    }
+
+    public String getCurrReleaseStatus() {
+        return currReleaseStatus;
     }
 }

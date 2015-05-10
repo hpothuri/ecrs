@@ -78,6 +78,12 @@
         <fixed-outcome>init</fixed-outcome>
       </outcome>
     </method-call>
+    <method-call id="reloadResults">
+      <method>#{pageFlowScope.manageCRSBean.reloadSearchResults}</method>
+      <outcome>
+        <fixed-outcome>toSearchPage</fixed-outcome>
+      </outcome>
+    </method-call>
     <train/>
     <control-flow-rule id="__5">
       <from-activity-id>crsFlowRouter</from-activity-id>
@@ -129,6 +135,10 @@
         <from-outcome>navToSearch</from-outcome>
         <to-activity-id>serach</to-activity-id>
       </control-flow-case>
+      <control-flow-case id="__30">
+        <from-outcome>reloadSearch</from-outcome>
+        <to-activity-id>reloadResults</to-activity-id>
+      </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__19">
       <from-activity-id>initRiskRelation</from-activity-id>
@@ -167,6 +177,13 @@
       <control-flow-case id="__29">
         <from-outcome>init</from-outcome>
         <to-activity-id>crsFlowRouter</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__31">
+      <from-activity-id>reloadResults</from-activity-id>
+      <control-flow-case id="__32">
+        <from-outcome>toSearchPage</from-outcome>
+        <to-activity-id>serach</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

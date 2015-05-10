@@ -41,11 +41,11 @@
               </af:selectOneChoice>
             </f:facet>            
             <f:facet name="BOTH">
-              <af:selectOneChoice value="#{bindings.ReleaseStatus.inputValue}"
+              <af:selectOneChoice value="#{pageFlowScope.manageCRSBean.currReleaseStatus}"
                                   label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
                                   shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
-                                  id="it8" contentStyle="width:170px;"
-                                  disabled="#{pageFlowScope.manageCRSBean.inboxDisable}" required="true">
+                                  id="it8" contentStyle="width:170px;" required="true"
+                                  autoSubmit="true">
                 <af:selectItem label="CURRENT" id="si8" value="C"/>
                 <af:selectItem label="PENDING" id="si9" value="P"/>
               </af:selectOneChoice>
@@ -155,7 +155,8 @@
                                     label="#{ecrsviewcontrollerBundle.INBOX}" id="sbc1"
                                     valueChangeListener="#{pageFlowScope.manageCRSBean.onSelectInbox}"
                                     autoSubmit="true"
-                                    rendered="#{!securityContext.userInRole['CRS_ADMIN'] &amp;&amp; securityContext.authenticated}"/>
+                                    rendered="#{!securityContext.userInRole['CRS_ADMIN'] &amp;&amp; securityContext.authenticated}"
+                                    visible="false"/>
           <af:commandButton text="#{ecrsviewcontrollerBundle.SEARCH}" id="cb1"
                             actionListener="#{pageFlowScope.manageCRSBean.onClickSearch}"/>
           <f:facet name="separator">
@@ -310,7 +311,8 @@
                     selectionListener="#{pageFlowScope.manageCRSBean.searchTableSelectionListener}"
                     rowSelection="single" id="t2" styleClass="AFStretchWidth"
                     columnStretching="column:c1" contentDelivery="immediate"
-                    autoHeightRows="15" inlineStyle="min-height:300px;">
+                    autoHeightRows="15" inlineStyle="min-height:300px;"
+                    binding="#{pageFlowScope.manageCRSBean.searchStagingTableBinding}">
             <af:column sortProperty="#{bindings.CrsContentVO.hints.CrsId.name}"
                        sortable="false"
                        headerText="#{ecrsviewcontrollerBundle.CRS_ID}" id="c3"
