@@ -7,7 +7,8 @@
   Version="11.1.2.64.36"
   SelectList="CrsRolesEO.ROLE_ID, 
        CrsRolesEO.ROLE_NAME, 
-       CrsRolesEO.ROLE_DESC"
+       CrsRolesEO.ROLE_DESC, 
+       CrsRolesEO.ACTIVE_FLAG"
   FromList="CRS.CRS_ROLES CrsRolesEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -46,6 +47,13 @@
     EntityAttrName="RoleDesc"
     EntityUsage="CrsRolesEO"
     AliasName="ROLE_DESC"/>
+  <ViewAttribute
+    Name="ActiveFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ActiveFlag"
+    EntityUsage="CrsRolesEO"
+    AliasName="ACTIVE_FLAG"/>
   <ViewCriteria
     Name="searchRoles"
     ViewObjectName="com.novartis.ecrs.model.view.CrsRolesVO"

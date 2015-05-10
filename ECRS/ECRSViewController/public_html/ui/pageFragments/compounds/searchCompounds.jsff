@@ -52,7 +52,7 @@
                   fetchSize="#{bindings.CrsCompoundVO.rangeSize}" rowBandingInterval="0"
                   selectedRowKeys="#{bindings.CrsCompoundVO.collectionModel.selectedRow}"
                   selectionListener="#{bindings.CrsCompoundVO.collectionModel.makeCurrent}" rowSelection="single"
-                  id="t2" styleClass="AFStretchWidth" columnStretching="last">
+                  id="t2" styleClass="AFStretchWidth" columnStretching="column:c4">
           <af:column sortProperty="#{bindings.CrsCompoundVO.hints.CompoundId.name}" sortable="true"
                      headerText="Compound Id" id="c1">
             <af:commandLink shortDesc="#{bindings.CrsCompoundVO.hints.CompoundId.tooltip}" id="ot1"
@@ -74,6 +74,11 @@
                      headerText="Compound Description" id="c4">
             <af:outputText value="#{row.CompoundDesc}" shortDesc="#{bindings.CrsCompoundVO.hints.CompoundDesc.tooltip}"
                            id="ot4"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.CrsCompoundVO.hints.ActiveFlag.name}" sortable="false"
+                     headerText="#{ecrsviewcontrollerBundle.ACTIVE_FLAG}" id="c5">
+            <af:outputText value="#{row.ActiveFlag}" shortDesc="#{bindings.CrsCompoundVO.hints.ActiveFlag.tooltip}"
+                           id="ot5"/>
           </af:column>
         </af:table>
       </af:panelCollection>

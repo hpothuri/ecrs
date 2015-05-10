@@ -46,7 +46,7 @@
                   fetchSize="#{bindings.CrsStateVO.rangeSize}" rowBandingInterval="0"
                   selectedRowKeys="#{bindings.CrsStateVO.collectionModel.selectedRow}"
                   selectionListener="#{bindings.CrsStateVO.collectionModel.makeCurrent}" rowSelection="single" id="t2"
-                  width="AFStretchWidth" columnStretching="last">
+                  width="AFStretchWidth" columnStretching="column:c3">
           <af:column sortProperty="#{bindings.CrsStateVO.hints.StateId.name}" sortable="true"
                      headerText="#{ecrsviewcontrollerBundle.STATE_ID}" id="c1">
             <af:commandLink shortDesc="#{bindings.CrsStateVO.hints.StateId.tooltip}" id="ot1" text="#{row.StateId}"
@@ -61,6 +61,11 @@
                      headerText="#{ecrsviewcontrollerBundle.STATE_DESCRIPTION}" id="c3">
             <af:outputText value="#{row.StateDesc}" shortDesc="#{bindings.CrsStateVO.hints.StateDesc.tooltip}"
                            id="ot3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.CrsStateVO.hints.ActiveFlag.name}" sortable="false"
+                     headerText="#{ecrsviewcontrollerBundle.ACTIVE_FLAG}" id="c4">
+            <af:outputText value="#{row.ActiveFlag}" shortDesc="#{bindings.CrsStateVO.hints.ActiveFlag.tooltip}"
+                           id="ot4"/>
           </af:column>
         </af:table>
       </af:panelCollection>

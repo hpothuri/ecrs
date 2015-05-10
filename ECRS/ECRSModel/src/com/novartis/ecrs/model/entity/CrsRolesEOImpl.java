@@ -47,6 +47,26 @@ public class CrsRolesEOImpl extends EntityImpl {
             }
         }
         ,
+        OracleRoleName {
+            public Object get(CrsRolesEOImpl obj) {
+                return obj.getOracleRoleName();
+            }
+
+            public void put(CrsRolesEOImpl obj, Object value) {
+                obj.setOracleRoleName((String)value);
+            }
+        }
+        ,
+        ActiveFlag {
+            public Object get(CrsRolesEOImpl obj) {
+                return obj.getActiveFlag();
+            }
+
+            public void put(CrsRolesEOImpl obj, Object value) {
+                obj.setActiveFlag((String)value);
+            }
+        }
+        ,
         CrsUserRolesEO {
             public Object get(CrsRolesEOImpl obj) {
                 return obj.getCrsUserRolesEO();
@@ -83,15 +103,25 @@ public class CrsRolesEOImpl extends EntityImpl {
             return vals;
         }
     }
+
     public static final int ROLEID = AttributesEnum.RoleId.index();
     public static final int ROLENAME = AttributesEnum.RoleName.index();
     public static final int ROLEDESC = AttributesEnum.RoleDesc.index();
+    public static final int ORACLEROLENAME = AttributesEnum.OracleRoleName.index();
+    public static final int ACTIVEFLAG = AttributesEnum.ActiveFlag.index();
     public static final int CRSUSERROLESEO = AttributesEnum.CrsUserRolesEO.index();
 
     /**
      * This is the default constructor (do not remove).
      */
     public CrsRolesEOImpl() {
+    }
+
+    /**
+     * @return the definition object for this instance class.
+     */
+    public static synchronized EntityDefImpl getDefinitionObject() {
+        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsRolesEO");
     }
 
     /**
@@ -143,6 +173,38 @@ public class CrsRolesEOImpl extends EntityImpl {
     }
 
     /**
+     * Gets the attribute value for OracleRoleName, using the alias name OracleRoleName.
+     * @return the value of OracleRoleName
+     */
+    public String getOracleRoleName() {
+        return (String)getAttributeInternal(ORACLEROLENAME);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for OracleRoleName.
+     * @param value value to set the OracleRoleName
+     */
+    public void setOracleRoleName(String value) {
+        setAttributeInternal(ORACLEROLENAME, value);
+    }
+
+    /**
+     * Gets the attribute value for ActiveFlag, using the alias name ActiveFlag.
+     * @return the value of ActiveFlag
+     */
+    public String getActiveFlag() {
+        return (String)getAttributeInternal(ACTIVEFLAG);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ActiveFlag.
+     * @param value value to set the ActiveFlag
+     */
+    public void setActiveFlag(String value) {
+        setAttributeInternal(ACTIVEFLAG, value);
+    }
+
+    /**
      * getAttrInvokeAccessor: generated method. Do not modify.
      * @param index the index identifying the attribute
      * @param attrDef the attribute
@@ -187,6 +249,7 @@ public class CrsRolesEOImpl extends EntityImpl {
         setAttributeInternal(CRSUSERROLESEO, value);
     }
 
+
     /**
      * @param roleId key constituent
 
@@ -196,13 +259,6 @@ public class CrsRolesEOImpl extends EntityImpl {
         return new Key(new Object[]{roleId});
     }
 
-    /**
-     * @return the definition object for this instance class.
-     */
-    public static synchronized EntityDefImpl getDefinitionObject() {
-        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsRolesEO");
-    }
-    
     public void doDML(int operation, TransactionEvent e) {
         if(operation == DML_INSERT)
             this.setRoleId((Integer)(new SequenceImpl("crs_roles_seq",getDBTransaction()).getSequenceNumber()).intValue());

@@ -33,6 +33,11 @@
                       shortDesc="#{bindings.StateDesc.hints.tooltip}" id="it3" contentStyle="width:200px;">
           <f:validator binding="#{bindings.StateDesc.validator}"/>
         </af:inputText>
+        <af:selectOneChoice label="#{ecrsviewcontrollerBundle.ACTIVE_FLAG}" id="soc1"
+                            value="#{bindings.ActiveFlag.inputValue}">
+          <af:selectItem label="Y" value="Y" id="si1"/>
+          <af:selectItem label="N" value="N" id="si2"/>
+        </af:selectOneChoice>
         <af:inputText value="#{bindings.StateId.inputValue == -1 ? '' : bindings.StateId.inputValue}" label="#{ecrsviewcontrollerBundle.STATE_ID}"
                       required="#{bindings.StateId.hints.mandatory}" columns="#{bindings.StateId.hints.displayWidth}"
                       maximumLength="#{bindings.StateId.hints.precision}" shortDesc="#{bindings.StateId.hints.tooltip}"

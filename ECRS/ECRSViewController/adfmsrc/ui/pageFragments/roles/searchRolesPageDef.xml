@@ -25,6 +25,7 @@
           <Item Value="RoleId"/>
           <Item Value="RoleName"/>
           <Item Value="RoleDesc"/>
+          <Item Value="ActiveFlag"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

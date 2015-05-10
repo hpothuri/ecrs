@@ -48,6 +48,16 @@ public class CrsStateEOImpl extends EntityImpl {
             }
         }
         ,
+        ActiveFlag {
+            public Object get(CrsStateEOImpl obj) {
+                return obj.getActiveFlag();
+            }
+
+            public void put(CrsStateEOImpl obj, Object value) {
+                obj.setActiveFlag((String)value);
+            }
+        }
+        ,
         CrsContentEO {
             public Object get(CrsStateEOImpl obj) {
                 return obj.getCrsContentEO();
@@ -84,15 +94,24 @@ public class CrsStateEOImpl extends EntityImpl {
             return vals;
         }
     }
+
     public static final int STATEID = AttributesEnum.StateId.index();
     public static final int STATENAME = AttributesEnum.StateName.index();
     public static final int STATEDESC = AttributesEnum.StateDesc.index();
+    public static final int ACTIVEFLAG = AttributesEnum.ActiveFlag.index();
     public static final int CRSCONTENTEO = AttributesEnum.CrsContentEO.index();
 
     /**
      * This is the default constructor (do not remove).
      */
     public CrsStateEOImpl() {
+    }
+
+    /**
+     * @return the definition object for this instance class.
+     */
+    public static synchronized EntityDefImpl getDefinitionObject() {
+        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsStateEO");
     }
 
     /**
@@ -144,6 +163,22 @@ public class CrsStateEOImpl extends EntityImpl {
     }
 
     /**
+     * Gets the attribute value for ActiveFlag, using the alias name ActiveFlag.
+     * @return the value of ActiveFlag
+     */
+    public String getActiveFlag() {
+        return (String)getAttributeInternal(ACTIVEFLAG);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ActiveFlag.
+     * @param value value to set the ActiveFlag
+     */
+    public void setActiveFlag(String value) {
+        setAttributeInternal(ACTIVEFLAG, value);
+    }
+
+    /**
      * getAttrInvokeAccessor: generated method. Do not modify.
      * @param index the index identifying the attribute
      * @param attrDef the attribute
@@ -181,6 +216,7 @@ public class CrsStateEOImpl extends EntityImpl {
         return (RowIterator)getAttributeInternal(CRSCONTENTEO);
     }
 
+
     /**
      * @param stateId key constituent
 
@@ -190,13 +226,6 @@ public class CrsStateEOImpl extends EntityImpl {
         return new Key(new Object[]{stateId});
     }
 
-    /**
-     * @return the definition object for this instance class.
-     */
-    public static synchronized EntityDefImpl getDefinitionObject() {
-        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsStateEO");
-    }
-    
     public void doDML(int operation, TransactionEvent e) {
         if(operation == DML_INSERT)
             this.setStateId((Integer)(new SequenceImpl("crs_states_seq",getDBTransaction()).getSequenceNumber()).intValue());

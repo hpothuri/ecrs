@@ -8,7 +8,8 @@
   SelectList="CrsCompoundEO.COMPOUND_ID, 
        CrsCompoundEO.COMPOUND_CODE, 
        CrsCompoundEO.COMPOUND_TYPE, 
-       CrsCompoundEO.COMPOUND_DESC"
+       CrsCompoundEO.COMPOUND_DESC, 
+       CrsCompoundEO.ACTIVE_FLAG"
   FromList="CRS.CRS_COMPOUNDS CrsCompoundEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -87,6 +88,13 @@
     EntityAttrName="CompoundDesc"
     EntityUsage="CrsCompoundEO"
     AliasName="COMPOUND_DESC"/>
+  <ViewAttribute
+    Name="ActiveFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ActiveFlag"
+    EntityUsage="CrsCompoundEO"
+    AliasName="ACTIVE_FLAG"/>
   <ViewCriteria
     Name="findByCompoundType"
     ViewObjectName="com.novartis.ecrs.model.view.CrsCompoundVO"

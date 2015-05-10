@@ -32,5 +32,10 @@
             Action="createInsertRow"/>
     <action id="Commit" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
             RequiresUpdateModel="true" Action="commitTransaction"/>
+    <attributeValues IterBinding="CrsCompoundVOIterator" id="ActiveFlag">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

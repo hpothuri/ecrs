@@ -26,6 +26,7 @@
           <Item Value="RiskPurposeId"/>
           <Item Value="RiskPurposeCode"/>
           <Item Value="RiskPurposeDesc"/>
+          <Item Value="ActiveFlag"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

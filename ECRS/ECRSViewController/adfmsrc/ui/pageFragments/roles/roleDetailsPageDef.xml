@@ -30,5 +30,10 @@
             RequiresUpdateModel="false" Action="rollbackTransaction"/>
     <action IterBinding="RolesTransientVOIterator" id="CreateInsert" RequiresUpdateModel="true"
             Action="createInsertRow"/>
+    <attributeValues IterBinding="CrsRolesVOIterator" id="ActiveFlag">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

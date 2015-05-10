@@ -45,7 +45,7 @@
                   fetchSize="#{bindings.CrsRolesVO.rangeSize}" rowBandingInterval="0"
                   selectedRowKeys="#{bindings.CrsRolesVO.collectionModel.selectedRow}"
                   selectionListener="#{bindings.CrsRolesVO.collectionModel.makeCurrent}" rowSelection="single" id="t2"
-                  styleClass="AFStretchWidth" columnStretching="last">
+                  styleClass="AFStretchWidth" columnStretching="column:c3">
           <af:column sortProperty="#{bindings.CrsRolesVO.hints.RoleId.name}" sortable="true"
                      headerText="#{ecrsviewcontrollerBundle.ROLE_ID}" id="c1">
             <af:commandLink shortDesc="#{bindings.CrsRolesVO.hints.RoleId.tooltip}" id="ot1" text="#{row.RoleId}"
@@ -58,6 +58,11 @@
           <af:column sortProperty="#{bindings.CrsRolesVO.hints.RoleDesc.name}" sortable="true"
                      headerText="#{ecrsviewcontrollerBundle.ROLE_DESCRIPTION}" id="c3">
             <af:outputText value="#{row.RoleDesc}" shortDesc="#{bindings.CrsRolesVO.hints.RoleDesc.tooltip}" id="ot3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.CrsRolesVO.hints.ActiveFlag.name}" sortable="false"
+                     headerText="#{ecrsviewcontrollerBundle.ACTIVE_FLAG}" id="c4">
+            <af:outputText value="#{row.ActiveFlag}" shortDesc="#{bindings.CrsRolesVO.hints.ActiveFlag.tooltip}"
+                           id="ot4"/>
           </af:column>
         </af:table>
       </af:panelCollection>

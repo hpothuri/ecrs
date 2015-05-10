@@ -46,6 +46,16 @@ public class CrsRiskPurposesEOImpl extends EntityImpl {
                 obj.setRiskPurposeDesc((String)value);
             }
         }
+        ,
+        ActiveFlag {
+            public Object get(CrsRiskPurposesEOImpl obj) {
+                return obj.getActiveFlag();
+            }
+
+            public void put(CrsRiskPurposesEOImpl obj, Object value) {
+                obj.setActiveFlag((String)value);
+            }
+        }
         ;
         private static AttributesEnum[] vals = null;
         private static int firstIndex = 0;
@@ -73,14 +83,23 @@ public class CrsRiskPurposesEOImpl extends EntityImpl {
             return vals;
         }
     }
+
     public static final int RISKPURPOSEID = AttributesEnum.RiskPurposeId.index();
     public static final int RISKPURPOSECODE = AttributesEnum.RiskPurposeCode.index();
     public static final int RISKPURPOSEDESC = AttributesEnum.RiskPurposeDesc.index();
+    public static final int ACTIVEFLAG = AttributesEnum.ActiveFlag.index();
 
     /**
      * This is the default constructor (do not remove).
      */
     public CrsRiskPurposesEOImpl() {
+    }
+
+    /**
+     * @return the definition object for this instance class.
+     */
+    public static synchronized EntityDefImpl getDefinitionObject() {
+        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsRiskPurposesEO");
     }
 
     /**
@@ -132,6 +151,22 @@ public class CrsRiskPurposesEOImpl extends EntityImpl {
     }
 
     /**
+     * Gets the attribute value for ActiveFlag, using the alias name ActiveFlag.
+     * @return the value of ActiveFlag
+     */
+    public String getActiveFlag() {
+        return (String)getAttributeInternal(ACTIVEFLAG);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ActiveFlag.
+     * @param value value to set the ActiveFlag
+     */
+    public void setActiveFlag(String value) {
+        setAttributeInternal(ACTIVEFLAG, value);
+    }
+
+    /**
      * getAttrInvokeAccessor: generated method. Do not modify.
      * @param index the index identifying the attribute
      * @param attrDef the attribute
@@ -162,6 +197,7 @@ public class CrsRiskPurposesEOImpl extends EntityImpl {
         super.setAttrInvokeAccessor(index, value, attrDef);
     }
 
+
     /**
      * @param riskPurposeId key constituent
 
@@ -171,13 +207,6 @@ public class CrsRiskPurposesEOImpl extends EntityImpl {
         return new Key(new Object[]{riskPurposeId});
     }
 
-    /**
-     * @return the definition object for this instance class.
-     */
-    public static synchronized EntityDefImpl getDefinitionObject() {
-        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsRiskPurposesEO");
-    }
-    
     public void doDML(int operation, TransactionEvent e) {
         if(operation == DML_INSERT)
             this.setRiskPurposeId((Integer)(new SequenceImpl("crs_risk_purposes_seq",getDBTransaction()).getSequenceNumber()).intValue());

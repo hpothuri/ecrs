@@ -58,6 +58,16 @@ public class CrsCompoundEOImpl extends EntityImpl {
             }
         }
         ,
+        ActiveFlag {
+            public Object get(CrsCompoundEOImpl obj) {
+                return obj.getActiveFlag();
+            }
+
+            public void put(CrsCompoundEOImpl obj, Object value) {
+                obj.setActiveFlag((String)value);
+            }
+        }
+        ,
         CrsContentEO {
             public Object get(CrsCompoundEOImpl obj) {
                 return obj.getCrsContentEO();
@@ -94,16 +104,25 @@ public class CrsCompoundEOImpl extends EntityImpl {
             return vals;
         }
     }
+
     public static final int COMPOUNDID = AttributesEnum.CompoundId.index();
     public static final int COMPOUNDCODE = AttributesEnum.CompoundCode.index();
     public static final int COMPOUNDTYPE = AttributesEnum.CompoundType.index();
     public static final int COMPOUNDDESC = AttributesEnum.CompoundDesc.index();
+    public static final int ACTIVEFLAG = AttributesEnum.ActiveFlag.index();
     public static final int CRSCONTENTEO = AttributesEnum.CrsContentEO.index();
 
     /**
      * This is the default constructor (do not remove).
      */
     public CrsCompoundEOImpl() {
+    }
+
+    /**
+     * @return the definition object for this instance class.
+     */
+    public static synchronized EntityDefImpl getDefinitionObject() {
+        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsCompoundEO");
     }
 
     /**
@@ -171,6 +190,22 @@ public class CrsCompoundEOImpl extends EntityImpl {
     }
 
     /**
+     * Gets the attribute value for ActiveFlag, using the alias name ActiveFlag.
+     * @return the value of ActiveFlag
+     */
+    public String getActiveFlag() {
+        return (String)getAttributeInternal(ACTIVEFLAG);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for ActiveFlag.
+     * @param value value to set the ActiveFlag
+     */
+    public void setActiveFlag(String value) {
+        setAttributeInternal(ACTIVEFLAG, value);
+    }
+
+    /**
      * getAttrInvokeAccessor: generated method. Do not modify.
      * @param index the index identifying the attribute
      * @param attrDef the attribute
@@ -208,6 +243,7 @@ public class CrsCompoundEOImpl extends EntityImpl {
         return (RowIterator)getAttributeInternal(CRSCONTENTEO);
     }
 
+
     /**
      * @param compoundId key constituent
 
@@ -217,13 +253,6 @@ public class CrsCompoundEOImpl extends EntityImpl {
         return new Key(new Object[]{compoundId});
     }
 
-    /**
-     * @return the definition object for this instance class.
-     */
-    public static synchronized EntityDefImpl getDefinitionObject() {
-        return EntityDefImpl.findDefObject("com.novartis.ecrs.model.entity.CrsCompoundEO");
-    }
-    
     public void doDML(int operation, TransactionEvent e) {
         if(operation == DML_INSERT)
             this.setCompoundId((Integer)(new SequenceImpl("crs_compounds_seq",getDBTransaction()).getSequenceNumber()).intValue());

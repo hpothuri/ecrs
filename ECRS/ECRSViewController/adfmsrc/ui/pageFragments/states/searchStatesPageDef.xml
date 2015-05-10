@@ -25,6 +25,7 @@
           <Item Value="StateId"/>
           <Item Value="StateName"/>
           <Item Value="StateDesc"/>
+          <Item Value="ActiveFlag"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

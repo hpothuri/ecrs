@@ -7,7 +7,8 @@
   Version="11.1.2.64.36"
   SelectList="CrsStateEO.STATE_ID, 
        CrsStateEO.STATE_NAME, 
-       CrsStateEO.STATE_DESC"
+       CrsStateEO.STATE_DESC, 
+       CrsStateEO.ACTIVE_FLAG"
   FromList="CRS.CRS_STATES CrsStateEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -46,6 +47,13 @@
     EntityAttrName="StateDesc"
     EntityUsage="CrsStateEO"
     AliasName="STATE_DESC"/>
+  <ViewAttribute
+    Name="ActiveFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ActiveFlag"
+    EntityUsage="CrsStateEO"
+    AliasName="ACTIVE_FLAG"/>
   <ViewCriteria
     Name="searchStates"
     ViewObjectName="com.novartis.ecrs.model.view.CrsStateVO"

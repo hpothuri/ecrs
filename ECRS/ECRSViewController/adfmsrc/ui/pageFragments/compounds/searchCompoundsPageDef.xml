@@ -23,6 +23,7 @@
           <Item Value="CompoundCode"/>
           <Item Value="CompoundType"/>
           <Item Value="CompoundDesc"/>
+          <Item Value="ActiveFlag"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

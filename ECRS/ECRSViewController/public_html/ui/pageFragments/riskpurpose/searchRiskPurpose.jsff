@@ -50,7 +50,7 @@
                   fetchSize="#{bindings.CrsRiskPurposesVO.rangeSize}" rowBandingInterval="0"
                   selectedRowKeys="#{bindings.CrsRiskPurposesVO.collectionModel.selectedRow}"
                   selectionListener="#{bindings.CrsRiskPurposesVO.collectionModel.makeCurrent}" rowSelection="single"
-                  id="t2" styleClass="AFStretchWidth" columnStretching="last">
+                  id="t2" styleClass="AFStretchWidth" columnStretching="column:c3">
           <af:column sortProperty="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeId.name}" sortable="true"
                      headerText="#{ecrsviewcontrollerBundle.RISK_PURPOSE_ID}" id="c1">
             <af:commandLink shortDesc="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeId.tooltip}" id="ot1"
@@ -65,6 +65,11 @@
                      headerText="#{ecrsviewcontrollerBundle.RISK_PURPOSE_DESCRIPTION}" id="c3">
             <af:outputText value="#{row.RiskPurposeDesc}"
                            shortDesc="#{bindings.CrsRiskPurposesVO.hints.RiskPurposeDesc.tooltip}" id="ot3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.CrsRiskPurposesVO.hints.ActiveFlag.name}" sortable="false"
+                     headerText="#{ecrsviewcontrollerBundle.ACTIVE_FLAG}" id="c4">
+            <af:outputText value="#{row.ActiveFlag}"
+                           shortDesc="#{bindings.CrsRiskPurposesVO.hints.ActiveFlag.tooltip}" id="ot4"/>
           </af:column>
         </af:table>
       </af:panelCollection>

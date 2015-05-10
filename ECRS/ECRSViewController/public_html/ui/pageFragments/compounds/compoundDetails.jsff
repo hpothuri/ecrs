@@ -38,6 +38,11 @@
                       shortDesc="#{bindings.CompoundDesc.hints.tooltip}" id="it4" contentStyle="width:200px;">
           <f:validator binding="#{bindings.CompoundDesc.validator}"/>
         </af:inputText>
+        <af:selectOneChoice label="#{ecrsviewcontrollerBundle.ACTIVE_FLAG}" id="soc2"
+                            value="#{bindings.ActiveFlag.inputValue}">
+          <af:selectItem label="Y" value="Y" id="si2"/>
+          <af:selectItem label="N" value="N" id="si3"/>
+        </af:selectOneChoice>
         <af:inputText value="#{bindings.CompoundId.inputValue == -1 ? '' : bindings.CompoundId.inputValue}"
                       label="Compound Id" required="#{bindings.CompoundId.hints.mandatory}"
                       columns="#{bindings.CompoundId.hints.displayWidth}"

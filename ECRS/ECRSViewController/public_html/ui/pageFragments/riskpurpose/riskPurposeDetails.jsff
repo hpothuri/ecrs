@@ -37,6 +37,11 @@
                       shortDesc="#{bindings.RiskPurposeDesc.hints.tooltip}" id="it2" contentStyle="width:200px;">
           <f:validator binding="#{bindings.RiskPurposeDesc.validator}"/>
         </af:inputText>
+        <af:selectOneChoice label="#{ecrsviewcontrollerBundle.ACTIVE_FLAG}" id="soc1"
+                            value="#{bindings.ActiveFlag.inputValue}">
+          <af:selectItem label="Y" value="Y" id="si1"/>
+          <af:selectItem label="N" value="N" id="si2"/>
+        </af:selectOneChoice>
         <af:inputText value="#{bindings.RiskPurposeId.inputValue == -1 ? '' : bindings.RiskPurposeId.inputValue}" label="#{ecrsviewcontrollerBundle.RISK_PURPOSE_ID}"
                       required="#{bindings.RiskPurposeId.hints.mandatory}"
                       columns="#{bindings.RiskPurposeId.hints.displayWidth}"

@@ -7,7 +7,8 @@
   Version="11.1.2.64.36"
   SelectList="CrsRiskPurposesEO.RISK_PURPOSE_CODE, 
        CrsRiskPurposesEO.RISK_PURPOSE_DESC, 
-       CrsRiskPurposesEO.RISK_PURPOSE_ID"
+       CrsRiskPurposesEO.RISK_PURPOSE_ID, 
+       CrsRiskPurposesEO.ACTIVE_FLAG"
   FromList="CRS_RISK_PURPOSES CrsRiskPurposesEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -52,6 +53,13 @@
     EntityAttrName="RiskPurposeId"
     EntityUsage="CrsRiskPurposesEO"
     AliasName="RISK_PURPOSE_ID"/>
+  <ViewAttribute
+    Name="ActiveFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ActiveFlag"
+    EntityUsage="CrsRiskPurposesEO"
+    AliasName="ACTIVE_FLAG"/>
   <ViewCriteria
     Name="searchRiskPurpose"
     ViewObjectName="com.novartis.ecrs.model.view.CrsRiskPurposesVO"

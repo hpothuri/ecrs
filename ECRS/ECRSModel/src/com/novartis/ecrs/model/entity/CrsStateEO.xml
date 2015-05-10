@@ -52,6 +52,19 @@
       <Attr Name="_DisplaySize" Value="100"/>
     </DesignTime>
   </Attribute>
+  <Attribute
+    Name="ActiveFlag"
+    IsNotNull="true"
+    Precision="1"
+    ColumnName="ACTIVE_FLAG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS.CRS_STATES">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
   <AccessorAttribute
     Name="CrsContentEO"
     Association="com.novartis.ecrs.model.entity.assoc.CrsContentIdxStateFkAssoc"
@@ -59,6 +72,15 @@
     AssociationOtherEnd="com.novartis.ecrs.model.entity.assoc.CrsContentIdxStateFkAssoc.CrsStateEO"
     Type="oracle.jbo.RowIterator"
     IsUpdateable="false"/>
+  <Key
+    Name="CrsStatesChkAct">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_STATES_CHK_ACT"/>
+      <Attr Name="_checkCondition" Value="ACTIVE_FLAG IN ('N', 'Y')"/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
   <Key
     Name="CrsStatesIdxPk"
     PrimaryKey="true">
