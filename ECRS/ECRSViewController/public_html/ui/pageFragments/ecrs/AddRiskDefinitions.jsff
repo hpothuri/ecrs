@@ -388,7 +388,8 @@
             </af:selectManyChoice>-->
             <af:selectOneChoice value="#{bindings.DomainId.inputValue}" label="#{ecrsviewcontrollerBundle.DATA_DOMAIN}"
                                 required="#{bindings.DomainId.hints.mandatory}"
-                                shortDesc="#{bindings.DomainId.hints.tooltip}" id="soc9" autoSubmit="true">
+                                shortDesc="#{bindings.DomainId.hints.tooltip}" id="soc9" autoSubmit="true"
+                                readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
               <f:selectItems value="#{bindings.DomainId.items}" id="si65"/>
             </af:selectOneChoice>
             <!--<af:selectOneChoice label="#{bindings.DataDomain.hints.label}" id="soc1"
@@ -436,7 +437,8 @@
                           shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it5" rows="3"
                           contentStyle="width:500px;"
                           disabled="#{!securityContext.userInRole['CRS_MQM'] &amp;&amp; !securityContext.userInRole['CRS_ADMIN']}"
-                          autoSubmit="true">
+                          autoSubmit="true"
+                          visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}">
               <f:validator binding="#{bindings.MqmComment.validator}"/>
             </af:inputText>
           </af:panelFormLayout>

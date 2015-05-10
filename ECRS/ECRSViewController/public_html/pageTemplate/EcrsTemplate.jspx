@@ -34,7 +34,7 @@
                                  inlineStyle="width:#{attrs.contentWidth};margin: 0 auto; background-color: white;">
                 <af:panelGroupLayout id="pt_pgl3" layout="horizontal" styleClass="AFStretchWidth">
                     <af:commandImageLink id="pt_gil1" icon="/images/crs.png" action="home" immediate="true"/>
-                    <af:panelGroupLayout id="pt_pgl2" layout="horizontal">
+                    <af:panelGroupLayout id="pt_pgl2" layout="horizontal" halign="end">
                         <af:commandButton text="Login" id="pt_cb1" visible="#{!securityContext.authenticated}">
                             <af:showPopupBehavior triggerType="click" popupId="pt_p1"/>
                         </af:commandButton>

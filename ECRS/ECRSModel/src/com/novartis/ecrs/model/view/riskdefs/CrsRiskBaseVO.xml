@@ -58,7 +58,8 @@ DECODE(RISK_PURPOSE_ER_FLAG, 'Y', 'ER,') AS RISK_PURPOSE_LIST,
 MEDDRA_DICT,
 CRS_EFFECTIVE_DT_REL,
 CRS_EFFECTIVE_DT_DEF CRS_EFFECTIVE_DT_DEF,
-MEDDRA_EXTENSION
+MEDDRA_EXTENSION,
+MEDDRA_QUALIFIER_UPD_FLAG
 FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
   <ViewAttribute
     Name="CrsId"
@@ -546,6 +547,21 @@ FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="5"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MeddraQualifierUpdFlag"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_QUALIFIER_UPD_FLAG"
+    Expression="MEDDRA_QUALIFIER_UPD_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
   </ViewAttribute>
   <ResourceBundle>
