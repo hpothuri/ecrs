@@ -438,7 +438,18 @@
                           contentStyle="width:500px;"
                           disabled="#{!securityContext.userInRole['CRS_MQM'] &amp;&amp; !securityContext.userInRole['CRS_ADMIN']}"
                           autoSubmit="true"
-                          visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}">
+                          visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
+                          rendered="false">
+              <f:validator binding="#{bindings.MqmComment.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.MqmComment.inputValue}" label="#{bindings.MqmComment.hints.label}"
+                          required="#{bindings.MqmComment.hints.mandatory}"
+                          columns="#{bindings.MqmComment.hints.displayWidth}"
+                          maximumLength="#{bindings.MqmComment.hints.precision}"
+                          shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it13" contentStyle="width:500px;"
+                          rows="3" autoSubmit="true"
+                          visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
+                          disabled="#{!securityContext.userInRole['CRS_MQM'] &amp;&amp; !securityContext.userInRole['CRS_ADMIN']}">
               <f:validator binding="#{bindings.MqmComment.validator}"/>
             </af:inputText>
           </af:panelFormLayout>
