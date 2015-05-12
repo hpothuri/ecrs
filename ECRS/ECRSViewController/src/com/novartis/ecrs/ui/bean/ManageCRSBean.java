@@ -148,9 +148,11 @@ public class ManageCRSBean implements Serializable {
     private String filterValue3;
     private String filterCri1="OR";
     private String filterCri2="OR";
-    private RichPopup advancedFilterPopup;
+    private transient RichPopup advancedFilterPopup;
     private transient RichTable searchStagingTableBinding;
     private String currReleaseStatus = ViewConstants.REL_STATUS_PENDING;
+    private transient RichPopup publishPopupBinding;
+    private transient RichPopup submitApprovalPopup;
 
     public ManageCRSBean() {
         super();
@@ -769,7 +771,7 @@ public class ManageCRSBean implements Serializable {
      public void processTaslReviewSubmit(DialogEvent dialogEvent) {
          // Add event code here...
          if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
-             processStateChange(ModelConstants.STATE_TASLAPPROVE, getReviewSubmitPopup());
+             processStateChange(ModelConstants.STATE_TASLAPPROVE, getSubmitApprovalPopup());
      }
        
     /** TASL APPROVE to ML APPROVE */ 
@@ -1955,8 +1957,6 @@ public class ManageCRSBean implements Serializable {
      * @return
      */
     public String getReasonForChange() {
-        if(!ViewConstants.isNotEmpty(reasonForChange))
-            reasonForChange = ViewConstants.REASON_DEFAULT_VALUE;
         return reasonForChange;
     }
 
@@ -2257,5 +2257,44 @@ public class ManageCRSBean implements Serializable {
 
     public String getCurrReleaseStatus() {
         return currReleaseStatus;
+    }
+
+    /**
+     * This methodd default reason for change to 'initial version'
+     * and shows the pubish popup
+     * @param actionEvent
+     */
+    public void onClickPublish(ActionEvent actionEvent) {
+        //default reason for change to initial version
+        reasonForChange = ViewConstants.REASON_DEFAULT_VALUE;
+        ADFUtils.showPopup(getPublishPopupBinding());
+    }
+
+    /**
+     * @param publishPopupBinding
+     */
+    public void setPublishPopupBinding(RichPopup publishPopupBinding) {
+        this.publishPopupBinding = publishPopupBinding;
+    }
+
+    /**
+     * @return
+     */
+    public RichPopup getPublishPopupBinding() {
+        return publishPopupBinding;
+    }
+
+    /**
+     * @param submitApprovalPopup
+     */
+    public void setSubmitApprovalPopup(RichPopup submitApprovalPopup) {
+        this.submitApprovalPopup = submitApprovalPopup;
+    }
+
+    /**
+     * @return
+     */
+    public RichPopup getSubmitApprovalPopup() {
+        return submitApprovalPopup;
     }
 }

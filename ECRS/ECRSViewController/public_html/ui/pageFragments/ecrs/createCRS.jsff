@@ -306,11 +306,12 @@
                                                       id="cb14"
                                                       disabled="#{bindings.StateId.inputValue ne 6}"
                                                       visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      inlineStyle="margin-right:10px;">
-                                        <af:setActionListener from="#{''}"
+                                                      inlineStyle="margin-right:10px;"
+                                                      actionListener="#{pageFlowScope.manageCRSBean.onClickPublish}">
+                                        <!--af:setActionListener from="#{''}"
                                                               to="#{pageFlowScope.manageCRSBean.reasonForChange}"/>
                                         <af:showPopupBehavior popupId="publish"
-                                                              triggerType="action"/>
+                                                              triggerType="action"/-->
                                     </af:commandButton>
                                     <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE}"
                                                       id="cb3"
@@ -559,7 +560,7 @@
                        title="#{ecrsviewcontrollerBundle.INFO}"
                        titleIconSource="/images/info_icon.png"
                        closeIconVisible="false" inlineStyle="width:250px;">
-                <af:outputText value="#{ecrsviewcontrollerBundle.THE_CRS_HAS_BEEN_SUBMITTED_FOR}" id="ot5"/>
+                <af:outputText value="#{ecrsviewcontrollerBundle.CRS_HAS_BEEN_SUBMITTED_REVIEW}" id="ot5"/>
             </af:dialog>
         </af:popup>
         <af:popup childCreation="deferred" autoCancel="disabled" id="p3"
@@ -747,7 +748,8 @@
                 </af:panelGroupLayout>
             </af:dialog>           
         </af:popup>
-         <af:popup childCreation="deferred" autoCancel="disabled" id="publish">
+         <af:popup childCreation="deferred" autoCancel="disabled" id="publish"
+                   binding="#{pageFlowScope.manageCRSBean.publishPopupBinding}">
             <af:dialog id="d19" title="#{ecrsviewcontrollerBundle.PUBLISH_CONFIRMATION}"
                        titleIconSource="/images/warning.png"
                        closeIconVisible="false" type="yesNo"
@@ -764,6 +766,16 @@
                         <af:spacer width="10" height="20" id="s14"/>
                     </f:facet>
                 </af:panelGroupLayout>
+            </af:dialog>
+        </af:popup>
+        <af:popup childCreation="deferred" autoCancel="disabled" id="p10"
+                   binding="#{pageFlowScope.manageCRSBean.submitApprovalPopup}">
+            <af:dialog id="d20" type="ok"
+                       title="#{ecrsviewcontrollerBundle.INFO}"
+                       titleIconSource="/images/info_icon.png"
+                       closeIconVisible="false" inlineStyle="width:250px;">
+                <af:outputText value="#{ecrsviewcontrollerBundle.CRS_HAS_BEEN_SUBMITTED_APPROVAL}"
+                               id="ot22"/>
             </af:dialog>
         </af:popup>
     </af:panelHeader>
