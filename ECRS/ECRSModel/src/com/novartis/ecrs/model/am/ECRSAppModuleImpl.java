@@ -59,15 +59,22 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         return (ViewObjectImpl)findViewObject("CrsUserRolesVO");
     }
     
+    /**
+     * Fetch the List of Designees (BSL's) to show as an LOV on the UI.
+     *
+     * @return - List of Designees
+     */
     public List fetchDesignees(){
         List<String> designeeList = new ArrayList<String>();
         ViewObject userVO = this.getCrsUserRolesVO();
+        //Where clause appended to fetch only BSL's
         userVO.setWhereClause("ROLE_NAME = '"+ModelConstants.ROLE_BSL+"'");
         userVO.executeQuery();
         if(userVO.getEstimatedRowCount() > 0){
             RowSetIterator rs = userVO.createRowSetIterator(null);
             while(rs.hasNext()){
                 Row row = rs.next();
+                //Adding all BSL usernames to the list.
                 designeeList.add((String)row.getAttribute("UserName"));
             }
             rs.closeRowSetIterator();
@@ -75,6 +82,11 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         return designeeList;
     }
     
+    /**
+     * Fetch the list of Database available (like MEDDRA, ARGUS) to show them as an LOV on the UI.
+     * 
+     * @return
+     */
     public List fetchDatabases(){
         List<String> databaseList = new ArrayList<String>();
         ViewObject databaseVO = this.getCrsDatabasesLOVVO();
@@ -83,6 +95,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             RowSetIterator rs = databaseVO.createRowSetIterator(null);
             while(rs.hasNext()){
                 Row row = rs.next();
+                //Adding all database names to the List being returned
                 databaseList.add((String)row.getAttribute("DatabaseName"));
             }
             rs.closeRowSetIterator();
@@ -146,6 +159,14 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         return (ViewObjectImpl)findViewObject("ECrsSearchVO");
     }
     
+    /**
+     * 
+     * This method fetches the CRS's the logged in user can see based on the search criteria entered in the form.
+     * 
+     * @param userInRole - logged in user's role
+     * @param userName - logged in user's name
+     * @param isInboxDisable - Inbox checkbox (enabled or disabled)
+     */
     public void filterCRSContent(String userInRole,String userName,boolean isInboxDisable){
         String whereClause = "";
         ViewObjectImpl searchVO = this.getECrsSearchVO();
@@ -173,6 +194,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
 
             row = (ECrsSearchVORowImpl)searchVO.getCurrentRow();
 
+            //Appending Where clause based on the entered search criteria in the form.s
             if (row.getReleaseStatus() != null)
                 whereClause += "RELEASE_STATUS_FLAG = '" + row.getReleaseStatus() + "' AND ";
             if (row.getCompoundType() != null)
@@ -218,6 +240,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     whereClause.substring(0, whereClause.length() - 4) + "";
         
         ViewObjectImpl crsContentVO = null;
+        //Hit Base table to fetch current records and Staging table to fetch pending records.
         if (ModelConstants.STATUS_PENDING.equals(row.getReleaseStatus())) {
             crsContentVO = this.getCrsContentVO();           
             this.getCrsContentBaseVO().executeEmptyRowSet();
@@ -296,15 +319,19 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      * Info : Metdod to show the risk definitions (if any) for the selected CRS on load of risk definitions page.
      */
     public void initRiskRelation(Long crsId, String status){
+        //Fetching current records from base table
         if(status != null && ModelConstants.BASE_FACET.equals(status)){
             ViewObject riskBaseVO = this.getCrsRiskBaseVO();
+            //for the selected CRSID
             riskBaseVO.setWhereClause("CRS_ID = "+crsId);
             riskBaseVO.executeQuery();
             ViewObject riskVO = this.getCrsRiskVO();
             riskVO.executeEmptyRowSet();
         }
+        //Fetching pending records from staging table
         else{
             ViewObject riskVO = this.getCrsRiskVO();
+            //for the selected CRSID
             riskVO.setWhereClause("CRS_ID = "+crsId);
             riskVO.executeQuery();
             ViewObject riskBaseVO = this.getCrsRiskBaseVO();
@@ -378,6 +405,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         ViewObject relationVO = this.getCrsRiskRelationVO();
         ViewObject definitionVO = this.getCrsRiskDefinitionsVO();
         ViewObjectImpl crsContentVO = this.getFetchCrsContentBaseVO();
+        //Fetch the crs details for CRS with name as ROUTINE
         crsContentVO.setWhereClause("CRS_NAME = 'ROUTINE'");
         crsContentVO.executeQuery(); 
         crsContentVO.setWhereClause(null);
@@ -386,6 +414,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             Row crsRow = crsContentVO.first();
             Long srcCrsId = (Long)crsRow.getAttribute("CrsId");
             ViewObject crsRiskVO = this.getCrsRiskBaseVO();
+            //Fetch risk relations for ROUTINE CRS in sorted order.
             crsRiskVO.setWhereClause("CRS_ID = "+srcCrsId);
             crsRiskVO.setSortBy("CrsRiskId asc");
             crsRiskVO.executeQuery();
@@ -393,8 +422,10 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             Long newCrsRiskId = null;
             if(crsRiskVO.getEstimatedRowCount() > 0){
                 RowSetIterator rs = crsRiskVO.createRowSetIterator(null);
+                //Iterating through each row in the FLAT VIEW
                 while(rs.hasNext()){
                     Row row = rs.next();
+                    //If it is a risk relation row, set all attributes required.
                     if(crsRiskId == null || !crsRiskId.equals((Long)row.getAttribute("CrsRiskId"))){
                         crsRiskId = (Long)row.getAttribute("CrsRiskId");
                         Row relationRow = relationVO.createRow();
@@ -403,6 +434,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
 //                        relationRow.setAttribute("DatabaseList", row.getAttribute("DatabaseList"));
                         relationRow.setAttribute("DomainId", fetchDomainIdFromName((String)row.getAttribute("DataDomain")));
                         String riskPurposeList = (String)row.getAttribute("RiskPurposeList");
+                        //Storing risk purposes as comma separated.
                         if(riskPurposeList != null && riskPurposeList.endsWith(",")){
                             riskPurposeList = riskPurposeList.substring(0,riskPurposeList.length()-1);
                         }
@@ -432,7 +464,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
 //                        definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
 //                        definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
                         definitionVO.insertRow(definitionRow);
-                    } else { 
+                    } else { //If it is a risk defintion row, set all attributes required.
                         Row definitionRow = definitionVO.createRow();
                         definitionRow.setAttribute("CrsRiskId", newCrsRiskId);
                         definitionRow.setAttribute("MeddraQualifier", row.getAttribute("MeddraQualifier"));
@@ -494,8 +526,10 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         Row crsRow = crsContentVO.getCurrentRow();
         if(crsRow != null){
             Long crsId = (Long)crsRow.getAttribute("CrsId");
+            //Fetch the required CRS details (that needs to be deleted)
             relationVO.setWhereClause("CRS_ID = "+crsId);
             relationVO.executeQuery();
+            //Fetch all risk relations.
             if(relationVO.getEstimatedRowCount() > 0){
                 RowSetIterator relationRs = relationVO.createRowSetIterator(null);
                 while(relationRs.hasNext()){
@@ -504,17 +538,22 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
 //                    Long riskId = (Long)relationRow.getAttribute("CrsRiskId");
 //                    definitionVO.setWhereClause("CRS_RISK_ID = "+riskId);
 //                    definitionVO.executeQuery();
+                    //Fetch all risk defintions
                     if(definitionVO.getEstimatedRowCount() > 0){
                         RowSetIterator definitionRs = definitionVO.createRowSetIterator(null);
                         while(definitionRs.hasNext()){
                             Row definitionRow = definitionRs.next();
+                            //delete risk defintions
                             definitionRow.remove();
                         }
                     }
+                    //delete risk relations
                     relationRow.remove();
                 }
             }
+            //delete crs
             crsRow.remove();
+            //commit
             this.getDBTransaction().commit();
         }
     }
@@ -546,22 +585,26 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
 
 
     /**
+     * This method copies the risk relation to the current selected CRS, this is used in the Copy Risk Definitions popup on the UI.
      *
-     * @param srcRiskId
-     * @param destCrsId
+     * @param srcRiskId - Source Risk Relation (copied from)
+     * @param destCrsId - Destination Risk Relation (copied to)
      */
     public void copyCurrentRiskRelation(Long srcRiskId, Long destCrsId) {
         ViewObject relationVO = this.getCrsRiskRelationVO();
         ViewObject definitionVO = this.getCrsRiskDefinitionsVO();
         ViewObject crsRiskVO = this.getFetchCrsRiskVO();
+        //Fetch the source risk relation details
         crsRiskVO.setWhereClause("CRS_RISK_ID = " + srcRiskId);
         crsRiskVO.executeQuery();
         Long crsRiskId = null;
         Long newCrsRiskId = null;
         if (crsRiskVO.getEstimatedRowCount() > 0) {
             RowSetIterator rs = crsRiskVO.createRowSetIterator(null);
+            //Iterating over each row in the FLAT VIEW
             while (rs.hasNext()) {
                 Row row = rs.next();
+                //If it is a risk relation(parent) row, set all attributes from source
                 if (crsRiskId == null || !crsRiskId.equals((Long)row.getAttribute("CrsRiskId"))) {
                     crsRiskId = (Long)row.getAttribute("CrsRiskId");
                     Row relationRow = relationVO.createRow();
@@ -569,6 +612,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
 //                    relationRow.setAttribute("DataDomain", row.getAttribute("DataDomain"));
                     relationRow.setAttribute("DomainId", fetchDomainIdFromName((String)row.getAttribute("DataDomain")));
 //                    relationRow.setAttribute("DatabaseList", row.getAttribute("DatabaseList"));
+                    //Risk purpose list stored as comma separated
                     String riskPurposeList = (String)row.getAttribute("RiskPurposeList");
                     if (riskPurposeList != null && riskPurposeList.endsWith(",")) {
                         riskPurposeList = riskPurposeList.substring(0, riskPurposeList.length() - 1);
@@ -598,7 +642,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
 //                    definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
 //                    definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
                     definitionVO.insertRow(definitionRow);
-                } else {
+                } else { //If it is a risk definitons (child) row, set all attributes from source
                     Row definitionRow = definitionVO.createRow();
                     definitionRow.setAttribute("CrsRiskId", newCrsRiskId);
                     definitionRow.setAttribute("MeddraQualifier", row.getAttribute("MeddraQualifier"));
@@ -886,6 +930,12 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         return (ViewObjectImpl)findViewObject("DictionaryVO");
     }
     
+    /**
+     * The MEDDRA dictionary version is fetched from the database once per session to show in the footer of every page.
+     * This method fetches the latest version.
+     *
+     * @return - latest MEDDRA Version
+     */
     public String fetchDictionaryVersion(){
         String version = "";
         ViewObject dictVO = getDictionaryVO();
@@ -896,6 +946,13 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         return version;
     }
     
+    /**
+     * This method is used to fetch the domain Id from domain name.
+     * Used while copying risk defintions and copying routine defintions as the DB flat view contains Domain name while Domain ID needs to be stored in the risk relations table.
+     *
+     * @param domainName - DataDomain Name
+     * @return - Domain Id
+     */
     private Integer fetchDomainIdFromName(String domainName){
         Integer domainId = 0;
         ViewObject domainVO = this.getDomainVO();
