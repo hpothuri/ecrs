@@ -71,9 +71,12 @@ import org.apache.myfaces.trinidad.event.SelectionEvent;
 import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
 import org.apache.myfaces.trinidad.model.CollectionModel;
 import org.apache.myfaces.trinidad.model.RowKeySet;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 
 public class ManageCRSBean implements Serializable {
@@ -153,7 +156,8 @@ public class ManageCRSBean implements Serializable {
     private String currReleaseStatus = ViewConstants.REL_STATUS_PENDING;
     private transient RichPopup publishPopupBinding;
     private transient RichPopup submitApprovalPopup;
-
+    private Map<Integer,String> statesMap = null;
+    
     public ManageCRSBean() {
         super();
         getUserRole();
@@ -1241,7 +1245,7 @@ public class ManageCRSBean implements Serializable {
                 iter = ADFUtils.findIterator("CrsRiskVOIterator");
 
             RowSetIterator rowSet = null;
-            int rowStartIndex = 8;
+            int rowStartIndex = 12;
             int cellStartIndex = 0;
             String emptyValReplace = null;
             String dateCellFormat = "M/dd/yyyy";
@@ -1290,11 +1294,13 @@ public class ManageCRSBean implements Serializable {
 
             workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
             Sheet sheet = workbook.getSheetAt(0);
+            writeHeaderData(sheet);
             ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
                                              cellStartIndex, columnMap, null,
                                              dateCellFormat, emptyValReplace,imageInputStream);
             //write image to sheet
             //ExcelExportUtils.writeImageTOExcel(sheet,imageInputStream);
+            
         } catch (InvalidFormatException invalidFormatException) {
             invalidFormatException.printStackTrace();
         } catch (IOException ioe) {
@@ -2296,5 +2302,164 @@ public class ManageCRSBean implements Serializable {
      */
     public RichPopup getSubmitApprovalPopup() {
         return submitApprovalPopup;
+    }
+
+    /**
+     * This method write header data to risk definition report.
+     * @param sheet
+     */
+    private void writeHeaderData(Sheet sheet) {
+        //        Excel report Header data to include
+        int count = 6;
+        //  •1 CRS Name
+        org.apache.poi.ss.usermodel.Row row1 = sheet.createRow(count);
+        Cell cell11 = row1.createCell((short)0);
+        cell11.setCellValue("CRS Name :" +
+                            ADFUtils.evaluateEL("#{pageFlowScope.crsName}"));
+        ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                            cell11.getColumnIndex(), false,
+                                            CellStyle.ALIGN_LEFT);
+        sheet.addMergedRegion(new CellRangeAddress(count, count, 0, 4));
+        //•1 CRS ID
+        //CRS ID
+        Cell cell12 = row1.createCell((short)7);
+        cell12.setCellValue("CRS ID : " +
+                            (Long)ADFUtils.getPageFlowScopeValue("crsId"));
+        ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                            cell12.getColumnIndex(), false,
+                                            CellStyle.ALIGN_LEFT);
+        sheet.addMergedRegion(new CellRangeAddress(count, count, 7, 10));
+        count++;
+        //        • 2 Dictionary Version
+        org.apache.poi.ss.usermodel.Row row2 = sheet.createRow(count);
+        //dictionary version
+        Cell cell21 = row2.createCell((short)0);
+        cell21.setCellValue("Dictionary Version: " +
+                            ADFUtils.evaluateEL("#{sessionScope.dictVersion}"));
+        ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                            cell21.getColumnIndex(), false,
+                                            CellStyle.ALIGN_LEFT);
+        sheet.addMergedRegion(new CellRangeAddress(count, count, 0, 4));
+        //Status //        • 2 Status (Active or Inactive)
+        Cell cell22 = row2.createCell((short)7);
+        // TODO
+        cell22.setCellValue("Status: " + "");
+        ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                            cell22.getColumnIndex(), false,
+                                            CellStyle.ALIGN_LEFT);
+        sheet.addMergedRegion(new CellRangeAddress(count, count, 7, 10));
+        count++;
+
+        //•3 Date and time the report is run
+        //Report time
+        org.apache.poi.ss.usermodel.Row row3 = sheet.createRow(count);
+        Cell cell31 = row3.createCell((short)0);
+        cell31.setCellValue("Downloaded Time: " +
+                            ModelConstants.getCustomTimeStamp());
+        ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                            cell31.getColumnIndex(), false,
+                                            CellStyle.ALIGN_LEFT);
+        sheet.addMergedRegion(new CellRangeAddress(count, count, 0, 4));
+        //•3 Release Status (CURRENT or PENDING)
+        String relFlag =
+            (String)ADFUtils.evaluateEL("#{bindings.ReleaseStatusFlag.inputValue}");
+        String relstatus = "";
+        if ("P".equals(relFlag))
+            relstatus = "Pending";
+        else
+            relstatus = "Current";
+        Cell cell32 = row3.createCell((short)7);
+        cell32.setCellValue("Release Status: " + relstatus);
+        ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                            cell32.getColumnIndex(), false,
+                                            CellStyle.ALIGN_LEFT);
+        sheet.addMergedRegion(new CellRangeAddress(count, count, 7, 10));
+        sheet.setColumnWidth(4, 6000);
+        count++;
+        //        •4 State (only displays the value for PENDING CRSs
+        //        •4 BSL
+        //BSL
+        org.apache.poi.ss.usermodel.Row row4 = sheet.createRow(count);
+        //invoke prepareStatesMap to get state names
+        if (statesMap == null || (statesMap != null && statesMap.size() == 0))
+            prepareStatesMap();
+        Cell cell41 = row4.createCell((short)0);
+        if (ModelConstants.STAGING_FACET.equals(getBaseOrStaging())) {
+            int stateId =
+                (Integer)ADFUtils.evaluateEL("#{bindings.StateId.inputValue}");
+            cell41.setCellValue("State:  " + statesMap.get(stateId));
+        }
+        ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                            cell41.getColumnIndex(), false,
+                                            CellStyle.ALIGN_LEFT);
+        sheet.addMergedRegion(new CellRangeAddress(count, count, 0, 4));
+        
+        Cell cell42 = row4.createCell((short)7);
+        String bsl = null;
+        if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
+            bsl =
+(String)ADFUtils.evaluateEL("#{bindings.BslNameBase.inputValue}");
+        } else
+            bsl =
+(String)ADFUtils.evaluateEL("#{bindings.BslName.inputValue}");
+        cell42.setCellValue("BSL: " + bsl);
+        ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                            cell42.getColumnIndex(), false,
+                                            CellStyle.ALIGN_LEFT);
+        sheet.addMergedRegion(new CellRangeAddress(count, count, 7, 10));
+        count++;
+        //        •5 TASL
+        //        •6 Medical Lead
+        //TASL
+        org.apache.poi.ss.usermodel.Row row5 = sheet.createRow(count);
+        Cell cell51 = row5.createCell((short)0);
+        String tasl = null;
+        if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
+            tasl =
+(String)ADFUtils.evaluateEL("#{bindings.TaslNameBase.inputValue}");
+        } else
+            tasl =
+(String)ADFUtils.evaluateEL("#{bindings.TaslName.inputValue}");
+        cell51.setCellValue("TASL :  " + tasl);
+        ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                            cell51.getColumnIndex(), false,
+                                            CellStyle.ALIGN_LEFT);
+        sheet.addMergedRegion(new CellRangeAddress(count, count, 0, 4));
+        //ML name
+        Cell cell52 = row5.createCell((short)7);
+        String medLLead = null;
+        if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
+            medLLead =
+                    (String)ADFUtils.evaluateEL("#{bindings.MedicalLeadNameBase.inputValue}");
+        } else
+            medLLead =
+                    (String)ADFUtils.evaluateEL("#{bindings.MedicalLeadName.inputValue}");
+        cell51.setCellValue("TASL :  " + tasl);
+        cell52.setCellValue("Medical Lead: " + medLLead);
+        ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                            cell52.getColumnIndex(), false,
+                                            CellStyle.ALIGN_LEFT);
+        sheet.addMergedRegion(new CellRangeAddress(count, count, 7, 10));
+        count++;
+    }
+
+    /**
+     * This method is used to prepare map with stateid and stateName
+     */
+    private void prepareStatesMap() {
+        statesMap = new HashMap<Integer, String>();
+        DCIteratorBinding iter = ADFUtils.findIterator("CrsStateVOIterator");
+        if (iter != null) {
+            Row[] rows = iter.getAllRowsInRange();
+            Integer stateId = null;
+            String stateName = null;
+            for (Row row : rows) {
+                if (row != null) {
+                    stateId = (Integer)row.getAttribute("StateId");
+                    stateName = (String)row.getAttribute("StateName");
+                    statesMap.put(stateId, stateName);
+                }
+            }
+        }
     }
 }

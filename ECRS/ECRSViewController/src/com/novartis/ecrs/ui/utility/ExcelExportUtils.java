@@ -39,7 +39,7 @@ public class ExcelExportUtils {
     
     public static void setHeaderCellStyle(Sheet sheet, int rowIndex,
                                            int cellIndex,
-                                           boolean isAdminTitle) {
+                                           boolean isAdminTitle,short align) {
         org.apache.poi.ss.usermodel.Row row = sheet.getRow((short)rowIndex);
         Workbook wb = sheet.getWorkbook();
         Font font = wb.createFont();
@@ -49,11 +49,11 @@ public class ExcelExportUtils {
         cellStyle.setFont(font);
         Cell cell = row.getCell((short)cellIndex);
         if (isAdminTitle)
-            cellStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
+            cellStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
         else
             cellStyle.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
         cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-        cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
+        cellStyle.setAlignment(align);
         cellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         cell.setCellStyle(cellStyle);
     }

@@ -63,25 +63,41 @@
                                             action="browseSearch"  inlineStyle=" font-weight: bold;     padding-right: 10px;"/>
                         <af:menu text="#{ecrsviewcontrollerBundle.REPORTS}" id="pt_m2"
                                  inlineStyle="font-weight: bold;     padding-right: 10px;">
-                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.ADMIN_DASHBOARD}" id="pt_cmi1"
-                                                action="adminDashBoard" inlineStyle="font-weight: bold;"
-                                                immediate="true"/>
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.MEDDRA_COMPONENTS}" id="pt_cmi2"
                                                 action="meddraComponents" inlineStyle="font-weight: bold;"
                                                 immediate="true"/>
-                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.MEDDRA_COMPONENT_STARDARDIZA_0}"
-                                                id="pt_cmi7" action="meddraCompStandard"
-                                                inlineStyle="font-weight: bold;" immediate="true"/>
-                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.RETIRED_NMQSCMQS_PREVIOUSLY_US}" id="pt_cmi3"
-                                                inlineStyle="font-weight: bold;" immediate="true" action="retiredNmq"/>
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.RISK_DEFINITIONS_PER_SAFETY_TO}" id="pt_cmi4"
                                                 action="riskDefSafety" inlineStyle="font-weight: bold;"
                                                 immediate="true"/>
-                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CRS_COUNT_PER_MEDDRA_COMPONENT}" id="pt_cmi5"
-                                                action="crsCountper" inlineStyle="font-weight: bold;" immediate="true"/>
-                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CURRENT_AND_PENDING_CRS}" id="pt_cmi6"
-                                                action="crsCurrentPending" inlineStyle="font-weight: bold;"
-                                                immediate="true"/>
+                            <af:menu text="#{ecrsviewcontrollerBundle.ADMIN_REPORTS}" id="pt_m3"
+                                     visible="#{securityContext.userInRole['CRS_ADMIN']}"
+                                     inlineStyle="font-weight: bold;     padding-right: 10px;">
+                                <af:commandMenuItem text="#{ecrsviewcontrollerBundle.ADMIN_DASHBOARD}"
+                                                    id="pt_cmi1"
+                                                    action="adminDashBoard"
+                                                    inlineStyle="font-weight: bold;"
+                                                    immediate="true"/>
+                                <af:commandMenuItem text="#{ecrsviewcontrollerBundle.MEDDRA_COMPONENT_STARDARDIZA_0}"
+                                                    id="pt_cmi7"
+                                                    action="meddraCompStandard"
+                                                    inlineStyle="font-weight: bold;"
+                                                    immediate="true"/>
+                                <af:commandMenuItem text="#{ecrsviewcontrollerBundle.RETIRED_NMQSCMQS_PREVIOUSLY_US}"
+                                                    id="pt_cmi3"
+                                                    inlineStyle="font-weight: bold;"
+                                                    immediate="true"
+                                                    action="retiredNmq"/>
+                                <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CRS_COUNT_PER_MEDDRA_COMPONENT}"
+                                                    id="pt_cmi5"
+                                                    action="crsCountper"
+                                                    inlineStyle="font-weight: bold;"
+                                                    immediate="true"/>
+                                <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CURRENT_AND_PENDING_CRS}"
+                                                    id="pt_cmi6"
+                                                    action="crsCurrentPending"
+                                                    inlineStyle="font-weight: bold;"
+                                                    immediate="true"/>
+                            </af:menu>
                         </af:menu>
                         <af:menu text="#{ecrsviewcontrollerBundle.ADMINISTRATION}" id="pt_m1"
                                  inlineStyle="font-weight: bold;     padding-right: 10px;"

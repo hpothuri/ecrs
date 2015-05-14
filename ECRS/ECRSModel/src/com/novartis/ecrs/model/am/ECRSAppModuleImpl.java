@@ -987,4 +987,12 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public ViewObjectImpl getCrsDomainsVO() {
         return (ViewObjectImpl)findViewObject("CrsDomainsVO");
     }
+
+    /**
+     * Container's getter for PurposeLegendStaticVO1.
+     * @return PurposeLegendStaticVO1
+     */
+    public ViewObjectImpl getPurposeLegendStaticVO() {
+        return (ViewObjectImpl)findViewObject("PurposeLegendStaticVO");
+    }
 }

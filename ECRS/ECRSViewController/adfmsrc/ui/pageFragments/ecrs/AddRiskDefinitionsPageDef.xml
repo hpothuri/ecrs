@@ -20,6 +20,14 @@
     <iterator Binds="CrsRiskBaseVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsRiskBaseVOIterator"/>
     <searchRegion Binds="CrsRiskBaseVOIterator" Criteria=""
                   Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer" id="CrsRiskBaseVOQuery"/>
+    <iterator Binds="PurposeLegendStaticVO" RangeSize="25"
+              DataControl="ECRSAppModuleDataControl"
+              id="PurposeLegendStaticVOIterator"/>
+    <iterator Binds="CrsContentBaseVO" RangeSize="10"
+              DataControl="ECRSAppModuleDataControl"
+              id="CrsContentBaseVOIterator"/>
+    <iterator Binds="CrsStateVO" RangeSize="10"
+              DataControl="ECRSAppModuleDataControl" id="CrsStateVOIterator"/>
   </executables>
   <bindings>
     <tree IterBinding="CrsRiskVOIterator" id="CrsRiskVO">
@@ -589,5 +597,57 @@
     </attributeValues>
     <list IterBinding="CrsRiskRelationVOIterator" StaticList="false" Uses="LOV_DomainId" id="DomainId"
           DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+    <tree IterBinding="PurposeLegendStaticVOIterator"
+          id="PurposeLegendStaticVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.trans.PurposeLegendStaticVO"
+                      Name="PurposeLegendStaticVO0">
+        <AttrNames>
+          <Item Value="RiskCode"/>
+          <Item Value="Name"/>
+          <Item Value="Description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="CrsContentVOIterator" id="TaslName">
+      <AttrNames>
+        <Item Value="TaslName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="BslName">
+      <AttrNames>
+        <Item Value="BslName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="MedicalLeadName">
+      <AttrNames>
+        <Item Value="MedicalLeadName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="BslNameBase">
+      <AttrNames>
+        <Item Value="BslName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="TaslNameBase">
+      <AttrNames>
+        <Item Value="TaslName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator"
+                     id="MedicalLeadNameBase">
+      <AttrNames>
+        <Item Value="MedicalLeadName"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="CrsStateVOIterator" id="CrsStateVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsStateVO"
+                      Name="CrsStateVO0">
+        <AttrNames>
+          <Item Value="StateId"/>
+          <Item Value="StateDesc"/>
+          <Item Value="StateName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
   </bindings>
 </pageDefinition>

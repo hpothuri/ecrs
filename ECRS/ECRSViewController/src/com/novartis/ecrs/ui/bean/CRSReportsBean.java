@@ -23,6 +23,7 @@ import oracle.jbo.RowSetIterator;
 import oracle.security.crypto.util.InvalidFormatException;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -62,7 +63,7 @@ public class CRSReportsBean {
             Cell cell = row.createCell((short)2);
             cell.setCellValue("Admin Dashboard Report");
             ExcelExportUtils.setHeaderCellStyle(sheet, count,
-                                                cell.getColumnIndex(), true);
+                                                cell.getColumnIndex(), true,CellStyle.ALIGN_CENTER);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
 
@@ -71,7 +72,7 @@ public class CRSReportsBean {
             Cell cell1 = row1.createCell((short)2);
             cell1.setCellValue("Number of Compound CRSs");
             ExcelExportUtils.setHeaderCellStyle(sheet, count,
-                                                cell1.getColumnIndex(), false);
+                                                cell1.getColumnIndex(), false,CellStyle.ALIGN_CENTER);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
             DCIteratorBinding compCrsIter =
@@ -96,7 +97,7 @@ public class CRSReportsBean {
             Cell cell2 = row2.createCell((short)2);
             cell2.setCellValue("Number of saftey topics (independent of CRSs)");
             ExcelExportUtils.setHeaderCellStyle(sheet, count,
-                                                cell2.getColumnIndex(), false);
+                                                cell2.getColumnIndex(), false,CellStyle.ALIGN_CENTER);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
             DCIteratorBinding safetyTopicIter =
@@ -120,7 +121,7 @@ public class CRSReportsBean {
             Cell cell3 = row3.createCell((short)2);
             cell3.setCellValue("Number of ADRs (CDSs)");
             ExcelExportUtils.setHeaderCellStyle(sheet, count,
-                                                cell3.getColumnIndex(), false);
+                                                cell3.getColumnIndex(), false,CellStyle.ALIGN_CENTER);
             sheet.addMergedRegion(new CellRangeAddress(count, count, 2, 4));
             count++;
             DCIteratorBinding adrIter =
