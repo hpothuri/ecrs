@@ -39,6 +39,7 @@ public class SessionBean {
     private String username;
     private String password;
     private String remoteAddress = "";
+    private String fullName;
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
@@ -195,5 +196,13 @@ public class SessionBean {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 }

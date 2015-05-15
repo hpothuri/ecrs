@@ -3,7 +3,9 @@ package com.novartis.ecrs.model.am;
 
 import com.novartis.ecrs.model.am.common.ECRSAppModule;
 import com.novartis.ecrs.model.constants.ModelConstants;
+import com.novartis.ecrs.model.lov.UserRoleVORowImpl;
 import com.novartis.ecrs.model.view.ECrsSearchVORowImpl;
+import com.novartis.ecrs.model.view.HierarchyChildDetailVOImpl;
 import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.DomainsTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
@@ -65,17 +67,17 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      * @return - List of Designees
      */
     public List fetchDesignees(){
-        List<String> designeeList = new ArrayList<String>();
-        ViewObject userVO = this.getCrsUserRolesVO();
+        List<UserRoleVORowImpl> designeeList = new ArrayList<UserRoleVORowImpl>();
+        ViewObject userVO = this.getUserRoleVO();
         //Where clause appended to fetch only BSL's
-        userVO.setWhereClause("ROLE_NAME = '"+ModelConstants.ROLE_BSL+"'");
+        userVO.setNamedWhereClauseParam("roleName",ModelConstants.ROLE_BSL);
         userVO.executeQuery();
         if(userVO.getEstimatedRowCount() > 0){
             RowSetIterator rs = userVO.createRowSetIterator(null);
             while(rs.hasNext()){
                 Row row = rs.next();
                 //Adding all BSL usernames to the list.
-                designeeList.add((String)row.getAttribute("UserName"));
+                designeeList.add((UserRoleVORowImpl)row);
             }
             rs.closeRowSetIterator();
         }
@@ -994,5 +996,13 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getPurposeLegendStaticVO() {
         return (ViewObjectImpl)findViewObject("PurposeLegendStaticVO");
+    }
+
+    /**
+     * Container's getter for UserRoleVO.
+     * @return UserRoleVO
+     */
+    public ViewObjectImpl getUserRoleVO() {
+        return (ViewObjectImpl)findViewObject("UserRoleVO");
     }
 }

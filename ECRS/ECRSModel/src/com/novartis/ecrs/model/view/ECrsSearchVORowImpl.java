@@ -223,6 +223,36 @@ public class ECrsSearchVORowImpl extends ViewRowImpl {
                 obj.setAttributeInternal(index(), value);
             }
         }
+        ,
+        TASLVA {
+            public Object get(ECrsSearchVORowImpl obj) {
+                return obj.getTASLVA();
+            }
+
+            public void put(ECrsSearchVORowImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ,
+        MLVA {
+            public Object get(ECrsSearchVORowImpl obj) {
+                return obj.getMLVA();
+            }
+
+            public void put(ECrsSearchVORowImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ,
+        BSLVA {
+            public Object get(ECrsSearchVORowImpl obj) {
+                return obj.getBSLVA();
+            }
+
+            public void put(ECrsSearchVORowImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
         ;
         private static AttributesEnum[] vals = null;
         private static int firstIndex = 0;
@@ -273,6 +303,9 @@ public class ECrsSearchVORowImpl extends ViewRowImpl {
     public static final int CRSUSERBSLVA = AttributesEnum.CrsUserBSLVA.index();
     public static final int CRSUSERTASLVA = AttributesEnum.CrsUserTASLVA.index();
     public static final int CRSUSERMLVA = AttributesEnum.CrsUserMLVA.index();
+    public static final int TASLVA = AttributesEnum.TASLVA.index();
+    public static final int MLVA = AttributesEnum.MLVA.index();
+    public static final int BSLVA = AttributesEnum.BSLVA.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -560,6 +593,27 @@ public class ECrsSearchVORowImpl extends ViewRowImpl {
      */
     public RowSet getCrsUserMLVA() {
         return (RowSet)getAttributeInternal(CRSUSERMLVA);
+    }
+
+    /**
+     * Gets the view accessor <code>RowSet</code> TASLVA.
+     */
+    public RowSet getTASLVA() {
+        return (RowSet)getAttributeInternal(TASLVA);
+    }
+
+    /**
+     * Gets the view accessor <code>RowSet</code> MLVA.
+     */
+    public RowSet getMLVA() {
+        return (RowSet)getAttributeInternal(MLVA);
+    }
+
+    /**
+     * Gets the view accessor <code>RowSet</code> BSLVA.
+     */
+    public RowSet getBSLVA() {
+        return (RowSet)getAttributeInternal(BSLVA);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.novartis.ecrs.ui.bean;
 
 
 import com.novartis.ecrs.model.constants.ModelConstants;
+import com.novartis.ecrs.model.lov.UserRoleVORowImpl;
 import com.novartis.ecrs.model.view.CrsContentVORowImpl;
 import com.novartis.ecrs.model.view.HierarchyChildVORowImpl;
 import com.novartis.ecrs.model.view.base.CrsContentBaseVORowImpl;
@@ -298,10 +299,10 @@ public class ManageCRSBean implements Serializable {
             designeeList = new ArrayList<SelectItem>();
             DCBindingContainer bc = ADFUtils.getDCBindingContainer();
             OperationBinding ob = bc.getOperationBinding("fetchDesignees");
-            List<String> designees = (List<String>)ob.execute();
+            List<UserRoleVORowImpl> designees = (List<UserRoleVORowImpl>)ob.execute();
             if(designees != null && designees.size() > 0){
-                for(String designee : designees){
-                    SelectItem item = new SelectItem(designee, designee);
+                for(UserRoleVORowImpl designee : designees){
+                    SelectItem item = new SelectItem(designee.getUserName(), designee.getFullName());
                     designeeList.add(item);
                 }
             }

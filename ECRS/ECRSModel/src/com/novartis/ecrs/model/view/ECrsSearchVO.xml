@@ -79,6 +79,33 @@
       </PIMap>
     </ParameterMap>
   </ViewAccessor>
+  <ViewAccessor
+    Name="TASLVA"
+    ViewObjectName="com.novartis.ecrs.model.lov.UserRoleVO">
+    <ParameterMap>
+      <PIMap Variable="roleName">
+        <TransientExpression><![CDATA['CRS_TASL']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="MLVA"
+    ViewObjectName="com.novartis.ecrs.model.lov.UserRoleVO">
+    <ParameterMap>
+      <PIMap Variable="roleName">
+        <TransientExpression><![CDATA['CRS_ML']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="BSLVA"
+    ViewObjectName="com.novartis.ecrs.model.lov.UserRoleVO">
+    <ParameterMap>
+      <PIMap Variable="roleName">
+        <TransientExpression><![CDATA['CRS_BSL']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
   <ListBinding
     Name="LOV_CompoundType"
     ListVOName="CompundTypeLOVVA"
@@ -136,7 +163,7 @@
   </ListBinding>
   <ListBinding
     Name="LOV_Designee"
-    ListVOName="CrsUserBSLVA"
+    ListVOName="BSLVA"
     ListRangeSize="-1"
     NullValueFlag="start"
     NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
@@ -148,13 +175,13 @@
       <Item Value="UserName"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="UserName"/>
+      <Item Value="FullName"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
   <ListBinding
     Name="LOV_CrsTasl"
-    ListVOName="CrsUserTASLVA"
+    ListVOName="TASLVA"
     ListRangeSize="-1"
     NullValueFlag="start"
     NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
@@ -166,13 +193,13 @@
       <Item Value="UserName"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="UserName"/>
+      <Item Value="FullName"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
   <ListBinding
     Name="LOV_CrsMedicalLead"
-    ListVOName="CrsUserMLVA"
+    ListVOName="MLVA"
     ListRangeSize="-1"
     NullValueFlag="start"
     NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
@@ -184,13 +211,13 @@
       <Item Value="UserName"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="UserName"/>
+      <Item Value="FullName"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
   <ListBinding
     Name="LOV_CrsBsl"
-    ListVOName="CrsUserBSLVA"
+    ListVOName="BSLVA"
     ListRangeSize="-1"
     NullValueFlag="start"
     NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
@@ -202,7 +229,7 @@
       <Item Value="UserName"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="UserName"/>
+      <Item Value="FullName"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>

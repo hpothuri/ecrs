@@ -61,6 +61,10 @@
     <filter-name>adfBindings</filter-name>
     <filter-class>oracle.adf.model.servlet.ADFBindingFilter</filter-class>
   </filter>
+  <filter>
+    <filter-name>SessionTimeOutFilter</filter-name>
+    <filter-class>com.novartis.ecrs.ui.bean.application.TimeOutListener</filter-class>
+  </filter>
   <filter-mapping>
     <filter-name>JpsFilter</filter-name>
     <url-pattern>/*</url-pattern>
@@ -86,6 +90,10 @@
     <servlet-name>Faces Servlet</servlet-name>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>SessionTimeOutFilter</filter-name>
+    <servlet-name>Faces Servlet</servlet-name>
   </filter-mapping>
   <listener>
     <listener-class>oracle.adf.mbean.share.connection.ADFConnectionLifeCycleCallBack</listener-class>
