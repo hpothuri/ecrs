@@ -27,7 +27,7 @@
     Type="java.lang.String"/>
   <SQLQuery><![CDATA[SELECT DISTINCT
                        RTRIM(a.last_name||', '||a.first_name,', ') full_name,
-                       a.account_name                              user_name,
+                       upper(a.account_name)                              user_name,
                        r.granted_role                              role_name
                     FROM crs_roles         c,
                          opa.opa_accounts  a,

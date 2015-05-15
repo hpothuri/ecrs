@@ -271,7 +271,7 @@ public class ManageCRSBean implements Serializable {
 
         if (iter != null && iter.getCurrentRow() != null){
             CrsContentVORowImpl row = (CrsContentVORowImpl)iter.getCurrentRow();
-            row.setBslName(ADFContext.getCurrent().getSecurityContext().getUserName());
+            row.setBslName(ADFContext.getCurrent().getSecurityContext().getUserName().toUpperCase());
             row.setStateId(ModelConstants.STATE_DRAFT);
             row.setReviewApproveRequiredFlag(ModelConstants.REVIEW_REQD_YES);
             row.setReleaseStatusFlag(ModelConstants.STATUS_PENDING);
