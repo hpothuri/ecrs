@@ -114,6 +114,12 @@
         <Item Value="EntityState"/>
       </AttrNames>
     </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator"
+                     id="ReviewApproveRequiredFlag">
+      <AttrNames>
+        <Item Value="ReviewApproveRequiredFlag"/>
+      </AttrNames>
+    </attributeValues>
     <button IterBinding="CrsContentVOIterator" id="ReviewApproveRequiredFlag1"
             DTSupportsMRU="false" StaticList="true">
       <AttrNames>
@@ -124,6 +130,16 @@
         <Item Value="N"/>
       </ValueList>
     </button>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CrsCompoundCode">
+      <AttrNames>
+        <Item Value="CrsCompoundCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CompoundCode">
+      <AttrNames>
+        <Item Value="CompoundCode"/>
+      </AttrNames>
+    </attributeValues>
     <methodAction id="copyRoutineDefinition" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
                   DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="copyRoutineDefinition" IsViewObjectMethod="false"
