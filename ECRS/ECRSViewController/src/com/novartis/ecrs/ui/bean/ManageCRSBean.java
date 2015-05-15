@@ -158,6 +158,7 @@ public class ManageCRSBean implements Serializable {
     private transient RichPopup publishPopupBinding;
     private transient RichPopup submitApprovalPopup;
     private Map<Integer,String> statesMap = null;
+    private boolean nonCompoundSelected;
     
     public ManageCRSBean() {
         super();
@@ -212,7 +213,7 @@ public class ManageCRSBean implements Serializable {
         Boolean reviewReqd = (Boolean)ADFUtils.evaluateEL("#{bindings.ReviewApproveRequiredFlag1.inputValue}");
         // review reqd is false -> set the state to published
         if(Boolean.FALSE.equals(reviewReqd)){
-            ADFUtils.setEL("#{bindings.StateId.inputValue}",ModelConstants.STATE_PUBLISHED);
+            //ADFUtils.setEL("#{bindings.StateId.inputValue}",ModelConstants.STATE_PUBLISHED);
             ADFUtils.addPartialTarget(getCrsStateSOC());
             ADFUtils.addPartialTarget(getWorkflowPanelBox());
         }
@@ -400,6 +401,10 @@ public class ManageCRSBean implements Serializable {
             }
             setSelDesigneeList(designeeList);
         }
+        if (ModelConstants.COMPOUND_TYPE_NON_COMPOUND.equals(selectedRow.getCrsCompoundType())) {
+            setNonCompoundSelected(Boolean.TRUE);
+        } else
+            setNonCompoundSelected(Boolean.FALSE);
     }
 
     /**
@@ -496,20 +501,26 @@ public class ManageCRSBean implements Serializable {
         // Add event code here...
         if (vce != null) {
             vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            setNonCompoundSelected(Boolean.FALSE);
             if (vce.getNewValue() != null && !vce.getNewValue().equals(vce.getOldValue()) &&
-                ViewConstants.NON_COMPOUND_ROUTINE.equals(ADFUtils.evaluateEL("#{bindings.CompoundCode.inputValue}"))) {
+                ModelConstants.COMPOUND_TYPE_NON_COMPOUND.equals(ADFUtils.evaluateEL("#{bindings.CompoundType.inputValue}"))) {
                 ADFUtils.setEL("#{bindings.TradeName.inputValue}", null);
                 ADFUtils.setEL("#{bindings.GenericName.inputValue}", null);
                 ADFUtils.setEL("#{bindings.Indication.inputValue}", null);
                 //TODO make this enable when isMarketedFlag null
                 ADFUtils.setEL("#{bindings.IsMarketedFlag.inputValue}", "N");
+                ADFUtils.setEL("#{bindings.BslName.inputValue}", null);
+                ADFUtils.setEL("#{bindings.TaslName.inputValue}", null);
+                ADFUtils.setEL("#{bindings.MedicalLeadName.inputValue}", null);
+                setNonCompoundSelected(Boolean.TRUE);
             }
-
             String crsCompCode = (String)ADFUtils.evaluateEL("#{bindings.CrsCompoundCode.inputValue}");
             String compCode = (String)ADFUtils.evaluateEL("#{bindings.CompoundCode.inputValue}");
             String indication = (String)ADFUtils.evaluateEL("#{bindings.Indication.inputValue}");
             ADFUtils.setEL("#{bindings.CrsName.inputValue}",
                            (compCode != null ? compCode : crsCompCode) + (indication != null ? (" "+indication) : ""));
+            //ResetUtils.reset(vce.getComponent().getParent());
+            ADFUtils.addPartialTarget(vce.getComponent().getParent());
         }
     }
 
@@ -2462,5 +2473,19 @@ public class ManageCRSBean implements Serializable {
                 }
             }
         }
+    }
+
+    /**
+     * @param nonCompoundSelected
+     */
+    public void setNonCompoundSelected(boolean nonCompoundSelected) {
+        this.nonCompoundSelected = nonCompoundSelected;
+    }
+
+    /**
+     * @return
+     */
+    public boolean isNonCompoundSelected() {
+        return nonCompoundSelected;
     }
 }

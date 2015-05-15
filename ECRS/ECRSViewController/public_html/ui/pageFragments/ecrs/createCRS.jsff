@@ -42,7 +42,7 @@
                                                         showRequired="true"
                                                         autoSubmit="true"
                                                         valueChangeListener="#{pageFlowScope.manageCRSBean.onCompCodeSelect}"
-                                                        readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
+                                                        readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable || pageFlowScope.flowType ne 'C'}">
                                         <f:selectItems value="#{bindings.CompoundId.items}"
                                                        id="si2"/>
                                     </af:selectOneChoice>
@@ -79,7 +79,7 @@
                                                   shortDesc="#{bindings.TradeName.hints.tooltip}"
                                                   id="it1"
                                                   contentStyle="width:150px;"
-                                                  readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}"
+                                                  readOnly="#{bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"
                                                   autoSubmit="true">
                                         <f:validator binding="#{bindings.TradeName.validator}"/>
                                     </af:inputText>
@@ -91,7 +91,7 @@
                                                   shortDesc="#{bindings.GenericName.hints.tooltip}"
                                                   id="it2"
                                                   contentStyle="width:150px;"
-                                                  readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}"
+                                                  readOnly="#{bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"
                                                   autoSubmit="true">
                                         <f:validator binding="#{bindings.GenericName.validator}"/>
                                     </af:inputText>
@@ -104,7 +104,7 @@
                                                   id="it3"
                                                   contentStyle="width:150px;"
                                                   autoSubmit="true"
-                                                  readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}"
+                                                  readOnly="#{bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"
                                                   valueChangeListener="#{pageFlowScope.manageCRSBean.onChangeIndication}">
                                         <f:validator binding="#{bindings.Indication.validator}"/>
                                     </af:inputText>
@@ -112,7 +112,7 @@
                                                         id="soc8"
                                                         value="#{bindings.IsMarketedFlag.inputValue}"
                                                         required="false"
-                                                        readOnly="#{bindings.CrsCompoundCode.inputValue eq 'ROUTINE' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundCode.inputValue eq 'ROUTINE'}">
+                                                        readOnly="#{bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}">
                                         <af:selectItem label="Yes" value="Y"
                                                        id="si9"/>
                                         <af:selectItem label="No" value="N"
@@ -133,13 +133,12 @@
                         </af:switcher>-->
                                     <af:selectOneChoice value="#{bindings.BslName.inputValue}"
                                                         label="#{ecrsviewcontrollerBundle.BSL}"
-                                                        required="true"
                                                         shortDesc="#{bindings.BslName.hints.tooltip}"
                                                         id="soc3"
                                                         contentStyle="width:170px;"
-                                                        readOnly="#{!securityContext.userInRole['CRS_ADMIN']}"
-                                                        showRequired="true"
-                                                        autoSubmit="true">
+                                                        readOnly="#{!securityContext.userInRole['CRS_ADMIN'] || pageFlowScope.manageCRSBean.nonCompoundSelected}"
+                                                        autoSubmit="true"
+                                                        required="#{!pageFlowScope.manageCRSBean.nonCompoundSelected}">
                                         <f:selectItems value="#{bindings.BslName.items}"
                                                        id="si3"/>
                                     </af:selectOneChoice>
@@ -147,30 +146,31 @@
                                                          id="smc2"
                                                          contentStyle="width:150px !important;"
                                                          value="#{pageFlowScope.manageCRSBean.selDesigneeList}"
-                                                         readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                                         autoSubmit="true">
+                                                         readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable || pageFlowScope.manageCRSBean.nonCompoundSelected}"
+                                                         autoSubmit="true"
+                                                         required="#{!pageFlowScope.manageCRSBean.nonCompoundSelected}">
                                         <f:selectItems value="#{pageFlowScope.manageCRSBean.designeeList}"
                                                        id="si11"/>
                                     </af:selectManyChoice>
                                     <af:selectOneChoice value="#{bindings.TaslName.inputValue}"
                                                         label="#{ecrsviewcontrollerBundle.CRS_TASL}"
-                                                        required="true"
                                                         shortDesc="#{bindings.TaslName.hints.tooltip}"
                                                         id="soc5"
                                                         contentStyle="width:170px;"
-                                                        readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                                        autoSubmit="true">
+                                                        readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable || pageFlowScope.manageCRSBean.nonCompoundSelected}"
+                                                        autoSubmit="true"
+                                                        required="#{!pageFlowScope.manageCRSBean.nonCompoundSelected}">
                                         <f:selectItems value="#{bindings.TaslName.items}"
                                                        id="si5"/>
                                     </af:selectOneChoice>
                                     <af:selectOneChoice value="#{bindings.MedicalLeadName.inputValue}"
                                                         label="#{ecrsviewcontrollerBundle.CRS_MEDICAL_LEAD}"
-                                                        required="true"
                                                         shortDesc="#{bindings.MedicalLeadName.hints.tooltip}"
                                                         id="soc6"
                                                         contentStyle="width:170px;"
-                                                        readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                                        autoSubmit="true">
+                                                        readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable || pageFlowScope.manageCRSBean.nonCompoundSelected}"
+                                                        autoSubmit="true"
+                                                        required="#{!pageFlowScope.manageCRSBean.nonCompoundSelected}">
                                         <f:selectItems value="#{bindings.MedicalLeadName.items}"
                                                        id="si6"/>
                                     </af:selectOneChoice>

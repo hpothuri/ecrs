@@ -139,7 +139,6 @@
   </Attribute>
   <Attribute
     Name="BslName"
-    IsNotNull="true"
     Precision="50"
     ColumnName="BSL_NAME"
     SQLType="VARCHAR"
@@ -176,7 +175,6 @@
   </Attribute>
   <Attribute
     Name="TaslName"
-    IsNotNull="true"
     Precision="50"
     ColumnName="TASL_NAME"
     SQLType="VARCHAR"
@@ -201,7 +199,6 @@
   </Attribute>
   <Attribute
     Name="MedicalLeadName"
-    IsNotNull="true"
     Precision="50"
     ColumnName="MEDICAL_LEAD_NAME"
     SQLType="VARCHAR"

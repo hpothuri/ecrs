@@ -38,6 +38,8 @@ public class ModelConstants {
 
     public static final String PLSQL_CALL_SUCCESS = "0";
     public static final String PLSQL_CALL_FAILURE = "-1";
+    public static final String COMPOUND_TYPE_NON_COMPOUND = "NON-COMPOUND";
+    public static final String COMPOUND_TYPE_COMPOUND = "COMPOUND";
 
     static public String getCustomTimeStamp() {
         String timeStamp =
