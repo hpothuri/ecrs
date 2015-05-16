@@ -125,6 +125,7 @@ public class ExcelExportUtils {
                                   String emptyValReplace) {
         int cellIndex=cellStartIndex;           
            Iterator entries = columnMap.entrySet().iterator();
+           CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
            while (entries.hasNext()) {
                Map.Entry entry = (Map.Entry) entries.next();
                Row currentRow=rowSet.getRowAtRangeIndex(rowCounter);  
@@ -163,7 +164,7 @@ public class ExcelExportUtils {
             else
                 sheet.setColumnWidth(cellIndex, 6000);
                
-               setDataCellStyle(sheet, rowIndex, cellIndex);
+               setDataCellStyle(sheet, rowIndex, cellIndex,cellStyle);
                cellIndex++; 
                 
            }       
@@ -202,10 +203,10 @@ public class ExcelExportUtils {
            cell.setCellStyle(cellStyle);
        }  
        
-       private static void setDataCellStyle(Sheet sheet, int rowIndex, int cellIndex){
+       private static void setDataCellStyle(Sheet sheet, int rowIndex, int cellIndex,CellStyle cellStyle){
            org.apache.poi.ss.usermodel.Row row = sheet.getRow((short)rowIndex);
            Workbook wb = sheet.getWorkbook();
-           CellStyle cellStyle = wb.createCellStyle();
+           //CellStyle cellStyle = wb.createCellStyle();
            Cell cell = row.getCell((short)cellIndex);
            cellStyle.setAlignment(CellStyle.ALIGN_LEFT);
            cellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);

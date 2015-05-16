@@ -20,8 +20,7 @@
                             <f:facet name="toolbar">
                                 <af:toolbar id="t4">
                                     <af:commandButton text="#{ecrsviewcontrollerBundle.EXPORT}"
-                                                      id="cb1"
-                                                      partialSubmit="true">
+                                                      id="cb1">
                                         <af:fileDownloadActionListener contentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                                                                        filename="MedDRAComponentStandardizationReport.xls"
                                                                        method="#{pageFlowScope.reportsBean.downloadMedDRACompStandardReport}"/>

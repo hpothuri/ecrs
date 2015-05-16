@@ -649,5 +649,10 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="StateIdBase">
+      <AttrNames>
+        <Item Value="StateId"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

@@ -503,4 +503,60 @@ public class CRSReportsBean {
     public InputStream getImageInpStream() {
         return excelUtils.getImageInpStream();
     }
+
+    public void ptReport(FacesContext facesContext,
+                         OutputStream outputStream) throws IOException {
+        // Add event code here...
+        // Add event code here...
+        //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
+        Workbook workbook = null;
+        InputStream excelInputStream = getExcelInpStream();
+
+        try {
+
+            //create sheet
+            DCIteratorBinding iter =
+                ADFUtils.findIterator("PTReportVOIterator");
+            RowSetIterator rowSet = null;
+            int rowStartIndex = 8;
+            int cellStartIndex = 0;
+            String emptyValReplace = null;
+            String dateCellFormat = "M/dd/yyyy";
+            if (iter != null) {
+                iter.setRangeSize(-1);
+                rowSet = iter.getRowSetIterator();
+            }
+            workbook = WorkbookFactory.create(excelInputStream);
+            LinkedHashMap columnMap = new LinkedHashMap();
+            ResourceBundle rsBundle =
+                BundleFactory.getBundle("com.novartis.ecrs.view.ECRSViewControllerBundle");
+            //Here Key will be ViewObject Attribute
+            columnMap.put("SafetyTopicOfInterest",
+                          rsBundle.getString("SAFETY_TOPIC_OF_INTEREST"));
+            columnMap.put("PtName", rsBundle.getString("PT_NAME"));
+            columnMap.put("PtCode", rsBundle.getString("PT_CODE"));
+            workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
+                                             cellStartIndex, columnMap, null,
+                                             dateCellFormat, emptyValReplace,
+                                             getImageInpStream());
+            //write image to sheet
+            //ExcelExportUtils.writeImageTOExcel(sheet,getImageInpStream());
+
+        } catch (IOException ioe) {
+            // TODO: Add catch code
+            ioe.printStackTrace();
+        } catch (InvalidFormatException ife) {
+            // TODO: Add catch code
+            ife.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            workbook.write(outputStream);
+            excelInputStream.close();
+            outputStream.close();
+        }
+    }
 }

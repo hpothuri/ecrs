@@ -8,7 +8,9 @@
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  UseGlueCode="false">
+  UseGlueCode="false"
+  FetchSize="20"
+  FetchMode="FETCH_AS_NEEDED">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>

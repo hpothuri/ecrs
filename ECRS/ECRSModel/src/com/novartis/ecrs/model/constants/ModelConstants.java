@@ -40,7 +40,9 @@ public class ModelConstants {
     public static final String PLSQL_CALL_FAILURE = "-1";
     public static final String COMPOUND_TYPE_NON_COMPOUND = "NON-COMPOUND";
     public static final String COMPOUND_TYPE_COMPOUND = "COMPOUND";
-
+    public static final String CRS_ACTIVE = "Active";
+    public static final String CRS_INACTIVE = "Inactive";
+    
     static public String getCustomTimeStamp() {
         String timeStamp =
             new SimpleDateFormat("MM-dd-yyyy hh:mm a").format(Calendar.getInstance().getTime());

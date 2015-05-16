@@ -316,16 +316,25 @@ public class ManageCRSBean implements Serializable {
     public void onClickSearch(ActionEvent actionEvent) {
         // TODO get user name
         //set release staus to binding
+        String releaseStatus = "";
         if ("anonymous".equalsIgnoreCase(userName))
-            ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}", ModelConstants.STATUS_CURRENT);
+            releaseStatus = ModelConstants.STATUS_CURRENT;
         else if (ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType()) &&
                  (ModelConstants.ROLE_ML.equals(loggedInUserRole) ||
                   ModelConstants.ROLE_MQM.equals(loggedInUserRole) ||
                   ModelConstants.ROLE_TASL.equals(loggedInUserRole)))
-            ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}", ModelConstants.STATUS_PENDING);
-
-        ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}", getCurrReleaseStatus());
+            releaseStatus = ModelConstants.STATUS_PENDING;
+        else
+            releaseStatus = getCurrReleaseStatus();
  
+        //set releaseStatus variable to current row attribute
+        ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}",
+                       releaseStatus);
+        //If mode is B&S ,and release status is 'CURRENT' set state to activated 
+        if(ViewConstants.FLOW_TYPE_SEARCH.equals(flowType) &&
+        ModelConstants.STATUS_CURRENT.equals(releaseStatus)){
+            ADFUtils.setEL("#{bindings.State.inputValue}", ModelConstants.STATE_ACTIVATED);
+        }
         DCBindingContainer bc = ADFUtils.getDCBindingContainer();
         OperationBinding ob = bc.getOperationBinding("filterCRSContent");
         ob.getParamsMap().put("userInRole", loggedInUserRole);
@@ -2307,6 +2316,10 @@ public class ManageCRSBean implements Serializable {
     private void writeHeaderData(Sheet sheet) {
         //        Excel report Header data to include
         int count = 6;
+        //invoke prepareStatesMap to get state names
+        if (statesMap == null || (statesMap != null && statesMap.size() == 0))
+            prepareStatesMap();
+        
         //  •1 CRS Name
         org.apache.poi.ss.usermodel.Row row1 = sheet.createRow(count);
         Cell cell11 = row1.createCell((short)0);
@@ -2337,9 +2350,18 @@ public class ManageCRSBean implements Serializable {
                                             CellStyle.ALIGN_LEFT);
         sheet.addMergedRegion(new CellRangeAddress(count, count, 0, 4));
         //Status //        • 2 Status (Active or Inactive)
+        String status = "";
+        if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
+            int stateIdBase =
+                (Integer)ADFUtils.evaluateEL("#{bindings.StateIdBase.inputValue}");
+            if (stateIdBase == ModelConstants.STATE_RETIRED.intValue())
+                status = ModelConstants.CRS_INACTIVE;
+            else
+                status = ModelConstants.CRS_ACTIVE;
+        }
         Cell cell22 = row2.createCell((short)7);
         // TODO
-        cell22.setCellValue("Status: " + "");
+        cell22.setCellValue("Status: " + status);
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell22.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
@@ -2376,14 +2398,12 @@ public class ManageCRSBean implements Serializable {
         //        •4 BSL
         //BSL
         org.apache.poi.ss.usermodel.Row row4 = sheet.createRow(count);
-        //invoke prepareStatesMap to get state names
-        if (statesMap == null || (statesMap != null && statesMap.size() == 0))
-            prepareStatesMap();
+       
         Cell cell41 = row4.createCell((short)0);
         if (ModelConstants.STAGING_FACET.equals(getBaseOrStaging())) {
-            int stateId =
+            int stateIdstg =
                 (Integer)ADFUtils.evaluateEL("#{bindings.StateId.inputValue}");
-            cell41.setCellValue("State:  " + statesMap.get(stateId));
+            cell41.setCellValue("State:  " + statesMap.get(stateIdstg));
         }
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell41.getColumnIndex(), false,
