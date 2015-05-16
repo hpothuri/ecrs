@@ -2,7 +2,7 @@
 <adf-config xmlns="http://xmlns.oracle.com/adf/config" xmlns:config="http://xmlns.oracle.com/bc4j/configuration"
             xmlns:adf="http://xmlns.oracle.com/adf/config/properties">
   <adf-adfm-config xmlns="http://xmlns.oracle.com/adfm/config">
-    <defaults changeEventPolicy="ppr" useBindVarsForViewCriteriaLiterals="true"/>
+    <defaults changeEventPolicy="none" useBindVarsForViewCriteriaLiterals="true"/>
     <startup>
       <amconfig-overrides>
         <config:Database jbo.locking.mode="optimistic"/>
