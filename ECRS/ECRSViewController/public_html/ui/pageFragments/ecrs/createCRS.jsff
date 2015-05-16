@@ -200,7 +200,8 @@
                                                               id="sbc1"
                                                               value="#{bindings.ReviewApproveRequiredFlag1.inputValue}"
                                                               autoSubmit="true"
-                                                              readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+                                                              readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                                                              disabled="#{bindings.StateId.inputValue ne 1}"/>
                                 </af:panelFormLayout>
                                 <af:panelGroupLayout id="pgl7"
                                                      layout="horizontal"
@@ -242,9 +243,9 @@
                                     <af:commandButton text="#{ecrsviewcontrollerBundle.REVIEW}"
                                                       id="cb2"
                                                       visible="#{(securityContext.userInRole['CRS_BSL']  || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      disabled="#{bindings.EntityState eq 'NEW' or bindings.StateId.inputValue ne 1}"
+                                                      disabled="#{bindings.EntityState eq 'NEW' or bindings.StateId.inputValue ne 1 or (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag eq 'N')}"
                                                       partialSubmit="true"
-                                                      inlineStyle="margin-right:10px;">
+                                                      inlineStyle="margin-right:10px;" partialTriggers="sbc1">
                                         <af:showPopupBehavior popupId="review"
                                                               triggerType="action"/>
                                     </af:commandButton>
@@ -304,10 +305,11 @@
                                     </af:commandButton>
                                     <af:commandButton text="#{ecrsviewcontrollerBundle.PUBLISHED}"
                                                       id="cb14"
-                                                      disabled="#{bindings.StateId.inputValue ne 6}"
+                                                      disabled="#{!(bindings.StateId.inputValue eq 6 || (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag.inputValue eq 'N'))}"
                                                       visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
                                                       inlineStyle="margin-right:10px;"
-                                                      actionListener="#{pageFlowScope.manageCRSBean.onClickPublish}">
+                                                      actionListener="#{pageFlowScope.manageCRSBean.onClickPublish}"
+                                                      partialTriggers="sbc1">
                                         <!--af:setActionListener from="#{''}"
                                                               to="#{pageFlowScope.manageCRSBean.reasonForChange}"/>
                                         <af:showPopupBehavior popupId="publish"
