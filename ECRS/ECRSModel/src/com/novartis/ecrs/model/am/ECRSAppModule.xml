@@ -132,6 +132,9 @@
   <ViewUsage
     Name="UserRoleVO"
     ViewObjectName="com.novartis.ecrs.model.lov.UserRoleVO"/>
+  <ViewUsage
+    Name="PTReportVO"
+    ViewObjectName="com.novartis.ecrs.model.view.report.PTReportVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

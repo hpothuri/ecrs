@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="PTReportPageDef"
+                Package="pages.reports">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="PTReportVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="PTReportVOIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="PTReportVOIterator" id="PTReportVO">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.report.PTReportVO" Name="PTReportVO0">
+        <AttrNames>
+          <Item Value="SafetyTopicOfInterest"/>
+          <Item Value="PtName"/>
+          <Item Value="PtCode"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

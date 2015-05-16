@@ -1005,4 +1005,12 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public ViewObjectImpl getUserRoleVO() {
         return (ViewObjectImpl)findViewObject("UserRoleVO");
     }
+
+    /**
+     * Container's getter for PTReportVO.
+     * @return PTReportVO
+     */
+    public ViewObjectImpl getPTReportVO() {
+        return (ViewObjectImpl)findViewObject("PTReportVO");
+    }
 }

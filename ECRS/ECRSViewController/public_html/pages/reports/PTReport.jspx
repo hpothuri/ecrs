@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="PTReport.jspx" id="d1">
+            <af:messages id="m1"/>
+            <af:form id="f1">
+                <af:pageTemplate viewId="/pageTemplate/EcrsTemplate.jspx" id="pt1">
+                    <f:facet name="content">
+                        <af:panelGroupLayout id="pgl2" layout="vertical">
+                            <af:panelHeader text="#{ecrsviewcontrollerBundle.PT_REPORT}" id="ph1" size="1"
+                                            inlineStyle="padding:5px;">
+                                <f:facet name="context"/>
+                                <f:facet name="menuBar"/>
+                                <f:facet name="toolbar"/>
+                                <f:facet name="legend"/>
+                                <f:facet name="info"/>
+                                <af:table value="#{bindings.PTReportVO.collectionModel}" var="row"
+                                          rows="#{bindings.PTReportVO.rangeSize}"
+                                          emptyText="#{bindings.PTReportVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          fetchSize="#{bindings.PTReportVO.rangeSize}" rowBandingInterval="0" id="t1"
+                                          styleClass="AFStretchWidth" columnStretching="column:c2">
+                                    <af:column sortProperty="#{bindings.PTReportVO.hints.SafetyTopicOfInterest.name}"
+                                               sortable="false"
+                                               headerText="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_OF_INTEREST}"
+                                               id="c1">
+                                        <af:outputText value="#{row.SafetyTopicOfInterest}"
+                                                       shortDesc="#{bindings.PTReportVO.hints.SafetyTopicOfInterest.tooltip}"
+                                                       id="ot1"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.PTReportVO.hints.PtName.name}" sortable="false"
+                                               headerText="#{ecrsviewcontrollerBundle.PT_NAME}" id="c2">
+                                        <af:outputText value="#{row.PtName}"
+                                                       shortDesc="#{bindings.PTReportVO.hints.PtName.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.PTReportVO.hints.PtCode.name}" sortable="false"
+                                               headerText="#{ecrsviewcontrollerBundle.PT_CODE}" id="c3">
+                                        <af:outputText value="#{row.PtCode}"
+                                                       shortDesc="#{bindings.PTReportVO.hints.PtCode.tooltip}"
+                                                       id="ot3"/>
+                                    </af:column>
+                                </af:table>
+                            </af:panelHeader>
+                            <af:panelGroupLayout id="pgl4" layout="vertical">
+                                <af:spacer width="10" height="20" id="s2"/>
+                                <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb2" action="home"/>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                    </f:facet>
+                </af:pageTemplate>
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

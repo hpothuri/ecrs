@@ -74,6 +74,7 @@
     <page path="/ui/pageFragments/domains/searchDomains.jsff" usageId="com_novartis_ecrs_view_searchDomainsPageDef"/>
     <page path="/ui/pageFragments/domains/domainDetails.jsff" usageId="com_novartis_ecrs_view_domainDetailsPageDef"/>
     <page path="/pages/ManageDomains.jspx" usageId="com_novartis_ecrs_view_ManageDomainsPageDef"/>
+    <page path="/pages/reports/PTReport.jspx" usageId="com_novartis_ecrs_view_PTReportPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -137,6 +138,7 @@
     <page id="com_novartis_ecrs_view_searchDomainsPageDef" path="ui.pageFragments.domains.searchDomainsPageDef"/>
     <page id="com_novartis_ecrs_view_domainDetailsPageDef" path="ui.pageFragments.domains.domainDetailsPageDef"/>
     <page id="com_novartis_ecrs_view_ManageDomainsPageDef" path="pages.ManageDomainsPageDef"/>
+    <page id="com_novartis_ecrs_view_PTReportPageDef" path="pages.reports.PTReportPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

@@ -69,6 +69,8 @@
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.RISK_DEFINITIONS_PER_SAFETY_TO}" id="pt_cmi4"
                                                 action="riskDefSafety" inlineStyle="font-weight: bold;"
                                                 immediate="true"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.PT_REPORT}" id="pt_cmi9"
+                                                action="ptReport" inlineStyle="font-weight: bold;" immediate="true"/>
                             <af:menu text="#{ecrsviewcontrollerBundle.ADMIN_REPORTS}" id="pt_m3"
                                      visible="#{securityContext.userInRole['CRS_ADMIN']}"
                                      inlineStyle="font-weight: bold;     padding-right: 10px;">

@@ -109,7 +109,7 @@
       <property
          name="fromOutcome">riskPurpose</property>
       <property
-         name="sdm:polyPoints">L72,432.0,164.44824,286.6963,277.44824,T50</property>
+         name="sdm:polyPoints">L77,432.0,167.94824,286.6963,277.44824,T50</property>
    </ControlFlowCase>
    <View
       id="View11">
@@ -134,7 +134,7 @@
       <property
          name="fromOutcome">compound</property>
       <property
-         name="sdm:polyPoints">L50,428.60788,150.44824,247.03516,186.44824,R50</property>
+         name="sdm:polyPoints">L55,428.70496,153.94824,247.03516,186.44824,R50</property>
    </ControlFlowCase>
    <View
       id="View13">
@@ -184,7 +184,7 @@
       <property
          name="fromOutcome">create</property>
       <property
-         name="sdm:polyPoints">L28,432.0,136.44824,290.5,60.448242,B50</property>
+         name="sdm:polyPoints">L23,432.0,132.94824,290.5,60.448242,B50</property>
    </ControlFlowCase>
    <View
       id="View17">
@@ -435,5 +435,30 @@
          name="fromOutcome">domains</property>
       <property
          name="sdm:polyPoints">L34,430.78473,139.94824,182.35742,86.44824,B50</property>
+   </ControlFlowCase>
+   <View
+      id="View38">
+      <property
+         name="activityId">PTReport</property>
+      <property
+         name="page">/pages/reports/PTReport.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>PTReport&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">11.798828</property>
+      <property
+         name="x">420.5</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase39"
+      from="WildcardControlFlowRule2"
+      to="View38">
+      <property
+         name="fromOutcome">ptReport</property>
+      <property
+         name="sdm:polyPoints">T43,464.5,107.94824,420.5,65.44824,B50</property>
    </ControlFlowCase>
 </SDM>
