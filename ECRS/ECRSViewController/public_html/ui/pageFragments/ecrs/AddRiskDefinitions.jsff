@@ -44,10 +44,6 @@
                 <af:commandButton text="#{ecrsviewcontrollerBundle.REFRESH_REPOSITORY}" id="cb22"
                                   icon="/images/database-refresh-icon.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.refreshRepository}"/>
-                <af:commandImageLink id="cil5" icon="/images/Help-icon.png">
-                  <af:showPopupBehavior triggerType="action"
-                                        popupId="::prplegend"/>
-                </af:commandImageLink>
               </af:toolbar>
             </f:facet>
             <af:table value="#{bindings.CrsRiskVO.collectionModel}" var="row" rows="#{bindings.CrsRiskVO.rangeSize}"
@@ -124,6 +120,17 @@
                     <af:outputText value="#{row.RiskPurposeErFlag eq 'Y' ? 'X' : ''}" id="ot65"
                                    shortDesc="#{ecrsviewcontrollerBundle.EXPEDITING_RULES}"/>
                   </af:column>
+                  <f:facet name="header">
+                    <af:panelGroupLayout id="pgl13" layout="horizontal">
+                      <af:outputText value="#{ecrsviewcontrollerBundle.PURPOSE_OF_THE_RISK_DEFINTION}" id="ot79"/>
+                      <af:commandImageLink id="cil5" icon="/images/Help-icon.png">
+                        <af:showPopupBehavior triggerType="action" popupId=":::prplegend"/>
+                      </af:commandImageLink>
+                      <f:facet name="separator">
+                        <af:spacer width="10" height="10" id="s7"/>
+                      </f:facet>
+                    </af:panelGroupLayout>
+                  </f:facet>
                 </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskVO.hints.SocTerm.name}" filterable="true"
                            headerText="#{ecrsviewcontrollerBundle.SOC}" id="c11" width="170">
@@ -262,6 +269,17 @@
                     <af:outputText value="#{row.RiskPurposeErFlag eq 'Y' ? 'X' : ''}" id="ot47"
                                    shortDesc="#{ecrsviewcontrollerBundle.EXPEDITING_RULES}"/>
                   </af:column>
+                  <f:facet name="header">
+                    <af:panelGroupLayout id="pgl12" layout="horizontal">
+                      <af:outputText value="#{ecrsviewcontrollerBundle.PURPOSE_OF_THE_RISK_DEFINTION}" id="ot78"/>
+                      <af:commandImageLink id="cil6" icon="/images/Help-icon.png">
+                        <af:showPopupBehavior triggerType="action" popupId=":::prplegend"/>
+                      </af:commandImageLink>
+                      <f:facet name="separator">
+                        <af:spacer width="10" height="10" id="s8"/>
+                      </f:facet>
+                    </af:panelGroupLayout>
+                  </f:facet>
                 </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.SocTerm.name}" filterable="true" sortable="true"
                            headerText="#{ecrsviewcontrollerBundle.SOC}" id="c71" width="170">
@@ -323,10 +341,6 @@
                                                  filename="AddRiskDefinitionsReport.xls"
                                                  method="#{pageFlowScope.manageCRSBean.exportRiskDefinitions}"/>
                 </af:commandButton>
-                <af:commandImageLink id="cil6" icon="/images/Help-icon.png">
-                  <af:showPopupBehavior triggerType="action"
-                                        popupId="::prplegend"/>
-                </af:commandImageLink>
               </af:toolbar>
             </f:facet>
           </af:panelCollection>
@@ -790,6 +804,17 @@
                   <af:outputText value="#{copyRow.RiskPurposeErFlag eq 'Y' ? 'X' : ''}" id="ot76"
                                  shortDesc="#{ecrsviewcontrollerBundle.EXPEDITING_RULES}"/>
                 </af:column>
+                <f:facet name="header">
+                  <af:panelGroupLayout id="pgl14" layout="horizontal">
+                    <af:outputText value="#{ecrsviewcontrollerBundle.PURPOSE_OF_THE_RISK_DEFINTION}" id="ot80"/>
+                    <af:commandImageLink id="cil8" icon="/images/Help-icon.png">
+                      <af:showPopupBehavior triggerType="action" popupId="::prplegend"/>
+                    </af:commandImageLink>
+                    <f:facet name="separator">
+                      <af:spacer width="10" height="10" id="s9"/>
+                    </f:facet>
+                  </af:panelGroupLayout>
+                </f:facet>
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.SocTerm.name}" sortable="true"
                          headerText="#{ecrsviewcontrollerBundle.SOC}" id="c481">
@@ -833,12 +858,7 @@
                                shortDesc="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.tooltip}" id="ot32"/>
               </af:column>
             </af:table>
-            <f:facet name="prompt">
-              <af:commandImageLink id="cil8" icon="/images/help_icon.png">
-                <af:showPopupBehavior triggerType="action"
-                                      popupId="::prplegend"/>
-              </af:commandImageLink>
-            </f:facet>
+            <f:facet name="prompt"/>
           </af:showDetail>
           <af:panelGroupLayout id="pgl51" binding="#{pageFlowScope.manageCRSBean.copyPanel}"
                                layout="vertical" visible="false">

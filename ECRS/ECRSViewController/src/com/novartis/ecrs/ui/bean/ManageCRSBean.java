@@ -332,7 +332,7 @@ public class ManageCRSBean implements Serializable {
     public void onClickSearch(ActionEvent actionEvent) {
         // TODO get user name
         //set release staus to binding
-        if ("anonymous".equals(userName))
+        if ("anonymous".equalsIgnoreCase(userName))
             ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}", ModelConstants.STATUS_CURRENT);
         else if (ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType()) &&
                  (ModelConstants.ROLE_ML.equals(loggedInUserRole) ||
@@ -547,7 +547,7 @@ public class ManageCRSBean implements Serializable {
                     (String)ADFUtils.evaluateEL("#{sessionBean.userRole}");
         }
         if (ADFUtils.evaluateEL("#{securityContext.userName}") != null) {
-            setUserName((String)ADFUtils.evaluateEL("#{securityContext.userName}"));
+            setUserName(ADFUtils.evaluateEL("#{securityContext.userName}").toString().toUpperCase());
         }
     }
 
