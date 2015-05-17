@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1252" ?>
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="ManageCRSTF">
-    <default-activity>initManageCrs</default-activity>
+    <default-activity>executeSearchVo</default-activity>
     <input-parameter-definition id="__4">
       <name>flowType</name>
       <value>#{pageFlowScope.flowType}</value>
@@ -82,6 +82,12 @@
       <method>#{pageFlowScope.manageCRSBean.reloadSearchResults}</method>
       <outcome>
         <fixed-outcome>toSearchPage</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="executeSearchVo">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome>
+        <fixed-outcome>initSearch</fixed-outcome>
       </outcome>
     </method-call>
     <train/>
@@ -172,9 +178,9 @@
         <to-activity-id>create</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
-    <control-flow-rule id="__28">
+    <control-flow-rule id="__70">
       <from-activity-id>initManageCrs</from-activity-id>
-      <control-flow-case id="__29">
+      <control-flow-case id="__71">
         <from-outcome>init</from-outcome>
         <to-activity-id>crsFlowRouter</to-activity-id>
       </control-flow-case>
@@ -184,6 +190,13 @@
       <control-flow-case id="__32">
         <from-outcome>toSearchPage</from-outcome>
         <to-activity-id>serach</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__33">
+      <from-activity-id>executeSearchVo</from-activity-id>
+      <control-flow-case id="__34">
+        <from-outcome>initSearch</from-outcome>
+        <to-activity-id>initManageCrs</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

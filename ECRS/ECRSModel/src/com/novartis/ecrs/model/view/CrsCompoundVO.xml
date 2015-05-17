@@ -17,7 +17,7 @@
   UseGlueCode="false"
   FetchSize="10"
   FetchMode="FETCH_AS_NEEDED"
-  Where="CRSCOMPOUNDEO.COMPOUND_TYPE = DECODE(:bindUserRole,'CRS_BSL','COMPOUND',CRSCOMPOUNDEO.COMPOUND_TYPE)">
+  Where="CRSCOMPOUNDEO.COMPOUND_TYPE = DECODE(:bindUserRole,'CRS_BSL', DECODE(:bindFlowType,'S',CRSCOMPOUNDEO.COMPOUND_TYPE,'COMPOUND'),CRSCOMPOUNDEO.COMPOUND_TYPE)">
   <Variable
     Name="bindCompoundType"
     Kind="viewcriteria"
@@ -35,6 +35,12 @@
     Kind="where"
     Type="java.lang.String">
     <TransientExpression><![CDATA[adf.context.current.sessionScope.get('sessionBean').userRole]]></TransientExpression>
+  </Variable>
+  <Variable
+    Name="bindFlowType"
+    Kind="where"
+    Type="java.lang.String">
+    <TransientExpression><![CDATA[adf.context.current.sessionScope.get('flowType')]]></TransientExpression>
   </Variable>
   <ViewAccessor
     Name="CompundTypeVA"

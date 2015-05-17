@@ -48,26 +48,26 @@
                                   autoSubmit="true"
                                   valueChangeListener="#{pageFlowScope.manageCRSBean.onChangeReleaseStatus}">
                 <af:selectItem label="CURRENT" id="si8" value="C"/>
-                <af:selectItem label="PENDING" id="si9" value="P"/>
-                <af:setPropertyListener from="#{null}"
-                                        to="#{bindings.State.inputValue}"
-                                        type="valueChange"/>
+                <af:selectItem label="PENDING" id="si9" value="P"/>             
               </af:selectOneChoice>
             </f:facet>
-          </af:switcher>
+          </af:switcher>          
           <af:selectOneChoice value="#{bindings.CompoundType.inputValue}"
                               shortDesc="#{bindings.CompoundType.hints.tooltip}"
                               id="soc1"
                               label="#{ecrsviewcontrollerBundle.COMPOUND_TYPE}"
                               contentStyle="width:170px;" autoSubmit="true"
                               disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
-            <f:selectItems value="#{bindings.CompoundType.items}" id="si1"/>
+            <!--<f:selectItems value="#{bindings.CompoundType.items}" id="si1"/>-->
+            <af:selectItem label="COMPOUND" id="si1" value="COMPOUND"/>
+                <af:selectItem label="NON-COMPOUND" id="si21" value="NON-COMPOUND"
+                               rendered="#{!(securityContext.userInRole['CRS_BSL'] and pageFlowScope.flowType eq 'U')}"/> 
           </af:selectOneChoice>
-          <af:selectOneChoice value="#{bindings.CompoundCode.inputValue}"
+            <af:selectOneChoice value="#{bindings.CompoundCode.inputValue}"
                               label="#{ecrsviewcontrollerBundle.COMPOUND_CODE}"
                               shortDesc="#{bindings.CompoundCode.hints.tooltip}"
                               id="soc2" contentStyle="width:170px;"
-                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
+                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}" partialTriggers="soc1">
             <f:selectItems value="#{bindings.CompoundCode.items}" id="si2"/>
           </af:selectOneChoice>
           <af:switcher id="s11" defaultFacet="ANONYMOUS"
@@ -278,9 +278,9 @@
                        id="c22" width="70">
               <af:selectOneChoice value="#{row.bindings.BslName.inputValue}" label="#{row.bindings.BslName.label}"
                                   required="#{bindings.CrsContentBaseVO.hints.BslName.mandatory}"
-                                  shortDesc="#{bindings.CrsContentBaseVO.hints.BslName.tooltip}" id="soc15"
+                                  shortDesc="#{bindings.CrsContentBaseVO.hints.BslName.tooltip}" id="soc18"
                                   readOnly="true">
-                <f:selectItems value="#{row.bindings.BslName.items}" id="si17"/>
+                <f:selectItems value="#{row.bindings.BslName.items}" id="si20"/>
               </af:selectOneChoice>
             </af:column>
             <af:column sortProperty="#{bindings.CrsContentBaseVO.hints.TaslName.name}"

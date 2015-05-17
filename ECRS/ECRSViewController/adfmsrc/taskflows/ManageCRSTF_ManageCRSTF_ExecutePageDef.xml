@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36"
+                id="ManageCRSTF_ManageCRSTF_ExecutePageDef" Package="taskflows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="ECrsSearchVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="ECrsSearchVOIterator"
+              Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="ECrsSearchVOIterator" id="Execute" RequiresUpdateModel="true" Action="iteratorExecute"/>
+  </bindings>
+</pageDefinition>

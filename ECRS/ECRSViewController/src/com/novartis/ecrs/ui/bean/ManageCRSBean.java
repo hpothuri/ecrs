@@ -154,7 +154,7 @@ public class ManageCRSBean implements Serializable {
     private String filterCri2="OR";
     private transient RichPopup advancedFilterPopup;
     private transient RichTable searchStagingTableBinding;
-    private String currReleaseStatus = ViewConstants.REL_STATUS_PENDING;
+    private String currReleaseStatus = ModelConstants.STATUS_PENDING;
     private transient RichPopup publishPopupBinding;
     private transient RichPopup submitApprovalPopup;
     private Map<Integer,String> statesMap = null;
@@ -165,6 +165,8 @@ public class ManageCRSBean implements Serializable {
         super();
         getUserRole();
         getCrsFlowType();
+        // save flow type to session - CompoundVO uses flowType as bind param
+        ADFUtils.setSessionScopeValue("flowType", flowType);
         if (ViewConstants.FLOW_TYPE_CREATE.equals(flowType) ||
             ViewConstants.FLOW_TYPE_UPDATE.equals(flowType)) {
             setBaseOrStaging(ModelConstants.STAGING_FACET);
@@ -331,11 +333,19 @@ public class ManageCRSBean implements Serializable {
         //set releaseStatus variable to current row attribute
         ADFUtils.setEL("#{bindings.ReleaseStatus.inputValue}",
                        releaseStatus);
+        
         //If mode is B&S ,and release status is 'CURRENT' set state to activated 
         if(ViewConstants.FLOW_TYPE_SEARCH.equals(flowType) &&
         ModelConstants.STATUS_CURRENT.equals(releaseStatus)){
             ADFUtils.setEL("#{bindings.State.inputValue}", ModelConstants.STATE_ACTIVATED);
         }
+
+        //if mode is U and logged in is BSL, set Compound Type to COMPOUND
+        if (ViewConstants.FLOW_TYPE_UPDATE.equals(flowType)
+            && ModelConstants.ROLE_BSL.equals(loggedInUserRole)) {
+            ADFUtils.setEL("#{bindings.CompoundType.inputValue}", ModelConstants.COMPOUND_TYPE_COMPOUND);
+        }
+        
         DCBindingContainer bc = ADFUtils.getDCBindingContainer();
         OperationBinding ob = bc.getOperationBinding("filterCRSContent");
         ob.getParamsMap().put("userInRole", loggedInUserRole);
@@ -2190,10 +2200,7 @@ public class ManageCRSBean implements Serializable {
     }
     
     public void initManageCrs(){
-        if (ADFUtils.evaluateEL("#{bindings.State.inputValue}") != null)
-            ADFUtils.setEL("#{bindings.State.inputValue}", null);
-        if(getStateSwitcherBinding()!=null)
-            ADFUtils.addPartialTarget(getStateSwitcherBinding());
+       
         String dictVersion = (String)ADFUtils.getSessionScopeValue("dictVersion");
         if(dictVersion == null){
             OperationBinding oper = ADFUtils.findOperation("fetchDictionaryVersion");
@@ -2520,7 +2527,7 @@ public class ManageCRSBean implements Serializable {
         // Add event code here...
         if (vce != null && !vce.getNewValue().equals(vce.getOldValue())) {
             if (ViewConstants.FLOW_TYPE_SEARCH.equals(getFlowType())) {
-                if (ViewConstants.REL_STATUS_PENDING.endsWith((String)vce.getNewValue())) {
+                if (ModelConstants.STATUS_PENDING.equals((String)vce.getNewValue())) {
                     ADFUtils.setEL("#{bindings.State.inputValue}", null);
                 } else {
                     ADFUtils.setEL("#{bindings.State.inputValue}",

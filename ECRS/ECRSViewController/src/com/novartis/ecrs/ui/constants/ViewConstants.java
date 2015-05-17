@@ -13,7 +13,7 @@ public class ViewConstants {
     public static final String FLOW_TYPE_UPDATE = "U";
     public static final String FLOW_TYPE_SEARCH = "S";
     public static final String REASON_DEFAULT_VALUE = "Initial Version";
-    public static final String REL_STATUS_PENDING = "P";
+    
     
     public static boolean isNotEmpty(String str) {
         return str != null && str.trim().length() > 0;
