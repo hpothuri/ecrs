@@ -19,7 +19,6 @@ public interface ECRSAppModule extends ApplicationModule {
 
     List fetchDesignees();
 
-    void filterCRSContent(String userInRole, String userName, boolean isInboxDisable);
 
     void initRiskRelation(Long crsId, String status);
 
@@ -38,4 +37,6 @@ public interface ECRSAppModule extends ApplicationModule {
     String activateCrs(Long pCRSId, String pReasonForChange);
 
     String fetchDictionaryVersion();
+
+    void filterCRSContent(String userInRole, String userName, boolean isInboxDisable, String flowType);
 }

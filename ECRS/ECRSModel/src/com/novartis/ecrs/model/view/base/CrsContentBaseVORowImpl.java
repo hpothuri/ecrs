@@ -2,6 +2,7 @@ package com.novartis.ecrs.model.view.base;
 
 import java.sql.Timestamp;
 
+import oracle.jbo.RowSet;
 import oracle.jbo.server.AttributeDefImpl;
 import oracle.jbo.server.ViewRowImpl;
 // ---------------------------------------------------------------------
@@ -234,6 +235,36 @@ public class CrsContentBaseVORowImpl extends ViewRowImpl {
                 obj.setStateName((String)value);
             }
         }
+        ,
+        BSLUserVA {
+            public Object get(CrsContentBaseVORowImpl obj) {
+                return obj.getBSLUserVA();
+            }
+
+            public void put(CrsContentBaseVORowImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ,
+        TASLUserVA {
+            public Object get(CrsContentBaseVORowImpl obj) {
+                return obj.getTASLUserVA();
+            }
+
+            public void put(CrsContentBaseVORowImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ,
+        MLUserVA {
+            public Object get(CrsContentBaseVORowImpl obj) {
+                return obj.getMLUserVA();
+            }
+
+            public void put(CrsContentBaseVORowImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
         ;
         private static AttributesEnum[] vals = null;
         private static int firstIndex = 0;
@@ -261,6 +292,8 @@ public class CrsContentBaseVORowImpl extends ViewRowImpl {
             return vals;
         }
     }
+
+
     public static final int CRSID = AttributesEnum.CrsId.index();
     public static final int CRSNAME = AttributesEnum.CrsName.index();
     public static final int STATEID = AttributesEnum.StateId.index();
@@ -283,6 +316,9 @@ public class CrsContentBaseVORowImpl extends ViewRowImpl {
     public static final int CRSCOMPOUNDTYPE = AttributesEnum.CrsCompoundType.index();
     public static final int CRSCOMPOUNDCODE = AttributesEnum.CrsCompoundCode.index();
     public static final int STATENAME = AttributesEnum.StateName.index();
+    public static final int BSLUSERVA = AttributesEnum.BSLUserVA.index();
+    public static final int TASLUSERVA = AttributesEnum.TASLUserVA.index();
+    public static final int MLUSERVA = AttributesEnum.MLUserVA.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -640,6 +676,27 @@ public class CrsContentBaseVORowImpl extends ViewRowImpl {
      */
     public void setStateName(String value) {
         setAttributeInternal(STATENAME, value);
+    }
+
+    /**
+     * Gets the view accessor <code>RowSet</code> BSLUserVA.
+     */
+    public RowSet getBSLUserVA() {
+        return (RowSet)getAttributeInternal(BSLUSERVA);
+    }
+
+    /**
+     * Gets the view accessor <code>RowSet</code> TASLUserVA.
+     */
+    public RowSet getTASLUserVA() {
+        return (RowSet)getAttributeInternal(TASLUSERVA);
+    }
+
+    /**
+     * Gets the view accessor <code>RowSet</code> MLUserVA.
+     */
+    public RowSet getMLUserVA() {
+        return (RowSet)getAttributeInternal(MLUSERVA);
     }
 
     /**

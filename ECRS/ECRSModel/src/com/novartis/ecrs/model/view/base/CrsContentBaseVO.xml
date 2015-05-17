@@ -21,6 +21,105 @@
         ResId="com.novartis.ecrs.model.view.base.CrsContentBaseVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <ViewAccessor
+    Name="BSLUserVA"
+    ViewObjectName="com.novartis.ecrs.model.lov.UserRoleVO">
+    <ParameterMap>
+      <PIMap Variable="roleName">
+        <TransientExpression><![CDATA['CRS_BSL']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="TASLUserVA"
+    ViewObjectName="com.novartis.ecrs.model.lov.UserRoleVO">
+    <ParameterMap>
+      <PIMap Variable="roleName">
+        <TransientExpression><![CDATA['CRS_TASL']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="MLUserVA"
+    ViewObjectName="com.novartis.ecrs.model.lov.UserRoleVO">
+    <ParameterMap>
+      <PIMap Variable="roleName">
+        <TransientExpression><![CDATA['CRS_ML']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_BslName"
+    ListVOName="BSLUserVA"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BslName"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="FullName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_TaslName"
+    ListVOName="TASLUserVA"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TaslName"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="FullName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_MedicalLeadName"
+    ListVOName="MLUserVA"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="MedicalLeadName"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="FullName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Designee"
+    ListVOName="BSLUserVA"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Designee"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="UserName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="FullName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
   <SQLQuery><![CDATA[SELECT 
     CrsContentEO.CRS_ID, 
     CrsContentEO.CRS_NAME, 
@@ -239,7 +338,8 @@ ORDER BY
     ColumnType="VARCHAR2"
     AliasName="BSL_NAME"
     Expression="BSL_NAME"
-    SQLType="VARCHAR">
+    SQLType="VARCHAR"
+    LOVName="LOV_BslName">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="50"/>
     </DesignTime>
@@ -247,6 +347,8 @@ ORDER BY
       <SchemaBasedProperties>
         <LABEL
           ResId="com.novartis.ecrs.model.view.base.CrsContentBaseVO.BslName_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -260,10 +362,17 @@ ORDER BY
     ColumnType="VARCHAR2"
     AliasName="DESIGNEE"
     Expression="DESIGNEE"
-    SQLType="VARCHAR">
+    SQLType="VARCHAR"
+    LOVName="LOV_Designee">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="MqmComment"
@@ -296,7 +405,8 @@ ORDER BY
     ColumnType="VARCHAR2"
     AliasName="TASL_NAME"
     Expression="TASL_NAME"
-    SQLType="VARCHAR">
+    SQLType="VARCHAR"
+    LOVName="LOV_TaslName">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="50"/>
     </DesignTime>
@@ -304,6 +414,8 @@ ORDER BY
       <SchemaBasedProperties>
         <LABEL
           ResId="com.novartis.ecrs.model.view.base.CrsContentBaseVO.TaslName_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -338,7 +450,8 @@ ORDER BY
     ColumnType="VARCHAR2"
     AliasName="MEDICAL_LEAD_NAME"
     Expression="MEDICAL_LEAD_NAME"
-    SQLType="VARCHAR">
+    SQLType="VARCHAR"
+    LOVName="LOV_MedicalLeadName">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="50"/>
     </DesignTime>
@@ -346,6 +459,8 @@ ORDER BY
       <SchemaBasedProperties>
         <LABEL
           ResId="com.novartis.ecrs.model.view.base.CrsContentBaseVO.MedicalLeadName_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

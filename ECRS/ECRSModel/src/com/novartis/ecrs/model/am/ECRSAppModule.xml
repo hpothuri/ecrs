@@ -341,6 +341,9 @@
       <Parameter
         Name="isInboxDisable"
         Type="boolean"/>
+      <Parameter
+        Name="flowType"
+        Type="java.lang.String"/>
     </Method>
     <Method
       Name="initRiskRelation"

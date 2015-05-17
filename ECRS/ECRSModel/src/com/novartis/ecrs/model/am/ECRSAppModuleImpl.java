@@ -169,7 +169,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      * @param userName - logged in user's name
      * @param isInboxDisable - Inbox checkbox (enabled or disabled)
      */
-    public void filterCRSContent(String userInRole,String userName,boolean isInboxDisable){
+    public void filterCRSContent(String userInRole,String userName,boolean isInboxDisable, String flowType){
         String whereClause = "";
         ViewObjectImpl searchVO = this.getECrsSearchVO();
         
@@ -226,6 +226,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             if (row.getCrsId() != null)
                 whereClause += "CRS_ID LIKE '%" + row.getCrsId() + "%' AND ";
             
+            if(flowType != null && "S".equalsIgnoreCase(flowType)){
             // DATA SECUTIRY - BSL/MQM/TASL/ML can view only their corresponding records
             if (ModelConstants.ROLE_MQM.equals(userInRole))
                 whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID IN (2,3)) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";
@@ -235,6 +236,15 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 5 AND MEDICAL_LEAD_NAME ='"+userName+"') OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
             if (ModelConstants.ROLE_BSL.equals(userInRole))
                 whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID NOT IN (2,4,5) AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
+            }
+            else{
+                if (ModelConstants.ROLE_TASL.equals(userInRole))
+                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 4 AND TASL_NAME ='"+userName+"') OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND AND TASL_NAME ='"+userName+"'))";
+                if (ModelConstants.ROLE_ML.equals(userInRole))
+                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 5 AND MEDICAL_LEAD_NAME ='"+userName+"') OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND MEDICAL_LEAD_NAME ='"+userName+"'))";        
+                if (ModelConstants.ROLE_BSL.equals(userInRole))
+                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID NOT IN (2,4,5) AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')) OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')))";       
+            }
 //        }
         
         if (whereClause.endsWith("AND "))

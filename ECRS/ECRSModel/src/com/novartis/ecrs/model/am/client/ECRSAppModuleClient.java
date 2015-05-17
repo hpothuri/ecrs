@@ -56,9 +56,9 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return (String)_ret;
     }
 
-    public void filterCRSContent(String userInRole, String userName, boolean isInboxDisable) {
+    public void filterCRSContent(String userInRole, String userName, boolean isInboxDisable, String flowType) {
         Object _ret =
-            this.riInvokeExportedMethod(this,"filterCRSContent",new String [] {"java.lang.String","java.lang.String","boolean"},new Object[] {userInRole, userName, new Boolean(isInboxDisable)});
+            this.riInvokeExportedMethod(this,"filterCRSContent",new String [] {"java.lang.String","java.lang.String","boolean","java.lang.String"},new Object[] {userInRole, userName, new Boolean(isInboxDisable), flowType});
         return;
     }
 
