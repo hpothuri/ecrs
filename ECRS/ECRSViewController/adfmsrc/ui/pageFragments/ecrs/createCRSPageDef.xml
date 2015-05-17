@@ -200,11 +200,6 @@
         <Item Value="ReleaseStatusFlag"/>
       </AttrNames>
     </attributeValues>
-    <attributeValues IterBinding="CrsContentBaseVOIterator" id="BslNameBase">
-      <AttrNames>
-        <Item Value="BslName"/>
-      </AttrNames>
-    </attributeValues>
     <attributeValues IterBinding="CrsContentBaseVOIterator" id="DesigneeBase">
       <AttrNames>
         <Item Value="Designee"/>
@@ -215,21 +210,10 @@
         <Item Value="MqmComment"/>
       </AttrNames>
     </attributeValues>
-    <attributeValues IterBinding="CrsContentBaseVOIterator" id="TaslNameBase">
-      <AttrNames>
-        <Item Value="TaslName"/>
-      </AttrNames>
-    </attributeValues>
     <attributeValues IterBinding="CrsContentBaseVOIterator"
                      id="TaslRejectCommentBase">
       <AttrNames>
         <Item Value="TaslRejectComment"/>
-      </AttrNames>
-    </attributeValues>
-    <attributeValues IterBinding="CrsContentBaseVOIterator"
-                     id="MedicalLeadNameBase">
-      <AttrNames>
-        <Item Value="MedicalLeadName"/>
       </AttrNames>
     </attributeValues>
     <attributeValues IterBinding="CrsContentBaseVOIterator"
@@ -266,5 +250,11 @@
       <NamedData NDName="pCRSId" NDType="java.lang.Long"/>
       <NamedData NDName="pReasonForChange" NDType="java.lang.String"/>
     </methodAction>
+    <list IterBinding="CrsContentBaseVOIterator" StaticList="false" Uses="LOV_BslName" id="BslNameBase"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+    <list IterBinding="CrsContentBaseVOIterator" StaticList="false" Uses="LOV_TaslName" id="TaslNameBase"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+    <list IterBinding="CrsContentBaseVOIterator" StaticList="false" Uses="LOV_MedicalLeadName" id="MedicalLeadNameBase"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
   </bindings>
 </pageDefinition>
