@@ -45,7 +45,8 @@
                                   label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
                                   shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
                                   id="it8" contentStyle="width:170px;" required="true"
-                                  autoSubmit="true">
+                                  autoSubmit="true"
+                                  valueChangeListener="#{pageFlowScope.manageCRSBean.onChangeReleaseStatus}">
                 <af:selectItem label="CURRENT" id="si8" value="C"/>
                 <af:selectItem label="PENDING" id="si9" value="P"/>
                 <af:setPropertyListener from="#{null}"
@@ -69,14 +70,30 @@
                               disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
             <f:selectItems value="#{bindings.CompoundCode.items}" id="si2"/>
           </af:selectOneChoice>
-          <af:selectOneChoice value="#{bindings.State.inputValue}"
+          <af:switcher id="s11" defaultFacet="ANONYMOUS"
+                       facetName="#{securityContext.userInRole['anonymous'] ? 'ANONYMOUS' : 'LOGGED_IN'}"
+                       binding="#{pageFlowScope.manageCRSBean.stateSwitcherBinding}">
+            <f:facet name="ANONYMOUS">
+              <af:selectOneChoice
+                                  label="#{ecrsviewcontrollerBundle.STATE}"
+                                  id="soc15" contentStyle="width:170px;" readOnly="true"
+                                  value="8">
+                <af:selectItem label="ACTIVATED" id="si17" value="8"/>
+              </af:selectOneChoice>
+            </f:facet>
+            <f:facet name="LOGGED_IN">
+            <af:selectOneChoice
                               label="#{bindings.State.label}"
                               shortDesc="#{bindings.State.hints.tooltip}"
                               id="soc3" contentStyle="width:170px;"
-                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}"
-                              partialTriggers="it8">
+                              partialTriggers="it8"
+                              value="#{bindings.State.inputValue}"
+                              readOnly="#{pageFlowScope.flowType eq 'S' and pageFlowScope.manageCRSBean.currReleaseStatus eq 'C'}"
+                                autoSubmit="true">
             <f:selectItems value="#{bindings.State.items}" id="si3"/>
-          </af:selectOneChoice>
+            </af:selectOneChoice>
+            </f:facet>            
+          </af:switcher>
           <af:inputText value="#{bindings.GenericName.inputValue}"
                         columns="#{bindings.GenericName.hints.displayWidth}"
                         maximumLength="#{bindings.GenericName.hints.precision}"

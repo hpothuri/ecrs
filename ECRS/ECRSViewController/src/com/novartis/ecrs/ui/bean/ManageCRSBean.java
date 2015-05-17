@@ -159,7 +159,8 @@ public class ManageCRSBean implements Serializable {
     private transient RichPopup submitApprovalPopup;
     private Map<Integer,String> statesMap = null;
     private boolean nonCompoundSelected;
-    
+    private transient UIXSwitcher stateSwitcherBinding;
+
     public ManageCRSBean() {
         super();
         getUserRole();
@@ -2189,6 +2190,10 @@ public class ManageCRSBean implements Serializable {
     }
     
     public void initManageCrs(){
+        if (ADFUtils.evaluateEL("#{bindings.State.inputValue}") != null)
+            ADFUtils.setEL("#{bindings.State.inputValue}", null);
+        if(getStateSwitcherBinding()!=null)
+            ADFUtils.addPartialTarget(getStateSwitcherBinding());
         String dictVersion = (String)ADFUtils.getSessionScopeValue("dictVersion");
         if(dictVersion == null){
             OperationBinding oper = ADFUtils.findOperation("fetchDictionaryVersion");
@@ -2492,5 +2497,37 @@ public class ManageCRSBean implements Serializable {
      */
     public boolean isNonCompoundSelected() {
         return nonCompoundSelected;
+    }
+
+    /**
+     * @param stateSwitcherBinding
+     */
+    public void setStateSwitcherBinding(UIXSwitcher stateSwitcherBinding) {
+        this.stateSwitcherBinding = stateSwitcherBinding;
+    }
+
+    /**
+     * @return
+     */
+    public UIXSwitcher getStateSwitcherBinding() {
+        return stateSwitcherBinding;
+    }
+
+    /**
+     * @param vce
+     */
+    public void onChangeReleaseStatus(ValueChangeEvent vce) {
+        // Add event code here...
+        if (vce != null && !vce.getNewValue().equals(vce.getOldValue())) {
+            if (ViewConstants.FLOW_TYPE_SEARCH.equals(getFlowType())) {
+                if (ViewConstants.REL_STATUS_PENDING.endsWith((String)vce.getNewValue())) {
+                    ADFUtils.setEL("#{bindings.State.inputValue}", null);
+                } else {
+                    ADFUtils.setEL("#{bindings.State.inputValue}",
+                                   ModelConstants.STATE_ACTIVATED);
+                }
+            }
+            ADFUtils.addPartialTarget(stateSwitcherBinding);
+        }
     }
 }
