@@ -239,7 +239,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             }
             else{
                 if (ModelConstants.ROLE_TASL.equals(userInRole))
-                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 4 AND TASL_NAME ='"+userName+"') OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND AND TASL_NAME ='"+userName+"'))";
+                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 4 AND TASL_NAME ='"+userName+"') OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND TASL_NAME ='"+userName+"'))";
                 if (ModelConstants.ROLE_ML.equals(userInRole))
                     whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 5 AND MEDICAL_LEAD_NAME ='"+userName+"') OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND MEDICAL_LEAD_NAME ='"+userName+"'))";        
                 if (ModelConstants.ROLE_BSL.equals(userInRole))
