@@ -48,6 +48,9 @@
                                   autoSubmit="true">
                 <af:selectItem label="CURRENT" id="si8" value="C"/>
                 <af:selectItem label="PENDING" id="si9" value="P"/>
+                <af:setPropertyListener from="#{null}"
+                                        to="#{bindings.State.inputValue}"
+                                        type="valueChange"/>
               </af:selectOneChoice>
             </f:facet>
           </af:switcher>
@@ -70,7 +73,8 @@
                               label="#{bindings.State.label}"
                               shortDesc="#{bindings.State.hints.tooltip}"
                               id="soc3" contentStyle="width:170px;"
-                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}">
+                              disabled="#{pageFlowScope.manageCRSBean.inboxDisable}"
+                              partialTriggers="it8">
             <f:selectItems value="#{bindings.State.items}" id="si3"/>
           </af:selectOneChoice>
           <af:inputText value="#{bindings.GenericName.inputValue}"

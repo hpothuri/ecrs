@@ -443,10 +443,15 @@
                                                         shortDesc="#{bindings.StateId.hints.tooltip}"
                                                         id="soc14"
                                                         readOnly="true"/>
-                                    <af:inputText label="#{ecrsviewcontrollerBundle.CRS_STATUS}#{ecrsviewcontrollerBundle.COLON}"
-                                                        id="soc15"
+                                    <af:selectOneChoice label="#{ecrsviewcontrollerBundle.CRS_STATUS}#{ecrsviewcontrollerBundle.COLON}"
+                                                        id="soc9"
                                                         value="#{bindings.ReleaseStatusFlagBase.inputValue}"
-                                                        readOnly="true"/>
+                                                        readOnly="true">
+                                        <af:selectItem label="Pending" id="si4"
+                                                       value="P"/>
+                                        <af:selectItem label="Current" id="si12"
+                                                       value="C"/>
+                                    </af:selectOneChoice>
                                     <af:spacer width="10" height="10"
                                                id="sp23"/>
                                 </af:panelFormLayout>
@@ -488,7 +493,8 @@
                                               styleClass="AFStretchWidth"
                                               label="#{ecrsviewcontrollerBundle.MQM_COMMENT}"
                                               rows="3" contentStyle="width:75%;"
-                                              readOnly="true">
+                                              readOnly="true"
+                                              visible="#{!(bindings.ReleaseStatusFlagBase eq 'C' and pageFlowScope.flowType  eq 'S')}">
                                     <f:validator binding="#{bindings.MqmComment.validator}"/>
                                 </af:inputText>
                                 <af:inputText value="#{bindings.TaslRejectCommentBase.inputValue}"
