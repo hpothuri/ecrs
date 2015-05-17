@@ -414,28 +414,30 @@
                                                   id="soc10"
                                                   value="#{bindings.IsMarketedFlagBase.inputValue}"
                                                   readOnly="true"/>
-                                    <af:inputText value="#{bindings.BslNameBase.inputValue}"
-                                                  label="#{ecrsviewcontrollerBundle.BSL}"
-                                                  shortDesc="#{bindings.BslNameBase.hints.tooltip}"
-                                                  id="soc11"
-                                                  contentStyle="width:170px;"
-                                                  readOnly="true"/>
+                                    <af:selectOneChoice value="#{bindings.BslNameBase.inputValue}"
+                                                        label="#{ecrsviewcontrollerBundle.BSL}"
+                                                        required="#{bindings.BslName1.hints.mandatory}"
+                                                        shortDesc="#{bindings.BslName1.hints.tooltip}" id="soc15"
+                                                        readOnly="true" contentStyle="width:170px;">
+                                        <f:selectItems value="#{bindings.BslNameBase.items}" id="si13"/>
+                                    </af:selectOneChoice>
                                     <af:inputText label="Designee" id="smc1"
                                                   contentStyle="width:150px !important;"
                                                   value="#{bindings.DesigneeBase.inputValue}"
                                                   readOnly="true"/>
-                                    <af:inputText value="#{bindings.TaslNameBase.inputValue}"
-                                                  label="#{ecrsviewcontrollerBundle.CRS_TASL}"
-                                                  shortDesc="#{bindings.TaslNameBase.hints.tooltip}"
-                                                  id="soc12"
-                                                  contentStyle="width:170px;"
-                                                  readOnly="true"/>
-                                    <af:inputText value="#{bindings.MedicalLeadNameBase.inputValue}"
+                                    <af:selectOneChoice value="#{bindings.TaslNameBase.inputValue}"
+                                                        label="#{ecrsviewcontrollerBundle.CRS_TASL}"
+                                                        shortDesc="#{bindings.TaslName1.hints.tooltip}" id="soc11"
+                                                        contentStyle="width:170px;" readOnly="true">
+                                        <f:selectItems value="#{bindings.TaslNameBase.items}" id="si14"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.MedicalLeadNameBase.inputValue}"
                                                         label="#{ecrsviewcontrollerBundle.CRS_MEDICAL_LEAD}"
-                                                        shortDesc="#{bindings.MedicalLeadNameBase.hints.tooltip}"
-                                                        id="soc13"
-                                                        contentStyle="width:170px;"
-                                                        readOnly="true"/>
+                                                        required="#{bindings.MedicalLeadNameBase.hints.mandatory}"
+                                                        shortDesc="#{bindings.MedicalLeadName1.hints.tooltip}"
+                                                        id="soc12" readOnly="true">
+                                        <f:selectItems value="#{bindings.MedicalLeadNameBase.items}" id="si15"/>
+                                    </af:selectOneChoice>
                                     <af:spacer width="10" height="10" id="s10"/>
                                     <af:spacer width="10" height="10" id="s11"/>
                                     <af:inputText value="#{bindings.StateNameBase.inputValue}"

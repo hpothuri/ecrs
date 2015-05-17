@@ -340,6 +340,7 @@ public class ManageCRSBean implements Serializable {
         ob.getParamsMap().put("userInRole", loggedInUserRole);
         ob.getParamsMap().put("userName", getUserName());
         ob.getParamsMap().put("isInboxDisable", isInboxDisable());
+        ob.getParamsMap().put("flowType", getFlowType());
         ob.execute();
         
         if (ModelConstants.STATUS_PENDING.equals(ADFUtils.evaluateEL("#{bindings.ReleaseStatus.inputValue}"))) {

@@ -253,33 +253,41 @@
                        sortable="false"
                        headerText="#{bindings.CrsContentBaseVO.hints.Designee.label}"
                        id="c21">
-              <af:outputText value="#{row.Designee}"
-                             shortDesc="#{bindings.CrsContentBaseVO.hints.Designee.tooltip}"
-                             id="ot18"/>
+              <af:outputText value="#{row.Designee}" id="ot18"/>
             </af:column>
             <af:column sortProperty="#{bindings.CrsContentBaseVO.hints.BslName.name}"
                        sortable="false"
                        headerText="#{bindings.CrsContentBaseVO.hints.BslName.label}"
                        id="c22" width="70">
-              <af:outputText value="#{row.BslName}"
-                             shortDesc="#{bindings.CrsContentBaseVO.hints.BslName.tooltip}"
-                             id="ot19"/>
+              <af:selectOneChoice value="#{row.bindings.BslName.inputValue}" label="#{row.bindings.BslName.label}"
+                                  required="#{bindings.CrsContentBaseVO.hints.BslName.mandatory}"
+                                  shortDesc="#{bindings.CrsContentBaseVO.hints.BslName.tooltip}" id="soc15"
+                                  readOnly="true">
+                <f:selectItems value="#{row.bindings.BslName.items}" id="si17"/>
+              </af:selectOneChoice>
             </af:column>
             <af:column sortProperty="#{bindings.CrsContentBaseVO.hints.TaslName.name}"
                        sortable="false"
                        headerText="#{bindings.CrsContentBaseVO.hints.TaslName.label}"
                        id="c23" width="70">
-              <af:outputText value="#{row.TaslName}"
-                             shortDesc="#{bindings.CrsContentBaseVO.hints.TaslName.tooltip}"
-                             id="ot20"/>
+              <af:selectOneChoice value="#{row.bindings.TaslName.inputValue}" label="#{row.bindings.TaslName.label}"
+                                  required="#{bindings.CrsContentBaseVO.hints.TaslName.mandatory}"
+                                  shortDesc="#{bindings.CrsContentBaseVO.hints.TaslName.tooltip}" id="soc17"
+                                  readOnly="true">
+                <f:selectItems value="#{row.bindings.TaslName.items}" id="si19"/>
+              </af:selectOneChoice>
             </af:column>
             <af:column sortProperty="#{bindings.CrsContentBaseVO.hints.MedicalLeadName.name}"
                        sortable="false"
                        headerText="#{bindings.CrsContentBaseVO.hints.MedicalLeadName.label}"
                        id="c24">
-              <af:outputText value="#{row.MedicalLeadName}"
-                             shortDesc="#{bindings.CrsContentBaseVO.hints.MedicalLeadName.tooltip}"
-                             id="ot21"/>
+              <af:selectOneChoice value="#{row.bindings.MedicalLeadName.inputValue}"
+                                  label="#{row.bindings.MedicalLeadName.label}"
+                                  required="#{bindings.CrsContentBaseVO.hints.MedicalLeadName.mandatory}"
+                                  shortDesc="#{bindings.CrsContentBaseVO.hints.MedicalLeadName.tooltip}" id="soc16"
+                                  readOnly="true">
+                <f:selectItems value="#{row.bindings.MedicalLeadName.items}" id="si18"/>
+              </af:selectOneChoice>
             </af:column>
             <af:column headerText="#{ecrsviewcontrollerBundle.ACTION}"
                        id="c26"
