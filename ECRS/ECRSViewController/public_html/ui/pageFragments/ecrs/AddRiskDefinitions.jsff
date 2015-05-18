@@ -599,7 +599,7 @@
                 <af:commandButton text="#{ecrsviewcontrollerBundle.REFRESH_REPOSITORY}" id="cb23"
                                   icon="/images/database-refresh-icon.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.refreshRepoInPopup}"/>
-                <af:commandImageLink id="cil7" icon="/images/help_icon.png">
+                <af:commandImageLink id="cil7" icon="/images/Help-icon.png">
                   <af:showPopupBehavior triggerType="action"
                                         popupId="::prplegend"/>
                 </af:commandImageLink>
@@ -1075,7 +1075,7 @@
     </af:popup>
     <af:popup childCreation="deferred" autoCancel="disabled" id="prplegend">
       <af:dialog id="d10" type="ok" title="#{ecrsviewcontrollerBundle.INFO}"
-                 titleIconSource="/images/info_icon.png" contentWidth="450">
+                 titleIconSource="/images/info_icon.png" contentWidth="750">
         <f:facet name="buttonBar"/>
         <af:table value="#{bindings.PurposeLegendStaticVO.collectionModel}"
                   var="row" rows="#{bindings.PurposeLegendStaticVO.rangeSize}"
@@ -1095,7 +1095,7 @@
           <af:column sortProperty="#{bindings.PurposeLegendStaticVO.hints.Name.name}"
                      sortable="false"
                      headerText="#{bindings.PurposeLegendStaticVO.hints.Name.label}"
-                     id="c72" width="90">
+                     id="c72" width="100">
             <af:outputText value="#{row.Name}"
                            shortDesc="#{bindings.PurposeLegendStaticVO.hints.Name.tooltip}"
                            id="ot26"/>
@@ -1103,7 +1103,7 @@
           <af:column sortProperty="#{bindings.PurposeLegendStaticVO.hints.Description.name}"
                      sortable="false"
                      headerText="#{bindings.PurposeLegendStaticVO.hints.Description.label}"
-                     id="c83">
+                     id="c83" noWrap="false">
             <af:outputText value="#{row.Description}"
                            shortDesc="#{bindings.PurposeLegendStaticVO.hints.Description.tooltip}"
                            id="ot49"/>

@@ -25,7 +25,15 @@
     IsPersistent="false"
     PrecisionRule="true"
     Type="java.lang.String"
-    ColumnType="$none$"/>
+    ColumnType="$none$"
+    SQLType="VARCHAR">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.novartis.ecrs.model.view.trans.PurposeLegendStaticVO.RiskCode_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ViewAttribute
     Name="Name"
     IsUpdateable="false"
@@ -33,7 +41,8 @@
     IsPersistent="false"
     PrecisionRule="true"
     Type="java.lang.String"
-    ColumnType="$none$"/>
+    ColumnType="$none$"
+    SQLType="VARCHAR"/>
   <ViewAttribute
     Name="Description"
     IsUpdateable="false"
@@ -41,7 +50,8 @@
     IsPersistent="false"
     PrecisionRule="true"
     Type="java.lang.String"
-    ColumnType="$none$"/>
+    ColumnType="$none$"
+    SQLType="VARCHAR"/>
   <StaticList
     Rows="9"
     Columns="3"/>
