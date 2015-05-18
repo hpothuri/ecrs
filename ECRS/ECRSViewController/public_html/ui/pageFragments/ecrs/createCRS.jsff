@@ -26,8 +26,7 @@
                                 <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}"
                                                   id="cb4"
                                                   actionListener="#{pageFlowScope.manageCRSBean.onClickCreateSave}"
-                                                  visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable or (securityContext.userInRole['CRS_MQM'] and bindings.StateId.inputValue eq 2) or (securityContext.userInRole['CRS_TASL'] and bindings.StateId.inputValue eq 4)  || (securityContext.userInRole['CRS_ML'] and bindings.StateId.inputValue eq 5)}"
-                                                  disabled="#{!bindings.Commit.enabled}"/>
+                                                  visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable or (securityContext.userInRole['CRS_MQM'] and bindings.StateId.inputValue eq 2) or (securityContext.userInRole['CRS_TASL'] and bindings.StateId.inputValue eq 4)  || (securityContext.userInRole['CRS_ML'] and bindings.StateId.inputValue eq 5)}"/>
                             </f:facet>
                             <af:panelGroupLayout id="pgl3" layout="horizontal">
                                 
@@ -305,7 +304,7 @@
                                     </af:commandButton>
                                     <af:commandButton text="#{ecrsviewcontrollerBundle.PUBLISHED}"
                                                       id="cb14"
-                                                      disabled="#{!(bindings.StateId.inputValue eq 6 || (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag.inputValue eq 'N'))}"
+                                                      disabled="#{bindings.EntityState eq 'NEW' or !(bindings.StateId.inputValue eq 6 || (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag.inputValue eq 'N'))}"
                                                       visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
                                                       inlineStyle="margin-right:10px;"
                                                       actionListener="#{pageFlowScope.manageCRSBean.onClickPublish}"
