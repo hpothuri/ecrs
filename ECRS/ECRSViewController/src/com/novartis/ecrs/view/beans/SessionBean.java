@@ -140,13 +140,19 @@ public class SessionBean {
             ctx.addMessage(null, msg);
             return null;
         } catch (LoginException le) {
- //           reportUnexpectedLoginError("LoginException", le);
+            le.printStackTrace();
+            FacesMessage msg =
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login failure", "Unable to login.  Please contact eCRS support for help.");
+            ctx.addMessage(null, msg);
             return null;
         } catch (Exception e) {
-//            CSMQBean.logger.error("ERROR", e);
+            e.printStackTrace();
+            FacesMessage msg =
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login failure", "Unable to login.  Please contact eCRS support for help.");
+            ctx.addMessage(null, msg);
             return null;
         }
-//        accessLogger.info("SUCCESSFUL LOGIN: " + un);
+       
               
         return null;
     }
