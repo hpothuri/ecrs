@@ -599,7 +599,7 @@
                 <af:commandButton text="#{ecrsviewcontrollerBundle.REFRESH_REPOSITORY}" id="cb23"
                                   icon="/images/database-refresh-icon.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.refreshRepoInPopup}"/>
-                <af:commandImageLink id="cil7" icon="/images/Help-icon.png">
+                <af:commandImageLink id="cil7" icon="/images/Help-icon.png" rendered="false">
                   <af:showPopupBehavior triggerType="action"
                                         popupId="::prplegend"/>
                 </af:commandImageLink>
@@ -645,7 +645,7 @@
                   fetchSize="#{bindings.HierarchySearchVO.rangeSize}" rowBandingInterval="0"
                   selectedRowKeys="#{bindings.HierarchySearchVO.collectionModel.selectedRow}"
                   selectionListener="#{bindings.HierarchySearchVO.collectionModel.makeCurrent}" rowSelection="multiple"
-                  id="t6" styleClass="AFStretchWidth" columnStretching="column:c30">
+                  id="t6" styleClass="AFStretchWidth" columnStretching="column:c30" partialTriggers="::cb10">
           <af:column sortProperty="#{bindings.HierarchySearchVO.hints.Mqterm.name}" sortable="false"
                      headerText="#{ecrsviewcontrollerBundle.TERM}" id="c30">
             <af:outputText value="#{row.Mqterm}" shortDesc="#{bindings.HierarchySearchVO.hints.Mqterm.tooltip}"
@@ -742,7 +742,7 @@
                       fetchSize="#{bindings.CopyCrsRiskVO.rangeSize}" rowBandingInterval="0"
                       selectedRowKeys="#{bindings.CopyCrsRiskVO.collectionModel.selectedRow}"
                       selectionListener="#{bindings.CopyCrsRiskVO.collectionModel.makeCurrent}" rowSelection="single"
-                      id="t7" styleClass="AFStretchWidth">
+                      id="t7" styleClass="AFStretchWidth" partialTriggers="::cb17">
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.SafetyTopicOfInterest.name}" sortable="true"
                          headerText="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_OF_INTEREST}" id="c38">
                 <af:commandLink shortDesc="#{bindings.CopyCrsRiskVO.hints.SafetyTopicOfInterest.tooltip}" id="cl1"
