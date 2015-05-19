@@ -98,6 +98,41 @@
         Required="Optional"/>
     </ViewCriteriaRow>
   </ViewCriteria>
+  <ViewCriteria
+    Name="activeStates"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsStateVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="CrsStateVOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="CrsStateVOCriteria_CrsStateVOCriteria_row_0_ActiveFlag"
+        ViewAttribute="ActiveFlag"
+        Operator="="
+        Conjunction="AND"
+        Value="Y"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <ViewLinkAccessor
     Name="CrsContentVO"
     ViewLink="com.novartis.ecrs.model.view.link.CrsContentIdxStateFkLink"

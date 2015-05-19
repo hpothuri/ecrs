@@ -195,7 +195,7 @@
           </af:panelCollection>
         </f:facet>
         <f:facet name="BASE">
-          <af:panelCollection id="pc4" styleClass="AFStretchWidth">
+          <af:panelCollection id="pc4" styleClass="AFStretchWidth" featuresOff="freeze wrap">
             <f:facet name="menus"/>
             <f:facet name="statusbar"/>
             <af:table value="#{bindings.CrsRiskBaseVO.collectionModel}" var="row"
@@ -298,7 +298,7 @@
                 </af:column>
                 <f:facet name="header">
                   <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}" id="plam7">
-                    <af:outputText value="#{pageFlowScope.crsName}" id="ot56"/>
+                    <af:outputText value="#{pageFlowScope.manageCRSBean.selectedCrsName}" id="ot56"/>
                   </af:panelLabelAndMessage>
                 </f:facet>
               </af:column>
@@ -357,7 +357,7 @@
           <af:outputText id="ot9" value="#{sessionScope.dictVersion}"/>
         </af:panelLabelAndMessage>
         <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}#{ecrsviewcontrollerBundle.COLON}" id="plam5">
-          <af:outputText value="#{pageFlowScope.crsName}" id="ot10"/>
+          <af:outputText value="#{pageFlowScope.manageCRSBean.selectedCrsName}" id="ot10"/>
         </af:panelLabelAndMessage>
         <f:facet name="separator">
           <af:spacer width="10" height="10" id="s4"/>
@@ -409,9 +409,8 @@
               <f:selectItems value="#{pageFlowScope.manageCRSBean.databaseList}" id="si3"/>
             </af:selectManyChoice>-->
             <af:selectOneChoice value="#{bindings.DomainId.inputValue}" label="#{ecrsviewcontrollerBundle.DATA_DOMAIN}"
-                                required="#{bindings.DomainId.hints.mandatory}"
                                 shortDesc="#{bindings.DomainId.hints.tooltip}" id="soc9" autoSubmit="true"
-                                readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
+                                readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}" required="true">
               <f:selectItems value="#{bindings.DomainId.items}" id="si65"/>
             </af:selectOneChoice>
             <!--<af:selectOneChoice label="#{bindings.DataDomain.hints.label}" id="soc1"
@@ -586,7 +585,7 @@
                                   visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb5" icon="/images/filesave.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.saveRiskDefs}"
-                                  visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+                                  visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}" partialSubmit="true"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" id="cb6"
                                   icon="/images/hierarchy.gif" partialSubmit="true"
                                   actionListener="#{pageFlowScope.manageCRSBean.onClickHierarchySearch}"

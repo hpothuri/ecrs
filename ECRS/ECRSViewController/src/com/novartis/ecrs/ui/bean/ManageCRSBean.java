@@ -644,14 +644,32 @@ public class ManageCRSBean implements Serializable {
 //        } else
 //            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}",null);
         
+        String soc = (String)ADFUtils.evaluateEL("#{bindings.SocTerm.inputValue}");
+        if(soc == null || "".equals(soc)){
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select SOC.");
+            return;
+        }
+        String stoi = (String)ADFUtils.evaluateEL("#{bindings.SafetyTopicOfInterest.inputValue}");
+        if(stoi == null || "".equals(stoi)){
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please enter Safety Topic of Interest.");
+            return;
+        }
+        Integer domainId = (Integer)ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}");
+        if(domainId == null || "".equals(domainId)){
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select Data domain.");
+            return;
+        }
         if(selRiskPurposes != null && selRiskPurposes.size() > 0){
             String riskPurposes = "";
             for(String riskPurpose : selRiskPurposes){
                 riskPurposes = riskPurposes + "," + riskPurpose;
             }
             ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}", riskPurposes.substring(1));
-        } else
+        } else{
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select atleast one Risk Purpose.");
             ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}",null);
+            return;
+        }
         
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();

@@ -18,7 +18,7 @@
         ResId="com.novartis.ecrs.model.lov.DomainLOVVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
-  <SQLQuery><![CDATA[Select domain_id, domain_name, domain_desc from crs_domains]]></SQLQuery>
+  <SQLQuery><![CDATA[Select domain_id, domain_name, domain_desc from crs_domains where active_flag = 'Y']]></SQLQuery>
   <ViewAttribute
     Name="DomainId"
     IsUpdateable="false"
@@ -28,7 +28,7 @@
     ColumnType="INTEGER"
     AliasName="DOMAIN_ID"
     Expression="DOMAIN_ID"
-    SQLType="NUMERIC"/>
+    SQLType="INTEGER"/>
   <ViewAttribute
     Name="DomainName"
     IsUpdateable="false"

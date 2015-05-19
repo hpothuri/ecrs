@@ -22,7 +22,7 @@
   </Properties>
   <SQLQuery><![CDATA[SELECT DISTINCT
        CrsCompoundEO.COMPOUND_TYPE
-FROM CRS.CRS_COMPOUNDS CrsCompoundEO]]></SQLQuery>
+FROM CRS.CRS_COMPOUNDS CrsCompoundEO where active_flag='Y']]></SQLQuery>
   <ViewAttribute
     Name="CompoundType"
     IsUpdateable="false"

@@ -23,7 +23,11 @@
   <ViewAccessor
     Name="CrsStateVA"
     ViewObjectName="com.novartis.ecrs.model.view.CrsStateVO"
-    RowLevelBinds="true"/>
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="activeStates"
+      FullName="com.novartis.ecrs.model.view.CrsStateVO.activeStates"/>
+  </ViewAccessor>
   <ListBinding
     Name="LOV_StateId"
     ListVOName="CrsStateVA"

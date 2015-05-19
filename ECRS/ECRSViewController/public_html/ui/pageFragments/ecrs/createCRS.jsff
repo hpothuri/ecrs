@@ -543,7 +543,7 @@
                 </af:panelLabelAndMessage>
                 <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}#{ecrsviewcontrollerBundle.COLON}"
                                          id="plam2">
-                    <af:outputText value="#{bindings.CrsName.inputValue}" id="ot1" partialTriggers="soc2 it3"/>
+                    <af:outputText value="#{pageFlowScope.manageCRSBean.selectedCrsName}" id="ot1" partialTriggers="soc2 it3"/>
                 </af:panelLabelAndMessage>
                 <f:facet name="separator">
                     <af:spacer width="10" height="10" id="s4"/>
