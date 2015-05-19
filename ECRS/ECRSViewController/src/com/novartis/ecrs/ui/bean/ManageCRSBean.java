@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -1921,6 +1922,7 @@ public class ManageCRSBean implements Serializable {
                         ADFUtils.setEL("#{pageFlowScope.plsqlerror}", msg);
                         ADFUtils.showPopup(getErrorPLSqlPopup());
                     }
+                    onClickSearch(new ActionEvent((UIComponent)dialogEvent.getSource()));
                     getSearchBaseTableBinding().resetStampState();
                     ADFUtils.addPartialTarget(getSearchBaseTableBinding());
                 } catch (Exception e) {
@@ -1950,6 +1952,7 @@ public class ManageCRSBean implements Serializable {
                         ADFUtils.setEL("#{pageFlowScope.plsqlerror}", msg);
                         ADFUtils.showPopup(getErrorPLSqlPopup());
                     }
+                    onClickSearch(new ActionEvent((UIComponent)dialogEvent.getSource()));
                     getSearchBaseTableBinding().resetStampState();
                     ADFUtils.addPartialTarget(getSearchBaseTableBinding());
                 } catch (Exception e) {
