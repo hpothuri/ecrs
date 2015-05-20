@@ -21,6 +21,10 @@
         ResId="com.novartis.ecrs.model.view.base.CrsContentBaseVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <Variable
+    Name="pCrsName"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
   <ViewAccessor
     Name="BSLUserVA"
     ViewObjectName="com.novartis.ecrs.model.lov.UserRoleVO">

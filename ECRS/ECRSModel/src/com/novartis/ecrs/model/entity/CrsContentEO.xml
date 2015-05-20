@@ -16,6 +16,14 @@
     <Attr Name="_codeGenFlag2" Value="Access"/>
     <Attr Name="_isCodegen" Value="true"/>
   </DesignTime>
+  <ViewAccessor
+    Name="CrsContentStagingVA"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsContentVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="CrsContentBaseVA"
+    ViewObjectName="com.novartis.ecrs.model.view.base.CrsContentBaseVO"
+    RowLevelBinds="true"/>
   <Attribute
     Name="CrsId"
     IsNotNull="true"
@@ -347,6 +355,16 @@
     </AttrArray>
   </Key>
   <Key
+    Name="CrsConStgIdxPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_CON_STG_IDX_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.novartis.ecrs.model.entity.CrsContentEO.CrsId"/>
+    </AttrArray>
+  </Key>
+  <Key
     Name="CrsContentChkAppr">
     <DesignTime>
       <Attr Name="_DBObjectName" Value="CRS_CONTENT_CHK_APPR"/>
@@ -375,16 +393,6 @@
     <AttrArray Name="Attributes"/>
   </Key>
   <Key
-    Name="CrsContentIdxPk"
-    PrimaryKey="true">
-    <DesignTime>
-      <Attr Name="_DBObjectName" Value="CRS_CONTENT_IDX_PK"/>
-    </DesignTime>
-    <AttrArray Name="Attributes">
-      <Item Value="com.novartis.ecrs.model.entity.CrsContentEO.CrsId"/>
-    </AttrArray>
-  </Key>
-  <Key
     Name="CrsContentIdxCompoundFk">
     <DesignTime>
       <Attr Name="_referencedKey" Value="CRS_COMPOUNDS_IDX_PK"/>
@@ -407,27 +415,21 @@
     </AttrArray>
   </Key>
   <validation:UniqueKeyValidationBean
-    Name="CrsContentEO_Rule_0"
-    ResId="ANOTHER_CRS_WITH_THE_SAME_COMP"
-    KeyName="CoumpoundCodeInditcationAltKey">
-    <validation:OnAttributes>
-      <validation:Item
-        Value="CompoundId"/>
-      <validation:Item
-        Value="Indication"/>
-    </validation:OnAttributes>
-    <validation:OnCondition><![CDATA[CompoundId!=null && Indication !=null]]></validation:OnCondition>
-  </validation:UniqueKeyValidationBean>
-  <validation:UniqueKeyValidationBean
     Name="CrsContentEO_Rule_1"
     ResId="A_CRS_WITH_THE_SAME_ID_ALREADY"
-    KeyName="CrsContentIdxPk">
+    KeyName="CrsConStgIdxPk">
     <validation:OnAttributes>
       <validation:Item
         Value="CrsId"/>
     </validation:OnAttributes>
     <validation:OnCondition><![CDATA[CrsId!=null]]></validation:OnCondition>
   </validation:UniqueKeyValidationBean>
+  <validation:MethodValidationBean
+    Name="CrsContentEO_Rule_2"
+    ResId="A_CRS_IS_ALREADY_EXISTS_WITH_T"
+    MethodName="validateDuplicateCheckOnCrs">
+    <validation:OnCondition><![CDATA[CrsId!=null]]></validation:OnCondition>
+  </validation:MethodValidationBean>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>
