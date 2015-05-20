@@ -1203,8 +1203,14 @@ public class ManageCRSBean implements Serializable {
             oper.execute();
             if (oper.getErrors().size() > 0)
                 ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
-            else
-                ADFUtils.navigateToControlFlowCase("home");            
+            else{
+                String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}");
+                if(returnValue == null){
+                    ADFUtils.navigateToControlFlowCase("home");
+                }else{
+                    ADFUtils.navigateToControlFlowCase(returnValue);
+                }
+            }
         }
     }
 
