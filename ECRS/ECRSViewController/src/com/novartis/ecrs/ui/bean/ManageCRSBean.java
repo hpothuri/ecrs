@@ -672,7 +672,7 @@ public class ManageCRSBean implements Serializable {
             }
             ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}", riskPurposes.substring(1));
         } else{
-            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select atleast one Risk Purpose.");
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select at least one Risk Purpose.");
             ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}",null);
             return;
         }

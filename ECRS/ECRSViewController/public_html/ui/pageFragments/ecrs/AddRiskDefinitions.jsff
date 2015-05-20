@@ -14,7 +14,7 @@
       <f:facet name="info"/>
       <af:switcher id="s6" facetName="#{pageFlowScope.manageCRSBean.baseOrStaging}" defaultFacet="BASE">
         <f:facet name="STAGING">
-          <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="freeze wrap">
+          <af:panelCollection id="pc1" styleClass="AFStretchWidth">
             <f:facet name="menus">
               <af:menu text="#{ecrsviewcontrollerBundle.FILTER}" id="m1">
                 <af:commandMenuItem text="#{ecrsviewcontrollerBundle.ADVANCED_FILTER}" id="cmi1">
@@ -201,7 +201,7 @@
           </af:panelCollection>
         </f:facet>
         <f:facet name="BASE">
-          <af:panelCollection id="pc4" styleClass="AFStretchWidth" featuresOff="freeze wrap">
+          <af:panelCollection id="pc4" styleClass="AFStretchWidth">
             <f:facet name="menus"/>
             <f:facet name="statusbar"/>
             <af:table value="#{bindings.CrsRiskBaseVO.collectionModel}" var="row"
