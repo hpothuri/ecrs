@@ -23,6 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import oracle.adf.share.ADFContext;
 import oracle.adf.share.security.SecurityContext;
+
+import org.apache.log4j.Logger;
+
 import weblogic.security.Security;
 import weblogic.security.URLCallbackHandler;
 import weblogic.security.services.Authentication;
@@ -40,7 +43,8 @@ public class SessionBean {
     private String password;
     private String remoteAddress = "";
     private String fullName;
-
+    public static final Logger logger = Logger.getLogger(SessionBean.class);
+    
     public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
@@ -54,6 +58,7 @@ public class SessionBean {
                 for(String role : roles){
                     if("CRS_ADMIN".equalsIgnoreCase(role) || "CRS_BSL".equalsIgnoreCase(role) || "CRS_MQM".equalsIgnoreCase(role) || "CRS_TASL".equalsIgnoreCase(role) || "CRS_ML".equalsIgnoreCase(role)){
                         userRole = role;
+                        logger.info("Logged in user role - "+userRole);
                         break;
                     }
                 }

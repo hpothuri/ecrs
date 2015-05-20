@@ -1932,6 +1932,7 @@ public class ManageCRSBean implements Serializable {
                     if (!ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
                         ADFUtils.setEL("#{pageFlowScope.plsqlerror}", msg);
                         ADFUtils.showPopup(getErrorPLSqlPopup());
+                        return;
                     }
                     onClickSearch(new ActionEvent((UIComponent)dialogEvent.getSource()));
                     getSearchBaseTableBinding().resetStampState();
