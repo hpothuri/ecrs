@@ -20,8 +20,18 @@
         ResId="com.novartis.ecrs.model.view.report.PTReportVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
-  <SQLQuery><![CDATA[SELECT safety_topic_of_interest, pt_name, pt_code
+  <SQLQuery><![CDATA[SELECT crs_id,safety_topic_of_interest, pt_name, pt_code
        FROM TABLE(CRS_UI_TMS_UTILS.GET_TMS_ASSOCIATED_PTS())]]></SQLQuery>
+  <ViewAttribute
+    Name="CrsId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="CRS_ID"
+    Expression="CRS_ID"
+    SQLType="NUMERIC"/>
   <ViewAttribute
     Name="SafetyTopicOfInterest"
     IsUpdateable="false"

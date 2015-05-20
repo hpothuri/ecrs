@@ -63,6 +63,7 @@ import oracle.jbo.Row;
 import oracle.jbo.RowIterator;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.ViewObject;
+import oracle.jbo.server.ViewObjectImpl;
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
 
 import oracle.security.crypto.util.InvalidFormatException;
@@ -336,9 +337,9 @@ public class ManageCRSBean implements Serializable {
                        releaseStatus);
         
         //If mode is B&S ,and release status is 'CURRENT' set state to activated 
-        if(ViewConstants.FLOW_TYPE_SEARCH.equals(flowType) &&
-        ModelConstants.STATUS_CURRENT.equals(releaseStatus)){
-            ADFUtils.setEL("#{bindings.State.inputValue}", ModelConstants.STATE_ACTIVATED);
+        if ("anonymous".equalsIgnoreCase(userName)) {
+            ADFUtils.setEL("#{bindings.State.inputValue}",
+                           ModelConstants.STATE_ACTIVATED);
         }
 
         //if mode is U and logged in is BSL, set Compound Type to COMPOUND
@@ -518,6 +519,10 @@ public class ManageCRSBean implements Serializable {
                 ADFUtils.setEL("#{bindings.BslName.inputValue}", null);
                 ADFUtils.setEL("#{bindings.TaslName.inputValue}", null);
                 ADFUtils.setEL("#{bindings.MedicalLeadName.inputValue}", null);
+                ADFUtils.setEL("#{bindings.ReviewApproveRequiredFlag1.inputValue}",
+                               "N");
+                ADFUtils.setEL("#{bindings.MedicalLeadName.inputValue}", null);
+                setSelDesigneeList(null);
                 setNonCompoundSelected(Boolean.TRUE);
             }
             String crsCompCode = (String)ADFUtils.evaluateEL("#{bindings.CrsCompoundCode.inputValue}");
@@ -1281,7 +1286,7 @@ public class ManageCRSBean implements Serializable {
                 iter = ADFUtils.findIterator("CrsRiskVOIterator");
 
             RowSetIterator rowSet = null;
-            int rowStartIndex = 12;
+            int rowStartIndex = 14;
             int cellStartIndex = 0;
             String emptyValReplace = null;
             String dateCellFormat = "M/dd/yyyy";
@@ -1326,11 +1331,11 @@ public class ManageCRSBean implements Serializable {
                           rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.MeddraQualifier_LABEL"));
             columnMap.put("SearchCriteriaDetails",
                           rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.SearchCriteriaDetails_LABEL"));
-            columnMap.put("MqmComment", rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.MqmComment_LABEL"));
+            columnMap.put("NonMeddraComponentComment", rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskRelationVO.NonMeddraComponentComment_LABEL"));
 
             workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
             Sheet sheet = workbook.getSheetAt(0);
-            writeHeaderData(sheet);
+            writeHeaderData(sheet,0,4,7,10);
             ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
                                              cellStartIndex, columnMap, null,
                                              dateCellFormat, emptyValReplace,imageInputStream);
@@ -2344,10 +2349,13 @@ public class ManageCRSBean implements Serializable {
     }
 
     /**
-     * This method write header data to risk definition report.
+     * This method write header data to risk definition and PT report.
      * @param sheet
      */
-    private void writeHeaderData(Sheet sheet) {
+    private void writeHeaderData(Sheet sheet,int firstPalletStartIndx,
+                                 int firstPalletEndIndx,
+                                 int secondPalletStartIndx,
+                                 int secondPalletEndIndx) {
         //        Excel report Header data to include
         int count = 6;
         //invoke prepareStatesMap to get state names
@@ -2356,33 +2364,33 @@ public class ManageCRSBean implements Serializable {
         
         //  •1 CRS Name
         org.apache.poi.ss.usermodel.Row row1 = sheet.createRow(count);
-        Cell cell11 = row1.createCell((short)0);
+        Cell cell11 = row1.createCell((short)firstPalletStartIndx);
         cell11.setCellValue("CRS Name :" +
                             ADFUtils.evaluateEL("#{pageFlowScope.crsName}"));
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell11.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
-        sheet.addMergedRegion(new CellRangeAddress(count, count, 0, 4));
+        sheet.addMergedRegion(new CellRangeAddress(count, count, firstPalletStartIndx, firstPalletEndIndx));
         //•1 CRS ID
         //CRS ID
-        Cell cell12 = row1.createCell((short)7);
+        Cell cell12 = row1.createCell((short)secondPalletStartIndx);
         cell12.setCellValue("CRS ID : " +
                             (Long)ADFUtils.getPageFlowScopeValue("crsId"));
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell12.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
-        sheet.addMergedRegion(new CellRangeAddress(count, count, 7, 10));
+        sheet.addMergedRegion(new CellRangeAddress(count, count, secondPalletStartIndx, secondPalletEndIndx));
         count++;
         //        • 2 Dictionary Version
         org.apache.poi.ss.usermodel.Row row2 = sheet.createRow(count);
         //dictionary version
-        Cell cell21 = row2.createCell((short)0);
+        Cell cell21 = row2.createCell((short)firstPalletStartIndx);
         cell21.setCellValue("Dictionary Version: " +
                             ADFUtils.evaluateEL("#{sessionScope.dictVersion}"));
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell21.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
-        sheet.addMergedRegion(new CellRangeAddress(count, count, 0, 4));
+        sheet.addMergedRegion(new CellRangeAddress(count, count, firstPalletStartIndx, firstPalletEndIndx));
         //Status //        • 2 Status (Active or Inactive)
         String status = "";
         if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
@@ -2393,25 +2401,25 @@ public class ManageCRSBean implements Serializable {
             else
                 status = ModelConstants.CRS_ACTIVE;
         }
-        Cell cell22 = row2.createCell((short)7);
+        Cell cell22 = row2.createCell((short)secondPalletStartIndx);
         // TODO
         cell22.setCellValue("Status: " + status);
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell22.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
-        sheet.addMergedRegion(new CellRangeAddress(count, count, 7, 10));
+        sheet.addMergedRegion(new CellRangeAddress(count, count, secondPalletStartIndx, secondPalletEndIndx));
         count++;
 
         //•3 Date and time the report is run
         //Report time
         org.apache.poi.ss.usermodel.Row row3 = sheet.createRow(count);
-        Cell cell31 = row3.createCell((short)0);
+        Cell cell31 = row3.createCell((short)firstPalletStartIndx);
         cell31.setCellValue("Downloaded Time: " +
                             ModelConstants.getCustomTimeStamp());
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell31.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
-        sheet.addMergedRegion(new CellRangeAddress(count, count, 0, 4));
+        sheet.addMergedRegion(new CellRangeAddress(count, count, firstPalletStartIndx, firstPalletEndIndx));
         //•3 Release Status (CURRENT or PENDING)
         String relFlag =
             (String)ADFUtils.evaluateEL("#{bindings.ReleaseStatusFlag.inputValue}");
@@ -2420,12 +2428,12 @@ public class ManageCRSBean implements Serializable {
             relstatus = "Pending";
         else
             relstatus = "Current";
-        Cell cell32 = row3.createCell((short)7);
+        Cell cell32 = row3.createCell((short)secondPalletStartIndx);
         cell32.setCellValue("Release Status: " + relstatus);
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell32.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
-        sheet.addMergedRegion(new CellRangeAddress(count, count, 7, 10));
+        sheet.addMergedRegion(new CellRangeAddress(count, count, secondPalletStartIndx, secondPalletEndIndx));
         sheet.setColumnWidth(4, 6000);
         count++;
         //        •4 State (only displays the value for PENDING CRSs
@@ -2433,18 +2441,20 @@ public class ManageCRSBean implements Serializable {
         //BSL
         org.apache.poi.ss.usermodel.Row row4 = sheet.createRow(count);
        
-        Cell cell41 = row4.createCell((short)0);
+        Cell cell41 = row4.createCell((short)firstPalletStartIndx);
+        int stateIdstg = 0;
         if (ModelConstants.STAGING_FACET.equals(getBaseOrStaging())) {
-            int stateIdstg =
+            stateIdstg =
                 (Integer)ADFUtils.evaluateEL("#{bindings.StateId.inputValue}");
-            cell41.setCellValue("State:  " + statesMap.get(stateIdstg));
         }
+        cell41.setCellValue("State:  " + (statesMap.get(stateIdstg) == null ?
+                            "" : statesMap.get(stateIdstg)));
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell41.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
-        sheet.addMergedRegion(new CellRangeAddress(count, count, 0, 4));
+        sheet.addMergedRegion(new CellRangeAddress(count, count, firstPalletStartIndx, firstPalletEndIndx));
         
-        Cell cell42 = row4.createCell((short)7);
+        Cell cell42 = row4.createCell((short)secondPalletStartIndx);
         String bsl = null;
         if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
             bsl =
@@ -2452,17 +2462,18 @@ public class ManageCRSBean implements Serializable {
         } else
             bsl =
 (String)ADFUtils.evaluateEL("#{bindings.BslName.inputValue}");
+        bsl = getFullNamesForAccName(bsl);
         cell42.setCellValue("BSL: " + bsl);
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell42.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
-        sheet.addMergedRegion(new CellRangeAddress(count, count, 7, 10));
+        sheet.addMergedRegion(new CellRangeAddress(count, count, secondPalletStartIndx, secondPalletEndIndx));
         count++;
         //        •5 TASL
         //        •6 Medical Lead
         //TASL
         org.apache.poi.ss.usermodel.Row row5 = sheet.createRow(count);
-        Cell cell51 = row5.createCell((short)0);
+        Cell cell51 = row5.createCell((short)firstPalletStartIndx);
         String tasl = null;
         if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
             tasl =
@@ -2470,13 +2481,14 @@ public class ManageCRSBean implements Serializable {
         } else
             tasl =
 (String)ADFUtils.evaluateEL("#{bindings.TaslName.inputValue}");
+        tasl = getFullNamesForAccName(tasl);
         cell51.setCellValue("TASL :  " + tasl);
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell51.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
-        sheet.addMergedRegion(new CellRangeAddress(count, count, 0, 4));
+        sheet.addMergedRegion(new CellRangeAddress(count, count, firstPalletStartIndx, firstPalletEndIndx));
         //ML name
-        Cell cell52 = row5.createCell((short)7);
+        Cell cell52 = row5.createCell((short)secondPalletStartIndx);
         String medLLead = null;
         if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
             medLLead =
@@ -2484,13 +2496,28 @@ public class ManageCRSBean implements Serializable {
         } else
             medLLead =
                     (String)ADFUtils.evaluateEL("#{bindings.MedicalLeadName.inputValue}");
-        cell51.setCellValue("TASL :  " + tasl);
+        medLLead = getFullNamesForAccName(medLLead);
         cell52.setCellValue("Medical Lead: " + medLLead);
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell52.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
-        sheet.addMergedRegion(new CellRangeAddress(count, count, 7, 10));
+        sheet.addMergedRegion(new CellRangeAddress(count, count, secondPalletStartIndx, secondPalletEndIndx));
         count++;
+        org.apache.poi.ss.usermodel.Row row6 = sheet.createRow(count);
+        String designee = "";
+        if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
+            designee =
+                    (String)ADFUtils.evaluateEL("#{bindings.DesigneeBase.inputValue}");
+        } else
+            designee =
+                    (String)ADFUtils.evaluateEL("#{bindings.Designee.inputValue}");
+        designee = getFullNamesForAccName(designee);
+        Cell cell61 = row6.createCell((short)firstPalletStartIndx);
+        cell61.setCellValue("Designee: " + designee);
+        ExcelExportUtils.setHeaderCellStyle(sheet, count,
+                                            cell61.getColumnIndex(), false,
+                                            CellStyle.ALIGN_LEFT);
+        sheet.addMergedRegion(new CellRangeAddress(count, count, firstPalletStartIndx, firstPalletEndIndx));
     }
 
     /**
@@ -2542,20 +2569,110 @@ public class ManageCRSBean implements Serializable {
     }
 
     /**
+     * This method set state null or activated based on the flow type.
      * @param vce
      */
     public void onChangeReleaseStatus(ValueChangeEvent vce) {
         // Add event code here...
         if (vce != null && !vce.getNewValue().equals(vce.getOldValue())) {
-            if (ViewConstants.FLOW_TYPE_SEARCH.equals(getFlowType())) {
-                if (ModelConstants.STATUS_PENDING.equals((String)vce.getNewValue())) {
-                    ADFUtils.setEL("#{bindings.State.inputValue}", null);
-                } else {
-                    ADFUtils.setEL("#{bindings.State.inputValue}",
-                                   ModelConstants.STATE_ACTIVATED);
-                }
-            }
+//            if (ViewConstants.FLOW_TYPE_SEARCH.equals(getFlowType())) {
+//                if (ModelConstants.STATUS_PENDING.equals((String)vce.getNewValue())) {
+//                    ADFUtils.setEL("#{bindings.State.inputValue}", null);
+//                } else {
+//                    ADFUtils.setEL("#{bindings.State.inputValue}",
+//                                   ModelConstants.STATE_ACTIVATED);
+//                }
+//            }
             ADFUtils.addPartialTarget(stateSwitcherBinding);
         }
+    }
+
+    /**
+     * This method exports PT report for the current CRS id.
+     * @param facesContext
+     * @param outputStream
+     * @throws IOException
+     */
+    public void exportPTReport(FacesContext facesContext,
+                               OutputStream outputStream) {
+        // Add event code here...
+            //  _logger.info("Start of CRSReportsBean:exportPTReport()");
+        Workbook workbook = null;
+        DCIteratorBinding iter =
+            ADFUtils.findIterator("PTReportVOIterator");
+        if(iter!=null&& iter.getViewObject()!=null){
+            ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
+            String wrClause = "CRS_ID = "+ADFUtils.getPageFlowScopeValue("crsId");
+            vo.setWhereClause(wrClause);
+            vo.executeQuery();
+        }
+        ExcelExportUtils excUtils = new ExcelExportUtils();
+        InputStream excelInputStream = excUtils.getExcelInpStream();
+        InputStream imageInputStream = excUtils.getImageInpStream();
+            try {
+                //create sheet
+                RowSetIterator rowSet = null;
+                int rowStartIndex = 14;
+                int cellStartIndex = 0;
+                String emptyValReplace = null;
+                String dateCellFormat = "M/dd/yyyy";
+                if (iter != null) {
+                    iter.setRangeSize(-1);
+                    rowSet = iter.getRowSetIterator();
+                }
+                workbook = WorkbookFactory.create(excelInputStream);
+                LinkedHashMap columnMap = new LinkedHashMap();
+                ResourceBundle rsBundle =
+                    BundleFactory.getBundle("com.novartis.ecrs.view.ECRSViewControllerBundle");
+                //Here Key will be ViewObject Attribute
+                columnMap.put("SafetyTopicOfInterest",
+                              rsBundle.getString("SAFETY_TOPIC_OF_INTEREST"));
+                columnMap.put("PtName", rsBundle.getString("PT_NAME"));
+                columnMap.put("PtCode", rsBundle.getString("PT_CODE"));
+                workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
+                Sheet sheet = workbook.getSheetAt(0);
+                writeHeaderData(sheet,0,1,3,4);
+                ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
+                                                 cellStartIndex, columnMap, null,
+                                                 dateCellFormat, emptyValReplace,
+                                                 imageInputStream);
+
+            } catch (IOException ioe) {
+                // TODO: Add catch code
+                ioe.printStackTrace();
+            } catch (InvalidFormatException ife) {
+                // TODO: Add catch code
+                ife.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                workbook.write(outputStream);
+                excelInputStream.close();
+                outputStream.close();
+            } catch (IOException ioe) {
+                // TODO: Add catch code
+                ADFUtils.showFacesMessage(ioe.getMessage(), FacesMessage.SEVERITY_ERROR);
+            }
+            }
+    }
+
+    /**
+     * This method returns fullname from input account name of the user.
+     * @param accName
+     * @return
+     */
+    private String getFullNamesForAccName(String accName){
+        //invoke AMImpl with bsl,tasl,ml,designee acc names as keys
+        DCIteratorBinding iter = ADFUtils.findIterator("UserFullNameIterator");
+        String fullName = "";
+        if(iter!=null && iter.getViewObject()!=null){
+            ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
+            vo.setWhereClause("user_name = '"+ accName+"'");
+            vo.executeQuery();
+            if(vo.first()!=null)
+               fullName = (String) vo.first().getAttribute("FullName");
+        }
+        return fullName;
     }
 }

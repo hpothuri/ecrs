@@ -200,7 +200,7 @@
                                                               value="#{bindings.ReviewApproveRequiredFlag1.inputValue}"
                                                               autoSubmit="true"
                                                               readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                                              disabled="#{bindings.StateId.inputValue ne 1}"/>
+                                                              disabled="#{bindings.StateId.inputValue ne 1 || bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"/>
                                 </af:panelFormLayout>
                                 <af:panelGroupLayout id="pgl7"
                                                      layout="horizontal"
@@ -353,7 +353,8 @@
                                               label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}"
                                               rows="3" contentStyle="width:75%;"
                                               styleClass="AFStretchWidth"
-                                              autoSubmit="true" disabled="true">
+                                              autoSubmit="true" disabled="true"
+                                              visible="#{securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_TASL']}">
                                     <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
                                 </af:inputText>
                                 <af:inputText value="#{bindings.MedicalLeadRejectComment.inputValue}"
@@ -364,7 +365,8 @@
                                               label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}"
                                               rows="3" contentStyle="width:75%;"
                                               styleClass="AFStretchWidth"
-                                              autoSubmit="true" disabled="true">
+                                              autoSubmit="true" disabled="true"
+                                              visible="#{securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ML']}">
                                     <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
                                 </af:inputText>
                             </af:panelFormLayout>
@@ -506,7 +508,8 @@
                                               label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}"
                                               rows="3" contentStyle="width:75%;"
                                               styleClass="AFStretchWidth"
-                                              readOnly="true">
+                                              readOnly="true"
+                                              visible="#{!(bindings.ReleaseStatusFlagBase eq 'C' and pageFlowScope.flowType  eq 'S')}">
                                     <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
                                 </af:inputText>
                                 <af:inputText value="#{bindings.MedicalLeadRejectCommentBase.inputValue}"
@@ -517,7 +520,8 @@
                                               label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}"
                                               rows="3" contentStyle="width:75%;"
                                               styleClass="AFStretchWidth"
-                                              readOnly="true">
+                                              readOnly="true"
+                                              visible="#{!(bindings.ReleaseStatusFlagBase eq 'C' and pageFlowScope.flowType  eq 'S')}">
                                     <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
                                 </af:inputText>
                             </af:panelFormLayout>

@@ -71,7 +71,7 @@
             <f:selectItems value="#{bindings.CompoundCode.items}" id="si2"/>
           </af:selectOneChoice>
           <af:switcher id="s11" defaultFacet="ANONYMOUS"
-                       facetName="#{securityContext.userInRole['anonymous'] ? 'ANONYMOUS' : 'LOGGED_IN'}"
+                       facetName="#{securityContext.userInRole['anonymous'] ? 'ANONYMOUS' :  (pageFlowScope.flowType eq 'S' and pageFlowScope.manageCRSBean.currReleaseStatus eq 'C' ?  'LOGGED_IN_CURRENT' : 'LOGGED_IN_PENDING')}"
                        binding="#{pageFlowScope.manageCRSBean.stateSwitcherBinding}">
             <f:facet name="ANONYMOUS">
               <af:selectOneChoice
@@ -81,18 +81,29 @@
                 <af:selectItem label="ACTIVATED" id="si17" value="8"/>
               </af:selectOneChoice>
             </f:facet>
-            <f:facet name="LOGGED_IN">
+            <f:facet name="LOGGED_IN_CURRENT">
             <af:selectOneChoice
                               label="#{bindings.State.label}"
                               shortDesc="#{bindings.State.hints.tooltip}"
                               id="soc3" contentStyle="width:170px;"
                               partialTriggers="it8"
                               value="#{bindings.State.inputValue}"
-                              readOnly="#{pageFlowScope.flowType eq 'S' and pageFlowScope.manageCRSBean.currReleaseStatus eq 'C'}"
                                 autoSubmit="true">
-            <f:selectItems value="#{bindings.State.items}" id="si3"/>
-            </af:selectOneChoice>
-            </f:facet>            
+                <af:selectItem id="si24"/>
+                <af:selectItem label="ACTIVATED" id="si3" value="8"/>
+                <af:selectItem label="RETIRED" id="si23" value="7"/>
+              </af:selectOneChoice>
+            </f:facet>
+            <f:facet name="LOGGED_IN_PENDING">
+              <af:selectOneChoice label="#{bindings.State.label}"
+                                  shortDesc="#{bindings.State.hints.tooltip}"
+                                  id="soc19" contentStyle="width:170px;"
+                                  partialTriggers="it8"
+                                  value="#{bindings.State.inputValue}"
+                                  autoSubmit="true">
+                <f:selectItems value="#{bindings.State.items}" id="si22"/>
+              </af:selectOneChoice>
+            </f:facet>
           </af:switcher>
           <af:inputText value="#{bindings.GenericName.inputValue}"
                         columns="#{bindings.GenericName.hints.displayWidth}"

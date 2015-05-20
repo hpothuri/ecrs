@@ -28,6 +28,10 @@
               id="CrsContentBaseVOIterator"/>
     <iterator Binds="CrsStateVO" RangeSize="10"
               DataControl="ECRSAppModuleDataControl" id="CrsStateVOIterator"/>
+    <iterator Binds="PTReportVO" RangeSize="10"
+              DataControl="ECRSAppModuleDataControl" id="PTReportVOIterator"/>
+    <iterator id="UserFullNameIterator" Binds="UserFullNameVO"
+              DataControl="ECRSAppModuleDataControl" RangeSize="25"/>
   </executables>
   <bindings>
     <tree IterBinding="CrsRiskVOIterator" id="CrsRiskVO">
@@ -652,6 +656,16 @@
     <attributeValues IterBinding="CrsContentBaseVOIterator" id="StateIdBase">
       <AttrNames>
         <Item Value="StateId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="DesigneeBase">
+      <AttrNames>
+        <Item Value="Designee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="Designee">
+      <AttrNames>
+        <Item Value="Designee"/>
       </AttrNames>
     </attributeValues>
   </bindings>

@@ -34,6 +34,12 @@
                                                  filename="AddRiskDefinitionsReport.xls"
                                                  method="#{pageFlowScope.manageCRSBean.exportRiskDefinitions}"/>
                 </af:commandButton>
+                <af:commandButton text="#{ecrsviewcontrollerBundle.EXPORT_PT}"
+                                  id="cb25" icon="/images/excel_icon.gif">
+                  <af:fileDownloadActionListener contentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                                 filename="PTReport.xls"
+                                                 method="#{pageFlowScope.manageCRSBean.exportPTReport}"/>
+                </af:commandButton>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.COPY_RISK_DEFINTION}" id="cb2"
                                   icon="/images/copy.png" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                                   actionListener="#{pageFlowScope.manageCRSBean.onClickCopy}" partialSubmit="true"/>
@@ -340,6 +346,12 @@
                   <af:fileDownloadActionListener contentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                                                  filename="AddRiskDefinitionsReport.xls"
                                                  method="#{pageFlowScope.manageCRSBean.exportRiskDefinitions}"/>
+                </af:commandButton>
+                <af:commandButton text="#{ecrsviewcontrollerBundle.EXPORT_PT}"
+                                  id="cb26" icon="/images/excel_icon.gif">
+                  <af:fileDownloadActionListener contentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                                 filename="PTReport.xls"
+                                                 method="#{pageFlowScope.manageCRSBean.exportPTReport}"/>
                 </af:commandButton>
               </af:toolbar>
             </f:facet>
