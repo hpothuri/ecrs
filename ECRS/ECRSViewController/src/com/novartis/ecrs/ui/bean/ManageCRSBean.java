@@ -9,6 +9,9 @@ import com.novartis.ecrs.model.view.base.CrsContentBaseVORowImpl;
 import com.novartis.ecrs.ui.constants.ViewConstants;
 import com.novartis.ecrs.ui.utility.ADFUtils;
 import com.novartis.ecrs.ui.utility.ExcelExportUtils;
+import com.novartis.ecrs.view.beans.SessionBean;
+
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -162,6 +165,8 @@ public class ManageCRSBean implements Serializable {
     private Map<Integer,String> statesMap = null;
     private boolean nonCompoundSelected;
     private transient UIXSwitcher stateSwitcherBinding;
+    public static final Logger logger = Logger.getLogger(ManageCRSBean.class);
+    private RichPanelGroupLayout riskDefPopupPanel;
 
     public ManageCRSBean() {
         super();
@@ -434,6 +439,7 @@ public class ManageCRSBean implements Serializable {
      * @return
      */
     public String onClickNext() {
+        logger.info("Navigating to next train stop");
         String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getNext}");
         return returnValue;
     }
@@ -450,7 +456,10 @@ public class ManageCRSBean implements Serializable {
         Map params = new HashMap<String, Object>();
         params.put("crsId", crsId);
         params.put("status", getBaseOrStaging());
+        logger.info("Init risk Relation : current Crs ID :: "+crsId);
+        logger.info("Init risk Relation : Base or Staging :: "+getBaseOrStaging());
         try {
+            logger.info("Calling AM method initRiskRelation");
             ADFUtils.executeAction("initRiskRelation", params);
         } catch (Exception e) {
             e.printStackTrace();
@@ -567,15 +576,19 @@ public class ManageCRSBean implements Serializable {
         ViewObject relationVO = realtionIter.getViewObject();
         Row relationRow = relationVO.createRow();
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
+        logger.info("AddRiskDefinition crsId "+crsId);
         relationRow.setAttribute("CrsId", crsId);
         relationVO.insertRow(relationRow);
         relationVO.setCurrentRow(relationRow);
+        logger.info("Popup mode is add, opens blank risk defintion popup.");
         ADFUtils.setPageFlowScopeValue("popupMode", "Add");
         setSelDatabases(null);
         setSelRiskPurposes(null);
         if(savedSuccessMessage != null){
             savedSuccessMessage.setVisible(Boolean.FALSE);
         }
+        if(riskDefPopupPanel != null)
+            ResetUtils.reset(riskDefPopupPanel);
         ADFUtils.showPopup(riskDefPopup);
     }
 
@@ -588,8 +601,10 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void editRiskDefinition(ActionEvent actionEvent) {
+        logger.info("Editing Risk definition, popup mode edit.");
         ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
         Long riskId = (Long)ADFUtils.evaluateEL("#{row.CrsRiskId}");
+        logger.info("Current crs ");
 //        String databaseList = (String)ADFUtils.evaluateEL("#{row.DatabaseList}");
 //        List<String> dbList = new ArrayList<String>();
 //        if(databaseList != null){
@@ -619,6 +634,8 @@ public class ManageCRSBean implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(riskDefPopupPanel != null)
+            ResetUtils.reset(riskDefPopupPanel);
         ADFUtils.showPopup(riskDefPopup);
     }
 
@@ -2681,5 +2698,13 @@ public class ManageCRSBean implements Serializable {
                fullName = (String) vo.first().getAttribute("FullName");
         }
         return fullName;
+    }
+
+    public void setRiskDefPopupPanel(RichPanelGroupLayout riskDefPopupPanel) {
+        this.riskDefPopupPanel = riskDefPopupPanel;
+    }
+
+    public RichPanelGroupLayout getRiskDefPopupPanel() {
+        return riskDefPopupPanel;
     }
 }

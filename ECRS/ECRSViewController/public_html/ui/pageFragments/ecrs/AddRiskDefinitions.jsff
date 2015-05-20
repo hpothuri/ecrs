@@ -386,7 +386,7 @@
                               actionListener="#{pageFlowScope.manageCRSBean.onCancelCrsRiskPopup}" immediate="true"/>
           </af:panelGroupLayout>
         </f:facet>
-        <af:panelGroupLayout id="pgl2" layout="vertical">
+        <af:panelGroupLayout id="pgl2" layout="vertical" binding="#{pageFlowScope.manageCRSBean.riskDefPopupPanel}">
           <af:panelGroupLayout id="pgl8" layout="horizontal" halign="end">
             <af:outputText id="ot77"
                            binding="#{pageFlowScope.manageCRSBean.hiddenPopupAlign}">
