@@ -75,55 +75,55 @@
                   <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeSpFlag.name}" filterable="true"
                              sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeSpFlag.label}" id="c2"
                              width="20" align="center" shortDesc="#{ecrsviewcontrollerBundle.SPP}">
-                    <af:outputText value="#{row.RiskPurposeSpFlag eq 'Y' ? 'X' : ''}" id="ot57"
+                    <af:outputText value="#{row.RiskPurposeSpFlag eq 'Y' ? 'Y' : ''}" id="ot57"
                                    shortDesc="#{ecrsviewcontrollerBundle.SPP}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeDsFlag.name}" filterable="true"
                              sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeDsFlag.label}" id="c3"
                              width="20" align="center" shortDesc="#{ecrsviewcontrollerBundle.DSUR}">
-                    <af:outputText value="#{row.RiskPurposeDsFlag eq 'Y' ? 'X' : ''}" id="ot58"
+                    <af:outputText value="#{row.RiskPurposeDsFlag eq 'Y' ? 'Y' : ''}" id="ot58"
                                    shortDesc="#{ecrsviewcontrollerBundle.DSUR}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeRmFlag.name}" filterable="true"
                              sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeRmFlag.label}" id="c4"
                              width="20" align="center" shortDesc="#{ecrsviewcontrollerBundle.RMP}">
-                    <af:outputText value="#{row.RiskPurposeRmFlag eq 'Y' ? 'X' : ''}" id="ot59"
+                    <af:outputText value="#{row.RiskPurposeRmFlag eq 'Y' ? 'Y' : ''}" id="ot59"
                                    shortDesc="#{ecrsviewcontrollerBundle.RMP}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposePsFlag.name}" filterable="true"
                              sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposePsFlag.label}" id="c5"
                              width="20" align="center" shortDesc="#{ecrsviewcontrollerBundle.PSUR}">
-                    <af:outputText value="#{row.RiskPurposePsFlag eq 'Y' ? 'X' : ''}" id="ot60"
+                    <af:outputText value="#{row.RiskPurposePsFlag eq 'Y' ? 'Y' : ''}" id="ot60"
                                    shortDesc="#{ecrsviewcontrollerBundle.PSUR}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeIbFlag.name}" filterable="true"
                              sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeIbFlag.label}" id="c6"
                              width="20" align="center" shortDesc="#{ecrsviewcontrollerBundle.EXPECTED_IN_IB}">
-                    <af:outputText value="#{row.RiskPurposeIbFlag eq 'Y' ? 'X' : ''}" id="ot61"
+                    <af:outputText value="#{row.RiskPurposeIbFlag eq 'Y' ? 'Y' : ''}" id="ot61"
                                    shortDesc="#{ecrsviewcontrollerBundle.EXPECTED_IN_IB}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeCdFlag.name}" filterable="true"
                              sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeCdFlag.label}" id="c7"
                              width="20" align="center" shortDesc="#{ecrsviewcontrollerBundle.CDS}">
-                    <af:outputText value="#{row.RiskPurposeCdFlag eq 'Y' ? 'X' : ''}" id="ot62"
+                    <af:outputText value="#{row.RiskPurposeCdFlag eq 'Y' ? 'Y' : ''}" id="ot62"
                                    shortDesc="#{ecrsviewcontrollerBundle.CDS}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeOsFlag.name}" filterable="true"
                              sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeOsFlag.label}" id="c8"
                              width="20" align="center" shortDesc="#{ecrsviewcontrollerBundle.OTHER_SEARCH}">
-                    <af:outputText value="#{row.RiskPurposeOsFlag eq 'Y' ? 'X' : ''}" id="ot63"
+                    <af:outputText value="#{row.RiskPurposeOsFlag eq 'Y' ? 'Y' : ''}" id="ot63"
                                    inlineStyle=";" shortDesc="#{ecrsviewcontrollerBundle.OTHER_SEARCH}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeMiFlag.name}" filterable="true"
                              sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeMiFlag.label}" id="c9"
                              width="20" align="center" shortDesc="#{ecrsviewcontrollerBundle.MISSING_INFORMATION}">
-                    <af:outputText value="#{row.RiskPurposeMiFlag eq 'Y' ? 'X' : ''}" id="ot64"
+                    <af:outputText value="#{row.RiskPurposeMiFlag eq 'Y' ? 'Y' : ''}" id="ot64"
                                    shortDesc="#{ecrsviewcontrollerBundle.MISSING_INFORMATION}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskVO.hints.RiskPurposeErFlag.name}" filterable="true"
                              sortable="true" headerText="#{bindings.CrsRiskVO.hints.RiskPurposeErFlag.label}" id="c10"
                              width="20" align="center" shortDesc="#{ecrsviewcontrollerBundle.EXPEDITING_RULES}">
-                    <af:outputText value="#{row.RiskPurposeErFlag eq 'Y' ? 'X' : ''}" id="ot65"
+                    <af:outputText value="#{row.RiskPurposeErFlag eq 'Y' ? 'Y' : ''}" id="ot65"
                                    shortDesc="#{ecrsviewcontrollerBundle.EXPEDITING_RULES}"/>
                   </af:column>
                   <f:facet name="header">
@@ -224,55 +224,55 @@
                   <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.RiskPurposeSpFlag.name}" filterable="true"
                              sortable="true" headerText="#{ecrsviewcontrollerBundle.SP}" id="c62" width="20"
                              align="center" shortDesc="#{ecrsviewcontrollerBundle.SPP}">
-                    <af:outputText value="#{row.RiskPurposeSpFlag eq 'Y' ? 'X' : ''}" id="ot39"
+                    <af:outputText value="#{row.RiskPurposeSpFlag eq 'Y' ? 'Y' : ''}" id="ot39"
                                    shortDesc="#{ecrsviewcontrollerBundle.SPP}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.RiskPurposeDsFlag.name}" filterable="true"
                              sortable="true" headerText="#{ecrsviewcontrollerBundle.DS}" id="c63" width="20"
                              align="center" shortDesc="#{ecrsviewcontrollerBundle.DSUR}">
-                    <af:outputText value="#{row.RiskPurposeDsFlag eq 'Y' ? 'X' : ''}" id="ot40"
+                    <af:outputText value="#{row.RiskPurposeDsFlag eq 'Y' ? 'Y' : ''}" id="ot40"
                                    shortDesc="#{ecrsviewcontrollerBundle.DSUR}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.RiskPurposeRmFlag.name}" filterable="true"
                              sortable="true" headerText="#{ecrsviewcontrollerBundle.RM}" id="c64" width="20"
                              align="center" shortDesc="#{ecrsviewcontrollerBundle.RMP}">
-                    <af:outputText value="#{row.RiskPurposeRmFlag eq 'Y' ? 'X' : ''}" id="ot41"
+                    <af:outputText value="#{row.RiskPurposeRmFlag eq 'Y' ? 'Y' : ''}" id="ot41"
                                    shortDesc="#{ecrsviewcontrollerBundle.RMP}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.RiskPurposePsFlag.name}" filterable="true"
                              sortable="true" headerText="#{ecrsviewcontrollerBundle.PS}" id="c65" width="20"
                              align="center" shortDesc="#{ecrsviewcontrollerBundle.PSUR}">
-                    <af:outputText value="#{row.RiskPurposePsFlag eq 'Y' ? 'X' : ''}" id="ot42"
+                    <af:outputText value="#{row.RiskPurposePsFlag eq 'Y' ? 'Y' : ''}" id="ot42"
                                    shortDesc="#{ecrsviewcontrollerBundle.PSUR}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.RiskPurposeIbFlag.name}" filterable="true"
                              sortable="true" headerText="#{ecrsviewcontrollerBundle.IB}" id="c66" width="20"
                              align="center" shortDesc="#{ecrsviewcontrollerBundle.EXPECTED_IN_IB}">
-                    <af:outputText value="#{row.RiskPurposeIbFlag eq 'Y' ? 'X' : ''}" id="ot43"
+                    <af:outputText value="#{row.RiskPurposeIbFlag eq 'Y' ? 'Y' : ''}" id="ot43"
                                    shortDesc="#{ecrsviewcontrollerBundle.EXPECTED_IN_IB}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.RiskPurposeCdFlag.name}" filterable="true"
                              sortable="true" headerText="#{ecrsviewcontrollerBundle.CD}" id="c67" width="20"
                              align="center" shortDesc="#{ecrsviewcontrollerBundle.CDS}">
-                    <af:outputText value="#{row.RiskPurposeCdFlag eq 'Y' ? 'X' : ''}" id="ot44"
+                    <af:outputText value="#{row.RiskPurposeCdFlag eq 'Y' ? 'Y' : ''}" id="ot44"
                                    shortDesc="#{ecrsviewcontrollerBundle.CDS}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.RiskPurposeOsFlag.name}" filterable="true"
                              sortable="true" headerText="#{ecrsviewcontrollerBundle.OS}" id="c68" width="20"
                              align="center" shortDesc="#{ecrsviewcontrollerBundle.OTHER_SEARCH}">
-                    <af:outputText value="#{row.RiskPurposeOsFlag eq 'Y' ? 'X' : ''}" id="ot45"
+                    <af:outputText value="#{row.RiskPurposeOsFlag eq 'Y' ? 'Y' : ''}" id="ot45"
                                    shortDesc="#{ecrsviewcontrollerBundle.OTHER_SEARCH}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.RiskPurposeMiFlag.name}" filterable="true"
                              sortable="true" headerText="#{ecrsviewcontrollerBundle.MI}" id="c69" width="20"
                              align="center" shortDesc="#{ecrsviewcontrollerBundle.MISSING_INFORMATION}">
-                    <af:outputText value="#{row.RiskPurposeMiFlag eq 'Y' ? 'X' : ''}" id="ot46"
+                    <af:outputText value="#{row.RiskPurposeMiFlag eq 'Y' ? 'Y' : ''}" id="ot46"
                                    shortDesc="#{ecrsviewcontrollerBundle.MISSING_INFORMATION}"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.RiskPurposeErFlag.name}" filterable="true"
                              sortable="true" headerText="#{ecrsviewcontrollerBundle.ER}" id="c70" width="20"
                              align="center" shortDesc="#{ecrsviewcontrollerBundle.EXPEDITING_RULES}">
-                    <af:outputText value="#{row.RiskPurposeErFlag eq 'Y' ? 'X' : ''}" id="ot47"
+                    <af:outputText value="#{row.RiskPurposeErFlag eq 'Y' ? 'Y' : ''}" id="ot47"
                                    shortDesc="#{ecrsviewcontrollerBundle.EXPEDITING_RULES}"/>
                   </af:column>
                   <f:facet name="header">
@@ -764,55 +764,55 @@
                 <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeSpFlag.name}" sortable="true"
                            headerText="#{ecrsviewcontrollerBundle.SP}" id="c39" width="20"
                            shortDesc="#{ecrsviewcontrollerBundle.SPP}">
-                  <af:outputText value="#{copyRow.RiskPurposeSpFlag eq 'Y' ? 'X' : ''}" id="ot68"
+                  <af:outputText value="#{copyRow.RiskPurposeSpFlag eq 'Y' ? 'Y' : ''}" id="ot68"
                                  shortDesc="#{ecrsviewcontrollerBundle.SPP}"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeDsFlag.name}" sortable="true"
                            headerText="#{ecrsviewcontrollerBundle.DS}" id="c40" width="20"
                            shortDesc="#{ecrsviewcontrollerBundle.DSUR}">
-                  <af:outputText value="#{copyRow.RiskPurposeDsFlag eq 'Y' ? 'X' : ''}" id="ot69"
+                  <af:outputText value="#{copyRow.RiskPurposeDsFlag eq 'Y' ? 'Y' : ''}" id="ot69"
                                  shortDesc="#{ecrsviewcontrollerBundle.DSUR}"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeRmFlag.name}" sortable="true"
                            headerText="#{ecrsviewcontrollerBundle.RM}" id="c41" width="20"
                            shortDesc="#{ecrsviewcontrollerBundle.RMP}">
-                  <af:outputText value="#{copyRow.RiskPurposeRmFlag eq 'Y' ? 'X' : ''}" id="ot70"
+                  <af:outputText value="#{copyRow.RiskPurposeRmFlag eq 'Y' ? 'Y' : ''}" id="ot70"
                                  shortDesc="#{ecrsviewcontrollerBundle.RMP}"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposePsFlag.name}" sortable="true"
                            headerText="#{ecrsviewcontrollerBundle.PS}" id="c42" width="20"
                            shortDesc="#{ecrsviewcontrollerBundle.PSUR}">
-                  <af:outputText value="#{copyRow.RiskPurposePsFlag eq 'Y' ? 'X' : ''}" id="ot71"
+                  <af:outputText value="#{copyRow.RiskPurposePsFlag eq 'Y' ? 'Y' : ''}" id="ot71"
                                  shortDesc="#{ecrsviewcontrollerBundle.PSUR}"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeIbFlag.name}" sortable="true"
                            headerText="#{ecrsviewcontrollerBundle.IB}" id="c43" width="20"
                            shortDesc="#{ecrsviewcontrollerBundle.EXPECTED_IN_IB}">
-                  <af:outputText value="#{copyRow.RiskPurposeIbFlag eq 'Y' ? 'X' : ''}" id="ot72"
+                  <af:outputText value="#{copyRow.RiskPurposeIbFlag eq 'Y' ? 'Y' : ''}" id="ot72"
                                  shortDesc="#{ecrsviewcontrollerBundle.EXPECTED_IN_IB}"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeCdFlag.name}" sortable="true"
                            headerText="#{ecrsviewcontrollerBundle.CD}" id="c44" width="20"
                            shortDesc="#{ecrsviewcontrollerBundle.CDS}">
-                  <af:outputText value="#{copyRow.RiskPurposeCdFlag eq 'Y' ? 'X' : ''}" id="ot73"
+                  <af:outputText value="#{copyRow.RiskPurposeCdFlag eq 'Y' ? 'Y' : ''}" id="ot73"
                                  shortDesc="#{ecrsviewcontrollerBundle.CDS}"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeOsFlag.name}" sortable="true"
                            headerText="#{ecrsviewcontrollerBundle.OS}" id="c45" width="20"
                            shortDesc="#{ecrsviewcontrollerBundle.OTHER_SEARCH}">
-                  <af:outputText value="#{copyRow.RiskPurposeOsFlag eq 'Y' ? 'X' : ''}" id="ot74"
+                  <af:outputText value="#{copyRow.RiskPurposeOsFlag eq 'Y' ? 'Y' : ''}" id="ot74"
                                  shortDesc="#{ecrsviewcontrollerBundle.OTHER_SEARCH}"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeMiFlag.name}" sortable="true"
                            headerText="#{ecrsviewcontrollerBundle.MI}" id="c46" width="20"
                            shortDesc="#{ecrsviewcontrollerBundle.MISSING_INFORMATION}">
-                  <af:outputText value="#{copyRow.RiskPurposeMiFlag eq 'Y' ? 'X' : ''}" id="ot75"
+                  <af:outputText value="#{copyRow.RiskPurposeMiFlag eq 'Y' ? 'Y' : ''}" id="ot75"
                                  shortDesc="#{ecrsviewcontrollerBundle.MISSING_INFORMATION}"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeErFlag.name}" sortable="true"
                            headerText="#{ecrsviewcontrollerBundle.ER}" id="c47" width="20"
                            shortDesc="#{ecrsviewcontrollerBundle.EXPEDITING_RULES}">
-                  <af:outputText value="#{copyRow.RiskPurposeErFlag eq 'Y' ? 'X' : ''}" id="ot76"
+                  <af:outputText value="#{copyRow.RiskPurposeErFlag eq 'Y' ? 'Y' : ''}" id="ot76"
                                  shortDesc="#{ecrsviewcontrollerBundle.EXPEDITING_RULES}"/>
                 </af:column>
                 <f:facet name="header">

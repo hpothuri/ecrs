@@ -604,7 +604,7 @@ public class ManageCRSBean implements Serializable {
         logger.info("Editing Risk definition, popup mode edit.");
         ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
         Long riskId = (Long)ADFUtils.evaluateEL("#{row.CrsRiskId}");
-        logger.info("Current crs ");
+        logger.info("Current crs risk id "+riskId);
 //        String databaseList = (String)ADFUtils.evaluateEL("#{row.DatabaseList}");
 //        List<String> dbList = new ArrayList<String>();
 //        if(databaseList != null){
@@ -625,6 +625,7 @@ public class ManageCRSBean implements Serializable {
                 rpList.add(rp);
             }
         }
+        logger.info("Selected risk purpose list :: "+rpList);
         setSelRiskPurposes(rpList);
         
         Map params = new HashMap<String, Object>();
@@ -640,6 +641,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void deleteRiskDefinitions(ActionEvent actionEvent) {
+        logger.info("Deleting Selected Risk Definitions");
         RowKeySet rowKeySet = (RowKeySet)riskDefTable.getSelectedRowKeys();
         CollectionModel cm = (CollectionModel)riskDefTable.getValue();
         for (Object facesTreeRowKey : rowKeySet) {
@@ -666,7 +668,7 @@ public class ManageCRSBean implements Serializable {
 //            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}", databases.substring(1));
 //        } else
 //            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}",null);
-        
+        logger.info("Saving risk defs.");
         String soc = (String)ADFUtils.evaluateEL("#{bindings.SocTerm.inputValue}");
         if(soc == null || "".equals(soc)){
             ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select SOC.");
@@ -693,7 +695,7 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}",null);
             return;
         }
-        
+        logger.info("Selected risk purposes : "+selRiskPurposes);
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0) {
@@ -729,8 +731,10 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void onCloseRiskPopup(PopupCanceledEvent popupCanceledEvent) {
+        logger.info("Closing risk defintions popup");
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
         OperationBinding oper = ADFUtils.findOperation("initRiskRelation");
+        logger.info("Reexecuting the table with crsId : "+crsId+" state : "+getBaseOrStaging());
         oper.getParamsMap().put("crsId", crsId);
         oper.getParamsMap().put("status", getBaseOrStaging());
         oper.execute();
@@ -995,8 +999,10 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void searchHierarchy(ActionEvent actionEvent) {
+        logger.info("Querying Hierarchy search");
         DCIteratorBinding iter = ADFUtils.findIterator("HierarchySearchVOIterator");
         ViewObject hierVO = iter.getViewObject();
+        logger.info("Entered search criteria : term : "+term+" level : "+level+" dictionary : "+dictionary);
         hierVO.setNamedWhereClauseParam("pTerm", term != null ? term : null);
         hierVO.setNamedWhereClauseParam("pLevel", level != null ? level : null);
         hierVO.setNamedWhereClauseParam("pDict", dictionary != null ? dictionary : null);
@@ -1005,6 +1011,7 @@ public class ManageCRSBean implements Serializable {
 
     public void onClickHierarchySearch(ActionEvent actionEvent) {
         clickHierarchy();
+        logger.info("Opening the blank hierarchy popup, aligning to the right of risk definition popup.");
         RichPopup.PopupHints hints = new RichPopup.PopupHints();
         hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN_ID, this.getHiddenPopupAlign());
         hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN, RichPopup.PopupHints.AlignTypes.ALIGN_END_BEFORE);
@@ -1014,6 +1021,7 @@ public class ManageCRSBean implements Serializable {
     
     public void onClickCopyHierarchySearch(ActionEvent actionEvent) {
         clickHierarchy();
+        logger.info("Opening the blank hierarchy popup, aligning to the right of copy risk definition popup.");
         RichPopup.PopupHints hints = new RichPopup.PopupHints();
         hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN_ID, this.getCopyRiskDefTable());
         hints.add(RichPopup.PopupHints.HintTypes.HINT_ALIGN, RichPopup.PopupHints.AlignTypes.ALIGN_END_AFTER);
@@ -1044,7 +1052,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public DnDAction dragDropListener(DropEvent dropEvent) {
-
+        logger.info("Performed drag and drop.");
         DCIteratorBinding riskDefIter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
         ViewObject riskDefVO = riskDefIter.getViewObject();
 
@@ -1063,8 +1071,10 @@ public class ManageCRSBean implements Serializable {
             dragTable.setRowKey(key);
             Object dataObj = dragTable.getRowData();
             if (dataObj instanceof HierarchyChildUIBean) {
+                logger.info("Dragged child hierarchy row. (second level tree table)");
                 HierarchyChildUIBean selRow = (HierarchyChildUIBean)dragTable.getRowData();
                 if(selRow.getLevelName().equals(new Long(0))){
+                    logger.info("Dragged parent hierarchy row in tree. Diallowed");
                     ADFUtils.showPopup(parentError);
                     dragTable.setRowKey(dragCurrentRowKey);
                     AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
@@ -1115,6 +1125,7 @@ public class ManageCRSBean implements Serializable {
                     riskDefVO.insertRow(riskDefRow);
                 }
             } else {
+                logger.info("Dragged hierarchy row from 1st table");
                 JUCtrlHierNodeBinding rowBinding = (JUCtrlHierNodeBinding)dragTable.getRowData();
                 dragRow = rowBinding.getRow();
                 dragNodeVO = dragRow.getStructureDef().getDefName();
@@ -1129,6 +1140,7 @@ public class ManageCRSBean implements Serializable {
                     if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
                         Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
                         if (rows.length > 0) {
+                            logger.info("Dragged another meddra row, disallowed");
                             ADFUtils.showPopup(meddraError);
                             dragTable.setRowKey(dragCurrentRowKey);
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
@@ -1215,6 +1227,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void processDeleteDialog(DialogEvent dialogEvent) {
+        logger.info("Showing delete confirmation popup.");
         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())){
             OperationBinding oper = ADFUtils.findOperation("deleteCrs");
             oper.execute();
@@ -1408,6 +1421,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public List<SelectItem> getFilterItems() {
+        logger.info("Getting list of values for Filter in hierarchy search.");
         if(filterItems == null){
             filterItems = new ArrayList<SelectItem>();
             SelectItem item1 = new SelectItem("MQ1", "SMQ 1");
@@ -1439,6 +1453,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public List<SelectItem> getMeddraItems() {
+        logger.info("Fetching list of values for MEDDRA LOV in hierarchy search");
         if(meddraItems == null){
             meddraItems = new ArrayList<SelectItem>();
             SelectItem item1 = new SelectItem("SOC", "SOC");
@@ -1454,6 +1469,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void dictionaryVC(ValueChangeEvent valueChangeEvent) {
+        logger.info("Refreshing Level LOV based on the dictionary selected");
         if(valueChangeEvent.getNewValue() != null && valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue()){
             if("NMATMED".equalsIgnoreCase((String)valueChangeEvent.getNewValue())){
                 setLevelItems(getMeddraItems());
@@ -1472,6 +1488,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void onCancelCrsRiskPopup(ActionEvent actionEvent) {
+        logger.info("Closing CrsRisk Popup, rolling back any unsaved changes.");
         DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
         ViewObject riskDefVO = iter.getViewObject();
         Row currRow = riskDefVO.getCurrentRow();
@@ -1488,6 +1505,7 @@ public class ManageCRSBean implements Serializable {
         OperationBinding oper1 = ADFUtils.findOperation("initRiskRelation");
         oper1.getParamsMap().put("crsId", crsId);
         oper1.getParamsMap().put("status", getBaseOrStaging());
+        logger.info("CrsId : "+crsId+" state: "+getBaseOrStaging());
         oper1.execute();
         if (oper1.getErrors().size() > 0) 
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
@@ -1518,6 +1536,7 @@ public class ManageCRSBean implements Serializable {
     public void executeHierarchyChild(ActionEvent actionEvent) {
         DCIteratorBinding childIter = ADFUtils.findIterator("HierarchyChildVOIterator");
         ViewObject childVO = childIter.getViewObject();
+        logger.info("Executing hierachy child for selected content ID");
         childVO.setNamedWhereClauseParam("bContentId", ADFUtils.evaluateEL("#{row.ContentId}"));
         childVO.executeQuery();
         if(childVO.getEstimatedRowCount() > 0){
@@ -1561,6 +1580,7 @@ public class ManageCRSBean implements Serializable {
     
     public void searchCrs(ActionEvent actionEvent) {
         String stoi = getSafetyTopicOfInterest();
+        logger.info("Searching exisitng current safety topic of interests with entered value : "+stoi);
         DCIteratorBinding iter = ADFUtils.findIterator("CopyCrsRiskVOIterator");
         ViewObject crsSearchVO = iter.getViewObject();
         crsSearchVO.setWhereClause("SAFETY_TOPIC_OF_INTEREST like '"+stoi+"'");
@@ -1596,7 +1616,8 @@ public class ManageCRSBean implements Serializable {
 //                dbList.add(db.trim());
 //            }
 //        }
-//        setSelDatabases(dbList);
+//        setSelDatabases(dbList);       
+        logger.info("Copying crsRiskRelations from crsId : "+crsId+" riskID : "+riskId);
         String riskPurposeList = (String)ADFUtils.evaluateEL("#{copyRow.RiskPurposeList}");
         List<String> rpList = new ArrayList<String>();
         if(riskPurposeList != null){
@@ -1609,14 +1630,17 @@ public class ManageCRSBean implements Serializable {
             }
         }
         setSelRiskPurposes(rpList);
+        logger.info("Selected risk purposes "+rpList);
 //        if(copyDBListBinding != null)
 //            ResetUtils.reset(copyDBListBinding);
         if(copyRPListBinding != null)
             ResetUtils.reset(copyRPListBinding);
         Map params = new HashMap<String, Object>();
+        logger.info("Copying from source risk Id : "+riskId+ " destination crsId "+crsId);
         params.put("srcRiskId", riskId);
         params.put("destCrsId", crsId);
         try {
+            logger.info("Calling model method copyCurrentRiskRelation");
             ADFUtils.executeAction("copyCurrentRiskRelation", params);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1654,6 +1678,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void onClickYes(ActionEvent actionEvent) {
+        logger.info("On click yes on the pending changes popup, Rolling back");
         OperationBinding oper = ADFUtils.findOperation("Rollback");
         oper.execute();
         if (oper.getErrors().size() > 0) 
@@ -1663,6 +1688,7 @@ public class ManageCRSBean implements Serializable {
     }
     
     public void onClickCopy(ActionEvent actionEvent) {
+        logger.info("Opening the blank copy Risk Defintions popup");
         setSafetyTopicOfInterest(null);
         if(stoiBinding != null)
             ResetUtils.reset(stoiBinding);
@@ -1679,6 +1705,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void deleteCopiedRiskDefs(ActionEvent actionEvent) {
+        logger.info("Delete selected risk definitions in copy popup.");
         RowKeySet rowKeySet = (RowKeySet)copyRiskDefTable.getSelectedRowKeys();
         CollectionModel cm = (CollectionModel)copyRiskDefTable.getValue();
         for (Object facesTreeRowKey : rowKeySet) {
@@ -1809,6 +1836,7 @@ public class ManageCRSBean implements Serializable {
     public void refreshRepository(ActionEvent actionEvent) {
         Map params = new HashMap<String, Object>();
         params.put("crsId", ADFUtils.getPageFlowScopeValue("crsId"));
+        logger.info("Executing refreshRepository function call for crsID :: "+ADFUtils.getPageFlowScopeValue("crsId"));
         try {
             ADFUtils.executeAction("refreshRepository", params);
             setRepoRefreshed(Boolean.TRUE);
@@ -2153,6 +2181,7 @@ public class ManageCRSBean implements Serializable {
     public void refreshRepoInPopup(ActionEvent actionEvent) {
         Map params = new HashMap<String, Object>();
         params.put("crsId", ADFUtils.getPageFlowScopeValue("crsId"));
+        logger.info("Executing refreshRepository function call for crsId :: "+ADFUtils.getPageFlowScopeValue("crsId"));
         try {
             ADFUtils.executeAction("refreshRepository", params);
             setRepoRefreshed(Boolean.TRUE);
@@ -2231,6 +2260,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void onOkFilter(ActionEvent actionEvent) {
+        logger.info("Performing advanced filter on the table");
         DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskVOIterator");
         ViewObject riskVO = iter.getViewObject();
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
@@ -2250,12 +2280,13 @@ public class ManageCRSBean implements Serializable {
     }
     
     public void initManageCrs(){
-       
+        logger.info("Initalizing CRS taskflow, fetching the dictionary version from session");
         String dictVersion = (String)ADFUtils.getSessionScopeValue("dictVersion");
         if(dictVersion == null){
             OperationBinding oper = ADFUtils.findOperation("fetchDictionaryVersion");
             dictVersion = (String)oper.execute();  
             ADFUtils.setSessionScopeValue("dictVersion", dictVersion);
+            logger.info("Dict Version is :: "+dictVersion);
         }
     }
 
@@ -2268,6 +2299,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void clearFilters(ActionEvent actionEvent) {
+        logger.info("Clearing advanced filters");
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
         OperationBinding oper = ADFUtils.findOperation("initRiskRelation");
         oper.getParamsMap().put("crsId", crsId);
