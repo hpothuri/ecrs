@@ -68,7 +68,7 @@
                crs_risk_relations  r
           WHERE c.crs_id = r.crs_id
           GROUP BY c.crs_id, c.crs_name, r.safety_topic_of_interest) m
-    ORDER BY m.crs_name, m.safety_topic_of_interest]]></SQLQuery>
+    ORDER BY m.safety_topic_of_interest ,m.crs_name]]></SQLQuery>
   <ViewAttribute
     Name="CrsName"
     IsUpdateable="false"
