@@ -200,7 +200,8 @@
                                                               value="#{bindings.ReviewApproveRequiredFlag1.inputValue}"
                                                               autoSubmit="true"
                                                               readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                                              disabled="#{bindings.StateId.inputValue ne 1 || bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"/>
+                                                              disabled="#{bindings.StateId.inputValue ne 1 || bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"
+                                                              partialTriggers="pgl2"/>
                                 </af:panelFormLayout>
                                 <af:panelGroupLayout id="pgl7"
                                                      layout="horizontal"
