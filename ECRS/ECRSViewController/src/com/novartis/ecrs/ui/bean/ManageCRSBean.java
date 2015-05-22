@@ -324,7 +324,7 @@ public class ManageCRSBean implements Serializable {
      * @param actionEvent
      */
     public void onClickSearch(ActionEvent actionEvent) {
-        // TODO get user name
+        logger.info("--Start-ManageCRSBean:onClickSearch--");
         //set release staus to binding
         String releaseStatus = "";
         if ("anonymous".equalsIgnoreCase(userName))
@@ -373,13 +373,14 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
                                       FacesMessage.SEVERITY_ERROR);
         //TODO log the error 
+        logger.info("--End-ManageCRSBean:onClickSearch--");
     }
 
     /**
      * Invokes execute empty row set on crs content vo.
      */
     public void invokeEmptyRowSetOnContentVO() {
-        // Add event code here...
+        logger.info("--Start-ManageCRSBean:invokeEmptyRowSetOnContentVO--");
         DCBindingContainer bc =
             ADFUtils.findBindingContainerByName(ViewConstants.PAGE_DEF_SEARCH);
         DCIteratorBinding iter = bc.findIteratorBinding("CrsContentVOIterator");
@@ -388,6 +389,7 @@ public class ManageCRSBean implements Serializable {
         DCIteratorBinding baseIter = bc.findIteratorBinding("CrsContentBaseVOIterator");
         if (baseIter.getViewObject() != null)
             baseIter.getViewObject().executeEmptyRowSet();
+        logger.info("--End-ManageCRSBean:invokeEmptyRowSetOnContentVO--");
     }
 
     /**
@@ -395,7 +397,7 @@ public class ManageCRSBean implements Serializable {
      * @param selectionEvent
      */
     public void searchTableSelectionListener(SelectionEvent selectionEvent) {
-        // Add event code here...
+        logger.info("--Start-ManageCRSBean:searchTableSelectionListener--");
         ADFUtils.invokeEL("#{bindings.CrsContentVO.collectionModel.makeCurrent}", new Class[] {SelectionEvent.class},
                                  new Object[] { selectionEvent });
         // get the selected row , by this you can get any attribute of that row
@@ -417,6 +419,7 @@ public class ManageCRSBean implements Serializable {
             setNonCompoundSelected(Boolean.TRUE);
         } else
             setNonCompoundSelected(Boolean.FALSE);
+        logger.info("--End-ManageCRSBean:searchTableSelectionListener--");
     }
 
     /**
@@ -514,7 +517,7 @@ public class ManageCRSBean implements Serializable {
      * @param vce
      */
     public void onCompCodeSelect(ValueChangeEvent vce) {
-        // Add event code here...
+        logger.info("Start-ManageCRSBean:onCompCodeSelect()");
         if (vce != null) {
             vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
             setNonCompoundSelected(Boolean.FALSE);
@@ -533,6 +536,7 @@ public class ManageCRSBean implements Serializable {
                 ADFUtils.setEL("#{bindings.MedicalLeadName.inputValue}", null);
                 setSelDesigneeList(null);
                 setNonCompoundSelected(Boolean.TRUE);
+                logger.info("--------------Selected non compound value----------");
             }
             String crsCompCode = (String)ADFUtils.evaluateEL("#{bindings.CrsCompoundCode.inputValue}");
             String compCode = (String)ADFUtils.evaluateEL("#{bindings.CompoundCode.inputValue}");
@@ -542,6 +546,7 @@ public class ManageCRSBean implements Serializable {
             //ResetUtils.reset(vce.getComponent().getParent());
             ADFUtils.addPartialTarget(vce.getComponent().getParent());
         }
+        logger.info("End-ManageCRSBean:onCompCodeSelect()");
     }
 
     /**
@@ -565,9 +570,12 @@ public class ManageCRSBean implements Serializable {
         if (ADFUtils.evaluateEL("#{sessionBean.userRole}") != null) {
             loggedInUserRole =
                     (String)ADFUtils.evaluateEL("#{sessionBean.userRole}");
+            logger.info("loggedInUser role----------"+loggedInUserRole);
         }
         if (ADFUtils.evaluateEL("#{securityContext.userName}") != null) {
             setUserName(ADFUtils.evaluateEL("#{securityContext.userName}").toString().toUpperCase());
+            logger.info("user name from security context-------" +
+                        ADFUtils.evaluateEL("#{securityContext.userName}"));
         }
     }
 
@@ -758,18 +766,30 @@ public class ManageCRSBean implements Serializable {
         return userName;
     }
 
+    /**
+     * @param selDatabases
+     */
     public void setSelDatabases(List<String> selDatabases) {
         this.selDatabases = selDatabases;
     }
 
+    /**
+     * @return
+     */
     public List<String> getSelDatabases() {
         return selDatabases;
     }
 
+    /**
+     * @param databaseList
+     */
     public void setDatabaseList(List<SelectItem> databaseList) {
         this.databaseList = databaseList;
     }
 
+    /**
+     * @return
+     */
     public List<SelectItem> getDatabaseList() {
         if(databaseList == null){
             databaseList = new ArrayList<SelectItem>();
@@ -782,45 +802,70 @@ public class ManageCRSBean implements Serializable {
                     databaseList.add(item);
                 }
             }
+            logger.info("databaseList -->"+databaseList);
         }
         return databaseList;
     }
 
+    /**
+     * @param selRiskPurposes
+     */
     public void setSelRiskPurposes(List<String> selRiskPurposes) {
         this.selRiskPurposes = selRiskPurposes;
     }
 
+    /**
+     * @return
+     */
     public List<String> getSelRiskPurposes() {
         return selRiskPurposes;
     }
 
+    /**
+     * @param reviewSubmitPopup
+     */
     public void setReviewSubmitPopup(RichPopup reviewSubmitPopup) {
         this.reviewSubmitPopup = reviewSubmitPopup;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getReviewSubmitPopup() {
         return reviewSubmitPopup;
     }
 
+    /**
+     * @param crsStateSOC
+     */
     public void setCrsStateSOC(RichSelectOneChoice crsStateSOC) {
         this.crsStateSOC = crsStateSOC;
     }
 
+    /**
+     * @return
+     */
     public RichSelectOneChoice getCrsStateSOC() {
         return crsStateSOC;
     }
 
+    /**
+     * @param crsStatusSOC
+     */
     public void setCrsStatusSOC(RichSelectOneChoice crsStatusSOC) {
         this.crsStatusSOC = crsStatusSOC;
     }
 
+    /**
+     * @return
+     */
     public RichSelectOneChoice getCrsStatusSOC() {
         return crsStatusSOC;
     }
     
     /** DRAFT to REVIEW */
      public void processReviewDialog(DialogEvent dialogEvent) {
-         // Add event code here...
+         logger.info("--------processing Review action---------");
          if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
             processStateChange(ModelConstants.STATE_REVIEW, getReviewSubmitPopup());
 
@@ -828,28 +873,28 @@ public class ManageCRSBean implements Serializable {
        
     /** REVIEW to REVIEWED */
      public void processReviewedDialog(DialogEvent dialogEvent) {
-         // Add event code here...
+         logger.info("--------processing Reviewed action---------");
          if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
              processStateChange(ModelConstants.STATE_REVIEWED, getCrsReviewedPopup());    
      }
        
     /** REVIEWED to TASL APPROVE */
      public void processTaslReviewSubmit(DialogEvent dialogEvent) {
-         // Add event code here...
+         logger.info("--------processing TaslReviewSubmit action---------");
          if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
              processStateChange(ModelConstants.STATE_TASLAPPROVE, getSubmitApprovalPopup());
      }
        
     /** TASL APPROVE to ML APPROVE */ 
      public void processTaslApprove(DialogEvent dialogEvent) {
-         // Add event code here...
+         logger.info("--------processing TaslApprove action---------");
          if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) 
              processStateChange(ModelConstants.STATE_MLAPPROVE, getCrsApprovePopup());
      }
       
     /** TASL APPROVE to DRAFT */ 
      public void processTaslReject(DialogEvent dialogEvent) {
-         // Add event code here...
+        logger.info("--------processing TaslReject action---------");
         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
             String taslComments = (String)ADFUtils.evaluateEL("#{bindings.TaslRejectComment.inputValue}");
             if (taslComments==null || (taslComments != null && "".equals(taslComments.trim()))){
@@ -865,14 +910,14 @@ public class ManageCRSBean implements Serializable {
    
     /** ML APPROVE to APPROVED */ 
      public void processMLApprove(DialogEvent dialogEvent) {
-         // Add event code here...
+         logger.info("--------processing MLApprove action---------");
          if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
              processStateChange(ModelConstants.STATE_APPROVED, getCrsApprovePopup());
      }
        
     /** ML APPROVE to DRAFT */ 
      public void processMLReject(DialogEvent dialogEvent) {
-         // Add event code here...
+         logger.info("--------processing MLReject action---------");
         if (DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
             String mlComments = (String)ADFUtils.evaluateEL("#{bindings.MedicalLeadRejectComment.inputValue}");
             if (mlComments == null || (mlComments != null && "".equals(mlComments.trim()))) {
@@ -888,14 +933,14 @@ public class ManageCRSBean implements Serializable {
        
      /** BSL DEMOTE - any state to DRAFT */
     public void processDemoteToDraftDialog(DialogEvent dialogEvent) {
-        // Add event code here...
+         logger.info("--------processing DemoteToDraft action---------");
          if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome()))
              processStateChange(ModelConstants.STATE_DRAFT, getCrsDemoteDraftPopupBinding());
     }
 
     /** APPROVED to PUBLISHED */ 
      public void processPublishDialog(DialogEvent dialogEvent) {
-         // Add event code here...
+         logger.info("--------processing Publish action---------");
         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
             OperationBinding op = ADFUtils.findOperation("activateCrs");
             Map params = op.getParamsMap();
@@ -920,7 +965,7 @@ public class ManageCRSBean implements Serializable {
      }
     
     private void processStateChange(Integer newState, RichPopup infoPopup) {
-
+        logger.info("--------processing StateChange ---------");
         ADFUtils.setEL("#{bindings.StateId.inputValue}", newState);
 
         OperationBinding oper = ADFUtils.findOperation("Commit");
@@ -934,66 +979,114 @@ public class ManageCRSBean implements Serializable {
         }
     }
 
+    /**
+     * @param crsApprovePopup
+     */
     public void setCrsApprovePopup(RichPopup crsApprovePopup) {
         this.crsApprovePopup = crsApprovePopup;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getCrsApprovePopup() {
         return crsApprovePopup;
     }
 
+    /**
+     * @param workflowPanelBox
+     */
     public void setWorkflowPanelBox(RichPanelBox workflowPanelBox) {
         this.workflowPanelBox = workflowPanelBox;
     }
 
+    /**
+     * @return
+     */
     public RichPanelBox getWorkflowPanelBox() {
         return workflowPanelBox;
     }
 
+    /**
+     * @param crsRejectPopup
+     */
     public void setCrsRejectPopup(RichPopup crsRejectPopup) {
         this.crsRejectPopup = crsRejectPopup;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getCrsRejectPopup() {
         return crsRejectPopup;
     }
 
+    /**
+     * @param taslCommentsInputText
+     */
     public void setTaslCommentsInputText(RichInputText taslCommentsInputText) {
         this.taslCommentsInputText = taslCommentsInputText;
     }
 
+    /**
+     * @return
+     */
     public RichInputText getTaslCommentsInputText() {
         return taslCommentsInputText;
     }
 
+    /**
+     * @param mlCommentsInputText
+     */
     public void setMlCommentsInputText(RichInputText mlCommentsInputText) {
         this.mlCommentsInputText = mlCommentsInputText;
     }
 
+    /**
+     * @return
+     */
     public RichInputText getMlCommentsInputText() {
         return mlCommentsInputText;
     }
 
+    /**
+     * @param dictionary
+     */
     public void setDictionary(String dictionary) {
         this.dictionary = dictionary;
     }
 
+    /**
+     * @return
+     */
     public String getDictionary() {
         return dictionary;
     }
 
+    /**
+     * @param level
+     */
     public void setLevel(String level) {
         this.level = level;
     }
 
+    /**
+     * @return
+     */
     public String getLevel() {
         return level;
     }
 
+    /**
+     * @param term
+     */
     public void setTerm(String term) {
         this.term = term;
     }
 
+    /**
+     * @return
+     */
     public String getTerm() {
         return term;
     }
@@ -1029,6 +1122,7 @@ public class ManageCRSBean implements Serializable {
     }
     
     private void clickHierarchy(){
+        logger.info("-------clickHierarchy ---------");
         DCIteratorBinding iter = ADFUtils.findIterator("HierarchySearchVOIterator");
         ViewObject hierVO = iter.getViewObject();
         hierVO.executeEmptyRowSet();
@@ -1043,10 +1137,16 @@ public class ManageCRSBean implements Serializable {
             childTreeTable.setVisible(false);
     }
 
+    /**
+     * @param hierPopup
+     */
     public void setHierPopup(RichPopup hierPopup) {
         this.hierPopup = hierPopup;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getHierPopup() {
         return hierPopup;
     }
@@ -1187,12 +1287,17 @@ public class ManageCRSBean implements Serializable {
     }
 
 
+    /**
+     * @param crsFieldsUpdatable
+     */
     public void setCrsFieldsUpdatable(boolean crsFieldsUpdatable) {
         this.crsFieldsUpdatable = crsFieldsUpdatable;
     }
 
+    /**
+     * @return
+     */
     public boolean isCrsFieldsUpdatable() {
-        
         boolean isCrsFieldsUpdatable = false;
         Integer crsState = (Integer)ADFUtils.evaluateEL("#{bindings.StateId.inputValue}");
         String crsStatus = (String)ADFUtils.evaluateEL("#{bindings.ReleaseStatusFlag.inputValue}");
@@ -1205,7 +1310,7 @@ public class ManageCRSBean implements Serializable {
             
         //  BSL LOGIN
         if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_BSL)) {
-
+            logger.info("--Entering : isCrsFieldsUpdatable: BSL Loggedin block-------------");
             if (ModelConstants.STATUS_CURRENT.equals(crsStatus)) {
 
 
@@ -1217,12 +1322,14 @@ public class ManageCRSBean implements Serializable {
                     ModelConstants.STATE_PUBLISHED.equals(crsState) )
                     isCrsFieldsUpdatable = true;                                
             }
+            logger.info("--End : isCrsFieldsUpdatable:  BSL Loggedin block-------------");
         }
         
         // ADMIN LOGIN - admin can update any CRS in any state
        else if (ADFContext.getCurrent().getSecurityContext().isUserInRole(ModelConstants.ROLE_CRSADMIN))
             isCrsFieldsUpdatable = true;
         
+        logger.info("--isCrsFieldsUpdatable --->"+isCrsFieldsUpdatable);
         return isCrsFieldsUpdatable;
     }
 
@@ -1245,43 +1352,70 @@ public class ManageCRSBean implements Serializable {
     }
 
 
+    /**
+     * @param crsRetirePopup
+     */
     public void setCrsRetirePopup(RichPopup crsRetirePopup) {
         this.crsRetirePopup = crsRetirePopup;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getCrsRetirePopup() {
         return crsRetirePopup;
     }
 
+    /**
+     * @param crsReactivatePopup
+     */
     public void setCrsReactivatePopup(RichPopup crsReactivatePopup) {
         this.crsReactivatePopup = crsReactivatePopup;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getCrsReactivatePopup() {
         return crsReactivatePopup;
     }
 
+    /**
+     * @param crsReviewedPopup
+     */
     public void setCrsReviewedPopup(RichPopup crsReviewedPopup) {
         this.crsReviewedPopup = crsReviewedPopup;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getCrsReviewedPopup() {
         return crsReviewedPopup;
     }
 
+    /**
+     * @param meddraError
+     */
     public void setMeddraError(RichPopup meddraError) {
         this.meddraError = meddraError;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getMeddraError() {
         return meddraError;
     }
 
     /**
+     * This method is used to frame the crs name with the
+     * selected compound code and indication
      * @param vce
      */
     public void onChangeIndication(ValueChangeEvent vce) {
         if (vce != null) {
+            logger.info("-- onChangeIndication : append commpound and indication--->");
             vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
             if (vce.getNewValue() != null &&
                 !vce.getNewValue().equals(vce.getOldValue())) {
@@ -1308,7 +1442,7 @@ public class ManageCRSBean implements Serializable {
     public void exportRiskDefinitions(FacesContext facesContext,
                                       OutputStream outputStream) throws IOException {
         // Add event code here...
-        //  _logger.info("Start of CRSReportsBean:onAdminReportItmes()");
+        logger.info("Start of CRSReportsBean:onAdminReportItmes()");
         Workbook workbook = null;
         ExcelExportUtils excUtils = new ExcelExportUtils();
         InputStream excelInputStream = excUtils.getExcelInpStream();
@@ -1379,47 +1513,72 @@ public class ManageCRSBean implements Serializable {
             //ExcelExportUtils.writeImageTOExcel(sheet,imageInputStream);
             
         } catch (InvalidFormatException invalidFormatException) {
-            invalidFormatException.printStackTrace();
+            logger.error("Exception occured in onAdminReportItmes()"+invalidFormatException);
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            logger.error("Exception occured in onAdminReportItmes()"+ioe);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Exception occured in onAdminReportItmes()"+e);
         } finally {
             workbook.write(outputStream);
             excelInputStream.close();
-            outputStream.close();
+            outputStream.close(); 
         }
+        logger.info("End of CRSReportsBean:onAdminReportItmes()");
     }
 
-    
+
+    /**
+     * @param delConfPopupBinding
+     */
     public void setDelConfPopupBinding(RichPopup delConfPopupBinding) {
         this.delConfPopupBinding = delConfPopupBinding;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getDelConfPopupBinding() {
         return delConfPopupBinding;
     }
 
+    /**
+     * @param publishPopupBinding
+     */
     public void setCrsPublishPopupBinding(RichPopup publishPopupBinding) {
         this.crsPublishPopupBinding = publishPopupBinding;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getCrsPublishPopupBinding() {
         return crsPublishPopupBinding;
     }
 
+    /**
+     * @param crsDemoteDraftPopupBinding
+     */
     public void setCrsDemoteDraftPopupBinding(RichPopup crsDemoteDraftPopupBinding) {
         this.crsDemoteDraftPopupBinding = crsDemoteDraftPopupBinding;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getCrsDemoteDraftPopupBinding() {
         return crsDemoteDraftPopupBinding;
     }
 
+    /**
+     * @param filterItems
+     */
     public void setFilterItems(List<SelectItem> filterItems) {
         this.filterItems = filterItems;
     }
 
+    /**
+     * @return
+     */
     public List<SelectItem> getFilterItems() {
         logger.info("Getting list of values for Filter in hierarchy search.");
         if(filterItems == null){
@@ -1448,10 +1607,16 @@ public class ManageCRSBean implements Serializable {
         return filterItems;
     }
 
+    /**
+     * @param meddraItems
+     */
     public void setMeddraItems(List<SelectItem> meddraItems) {
         this.meddraItems = meddraItems;
     }
 
+    /**
+     * @return
+     */
     public List<SelectItem> getMeddraItems() {
         logger.info("Fetching list of values for MEDDRA LOV in hierarchy search");
         if(meddraItems == null){
@@ -1479,14 +1644,23 @@ public class ManageCRSBean implements Serializable {
         }
     }
 
+    /**
+     * @param levelItems
+     */
     public void setLevelItems(List<SelectItem> levelItems) {
         this.levelItems = levelItems;
     }
 
+    /**
+     * @return
+     */
     public List<SelectItem> getLevelItems() {
         return levelItems;
     }
 
+    /**
+     * @param actionEvent
+     */
     public void onCancelCrsRiskPopup(ActionEvent actionEvent) {
         logger.info("Closing CrsRisk Popup, rolling back any unsaved changes.");
         DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
@@ -1517,22 +1691,37 @@ public class ManageCRSBean implements Serializable {
             copyPopup.hide();
     }
 
+    /**
+     * @param contentId
+     */
     public void setContentId(String contentId) {
         this.contentId = contentId;
     }
 
+    /**
+     * @return
+     */
     public String getContentId() {
         return contentId;
     }
 
+    /**
+     * @param childScope
+     */
     public void setChildScope(String childScope) {
         this.childScope = childScope;
     }
 
+    /**
+     * @return
+     */
     public String getChildScope() {
         return childScope;
     }
 
+    /**
+     * @param actionEvent
+     */
     public void executeHierarchyChild(ActionEvent actionEvent) {
         DCIteratorBinding childIter = ADFUtils.findIterator("HierarchyChildVOIterator");
         ViewObject childVO = childIter.getViewObject();
@@ -1562,18 +1751,30 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.addPartialTarget(getChildTreeTable());
     }
 
+    /**
+     * @param childTreeTable
+     */
     public void setChildTreeTable(RichTreeTable childTreeTable) {
         this.childTreeTable = childTreeTable;
     }
 
+    /**
+     * @return
+     */
     public RichTreeTable getChildTreeTable() {
         return childTreeTable;
     }
 
+    /**
+     * @param parentError
+     */
     public void setParentError(RichPopup parentError) {
         this.parentError = parentError;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getParentError() {
         return parentError;
     }
@@ -1588,14 +1789,23 @@ public class ManageCRSBean implements Serializable {
         crsSearchVO.executeQuery();
     }
 
+    /**
+     * @param safetyTopicOfInterest
+     */
     public void setSafetyTopicOfInterest(String safetyTopicOfInterest) {
         this.safetyTopicOfInterest = safetyTopicOfInterest;
     }
 
+    /**
+     * @return
+     */
     public String getSafetyTopicOfInterest() {
         return safetyTopicOfInterest;
     }
-    
+
+    /**
+     * @param actionEvent
+     */
     public void copyCrsRiskRelation(ActionEvent actionEvent) {
     
 //        DCBindingContainer dcbind =(DCBindingContainer)getBindings();
@@ -1643,40 +1853,64 @@ public class ManageCRSBean implements Serializable {
             logger.info("Calling model method copyCurrentRiskRelation");
             ADFUtils.executeAction("copyCurrentRiskRelation", params);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Exception occured in copyCrsRiskRelation()"+e);
         }
         copyPanel.setVisible(true);
         ADFUtils.addPartialTarget(copyPanel);
     }
-    
+
+    /**
+     * @return
+     */
     public BindingContainer getBindings() {
         return BindingContext.getCurrent().getCurrentBindingsEntry();
     }
 
+    /**
+     * @param copyPopup
+     */
     public void setCopyPopup(RichPopup copyPopup) {
         this.copyPopup = copyPopup;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getCopyPopup() {
         return copyPopup;
     }
-    
+
+    /**
+     * @param copyPanel
+     */
     public void setCopyPanel(RichPanelGroupLayout copyPanel) {
         this.copyPanel = copyPanel;
     }
 
+    /**
+     * @return
+     */
     public RichPanelGroupLayout getCopyPanel() {
         return copyPanel;
     }
 
+    /**
+     * @param pendingPopup
+     */
     public void setPendingPopup(RichPopup pendingPopup) {
         this.pendingPopup = pendingPopup;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getPendingPopup() {
         return pendingPopup;
     }
 
+    /**
+     * @param actionEvent
+     */
     public void onClickYes(ActionEvent actionEvent) {
         logger.info("On click yes on the pending changes popup, Rolling back");
         OperationBinding oper = ADFUtils.findOperation("Rollback");
@@ -1686,7 +1920,10 @@ public class ManageCRSBean implements Serializable {
          else
             copyCrsRiskRelation(actionEvent);
     }
-    
+
+    /**
+     * @param actionEvent
+     */
     public void onClickCopy(ActionEvent actionEvent) {
         logger.info("Opening the blank copy Risk Defintions popup");
         setSafetyTopicOfInterest(null);
@@ -1704,6 +1941,9 @@ public class ManageCRSBean implements Serializable {
             copySuccessMessage.setVisible(Boolean.FALSE);
     }
 
+    /**
+     * @param actionEvent
+     */
     public void deleteCopiedRiskDefs(ActionEvent actionEvent) {
         logger.info("Delete selected risk definitions in copy popup.");
         RowKeySet rowKeySet = (RowKeySet)copyRiskDefTable.getSelectedRowKeys();
@@ -1771,32 +2011,50 @@ public class ManageCRSBean implements Serializable {
         return hiddenPopupAlign;
     }
 
+    /**
+     * @param stoiBinding
+     */
     public void setStoiBinding(RichInputText stoiBinding) {
         this.stoiBinding = stoiBinding;
     }
 
+    /**
+     * @return
+     */
     public RichInputText getStoiBinding() {
         return stoiBinding;
     }
 
+    /**
+     * @param copyDBListBinding
+     */
     public void setCopyDBListBinding(RichSelectManyChoice copyDBListBinding) {
         this.copyDBListBinding = copyDBListBinding;
     }
 
+    /**
+     * @return
+     */
     public RichSelectManyChoice getCopyDBListBinding() {
         return copyDBListBinding;
     }
 
+    /**
+     * @param copyRPListBinding
+     */
     public void setCopyRPListBinding(RichSelectManyChoice copyRPListBinding) {
         this.copyRPListBinding = copyRPListBinding;
     }
 
+    /**
+     * @return
+     */
     public RichSelectManyChoice getCopyRPListBinding() {
         return copyRPListBinding;
     }
 
     /**
-     * @param searchFacetBinding
+     * @param searchSwitherBinding
      */
     public void setSearchSwitherBinding(UIXSwitcher searchSwitherBinding) {
         this.searchSwitherBinding = searchSwitherBinding;
@@ -1813,7 +2071,7 @@ public class ManageCRSBean implements Serializable {
      * @param selectionEvent
      */
     public void baseContentVOSelectionListener(SelectionEvent selectionEvent) {
-        // Add event code here...
+        logger.info("Start- ManageCRSBean:baseContentVOSelectionListener--");
         ADFUtils.invokeEL("#{bindings.CrsContentBaseVO.collectionModel.makeCurrent}", new Class[] {SelectionEvent.class},
                                  new Object[] { selectionEvent });
         // get the selected row , by this you can get any attribute of that row
@@ -1831,6 +2089,7 @@ public class ManageCRSBean implements Serializable {
             }
             setSelDesigneeList(designeeList);
         }
+        logger.info("End- ManageCRSBean:baseContentVOSelectionListener--");
     }
 
     public void refreshRepository(ActionEvent actionEvent) {
@@ -1846,15 +2105,24 @@ public class ManageCRSBean implements Serializable {
         } 
     }
 
+    /**
+     * @param repoRefreshed
+     */
     public void setRepoRefreshed(Boolean repoRefreshed) {
         this.repoRefreshed = repoRefreshed;
     }
 
+    /**
+     * @return
+     */
     public Boolean getRepoRefreshed() {
         return repoRefreshed;
     }
 
 
+    /**
+     * @return
+     */
     public String initializeCreateUpdateCRS() {
         // chk if there exists a CRS in staging table with the same as selected CRS in base table
         if (!"anonymous".equals(userName) &&
@@ -1867,26 +2135,44 @@ public class ManageCRSBean implements Serializable {
             return "createUpdateCRS";
     }
 
+    /**
+     * @param baseOrStaging
+     */
     public void setBaseOrStaging(String baseOrStaging) {
         this.baseOrStaging = baseOrStaging;
     }
 
+    /**
+     * @return
+     */
     public String getBaseOrStaging() {
         return baseOrStaging;
     }
 
+    /**
+     * @param hierChildTreeModel
+     */
     public void setHierChildTreeModel(ChildPropertyTreeModel hierChildTreeModel) {
         this.hierChildTreeModel = hierChildTreeModel;
     }
 
+    /**
+     * @return
+     */
     public ChildPropertyTreeModel getHierChildTreeModel() {
         return hierChildTreeModel;
     }
 
+    /**
+     * @param hierChildList
+     */
     public void setHierChildList(List<HierarchyChildUIBean> hierChildList) {
         this.hierChildList = hierChildList;
     }
 
+    /**
+     * @return
+     */
     public List<HierarchyChildUIBean> getHierChildList() {
         return hierChildList;
     }
@@ -1923,10 +2209,16 @@ public class ManageCRSBean implements Serializable {
         return searchBaseTableBinding;
     }
 
+    /**
+     * @param reasonChangePopup
+     */
     public void setReasonChangePopup(RichDialog reasonChangePopup) {
         this.reasonChangePopup = reasonChangePopup;
     }
 
+    /**
+     * @return
+     */
     public RichDialog getReasonChangePopup() {
         return reasonChangePopup;
     }
@@ -1965,6 +2257,7 @@ public class ManageCRSBean implements Serializable {
     public void retireConfirmDialogListener(DialogEvent dialogEvent) {
         // Add event code here...
         if (DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
+            logger.info("Start- ManageCRSBean:retireConfirmDialogListener--");
             CrsContentBaseVORowImpl row =
                 (CrsContentBaseVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentBaseVOIterator.currentRow}");
             if (row.getCrsId() != null) {
@@ -1974,6 +2267,7 @@ public class ManageCRSBean implements Serializable {
                 try {
                     String msg =
                         (String)ADFUtils.executeAction("retireCrs", params);
+                    logger.info("Model result message--"+msg);
                     if (!ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
                         ADFUtils.setEL("#{pageFlowScope.plsqlerror}", msg);
                         ADFUtils.showPopup(getErrorPLSqlPopup());
@@ -1986,6 +2280,7 @@ public class ManageCRSBean implements Serializable {
                     e.printStackTrace();
                 }
             }
+            logger.info("End- ManageCRSBean:retireConfirmDialogListener--");
         }
     }
 
@@ -1995,6 +2290,7 @@ public class ManageCRSBean implements Serializable {
     public void reactivateConfirmDialogListener(DialogEvent dialogEvent) {
         // Add event code here...
         if (DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
+            logger.info("Start- ManageCRSBean:reactivateConfirmDialogListener--");
             CrsContentBaseVORowImpl row =
                 (CrsContentBaseVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentBaseVOIterator.currentRow}");
             if (row.getCrsId() != null) {
@@ -2016,6 +2312,7 @@ public class ManageCRSBean implements Serializable {
                     e.printStackTrace();
                 }
             }
+            logger.info("End- ManageCRSBean:reactivateConfirmDialogListener--");
         }
     }
 
@@ -2076,7 +2373,7 @@ public class ManageCRSBean implements Serializable {
     }
 
     public String onClickModifyCrs() {
-        // Add event code here...
+        logger.info("Start- ManageCRSBean:onClickModifyCrs--");
         DCBindingContainer bc =
             ADFUtils.findBindingContainerByName(ViewConstants.PAGE_DEF_SEARCH);
         DCIteratorBinding iter =
@@ -2094,15 +2391,16 @@ public class ManageCRSBean implements Serializable {
                                                 "findByCrsFromStg");
             op.getParamsMap().put("pCrsId", crsId);
             isCrsFound = (Boolean)op.execute();
-
+            logger.info("isCrsFound --"+isCrsFound);
             if (op.getErrors() != null && op.getErrors().size() > 0) {
+                logger.info("Error occured from findByCrsFromStg,Navigating to search page --");
                 ADFUtils.showFacesMessage("An Internal Error occured,Please try again later.",
                                           FacesMessage.SEVERITY_ERROR);
                 setBaseOrStaging(ModelConstants.BASE_FACET);
                 ADFUtils.closeDialog(getModifyReasonChngPopup());
                 return "navToSearch";
             } else {
-
+                logger.info("If isCrsFound true Navigating to search page ---");
                 // if found - show faces message that the CRS already in update process
                 if (isCrsFound) {
                     ADFUtils.showFacesMessage("The selected CRS is already in update process",
@@ -2111,6 +2409,7 @@ public class ManageCRSBean implements Serializable {
                     ADFUtils.closeDialog(getModifyReasonChngPopup());
                     return "navToSearch";
                 } else {
+                    logger.info("If isCrsFound false invoke modifyCrs ---");
                     // if NOT found - call MODIDY_CRS
                     String resultMsg = null;
                     op =
@@ -2120,12 +2419,14 @@ public class ManageCRSBean implements Serializable {
                     resultMsg = (String)op.execute();
 
                     if (op.getErrors() != null && op.getErrors().size() > 0) {
+                        logger.info("If error from invoke modifyCrs,navigate to search page ---");
                         ADFUtils.setEL("#{pageFlowScope.plsqlerror}", resultMsg);
                         ADFUtils.showPopup(getErrorPLSqlPopup());
                         setBaseOrStaging(ModelConstants.BASE_FACET);
                         ADFUtils.closeDialog(getModifyReasonChngPopup());
                         return "navToSearch";
                     } else {
+                        logger.info("If succes from modifyCrs,set crsid to current row ---");
                         // if PL/SQL call return value is success - set current row of staging table to CRS ID
                         if (ModelConstants.PLSQL_CALL_SUCCESS.equals(resultMsg)) {
                             //set the staging table to current crs id
@@ -2162,6 +2463,7 @@ public class ManageCRSBean implements Serializable {
                 }
             }
         } else {
+            logger.info(" current row null ,navigating to search page ---");
             ADFUtils.showFacesMessage("Please select a row to update before navigating.",
                                       FacesMessage.SEVERITY_INFO);
             setBaseOrStaging(ModelConstants.BASE_FACET);
@@ -2172,13 +2474,20 @@ public class ManageCRSBean implements Serializable {
         //return "createUpdate";
     }
 
+    /**
+     * @return
+     */
     public String cancelModifyCrs() {
         // Add event code here...
         ADFUtils.closeDialog(getModifyReasonChngPopup());
         return "navToSearch";
     }
 
+    /**
+     * @param actionEvent
+     */
     public void refreshRepoInPopup(ActionEvent actionEvent) {
+        logger.info(" Start-ManageCRSBean :refreshRepoInPopup ---");
         Map params = new HashMap<String, Object>();
         params.put("crsId", ADFUtils.getPageFlowScopeValue("crsId"));
         logger.info("Executing refreshRepository function call for crsId :: "+ADFUtils.getPageFlowScopeValue("crsId"));
@@ -2189,76 +2498,131 @@ public class ManageCRSBean implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        logger.info(" End-ManageCRSBean :refreshRepoInPopup ---");
     }
 
+    /**
+     * @return
+     */
     public boolean isCrsFieldsUpdatable1() {
         return crsFieldsUpdatable;
     }
 
+    /**
+     * @param filterBy1
+     */
     public void setFilterBy1(String filterBy1) {
         this.filterBy1 = filterBy1;
     }
 
+    /**
+     * @return
+     */
     public String getFilterBy1() {
         return filterBy1;
     }
 
+    /**
+     * @param filterBy2
+     */
     public void setFilterBy2(String filterBy2) {
         this.filterBy2 = filterBy2;
     }
 
+    /**
+     * @return
+     */
     public String getFilterBy2() {
         return filterBy2;
     }
 
+    /**
+     * @param filterBy3
+     */
     public void setFilterBy3(String filterBy3) {
         this.filterBy3 = filterBy3;
     }
 
+    /**
+     * @return
+     */
     public String getFilterBy3() {
         return filterBy3;
     }
 
+    /**
+     * @param filterValue1
+     */
     public void setFilterValue1(String filterValue1) {
         this.filterValue1 = filterValue1;
     }
 
+    /**
+     * @return
+     */
     public String getFilterValue1() {
         return filterValue1;
     }
 
+    /**
+     * @param filterValue2
+     */
     public void setFilterValue2(String filterValue2) {
         this.filterValue2 = filterValue2;
     }
 
+    /**
+     * @return
+     */
     public String getFilterValue2() {
         return filterValue2;
     }
 
+    /**
+     * @param filterValue3
+     */
     public void setFilterValue3(String filterValue3) {
         this.filterValue3 = filterValue3;
     }
 
+    /**
+     * @return
+     */
     public String getFilterValue3() {
         return filterValue3;
     }
 
+    /**
+     * @param filterCri1
+     */
     public void setFilterCri1(String filterCri1) {
         this.filterCri1 = filterCri1;
     }
 
+    /**
+     * @return
+     */
     public String getFilterCri1() {
         return filterCri1;
     }
 
+    /**
+     * @param filterCri2
+     */
     public void setFilterCri2(String filterCri2) {
         this.filterCri2 = filterCri2;
     }
 
+    /**
+     * @return
+     */
     public String getFilterCri2() {
         return filterCri2;
     }
 
+    /**
+     * @param actionEvent
+     */
     public void onOkFilter(ActionEvent actionEvent) {
         logger.info("Performing advanced filter on the table");
         DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskVOIterator");
@@ -2278,7 +2642,10 @@ public class ManageCRSBean implements Serializable {
         riskVO.executeQuery();
         advancedFilterPopup.hide();
     }
-    
+
+    /**
+     * Fetches the dictionary version from session
+     */
     public void initManageCrs(){
         logger.info("Initalizing CRS taskflow, fetching the dictionary version from session");
         String dictVersion = (String)ADFUtils.getSessionScopeValue("dictVersion");
@@ -2290,14 +2657,23 @@ public class ManageCRSBean implements Serializable {
         }
     }
 
+    /**
+     * @param advancedFilterPopup
+     */
     public void setAdvancedFilterPopup(RichPopup advancedFilterPopup) {
         this.advancedFilterPopup = advancedFilterPopup;
     }
 
+    /**
+     * @return
+     */
     public RichPopup getAdvancedFilterPopup() {
         return advancedFilterPopup;
     }
 
+    /**
+     * @param actionEvent
+     */
     public void clearFilters(ActionEvent actionEvent) {
         logger.info("Clearing advanced filters");
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
@@ -2357,10 +2733,16 @@ public class ManageCRSBean implements Serializable {
         return searchStagingTableBinding;
     }
 
+    /**
+     * @param currReleaseStatus
+     */
     public void setCurrReleaseStatus(String currReleaseStatus) {
         this.currReleaseStatus = currReleaseStatus;
     }
 
+    /**
+     * @return
+     */
     public String getCurrReleaseStatus() {
         return currReleaseStatus;
     }
@@ -2652,7 +3034,7 @@ public class ManageCRSBean implements Serializable {
     public void exportPTReport(FacesContext facesContext,
                                OutputStream outputStream) {
         // Add event code here...
-            //  _logger.info("Start of CRSReportsBean:exportPTReport()");
+        logger.info("Start of CRSReportsBean:exportPTReport()");
         Workbook workbook = null;
         DCIteratorBinding iter =
             ADFUtils.findIterator("PTReportVOIterator");
@@ -2711,6 +3093,7 @@ public class ManageCRSBean implements Serializable {
                 ADFUtils.showFacesMessage(ioe.getMessage(), FacesMessage.SEVERITY_ERROR);
             }
             }
+        logger.info("End of CRSReportsBean:exportPTReport()");
     }
 
     /**
@@ -2728,14 +3111,21 @@ public class ManageCRSBean implements Serializable {
             vo.executeQuery();
             if(vo.first()!=null)
                fullName = (String) vo.first().getAttribute("FullName");
+            logger.info("FullName for AccountName :-"+accName+" is -"+fullName);
         }
         return fullName;
     }
 
+    /**
+     * @param riskDefPopupPanel
+     */
     public void setRiskDefPopupPanel(RichPanelGroupLayout riskDefPopupPanel) {
         this.riskDefPopupPanel = riskDefPopupPanel;
     }
 
+    /**
+     * @return
+     */
     public RichPanelGroupLayout getRiskDefPopupPanel() {
         return riskDefPopupPanel;
     }

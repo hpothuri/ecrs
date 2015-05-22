@@ -39,6 +39,14 @@
                                       queryListener="#{bindings.RiskDefSafetyTopicReportQuery.processQuery}" varStatus="vs"
                                       id="t1" columnStretching="column:c1"
                                       styleClass="AFStretchWidth">
+                                <af:column sortProperty="#{bindings.RiskDefSafetyTopicReport.hints.SafetyTopicOfInterest.name}"
+                                           filterable="true" sortable="true"
+                                           headerText="#{bindings.RiskDefSafetyTopicReport.hints.SafetyTopicOfInterest.label}"
+                                           id="c2" width="300">
+                                    <af:outputText value="#{row.SafetyTopicOfInterest}"
+                                                   shortDesc="#{bindings.RiskDefSafetyTopicReport.hints.SafetyTopicOfInterest.tooltip}"
+                                                   id="ot2"/>
+                                </af:column>
                                 <af:column sortProperty="#{bindings.RiskDefSafetyTopicReport.hints.CrsName.name}"
                                            filterable="true" sortable="true"
                                            headerText="#{bindings.RiskDefSafetyTopicReport.hints.CrsName.label}"
@@ -46,14 +54,6 @@
                                     <af:outputText value="#{row.CrsName}"
                                                    shortDesc="#{bindings.RiskDefSafetyTopicReport.hints.CrsName.tooltip}"
                                                    id="ot1"/>
-                                </af:column>
-                                <af:column sortProperty="#{bindings.RiskDefSafetyTopicReport.hints.SafetyTopicOfInterest.name}"
-                                           filterable="true" sortable="true"
-                                           headerText="#{bindings.RiskDefSafetyTopicReport.hints.SafetyTopicOfInterest.label}"
-                                           id="c2" width="200">
-                                    <af:outputText value="#{row.SafetyTopicOfInterest}"
-                                                   shortDesc="#{bindings.RiskDefSafetyTopicReport.hints.SafetyTopicOfInterest.tooltip}"
-                                                   id="ot2"/>
                                 </af:column>
                                 <af:column sortProperty="#{bindings.RiskDefSafetyTopicReport.hints.MeddraTermCount.name}"
                                            filterable="true" sortable="true"
