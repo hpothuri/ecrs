@@ -384,6 +384,15 @@ public class ManageCRSBean implements Serializable {
         logger.info("--Start-ManageCRSBean:invokeEmptyRowSetOnContentVO--");
         DCBindingContainer bc =
             ADFUtils.findBindingContainerByName(ViewConstants.PAGE_DEF_SEARCH);
+        DCIteratorBinding searchIter =  bc.findIteratorBinding("ECrsSearchVOIterator");
+        //Mode is Update and role is BSL,settting CompoundType to COMPOUND
+        if (searchIter != null && searchIter.getCurrentRow() != null &&
+            ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType()) &&
+            ModelConstants.ROLE_BSL.equals(getLoggedInUserRole())) {
+            searchIter.getCurrentRow().setAttribute("CompoundType",
+                                                    ModelConstants.COMPOUND_TYPE_COMPOUND);
+            logger.info("Update mode and role is BSL,settting CompoundType to COMPOUND");
+        }
         DCIteratorBinding iter = bc.findIteratorBinding("CrsContentVOIterator");
         if (iter.getViewObject() != null)
             iter.getViewObject().executeEmptyRowSet();
