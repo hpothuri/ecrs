@@ -249,6 +249,23 @@ FROM CRS_RISK_DEFINITIONS_STG CrsRiskDefinitionsEO]]></SQLQuery>
     EntityAttrName="CrsQualifier"
     EntityUsage="CrsRiskDefinitionsEO"
     AliasName="CRS_QUALIFIER"/>
+  <ViewAttribute
+    Name="SelectAttr"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Boolean"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="BIT"
+    DefaultValue="FALSE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="check_box"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>

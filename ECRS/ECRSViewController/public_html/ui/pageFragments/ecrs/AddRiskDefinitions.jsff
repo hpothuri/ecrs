@@ -178,18 +178,23 @@
                   <af:outputText value="#{row.MeddraQualifier}"
                                  shortDesc="#{bindings.CrsRiskVO.hints.MeddraQualifier.tooltip}" id="ot16"/>
                 </af:column>
-              </af:column>
-              <af:column id="c24">
                 <af:column sortProperty="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.name}" filterable="true"
                            headerText="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.label}" id="c17" width="90">
                   <af:outputText value="#{row.SearchCriteriaDetails}"
                                  shortDesc="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.tooltip}" id="ot17"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskVO.hints.MqmComment.name}" filterable="true"
-                           headerText="#{ecrsviewcontrollerBundle.COMMENT}" id="c18" width="100">
+                           headerText="#{ecrsviewcontrollerBundle.COMMENT}" id="c18" width="50">
                   <af:outputText value="#{row.NonMeddraComponentComment}"
                                  shortDesc="#{bindings.CrsRiskVO.hints.MqmComment.tooltip}" id="ot18"/>
                 </af:column>
+                <af:column id="c84" headerText="#{ecrsviewcontrollerBundle.MQM_COMMENT_0}" filterable="true"
+                           visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
+                           width="50">
+                  <af:outputText value="#{row.MqmComment}" id="ot81"/>
+                </af:column>
+              </af:column>
+              <af:column id="c24" rendered="false">
                 <af:column id="c22" width="20" rendered="false">
                   <f:facet name="header">
                     <af:image source="/images/delete.png" id="i1"/>
@@ -325,8 +330,6 @@
                   <af:outputText value="#{row.MeddraQualifier}"
                                  shortDesc="#{bindings.CrsRiskBaseVO.hints.MeddraQualifier.tooltip}" id="ot53"/>
                 </af:column>
-              </af:column>
-              <af:column id="c82">
                 <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.SearchCriteriaDetails.name}" filterable="true"
                            sortable="true" headerText="#{ecrsviewcontrollerBundle.SEARCH_CRITERIA_DETAILS}" id="c77"
                            width="80">
@@ -339,6 +342,7 @@
                                  shortDesc="#{bindings.CrsRiskBaseVO.hints.MqmComment.tooltip}" id="ot55"/>
                 </af:column>
               </af:column>
+              <af:column id="c82" rendered="false"/>
             </af:table>
             <f:facet name="secondaryToolbar">
               <af:toolbar id="t11">
@@ -504,9 +508,15 @@
                       fetchSize="#{bindings.CrsRiskDefinitionsVO.rangeSize}" rowBandingInterval="0"
                       selectedRowKeys="#{bindings.CrsRiskDefinitionsVO.collectionModel.selectedRow}"
                       selectionListener="#{bindings.CrsRiskDefinitionsVO.collectionModel.makeCurrent}"
-                      rowSelection="multiple" id="t4" styleClass="AFStretchWidth" partialTriggers="::cb7"
+                      rowSelection="multiple" id="t4" styleClass="AFStretchWidth" partialTriggers="::cb7 ::cb4"
                       binding="#{pageFlowScope.manageCRSBean.riskDefTable}" contentDelivery="immediate"
                       columnStretching="column:c19">
+              <af:column id="c85" width="20">
+                <af:selectBooleanCheckbox value="#{row.bindings.SelectAttr.inputValue}"
+                                          label="#{row.bindings.SelectAttr.label}"
+                                          shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.SelectAttr.tooltip}"
+                                          id="sbc1" autoSubmit="true"/>
+              </af:column>
               <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO.hints.MeddraTerm.name}" sortable="false"
                          headerText="#{bindings.CrsRiskDefinitionsVO.hints.MeddraTerm.label}" id="c19">
                 <af:panelGroupLayout id="pgl10">
@@ -578,7 +588,8 @@
                   </af:inputText>
                 </af:panelGroupLayout>
               </af:column>
-              <af:column id="c29" width="20" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
+              <af:column id="c29" width="20" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                         rendered="false">
                 <f:facet name="header">
                   <af:image source="/images/delete.png" id="i2"/>
                 </f:facet>

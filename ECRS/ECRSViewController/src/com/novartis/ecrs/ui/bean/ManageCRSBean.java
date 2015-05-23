@@ -650,13 +650,19 @@ public class ManageCRSBean implements Serializable {
 
     public void deleteRiskDefinitions(ActionEvent actionEvent) {
         logger.info("Deleting Selected Risk Definitions");
-        RowKeySet rowKeySet = (RowKeySet)riskDefTable.getSelectedRowKeys();
-        CollectionModel cm = (CollectionModel)riskDefTable.getValue();
-        for (Object facesTreeRowKey : rowKeySet) {
-            cm.setRowKey(facesTreeRowKey);
-            JUCtrlHierNodeBinding rowData = (JUCtrlHierNodeBinding)cm.getRowData();
-            rowData.getRow().remove();
+        DCIteratorBinding riskDefIter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
+        ViewObject riskDefVO = riskDefIter.getViewObject();
+        Row[] rows= riskDefVO.getFilteredRows("SelectAttr", Boolean.TRUE);
+        for(Row row : rows){
+            row.remove();
         }
+//        RowKeySet rowKeySet = (RowKeySet)riskDefTable.getSelectedRowKeys();
+//        CollectionModel cm = (CollectionModel)riskDefTable.getValue();
+//        for (Object facesTreeRowKey : rowKeySet) {
+//            cm.setRowKey(facesTreeRowKey);
+//            JUCtrlHierNodeBinding rowData = (JUCtrlHierNodeBinding)cm.getRowData();
+//            rowData.getRow().remove();
+//        }
     }
 
     public void setRiskDefTable(RichTable riskDefTable) {
@@ -676,6 +682,17 @@ public class ManageCRSBean implements Serializable {
 //            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}", databases.substring(1));
 //        } else
 //            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}",null);
+        
+        Integer domain = (Integer)ADFUtils.evaluateEL("#{bindings.DomainId.attributeValue}");
+        if(domain != null && (domain == 1)){
+            DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
+            ViewObject riskDefVO = iter.getViewObject();
+            if(riskDefVO.getEstimatedRowCount() == 0){
+                ADFUtils.showFacesMessage("At least one term is mandatory when MEDDRA domain is selected.", FacesMessage.SEVERITY_ERROR);
+                return;
+            }
+        }
+        
         logger.info("Saving risk defs.");
         String soc = (String)ADFUtils.evaluateEL("#{bindings.SocTerm.inputValue}");
         if(soc == null || "".equals(soc)){
@@ -1193,6 +1210,24 @@ public class ManageCRSBean implements Serializable {
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
                             return DnDAction.NONE;
                         }
+                        Row rows1[] = riskDefVO.getFilteredRows("MeddraDict", "NMATSMQ");
+                        if (rows1.length > 0) {
+                            ADFUtils.showFacesMessage("Both MEDDRA and Filter Dictionary terms cannot be assigned to a single Safety Topic of Interest", FacesMessage.SEVERITY_ERROR);
+                            dragTable.setRowKey(dragCurrentRowKey);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                            return DnDAction.NONE;
+                        }
+                    }
+                    else if(dict != null && "NMATSMQ".equalsIgnoreCase(dict)){
+                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
+                        if (rows.length > 0) {
+                            ADFUtils.showFacesMessage("Both MEDDRA and Filter Dictionary terms cannot be assigned to a single Safety Topic of Interest", FacesMessage.SEVERITY_ERROR);
+                            dragTable.setRowKey(dragCurrentRowKey);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                            return DnDAction.NONE;
+                        }
                     }
                     Row riskDefRow = riskDefVO.createRow();
                     riskDefRow.setAttribute("MeddraCode", selRow.getDictContentCode());
@@ -1247,8 +1282,26 @@ public class ManageCRSBean implements Serializable {
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
                             return DnDAction.NONE;
                         }
+                        Row rows1[] = riskDefVO.getFilteredRows("MeddraDict", "NMATSMQ");
+                        if (rows1.length > 0) {
+                            ADFUtils.showFacesMessage("Both MEDDRA and Filter Dictionary terms cannot be assigned to a single Safety Topic of Interest", FacesMessage.SEVERITY_ERROR);
+                            dragTable.setRowKey(dragCurrentRowKey);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                            return DnDAction.NONE;
+                        }
                     }
-
+                    else if(dict != null && "NMATSMQ".equalsIgnoreCase(dict)){
+                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
+                        if (rows.length > 0) {
+                            ADFUtils.showFacesMessage("Both MEDDRA and Filter Dictionary terms cannot be assigned to a single Safety Topic of Interest", FacesMessage.SEVERITY_ERROR);
+                            dragTable.setRowKey(dragCurrentRowKey);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                            return DnDAction.NONE;
+                        }
+                    }
+                    
                     Row riskDefRow = riskDefVO.createRow();
                     riskDefRow.setAttribute("MeddraCode", code);
                     riskDefRow.setAttribute("MeddraLevel", level);
