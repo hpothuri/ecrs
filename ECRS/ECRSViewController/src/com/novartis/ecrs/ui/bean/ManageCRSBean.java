@@ -1556,7 +1556,32 @@ public class ManageCRSBean implements Serializable {
             columnMap.put("SearchCriteriaDetails",
                           rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.SearchCriteriaDetails_LABEL"));
             columnMap.put("NonMeddraComponentComment", rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskRelationVO.NonMeddraComponentComment_LABEL"));
+            //BSL, LoggedinUser in Designee, Admin,MQM
+            String bsl = "";
+            String designee = "";
+            if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
+                bsl =
+(String)ADFUtils.evaluateEL("#{bindings.BslNameBase.inputValue}");
 
+            } else
+                bsl =
+(String)ADFUtils.evaluateEL("#{bindings.BslName.inputValue}");
+
+            if (ModelConstants.BASE_FACET.equals(getBaseOrStaging())) {
+                designee =
+                        (String)ADFUtils.evaluateEL("#{bindings.DesigneeBase.inputValue}");
+            } else
+                designee =
+                        (String)ADFUtils.evaluateEL("#{bindings.Designee.inputValue}");
+
+            if (getUserName() != null && getUserName().equals(bsl) ||
+                ViewConstants.isNotEmpty(designee) &&
+                designee.contains(getUserName()) ||
+                ModelConstants.ROLE_CRSADMIN.equals(loggedInUserRole) ||
+                ModelConstants.ROLE_MQM.equals(loggedInUserRole)) {
+                columnMap.put("MqmComment",
+                              rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.MqmComment_LABEL"));
+            }
             workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
             Sheet sheet = workbook.getSheetAt(0);
             writeHeaderData(sheet,0,4,7,10);
