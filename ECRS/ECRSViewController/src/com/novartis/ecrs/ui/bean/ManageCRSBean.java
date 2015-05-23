@@ -167,6 +167,7 @@ public class ManageCRSBean implements Serializable {
     private transient UIXSwitcher stateSwitcherBinding;
     public static final Logger logger = Logger.getLogger(ManageCRSBean.class);
     private RichPanelGroupLayout riskDefPopupPanel;
+    private RichTable stagingTable;
 
     public ManageCRSBean() {
         super();
@@ -3181,5 +3182,30 @@ public class ManageCRSBean implements Serializable {
      */
     public RichPanelGroupLayout getRiskDefPopupPanel() {
         return riskDefPopupPanel;
+    }
+
+    public void deleteSafetyTopicOfInterest(ActionEvent actionEvent) {
+        DCIteratorBinding relationIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
+        DCIteratorBinding definitionIter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
+        ViewObject definitionVO = definitionIter.getViewObject();
+        Row[] defRows = definitionVO.getAllRowsInRange();
+        for(Row row : defRows)
+            row.remove();
+        relationIter.getCurrentRow().remove();
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0)
+            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+        riskDefPopup.hide();
+        initRisRel();
+        ADFUtils.addPartialTarget(stagingTable);
+    }
+
+    public void setStagingTable(RichTable stagingTable) {
+        this.stagingTable = stagingTable;
+    }
+
+    public RichTable getStagingTable() {
+        return stagingTable;
     }
 }

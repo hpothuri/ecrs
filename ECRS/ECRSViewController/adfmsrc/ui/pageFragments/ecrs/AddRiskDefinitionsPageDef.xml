@@ -405,6 +405,7 @@
           <Item Value="CrsEffectiveDt"/>
           <Item Value="CrsQualifier"/>
           <Item Value="MeddraQualifierUpdFlag"/>
+          <Item Value="SelectAttr"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

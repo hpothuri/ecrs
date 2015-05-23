@@ -60,7 +60,7 @@
                       selectedRowKeys="#{bindings.CrsRiskVO.collectionModel.selectedRow}"
                       selectionListener="#{bindings.CrsRiskVO.collectionModel.makeCurrent}" rowSelection="single"
                       id="t2" columnSelection="multiple" styleClass="AFStretchWidth" autoHeightRows="15"
-                      columnStretching="column:c23">
+                      columnStretching="column:c23" binding="#{pageFlowScope.manageCRSBean.stagingTable}">
               <af:column id="c21">
                 <af:column id="c12" width="8" rowHeader="true"/>
                 <af:column sortProperty="#{bindings.CrsRiskVO.hints.SafetyTopicOfInterest.name}" filterable="true"
@@ -621,6 +621,8 @@
                 <af:commandButton text="#{ecrsviewcontrollerBundle.REFRESH_REPOSITORY}" id="cb23"
                                   icon="/images/database-refresh-icon.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.refreshRepoInPopup}"/>
+                <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SAFETY_TOPIC_OF_INTERES}" id="cb27" icon="/images/delete.png"
+                                  actionListener="#{pageFlowScope.manageCRSBean.deleteSafetyTopicOfInterest}"/>
                 <af:commandImageLink id="cil7" icon="/images/Help-icon.png" rendered="false">
                   <af:showPopupBehavior triggerType="action"
                                         popupId="::prplegend"/>
@@ -963,6 +965,12 @@
                         rowSelection="multiple" id="t8" partialTriggers="::pc2:cb7 :::pc2:cb7"
                         columnStretching="column:c55" binding="#{pageFlowScope.manageCRSBean.copyRiskDefTable}"
                         styleClass="AFStretchWidth">
+                <af:column id="c86" width="20">
+                  <af:selectBooleanCheckbox value="#{row.bindings.SelectAttr.inputValue}"
+                                            label="#{row.bindings.SelectAttr.label}"
+                                            shortDesc="#{bindings.CrsRiskDefinitionsVO1.hints.SelectAttr.tooltip}"
+                                            id="sbc2"/>
+                </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraTerm.name}" sortable="false"
                            headerText="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraTerm.label}" id="c55">
                   <af:outputText value="#{row.MeddraTerm}"
@@ -992,7 +1000,7 @@
                                  shortDesc="#{bindings.CrsRiskDefinitionsVO1.hints.SearchCriteriaDetails.tooltip}"
                                  id="ot371"/>
                 </af:column>
-                <af:column id="c60" width="20">
+                <af:column id="c60" width="20" rendered="false">
                   <f:facet name="header">
                     <af:image source="/images/delete.png" id="i3"/>
                   </f:facet>
