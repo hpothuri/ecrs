@@ -511,7 +511,7 @@
                       rowSelection="multiple" id="t4" styleClass="AFStretchWidth" partialTriggers="::cb7 ::cb4"
                       binding="#{pageFlowScope.manageCRSBean.riskDefTable}" contentDelivery="immediate"
                       columnStretching="column:c19">
-              <af:column id="c85" width="20">
+              <af:column id="c85" width="20" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
                 <af:selectBooleanCheckbox value="#{row.bindings.SelectAttr.inputValue}"
                                           label="#{row.bindings.SelectAttr.label}"
                                           shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.SelectAttr.tooltip}"
@@ -622,7 +622,8 @@
                                   icon="/images/database-refresh-icon.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.refreshRepoInPopup}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SAFETY_TOPIC_OF_INTERES}" id="cb27" icon="/images/delete.png"
-                                  actionListener="#{pageFlowScope.manageCRSBean.deleteSafetyTopicOfInterest}"/>
+                                  actionListener="#{pageFlowScope.manageCRSBean.deleteSafetyTopicOfInterest}"
+                                  visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
                 <af:commandImageLink id="cil7" icon="/images/Help-icon.png" rendered="false">
                   <af:showPopupBehavior triggerType="action"
                                         popupId="::prplegend"/>
@@ -965,7 +966,7 @@
                         rowSelection="multiple" id="t8" partialTriggers="::pc2:cb7 :::pc2:cb7"
                         columnStretching="column:c55" binding="#{pageFlowScope.manageCRSBean.copyRiskDefTable}"
                         styleClass="AFStretchWidth">
-                <af:column id="c86" width="20">
+                <af:column id="c86" width="20" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
                   <af:selectBooleanCheckbox value="#{row.bindings.SelectAttr.inputValue}"
                                             label="#{row.bindings.SelectAttr.label}"
                                             shortDesc="#{bindings.CrsRiskDefinitionsVO1.hints.SelectAttr.tooltip}"
@@ -1015,7 +1016,7 @@
                   <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SELECTED}" id="cb81"
                                     icon="/images/delete.png"
                                     actionListener="#{pageFlowScope.manageCRSBean.deleteCopiedRiskDefs}"
-                                    partialSubmit="true"/>
+                                    partialSubmit="true" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
                   <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb18" icon="/images/filesave.png"
                                     actionListener="#{pageFlowScope.manageCRSBean.saveRiskDefs}" partialSubmit="true"/>
                   <af:commandButton text="#{ecrsviewcontrollerBundle.HIERARCHY_SEARCH}" id="cb19"

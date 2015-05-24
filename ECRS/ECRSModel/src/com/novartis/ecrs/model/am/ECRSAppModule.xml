@@ -138,6 +138,9 @@
   <ViewUsage
     Name="UserFullNameVO"
     ViewObjectName="com.novartis.ecrs.model.view.UserFullNameVO"/>
+  <ViewUsage
+    Name="FetchCrsRiskRelationVO"
+    ViewObjectName="com.novartis.ecrs.model.view.CrsRiskRelationVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"
@@ -431,6 +434,24 @@
       MethodName="fetchDictionaryVersion">
       <Return
         Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="validateSafetyTopic"
+      MethodName="validateSafetyTopic">
+      <Return
+        Type="java.lang.Boolean"/>
+      <Parameter
+        Name="crsId"
+        Type="java.lang.Long"/>
+      <Parameter
+        Name="safetyTopic"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="rpList"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="crsRiskId"
+        Type="java.lang.Long"/>
     </Method>
   </ClientInterface>
 </AppModule>

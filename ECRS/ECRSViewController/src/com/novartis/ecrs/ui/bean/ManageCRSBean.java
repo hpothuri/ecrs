@@ -604,6 +604,7 @@ public class ManageCRSBean implements Serializable {
         setSelRiskPurposes(null);
         if(savedSuccessMessage != null){
             savedSuccessMessage.setVisible(Boolean.FALSE);
+            ResetUtils.reset(savedSuccessMessage);
         }
         if(riskDefPopupPanel != null)
             ResetUtils.reset(riskDefPopupPanel);
@@ -655,6 +656,10 @@ public class ManageCRSBean implements Serializable {
         }
         if(riskDefPopupPanel != null)
             ResetUtils.reset(riskDefPopupPanel);
+        if(savedSuccessMessage != null){
+            savedSuccessMessage.setVisible(Boolean.FALSE);
+            ResetUtils.reset(savedSuccessMessage);
+        }
         ADFUtils.showPopup(riskDefPopup);
     }
 
@@ -684,6 +689,40 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void saveRiskDefs(ActionEvent actionEvent) {
+
+        String riskPurposes = "";
+        if(selRiskPurposes != null && selRiskPurposes.size() > 0){
+            for(String riskPurpose : selRiskPurposes){
+                riskPurposes = riskPurposes + "," + riskPurpose;
+            }
+            ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}", riskPurposes.substring(1));
+        } else{
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select at least one Risk Purpose.");
+            ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}",null);
+            return;
+        }
+        logger.info("Selected risk purposes : "+selRiskPurposes);
+        
+        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");  
+        String riskPurposeList = riskPurposes.substring(1);
+        String safetyTopic = (String)ADFUtils.evaluateEL("#{bindings.SafetyTopicOfInterest.inputValue}");
+        Map params1 = new HashMap<String, Object>();
+        logger.info("Validating it this CRS "+crsId+" has this safety topic already.");
+        params1.put("crsId", crsId);
+        params1.put("safetyTopic", safetyTopic);
+        params1.put("rpList", riskPurposeList);
+        params1.put("crsRiskId", ADFUtils.evaluateEL("#{bindings.CrsRiskId.inputValue}"));
+        try {
+            logger.info("Calling model method validateSafetyTopic");
+            Boolean invalid = (Boolean)ADFUtils.executeAction("validateSafetyTopic", params1);
+            if(invalid){
+                ADFUtils.showFacesMessage("This Safety Topic Of Interest and Risk Purpose combination already exists in this CRS.", FacesMessage.SEVERITY_ERROR);
+                return;
+            }
+        } catch (Exception e) {
+            logger.error("Exception occured in validateSafetyTopic()"+e);
+        }
+        
 //        if(selDatabases != null && selDatabases.size() > 0){
 //            String databases = "";
 //            for(String db : selDatabases){
@@ -719,18 +758,7 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select Data domain.");
             return;
         }
-        if(selRiskPurposes != null && selRiskPurposes.size() > 0){
-            String riskPurposes = "";
-            for(String riskPurpose : selRiskPurposes){
-                riskPurposes = riskPurposes + "," + riskPurpose;
-            }
-            ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}", riskPurposes.substring(1));
-        } else{
-            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select at least one Risk Purpose.");
-            ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}",null);
-            return;
-        }
-        logger.info("Selected risk purposes : "+selRiskPurposes);
+        
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0) {
@@ -738,10 +766,12 @@ public class ManageCRSBean implements Serializable {
             if(savedSuccessMessage != null){
                 savedSuccessMessage.setVisible(Boolean.FALSE);
                 ADFUtils.addPartialTarget(savedSuccessMessage);
+                ResetUtils.reset(savedSuccessMessage);
             }
             if(copySuccessMessage != null){
                 copySuccessMessage.setVisible(Boolean.FALSE);
                 ADFUtils.addPartialTarget(copySuccessMessage);
+                ResetUtils.reset(savedSuccessMessage);
             }
         }
         else{
@@ -749,10 +779,12 @@ public class ManageCRSBean implements Serializable {
             if(savedSuccessMessage != null){
                 savedSuccessMessage.setVisible(Boolean.TRUE);
                 ADFUtils.addPartialTarget(savedSuccessMessage);
+                ResetUtils.reset(savedSuccessMessage);
             }
             if(copySuccessMessage != null){
                 copySuccessMessage.setVisible(Boolean.TRUE);
                 ADFUtils.addPartialTarget(copySuccessMessage);
+                ResetUtils.reset(savedSuccessMessage);
             }
         }
     }
@@ -1209,6 +1241,16 @@ public class ManageCRSBean implements Serializable {
                     return DnDAction.NONE;
                 }
                 else{
+                    
+                    Row filterRow[] = riskDefVO.getFilteredRows("TmsDictContentId", selRow.getTmsDictContentId());
+                    if(filterRow.length > 0){
+                        ADFUtils.showFacesMessage("This Term already exists in this safety topic of interest.", FacesMessage.SEVERITY_ERROR);
+                        dragTable.setRowKey(dragCurrentRowKey);
+                        AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                        AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                        return DnDAction.NONE;
+                    }
+                    
                     String version = selRow.getDictContentAltCode();
                     String dict = selRow.getDictShortName();
                     if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
@@ -1275,6 +1317,16 @@ public class ManageCRSBean implements Serializable {
                 dragRow = rowBinding.getRow();
                 dragNodeVO = dragRow.getStructureDef().getDefName();
                 if ("HierarchySearchVO".equalsIgnoreCase(dragNodeVO)) {
+                    
+                    Row filterRow[] = riskDefVO.getFilteredRows("TmsDictContentId", dragRow.getAttribute("DictContentId"));
+                    if(filterRow.length > 0){
+                        ADFUtils.showFacesMessage("This Term already exists in this safety topic of interest.", FacesMessage.SEVERITY_ERROR);
+                        dragTable.setRowKey(dragCurrentRowKey);
+                        AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
+                        AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+                        return DnDAction.NONE;
+                    }
+                    
                     String term = (String)dragRow.getAttribute("Mqterm");
                     String code = (String)dragRow.getAttribute("Mqcode");
                     String level = (String)dragRow.getAttribute("Mqlevel");
@@ -1895,7 +1947,27 @@ public class ManageCRSBean implements Serializable {
      * @param actionEvent
      */
     public void copyCrsRiskRelation(ActionEvent actionEvent) {
-    
+        
+        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");  
+        String riskPurposeList = (String)ADFUtils.evaluateEL("#{copyRow.RiskPurposeList}");
+        String safetyTopic = (String)ADFUtils.evaluateEL("#{copyRow.SafetyTopicOfInterest}");
+        Map params1 = new HashMap<String, Object>();
+        logger.info("Validating it this CRS "+crsId+" has this safety topic already.");
+        params1.put("crsId", crsId);
+        params1.put("safetyTopic", safetyTopic);
+        params1.put("rpList", riskPurposeList);
+//        params1.put("crsRiskId", ADFUtils.evaluateEL("#{bindings.CrsRiskId.inputValue}"));
+        try {
+            logger.info("Calling model method validateSafetyTopic");
+            Boolean invalid = (Boolean)ADFUtils.executeAction("validateSafetyTopic", params1);
+            if(invalid){
+                ADFUtils.showFacesMessage("This Safety Topic Of Interest and Risk Purpose combination already exists in this CRS.", FacesMessage.SEVERITY_ERROR);
+                return;
+            }
+        } catch (Exception e) {
+            logger.error("Exception occured in validateSafetyTopic()"+e);
+        }
+        
 //        DCBindingContainer dcbind =(DCBindingContainer)getBindings();
 //        Boolean dirty = dcbind.getDataControl().isTransactionModified();
 //        if(dirty){
@@ -1905,7 +1977,7 @@ public class ManageCRSBean implements Serializable {
         
         ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
         Long riskId = (Long)ADFUtils.evaluateEL("#{copyRow.CrsRiskId}");
-        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
+        
 //        String databaseList = (String)ADFUtils.evaluateEL("#{copyRow.DatabaseList}");
 //        List<String> dbList = new ArrayList<String>();
 //        if(databaseList != null){
@@ -1916,7 +1988,7 @@ public class ManageCRSBean implements Serializable {
 //        }
 //        setSelDatabases(dbList);       
         logger.info("Copying crsRiskRelations from crsId : "+crsId+" riskID : "+riskId);
-        String riskPurposeList = (String)ADFUtils.evaluateEL("#{copyRow.RiskPurposeList}");
+        
         List<String> rpList = new ArrayList<String>();
         if(riskPurposeList != null){
             if(riskPurposeList.endsWith(",")){

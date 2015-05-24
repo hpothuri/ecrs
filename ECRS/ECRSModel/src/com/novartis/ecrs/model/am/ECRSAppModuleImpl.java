@@ -1031,4 +1031,22 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public ViewObjectImpl getUserFullNameVO() {
         return (ViewObjectImpl)findViewObject("UserFullNameVO");
     }
+    
+    public Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId){
+        ViewObject relationVO = this.getFetchCrsRiskRelationVO();
+        relationVO.setWhereClause("CRS_ID = "+crsId+" and SAFETY_TOPIC_OF_INTEREST = '"+safetyTopic+"' and RISK_PURPOSE_LIST = '"+rpList+"' and CRS_RISK_ID <> "+crsRiskId);
+        relationVO.executeQuery();
+        if(relationVO.getEstimatedRowCount() > 0)
+            return Boolean.TRUE;
+        else
+            return Boolean.FALSE;
+    }
+
+    /**
+     * Container's getter for FetchCrsRiskRelationVO.
+     * @return FetchCrsRiskRelationVO
+     */
+    public ViewObjectImpl getFetchCrsRiskRelationVO() {
+        return (ViewObjectImpl)findViewObject("FetchCrsRiskRelationVO");
+    }
 }

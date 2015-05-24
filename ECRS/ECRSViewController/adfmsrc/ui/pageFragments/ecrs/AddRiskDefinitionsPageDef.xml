@@ -670,5 +670,19 @@
         <Item Value="Designee"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="validateSafetyTopic" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="validateSafetyTopic" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.validateSafetyTopic_ECRSAppModuleDataControl_dataProvider_validateSafetyTopic_result">
+      <NamedData NDName="crsId" NDType="java.lang.Long"/>
+      <NamedData NDName="safetyTopic" NDType="java.lang.String"/>
+      <NamedData NDName="rpList" NDType="java.lang.String"/>
+      <NamedData NDName="crsRiskId" NDType="java.lang.Long"/>
+    </methodAction>
+    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="CrsRiskId">
+      <AttrNames>
+        <Item Value="CrsRiskId"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>
