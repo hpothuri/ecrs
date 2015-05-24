@@ -461,9 +461,9 @@ public class CRSReportsBean {
             ResourceBundle rsBundle =
                 BundleFactory.getBundle("com.novartis.ecrs.model.ECRSModelBundle");
             //Here Key will be ViewObject Attribute
-            columnMap.put("CrsName", rsBundle.getString("CRS_NAME"));
             columnMap.put("SafetyTopicOfInterest",
                           rsBundle.getString("SAFETY_TOPIC"));
+            columnMap.put("CrsName", rsBundle.getString("CRS_NAME"));
             columnMap.put("MeddraTermCount", rsBundle.getString("MEDDRA_TERM"));
             columnMap.put("SmqCount", rsBundle.getString("SMQ"));
             columnMap.put("NmqCount", rsBundle.getString("NMQ"));
