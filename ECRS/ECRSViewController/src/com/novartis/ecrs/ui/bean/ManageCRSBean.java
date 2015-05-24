@@ -166,8 +166,8 @@ public class ManageCRSBean implements Serializable {
     private boolean nonCompoundSelected;
     private transient UIXSwitcher stateSwitcherBinding;
     public static final Logger logger = Logger.getLogger(ManageCRSBean.class);
-    private RichPanelGroupLayout riskDefPopupPanel;
-    private RichTable stagingTable;
+    private transient RichPanelGroupLayout riskDefPopupPanel;
+    private transient RichTable stagingTable;
 
     public ManageCRSBean() {
         super();
