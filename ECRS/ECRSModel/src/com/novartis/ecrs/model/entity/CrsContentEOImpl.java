@@ -849,15 +849,21 @@ public class CrsContentEOImpl extends EntityImpl {
                 iter.closeRowSetIterator();
         }
         RowSet baseRwSet = this.getCrsContentBaseVA();
-        baseRwSet.setNamedWhereClauseParam("pCrsName", getCrsName());
-        baseRwSet.executeQuery();
-        if (baseRwSet.first() != null &&
-            baseRwSet.first().getAttribute("CrsName").equals(getCrsName())) {
-//            System.out.println("baseRwSet.first().getAttribute(\"CrsName\")-->" +
-//                               baseRwSet.first().getAttribute("CrsName"));
-            baseRwSet.setNamedWhereClauseParam("pCrsName", null);
-            baseRwSet.executeQuery();
-            return false;
+        RowSetIterator baseRwSetiter = baseRwSet.createRowSetIterator(null);
+        try {
+            if (baseRwSetiter != null) {
+                baseRwSetiter.reset();
+                while (baseRwSetiter.hasNext()) {
+                    Row rw = baseRwSetiter.next();
+                    if (getCrsName().equals(rw.getAttribute("CrsName"))) {
+                        return false;
+                    }
+                }
+
+            }
+        } finally {
+            if (baseRwSetiter != null)
+                baseRwSetiter.closeRowSetIterator();
         }
         return true;
     }
