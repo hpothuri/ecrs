@@ -784,7 +784,7 @@ public class ManageCRSBean implements Serializable {
             if(copySuccessMessage != null){
                 copySuccessMessage.setVisible(Boolean.TRUE);
                 ADFUtils.addPartialTarget(copySuccessMessage);
-                ResetUtils.reset(savedSuccessMessage);
+                ResetUtils.reset(copySuccessMessage);
             }
         }
     }
@@ -3303,7 +3303,18 @@ public class ManageCRSBean implements Serializable {
         if (oper.getErrors().size() > 0)
             ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
         riskDefPopup.hide();
-        initRisRel();
+        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
+        Map params = new HashMap<String, Object>();
+        params.put("crsId", crsId);
+        params.put("status", "STAGING");
+        logger.info("Init risk Relation : current Crs ID :: "+crsId);
+        logger.info("Init risk Relation : Base or Staging :: "+getBaseOrStaging());
+        try {
+            logger.info("Calling AM method initRiskRelation");
+            ADFUtils.executeAction("initRiskRelation", params);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ADFUtils.addPartialTarget(stagingTable);
     }
 
