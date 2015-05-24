@@ -357,10 +357,6 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <value n="id" v="Log4j-1.2.13.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
             <value n="id" v="J2EE 1.4"/>
             <value n="isJDK" v="false"/>
          </hash>
@@ -441,15 +437,6 @@
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Poi-ooxml-3.8-20120326.jar"/>
                <value n="id" v="Poi-ooxml-3.8-20120326.jar"/>
-               <value n="locked" v="true"/>
-            </hash>
-            <hash>
-               <list n="classPath">
-                  <url path="../lib/poi-3.8/log4j-1.2.13.jar" jar-entry=""/>
-               </list>
-               <value n="deployedByDefault" v="true"/>
-               <value n="description" v="Log4j-1.2.13.jar"/>
-               <value n="id" v="Log4j-1.2.13.jar"/>
                <value n="locked" v="true"/>
             </hash>
             <hash>
@@ -614,10 +601,6 @@
          </hash>
          <hash>
             <value n="id" v="Poi-ooxml-3.8-20120326.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Log4j-1.2.13.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
          <hash>

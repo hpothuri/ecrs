@@ -203,11 +203,7 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <value n="id" v="Log4j-api-2.3.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Log4j-core-2.3.jar"/>
+            <value n="id" v="Log4j-1.2.13.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>
@@ -215,20 +211,11 @@
          <list n="libraryDefinitions">
             <hash>
                <list n="classPath">
-                  <url path="../lib/apache-log4j-2.3-bin/log4j-api-2.3.jar" jar-entry=""/>
+                  <url path="../lib/poi-3.8/log4j-1.2.13.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
-               <value n="description" v="Log4j-api-2.3.jar"/>
-               <value n="id" v="Log4j-api-2.3.jar"/>
-               <value n="locked" v="true"/>
-            </hash>
-            <hash>
-               <list n="classPath">
-                  <url path="../lib/apache-log4j-2.3-bin/log4j-core-2.3.jar" jar-entry=""/>
-               </list>
-               <value n="deployedByDefault" v="true"/>
-               <value n="description" v="Log4j-core-2.3.jar"/>
-               <value n="id" v="Log4j-core-2.3.jar"/>
+               <value n="description" v="Log4j-1.2.13.jar"/>
+               <value n="id" v="Log4j-1.2.13.jar"/>
                <value n="locked" v="true"/>
             </hash>
          </list>
@@ -271,11 +258,7 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <value n="id" v="Log4j-api-2.3.jar"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Log4j-core-2.3.jar"/>
+            <value n="id" v="Log4j-1.2.13.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>
