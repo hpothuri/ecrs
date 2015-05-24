@@ -481,7 +481,8 @@
                             </af:panelFormLayout>
                         </af:panelBox>
                         <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}"
-                                     id="pb4">
+                                     id="pb4"
+                                     visible="#{!(bindings.ReleaseStatusFlagBase eq 'C' and pageFlowScope.flowType  eq 'S')}">
                             <f:facet name="toolbar"/>
                             <af:panelFormLayout id="pfl5"
                                                 styleClass="AFStretchWidth"
@@ -497,8 +498,7 @@
                                               styleClass="AFStretchWidth"
                                               label="#{ecrsviewcontrollerBundle.MQM_COMMENT}"
                                               rows="3" contentStyle="width:75%;"
-                                              readOnly="true"
-                                              visible="#{!(bindings.ReleaseStatusFlagBase eq 'C' and pageFlowScope.flowType  eq 'S')}">
+                                              readOnly="true">
                                     <f:validator binding="#{bindings.MqmComment.validator}"/>
                                 </af:inputText>
                                 <af:inputText value="#{bindings.TaslRejectCommentBase.inputValue}"
@@ -509,8 +509,7 @@
                                               label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}"
                                               rows="3" contentStyle="width:75%;"
                                               styleClass="AFStretchWidth"
-                                              readOnly="true"
-                                              visible="#{!(bindings.ReleaseStatusFlagBase eq 'C' and pageFlowScope.flowType  eq 'S')}">
+                                              readOnly="true">
                                     <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
                                 </af:inputText>
                                 <af:inputText value="#{bindings.MedicalLeadRejectCommentBase.inputValue}"
@@ -521,8 +520,7 @@
                                               label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}"
                                               rows="3" contentStyle="width:75%;"
                                               styleClass="AFStretchWidth"
-                                              readOnly="true"
-                                              visible="#{!(bindings.ReleaseStatusFlagBase eq 'C' and pageFlowScope.flowType  eq 'S')}">
+                                              readOnly="true">
                                     <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
                                 </af:inputText>
                             </af:panelFormLayout>
