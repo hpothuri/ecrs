@@ -274,9 +274,12 @@ public class ManageCRSBean implements Serializable {
             row.setCrsEffectiveDt(ADFUtils.getJBOTimeStamp());
             
             Long crsId = row.getCrsId();
-            OperationBinding copyOper = bc.getOperationBinding("copyRoutineDefinition");
-            copyOper.getParamsMap().put("crsId", crsId);
-            copyOper.execute();
+            if (row.getCompoundType() != null &&
+                  ModelConstants.COMPOUND_TYPE_COMPOUND.equalsIgnoreCase(row.getCompoundType())) {
+                OperationBinding copyOper = bc.getOperationBinding("copyRoutineDefinition");
+                copyOper.getParamsMap().put("crsId", crsId);
+                copyOper.execute();
+            }
         }
     }
 
