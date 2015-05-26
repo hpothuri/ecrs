@@ -428,10 +428,10 @@ public class ManageCRSBean implements Serializable {
             }
             setSelDesigneeList(designeeList);
         }
-        if (ModelConstants.COMPOUND_TYPE_NON_COMPOUND.equals(selectedRow.getCrsCompoundType())) {
-            setNonCompoundSelected(Boolean.TRUE);
-        } else
-            setNonCompoundSelected(Boolean.FALSE);
+//        if (ModelConstants.COMPOUND_TYPE_NON_COMPOUND.equals(selectedRow.getCrsCompoundType())) {
+//            setNonCompoundSelected(Boolean.TRUE);
+//        } else
+//            setNonCompoundSelected(Boolean.FALSE);
         logger.info("--End-ManageCRSBean:searchTableSelectionListener--");
     }
 

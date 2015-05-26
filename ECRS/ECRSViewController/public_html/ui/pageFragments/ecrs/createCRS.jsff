@@ -135,7 +135,7 @@
                                                         shortDesc="#{bindings.BslName.hints.tooltip}"
                                                         id="soc3"
                                                         contentStyle="width:170px;"
-                                                        readOnly="#{!securityContext.userInRole['CRS_ADMIN'] || pageFlowScope.manageCRSBean.nonCompoundSelected}"
+                                                        readOnly="#{!securityContext.userInRole['CRS_ADMIN'] || bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"
                                                         autoSubmit="true"
                                                         required="#{!pageFlowScope.manageCRSBean.nonCompoundSelected}">
                                         <f:selectItems value="#{bindings.BslName.items}"
@@ -145,7 +145,7 @@
                                                          id="smc2"
                                                          contentStyle="width:150px !important;"
                                                          value="#{pageFlowScope.manageCRSBean.selDesigneeList}"
-                                                         readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable || pageFlowScope.manageCRSBean.nonCompoundSelected}"
+                                                         readOnly="#{bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"
                                                          autoSubmit="true"
                                                          required="#{!pageFlowScope.manageCRSBean.nonCompoundSelected}">
                                         <f:selectItems value="#{pageFlowScope.manageCRSBean.designeeList}"
@@ -156,7 +156,7 @@
                                                         shortDesc="#{bindings.TaslName.hints.tooltip}"
                                                         id="soc5"
                                                         contentStyle="width:170px;"
-                                                        readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable || pageFlowScope.manageCRSBean.nonCompoundSelected}"
+                                                        readOnly="#{bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"
                                                         autoSubmit="true"
                                                         required="#{!pageFlowScope.manageCRSBean.nonCompoundSelected}">
                                         <f:selectItems value="#{bindings.TaslName.items}"
@@ -167,7 +167,7 @@
                                                         shortDesc="#{bindings.MedicalLeadName.hints.tooltip}"
                                                         id="soc6"
                                                         contentStyle="width:170px;"
-                                                        readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable || pageFlowScope.manageCRSBean.nonCompoundSelected}"
+                                                        readOnly="#{bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"
                                                         autoSubmit="true"
                                                         required="#{!pageFlowScope.manageCRSBean.nonCompoundSelected}">
                                         <f:selectItems value="#{bindings.MedicalLeadName.items}"
