@@ -623,6 +623,10 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void editRiskDefinition(ActionEvent actionEvent) {
+        //Added because, when coming from copy current flow, the new ID is not there in the EO and giving error while setting current row.
+        DCIteratorBinding relationIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
+        relationIter.executeQuery();
+        
         logger.info("Editing Risk definition, popup mode edit.");
         ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
         Long riskId = (Long)ADFUtils.evaluateEL("#{row.CrsRiskId}");
