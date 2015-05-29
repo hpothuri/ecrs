@@ -168,6 +168,8 @@ public class ManageCRSBean implements Serializable {
     public static final Logger logger = Logger.getLogger(ManageCRSBean.class);
     private transient RichPanelGroupLayout riskDefPopupPanel;
     private transient RichTable stagingTable;
+    private transient ResourceBundle uiBundle =
+        BundleFactory.getBundle("com.novartis.ecrs.view.ECRSViewControllerBundle");
 
     public ManageCRSBean() {
         super();
@@ -232,7 +234,7 @@ public class ManageCRSBean implements Serializable {
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0)
-            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
         else {
 //            String flowType = (String)ADFUtils.evaluateEL("#{pageFlowScope.flowType}");
 //            if (flowType != null && "C".equalsIgnoreCase(flowType)) {
@@ -346,7 +348,7 @@ public class ManageCRSBean implements Serializable {
                        releaseStatus);
         
         //If mode is B&S ,and release status is 'CURRENT' set state to activated 
-        if ("anonymous".equalsIgnoreCase(userName)) {
+        if (ViewConstants.ANONYMOUS_ROLE.equalsIgnoreCase(userName)) {
             ADFUtils.setEL("#{bindings.State.inputValue}",
                            ModelConstants.STATE_ACTIVATED);
         }
@@ -374,7 +376,7 @@ public class ManageCRSBean implements Serializable {
         }
         ADFUtils.addPartialTarget(getSearchSwitherBinding());
         if (ob.getErrors().size() > 0)
-            ADFUtils.showFacesMessage("An internal error has occured. Please try later.",
+            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"),
                                       FacesMessage.SEVERITY_ERROR);
         //TODO log the error 
         logger.info("--End-ManageCRSBean:onClickSearch--");
@@ -448,8 +450,6 @@ public class ManageCRSBean implements Serializable {
     public String getSelectedCrsName() {
         return selectedCrsName;
     }
-    
-    /**********************************************************************************************************************/
 
     /**
      * @return
@@ -723,7 +723,7 @@ public class ManageCRSBean implements Serializable {
             logger.info("Calling model method validateSafetyTopic");
             Boolean invalid = (Boolean)ADFUtils.executeAction("validateSafetyTopic", params1);
             if(invalid){
-                ADFUtils.showFacesMessage("This Safety Topic Of Interest and Risk Purpose combination already exists in this CRS.", FacesMessage.SEVERITY_ERROR);
+                ADFUtils.showFacesMessage(uiBundle.getString("STOI_UNIQUE_ERROR"), FacesMessage.SEVERITY_ERROR);
                 return;
             }
         } catch (Exception e) {
@@ -744,7 +744,7 @@ public class ManageCRSBean implements Serializable {
             DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
             ViewObject riskDefVO = iter.getViewObject();
             if(riskDefVO.getEstimatedRowCount() == 0){
-                ADFUtils.showFacesMessage("At least one term is mandatory when MEDDRA domain is selected.", FacesMessage.SEVERITY_ERROR);
+                ADFUtils.showFacesMessage(uiBundle.getString("MEDDRA_MANDATE_ERROR"), FacesMessage.SEVERITY_ERROR);
                 return;
             }
         }
@@ -752,24 +752,24 @@ public class ManageCRSBean implements Serializable {
         logger.info("Saving risk defs.");
         String soc = (String)ADFUtils.evaluateEL("#{bindings.SocTerm.inputValue}");
         if(soc == null || "".equals(soc)){
-            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select SOC.");
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("SOC_MANDATE_ERROR"));
             return;
         }
         String stoi = (String)ADFUtils.evaluateEL("#{bindings.SafetyTopicOfInterest.inputValue}");
         if(stoi == null || "".equals(stoi)){
-            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please enter Safety Topic of Interest.");
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("STOI_MANDATE_ERROR"));
             return;
         }
         Integer domainId = (Integer)ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}");
         if(domainId == null || "".equals(domainId)){
-            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select Data domain.");
+            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("DATA_DOMAIN_MANDATE_ERROR"));
             return;
         }
         
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0) {
-            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
             if(savedSuccessMessage != null){
                 savedSuccessMessage.setVisible(Boolean.FALSE);
                 ADFUtils.addPartialTarget(savedSuccessMessage);
@@ -813,7 +813,7 @@ public class ManageCRSBean implements Serializable {
         oper.getParamsMap().put("status", getBaseOrStaging());
         oper.execute();
         if (oper.getErrors().size() > 0) 
-            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
         ADFUtils.addPartialTarget(riskDefTable);
         setRepoRefreshed(Boolean.FALSE);
     }
@@ -1015,7 +1015,7 @@ public class ManageCRSBean implements Serializable {
             String msg = (String)op.execute();
 
             if (op.getErrors() != null && op.getErrors().size() > 0) {
-                ADFUtils.showFacesMessage("An internal error has occured. Please contact the Administrator",
+                ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"),
                                           FacesMessage.SEVERITY_ERROR);
             } else {
 
@@ -1037,7 +1037,7 @@ public class ManageCRSBean implements Serializable {
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0)
-            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
         else {
             ADFUtils.showPopup(infoPopup);
             ADFUtils.addPartialTarget(getCrsStateSOC());
@@ -1251,7 +1251,7 @@ public class ManageCRSBean implements Serializable {
                     
                     Row filterRow[] = riskDefVO.getFilteredRows("TmsDictContentId", selRow.getTmsDictContentId());
                     if(filterRow.length > 0){
-                        ADFUtils.showFacesMessage("This Term already exists in this safety topic of interest.", FacesMessage.SEVERITY_ERROR);
+                        ADFUtils.showFacesMessage(uiBundle.getString("TERM_UNIQUE_ERROR"), FacesMessage.SEVERITY_ERROR);
                         dragTable.setRowKey(dragCurrentRowKey);
                         AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
                         AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
@@ -1260,8 +1260,8 @@ public class ManageCRSBean implements Serializable {
                     
                     String version = selRow.getDictContentAltCode();
                     String dict = selRow.getDictShortName();
-                    if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
-                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
+                    if (dict != null && ViewConstants.MEDDRA_DICTIONARY.equalsIgnoreCase(dict)) {
+                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", ViewConstants.MEDDRA_DICTIONARY);
                         if (rows.length > 0) {
                             ADFUtils.showPopup(meddraError);
                             dragTable.setRowKey(dragCurrentRowKey);
@@ -1269,19 +1269,19 @@ public class ManageCRSBean implements Serializable {
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
                             return DnDAction.NONE;
                         }
-                        Row rows1[] = riskDefVO.getFilteredRows("MeddraDict", "NMATSMQ");
+                        Row rows1[] = riskDefVO.getFilteredRows("MeddraDict", ViewConstants.FILTER_DICTIONARY);
                         if (rows1.length > 0) {
-                            ADFUtils.showFacesMessage("Both MEDDRA and Filter Dictionary terms cannot be assigned to a single Safety Topic of Interest", FacesMessage.SEVERITY_ERROR);
+                            ADFUtils.showFacesMessage(uiBundle.getString("MEDDRA_FILTER_COMBO_ERROR"), FacesMessage.SEVERITY_ERROR);
                             dragTable.setRowKey(dragCurrentRowKey);
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
                             return DnDAction.NONE;
                         }
                     }
-                    else if(dict != null && "NMATSMQ".equalsIgnoreCase(dict)){
-                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
+                    else if(dict != null && ViewConstants.FILTER_DICTIONARY.equalsIgnoreCase(dict)){
+                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", ViewConstants.MEDDRA_DICTIONARY);
                         if (rows.length > 0) {
-                            ADFUtils.showFacesMessage("Both MEDDRA and Filter Dictionary terms cannot be assigned to a single Safety Topic of Interest", FacesMessage.SEVERITY_ERROR);
+                            ADFUtils.showFacesMessage(uiBundle.getString("MEDDRA_FILTER_COMBO_ERROR"), FacesMessage.SEVERITY_ERROR);
                             dragTable.setRowKey(dragCurrentRowKey);
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
@@ -1296,13 +1296,13 @@ public class ManageCRSBean implements Serializable {
                     riskDefRow.setAttribute("MeddraVersion", ADFUtils.getPageFlowScopeValue("childVersion"));
                     riskDefRow.setAttribute("MeddraVersionDate", ADFUtils.getPageFlowScopeValue("childDate"));
 
-                    if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
-                        if (selRow.getTerm() != null && selRow.getTerm().contains("NMQ"))
-                            riskDefRow.setAttribute("MeddraExtension", "NMQ");
-                        else if (selRow.getTerm() != null && selRow.getTerm().contains("CMQ"))
-                            riskDefRow.setAttribute("MeddraExtension", "CMQ");
-                        else if (selRow.getTerm() != null && selRow.getTerm().contains("SMQ"))
-                            riskDefRow.setAttribute("MeddraExtension", "SMQ");
+                    if (dict != null && ViewConstants.FILTER_DICTIONARY.equalsIgnoreCase(dict)) {
+                        if (selRow.getTerm() != null && selRow.getTerm().contains(ViewConstants.NMQ))
+                            riskDefRow.setAttribute("MeddraExtension", ViewConstants.NMQ);
+                        else if (selRow.getTerm() != null && selRow.getTerm().contains(ViewConstants.CMQ))
+                            riskDefRow.setAttribute("MeddraExtension", ViewConstants.CMQ);
+                        else if (selRow.getTerm() != null && selRow.getTerm().contains(ViewConstants.SMQ))
+                            riskDefRow.setAttribute("MeddraExtension", ViewConstants.SMQ);
                         else
                             riskDefRow.setAttribute("MeddraExtension", selRow.getLevelName());
                     } else
@@ -1327,7 +1327,7 @@ public class ManageCRSBean implements Serializable {
                     
                     Row filterRow[] = riskDefVO.getFilteredRows("TmsDictContentId", dragRow.getAttribute("DictContentId"));
                     if(filterRow.length > 0){
-                        ADFUtils.showFacesMessage("This Term already exists in this safety topic of interest.", FacesMessage.SEVERITY_ERROR);
+                        ADFUtils.showFacesMessage(uiBundle.getString("TERM_UNIQUE_ERROR"), FacesMessage.SEVERITY_ERROR);
                         dragTable.setRowKey(dragCurrentRowKey);
                         AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
                         AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
@@ -1341,8 +1341,8 @@ public class ManageCRSBean implements Serializable {
                     String dict = (String)dragRow.getAttribute("DictNm");
                     String version = (String)dragRow.getAttribute("DictVersion");
 
-                    if (dict != null && "NMATMED".equalsIgnoreCase(dict)) {
-                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
+                    if (dict != null && ViewConstants.MEDDRA_DICTIONARY.equalsIgnoreCase(dict)) {
+                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", ViewConstants.MEDDRA_DICTIONARY);
                         if (rows.length > 0) {
                             logger.info("Dragged another meddra row, disallowed");
                             ADFUtils.showPopup(meddraError);
@@ -1351,19 +1351,19 @@ public class ManageCRSBean implements Serializable {
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
                             return DnDAction.NONE;
                         }
-                        Row rows1[] = riskDefVO.getFilteredRows("MeddraDict", "NMATSMQ");
+                        Row rows1[] = riskDefVO.getFilteredRows("MeddraDict", ViewConstants.FILTER_DICTIONARY);
                         if (rows1.length > 0) {
-                            ADFUtils.showFacesMessage("Both MEDDRA and Filter Dictionary terms cannot be assigned to a single Safety Topic of Interest", FacesMessage.SEVERITY_ERROR);
+                            ADFUtils.showFacesMessage(uiBundle.getString("MEDDRA_FILTER_COMBO_ERROR"), FacesMessage.SEVERITY_ERROR);
                             dragTable.setRowKey(dragCurrentRowKey);
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
                             return DnDAction.NONE;
                         }
                     }
-                    else if(dict != null && "NMATSMQ".equalsIgnoreCase(dict)){
-                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", "NMATMED");
+                    else if(dict != null && ViewConstants.FILTER_DICTIONARY.equalsIgnoreCase(dict)){
+                        Row rows[] = riskDefVO.getFilteredRows("MeddraDict", ViewConstants.MEDDRA_DICTIONARY);
                         if (rows.length > 0) {
-                            ADFUtils.showFacesMessage("Both MEDDRA and Filter Dictionary terms cannot be assigned to a single Safety Topic of Interest", FacesMessage.SEVERITY_ERROR);
+                            ADFUtils.showFacesMessage(uiBundle.getString("MEDDRA_FILTER_COMBO_ERROR"), FacesMessage.SEVERITY_ERROR);
                             dragTable.setRowKey(dragCurrentRowKey);
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
                             AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
@@ -1381,13 +1381,13 @@ public class ManageCRSBean implements Serializable {
                     riskDefRow.setAttribute("TmsDictContentEntryTs", dragRow.getAttribute("DictContentEntryTs"));
                     riskDefRow.setAttribute("TmsDictContentId", dragRow.getAttribute("DictContentId"));
                     riskDefRow.setAttribute("TmsEndTs", dragRow.getAttribute("EndTs"));
-                    if (dict != null && "NMATSMQ".equalsIgnoreCase(dict)) {
-                        if (term != null && term.contains("NMQ"))
-                            riskDefRow.setAttribute("MeddraExtension", "NMQ");
-                        else if (term != null && term.contains("CMQ"))
-                            riskDefRow.setAttribute("MeddraExtension", "CMQ");
-                        else if (term != null && term.contains("SMQ"))
-                            riskDefRow.setAttribute("MeddraExtension", "SMQ");
+                    if (dict != null && ViewConstants.FILTER_DICTIONARY.equalsIgnoreCase(dict)) {
+                        if (term != null && term.contains(ViewConstants.NMQ))
+                            riskDefRow.setAttribute("MeddraExtension", ViewConstants.NMQ);
+                        else if (term != null && term.contains(ViewConstants.CMQ))
+                            riskDefRow.setAttribute("MeddraExtension", ViewConstants.CMQ);
+                        else if (term != null && term.contains(ViewConstants.SMQ))
+                            riskDefRow.setAttribute("MeddraExtension", ViewConstants.SMQ);
                     } else
                         riskDefRow.setAttribute("MeddraExtension", level);
 
@@ -1461,7 +1461,7 @@ public class ManageCRSBean implements Serializable {
             OperationBinding oper = ADFUtils.findOperation("deleteCrs");
             oper.execute();
             if (oper.getErrors().size() > 0)
-                ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+                ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
             else{
                 String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}");
                 if(returnValue == null){
@@ -1730,16 +1730,16 @@ public class ManageCRSBean implements Serializable {
         logger.info("Getting list of values for Filter in hierarchy search.");
         if(filterItems == null){
             filterItems = new ArrayList<SelectItem>();
-            SelectItem item1 = new SelectItem("MQ1", "SMQ 1");
-            SelectItem item2 = new SelectItem("MQ2", "SMQ 2");
-            SelectItem item3 = new SelectItem("MQ3", "SMQ 3");
-            SelectItem item4 = new SelectItem("MQ4", "SMQ 4");
-            SelectItem item5 = new SelectItem("MQ5", "SMQ 5");
-            SelectItem item6 = new SelectItem("NMQ1", "Custom 1");
-            SelectItem item7 = new SelectItem("NMQ2", "Custom 2");
-            SelectItem item8 = new SelectItem("NMQ3", "Custom 3");
-            SelectItem item9 = new SelectItem("NMQ4", "Custom 4");
-            SelectItem item10 = new SelectItem("NMQ5", "Custom 5");
+            SelectItem item1 = new SelectItem(ViewConstants.MQ1, ViewConstants.SMQ1);
+            SelectItem item2 = new SelectItem(ViewConstants.MQ2, ViewConstants.SMQ2);
+            SelectItem item3 = new SelectItem(ViewConstants.MQ3, ViewConstants.SMQ3);
+            SelectItem item4 = new SelectItem(ViewConstants.MQ4, ViewConstants.SMQ4);
+            SelectItem item5 = new SelectItem(ViewConstants.MQ5, ViewConstants.SMQ5);
+            SelectItem item6 = new SelectItem(ViewConstants.NMQ1, ViewConstants.CUSTOM1);
+            SelectItem item7 = new SelectItem(ViewConstants.NMQ2, ViewConstants.CUSTOM2);
+            SelectItem item8 = new SelectItem(ViewConstants.NMQ3, ViewConstants.CUSTOM3);
+            SelectItem item9 = new SelectItem(ViewConstants.NMQ4, ViewConstants.CUSTOM4);
+            SelectItem item10 = new SelectItem(ViewConstants.NMQ5, ViewConstants.CUSTOM5);
             filterItems.add(item1);
             filterItems.add(item2);
             filterItems.add(item3);
@@ -1768,10 +1768,10 @@ public class ManageCRSBean implements Serializable {
         logger.info("Fetching list of values for MEDDRA LOV in hierarchy search");
         if(meddraItems == null){
             meddraItems = new ArrayList<SelectItem>();
-            SelectItem item1 = new SelectItem("SOC", "SOC");
-            SelectItem item2 = new SelectItem("HLGT", "HLGT");
-            SelectItem item3 = new SelectItem("HLT", "HLT");
-            SelectItem item4 = new SelectItem("PT", "PT");
+            SelectItem item1 = new SelectItem(ViewConstants.SOC, ViewConstants.SOC);
+            SelectItem item2 = new SelectItem(ViewConstants.HLGT, ViewConstants.HLGT);
+            SelectItem item3 = new SelectItem(ViewConstants.HLT, ViewConstants.HLT);
+            SelectItem item4 = new SelectItem(ViewConstants.PT, ViewConstants.PT);
             meddraItems.add(item1);
             meddraItems.add(item2);
             meddraItems.add(item3);
@@ -1783,7 +1783,7 @@ public class ManageCRSBean implements Serializable {
     public void dictionaryVC(ValueChangeEvent valueChangeEvent) {
         logger.info("Refreshing Level LOV based on the dictionary selected");
         if(valueChangeEvent.getNewValue() != null && valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue()){
-            if("NMATMED".equalsIgnoreCase((String)valueChangeEvent.getNewValue())){
+            if(ViewConstants.MEDDRA_DICTIONARY.equalsIgnoreCase((String)valueChangeEvent.getNewValue())){
                 setLevelItems(getMeddraItems());
             }else{
                 setLevelItems(getFilterItems());
@@ -1829,7 +1829,7 @@ public class ManageCRSBean implements Serializable {
         logger.info("CrsId : "+crsId+" state: "+getBaseOrStaging());
         oper1.execute();
         if (oper1.getErrors().size() > 0) 
-            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
         if(riskDefTable != null)
             ADFUtils.addPartialTarget(riskDefTable);
         if(riskDefPopup != null)
@@ -1968,7 +1968,7 @@ public class ManageCRSBean implements Serializable {
             logger.info("Calling model method validateSafetyTopic");
             Boolean invalid = (Boolean)ADFUtils.executeAction("validateSafetyTopic", params1);
             if(invalid){
-                ADFUtils.showFacesMessage("This Safety Topic Of Interest and Risk Purpose combination already exists in this CRS.", FacesMessage.SEVERITY_ERROR);
+                ADFUtils.showFacesMessage(uiBundle.getString("STOI_UNIQUE_ERROR"), FacesMessage.SEVERITY_ERROR);
                 return;
             }
         } catch (Exception e) {
@@ -2083,7 +2083,7 @@ public class ManageCRSBean implements Serializable {
         OperationBinding oper = ADFUtils.findOperation("Rollback");
         oper.execute();
         if (oper.getErrors().size() > 0) 
-            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
          else
             copyCrsRiskRelation(actionEvent);
     }
@@ -2292,7 +2292,7 @@ public class ManageCRSBean implements Serializable {
      */
     public String initializeCreateUpdateCRS() {
         // chk if there exists a CRS in staging table with the same as selected CRS in base table
-        if (!"anonymous".equals(userName) &&
+        if (!ViewConstants.ANONYMOUS_ROLE.equalsIgnoreCase(userName) &&
             ModelConstants.BASE_FACET.equals(getBaseOrStaging()) &&
             ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType())) {
             setReasonForChange(null);
@@ -2561,7 +2561,7 @@ public class ManageCRSBean implements Serializable {
             logger.info("isCrsFound --"+isCrsFound);
             if (op.getErrors() != null && op.getErrors().size() > 0) {
                 logger.info("Error occured from findByCrsFromStg,Navigating to search page --");
-                ADFUtils.showFacesMessage("An Internal Error occured,Please try again later.",
+                ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"),
                                           FacesMessage.SEVERITY_ERROR);
                 setBaseOrStaging(ModelConstants.BASE_FACET);
                 ADFUtils.closeDialog(getModifyReasonChngPopup());
@@ -2608,7 +2608,7 @@ public class ManageCRSBean implements Serializable {
                             op.execute();
                             if (op.getErrors() != null &&
                                 op.getErrors().size() > 0) {
-                                ADFUtils.showFacesMessage("An Internal Error occured,Please try again later.",
+                                ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"),
                                                           FacesMessage.SEVERITY_ERROR);
                                 setBaseOrStaging(ModelConstants.BASE_FACET);
                                 ADFUtils.closeDialog(getModifyReasonChngPopup());
@@ -2631,7 +2631,7 @@ public class ManageCRSBean implements Serializable {
             }
         } else {
             logger.info(" current row null ,navigating to search page ---");
-            ADFUtils.showFacesMessage("Please select a row to update before navigating.",
+            ADFUtils.showFacesMessage(uiBundle.getString("NAV_ERROR"),
                                       FacesMessage.SEVERITY_INFO);
             setBaseOrStaging(ModelConstants.BASE_FACET);
             ADFUtils.closeDialog(getModifyReasonChngPopup());
@@ -2849,7 +2849,7 @@ public class ManageCRSBean implements Serializable {
         oper.getParamsMap().put("status", getBaseOrStaging());
         oper.execute();
         if (oper.getErrors().size() > 0) 
-            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
         setFilterBy1(null);
         setFilterBy2(null);
         setFilterBy3(null);
@@ -3030,9 +3030,9 @@ public class ManageCRSBean implements Serializable {
             (String)ADFUtils.evaluateEL("#{bindings.ReleaseStatusFlag.inputValue}");
         String relstatus = "";
         if ("P".equals(relFlag))
-            relstatus = "Pending";
+            relstatus = ViewConstants.PENDING;
         else
-            relstatus = "Current";
+            relstatus = ViewConstants.CURRENT;
         Cell cell32 = row3.createCell((short)secondPalletStartIndx);
         cell32.setCellValue("Release Status: " + relstatus);
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
@@ -3308,12 +3308,12 @@ public class ManageCRSBean implements Serializable {
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
         if (oper.getErrors().size() > 0)
-            ADFUtils.showFacesMessage("An internal error has occured. Please try later.", FacesMessage.SEVERITY_ERROR);
+            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
         riskDefPopup.hide();
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
         Map params = new HashMap<String, Object>();
         params.put("crsId", crsId);
-        params.put("status", "STAGING");
+        params.put("status", ViewConstants.STAGING);
         logger.info("Init risk Relation : current Crs ID :: "+crsId);
         logger.info("Init risk Relation : Base or Staging :: "+getBaseOrStaging());
         try {
