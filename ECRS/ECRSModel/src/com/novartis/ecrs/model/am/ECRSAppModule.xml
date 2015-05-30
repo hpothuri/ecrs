@@ -334,6 +334,15 @@
         Type="java.util.List"/>
     </Method>
     <Method
+      Name="fetchDomainIdFromName"
+      MethodName="fetchDomainIdFromName">
+      <Return
+        Type="java.lang.Integer"/>
+      <Parameter
+        Name="domainName"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
       Name="filterCRSContent"
       MethodName="filterCRSContent">
       <Return
@@ -452,6 +461,9 @@
       <Parameter
         Name="crsRiskId"
         Type="java.lang.Long"/>
+      <Parameter
+        Name="domainId"
+        Type="java.lang.Integer"/>
     </Method>
   </ClientInterface>
 </AppModule>

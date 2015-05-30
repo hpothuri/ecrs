@@ -39,5 +39,8 @@ public interface ECRSAppModule extends ApplicationModule {
     String fetchDictionaryVersion();
 
     void filterCRSContent(String userInRole, String userName, boolean isInboxDisable, String flowType);
-    Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId);
+
+    Integer fetchDomainIdFromName(String domainName);
+
+    Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId, Integer domainId);
 }

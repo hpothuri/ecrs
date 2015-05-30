@@ -719,6 +719,7 @@ public class ManageCRSBean implements Serializable {
         params1.put("safetyTopic", safetyTopic);
         params1.put("rpList", riskPurposeList);
         params1.put("crsRiskId", ADFUtils.evaluateEL("#{bindings.CrsRiskId.inputValue}"));
+        params1.put("domainId", ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}"));
         try {
             logger.info("Calling model method validateSafetyTopic");
             Boolean invalid = (Boolean)ADFUtils.executeAction("validateSafetyTopic", params1);
@@ -1958,11 +1959,20 @@ public class ManageCRSBean implements Serializable {
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");  
         String riskPurposeList = (String)ADFUtils.evaluateEL("#{copyRow.RiskPurposeList}");
         String safetyTopic = (String)ADFUtils.evaluateEL("#{copyRow.SafetyTopicOfInterest}");
+        Map params2 = new HashMap<String, Object>();
+        params2.put("domainName", ADFUtils.evaluateEL("#{copyRow.DataDomain}"));
+        Integer domainId = 0;
+        try {
+            ADFUtils.executeAction("fetchDomainIdFromName", params2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Map params1 = new HashMap<String, Object>();
         logger.info("Validating it this CRS "+crsId+" has this safety topic already.");
         params1.put("crsId", crsId);
         params1.put("safetyTopic", safetyTopic);
         params1.put("rpList", riskPurposeList);
+        params1.put("domainId", domainId);
 //        params1.put("crsRiskId", ADFUtils.evaluateEL("#{bindings.CrsRiskId.inputValue}"));
         try {
             logger.info("Calling model method validateSafetyTopic");
@@ -2113,12 +2123,11 @@ public class ManageCRSBean implements Serializable {
      */
     public void deleteCopiedRiskDefs(ActionEvent actionEvent) {
         logger.info("Delete selected risk definitions in copy popup.");
-        RowKeySet rowKeySet = (RowKeySet)copyRiskDefTable.getSelectedRowKeys();
-        CollectionModel cm = (CollectionModel)copyRiskDefTable.getValue();
-        for (Object facesTreeRowKey : rowKeySet) {
-            cm.setRowKey(facesTreeRowKey);
-            JUCtrlHierNodeBinding rowData = (JUCtrlHierNodeBinding)cm.getRowData();
-            rowData.getRow().remove();
+        DCIteratorBinding riskDefIter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
+        ViewObject riskDefVO = riskDefIter.getViewObject();
+        Row[] rows= riskDefVO.getFilteredRows("SelectAttr", Boolean.TRUE);
+        for(Row row : rows){
+            row.remove();
         }
     }
 

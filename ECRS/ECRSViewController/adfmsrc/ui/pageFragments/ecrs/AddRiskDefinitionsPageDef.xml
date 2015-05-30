@@ -678,11 +678,18 @@
       <NamedData NDName="safetyTopic" NDType="java.lang.String"/>
       <NamedData NDName="rpList" NDType="java.lang.String"/>
       <NamedData NDName="crsRiskId" NDType="java.lang.Long"/>
+      <NamedData NDName="domainId" NDType="java.lang.Integer"/>
     </methodAction>
     <attributeValues IterBinding="CrsRiskRelationVOIterator" id="CrsRiskId">
       <AttrNames>
         <Item Value="CrsRiskId"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="fetchDomainIdFromName" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="fetchDomainIdFromName" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.fetchDomainIdFromName_ECRSAppModuleDataControl_dataProvider_fetchDomainIdFromName_result">
+      <NamedData NDName="domainName" NDType="java.lang.String"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

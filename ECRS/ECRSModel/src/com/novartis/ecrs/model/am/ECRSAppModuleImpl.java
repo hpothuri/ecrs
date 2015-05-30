@@ -641,6 +641,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     newCrsRiskId = (Long)relationRow.getAttribute("CrsRiskId");
                     definitionRow.setAttribute("CrsRiskId", newCrsRiskId);
                     definitionRow.setAttribute("MeddraQualifier", row.getAttribute("MeddraQualifier"));
+                    definitionRow.setAttribute("CrsQualifier", row.getAttribute("MeddraQualifier"));
                     definitionRow.setAttribute("MeddraCode", row.getAttribute("MeddraCode"));
                     definitionRow.setAttribute("MeddraLevel", row.getAttribute("MeddraLevel"));
                     definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
@@ -660,6 +661,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     Row definitionRow = definitionVO.createRow();
                     definitionRow.setAttribute("CrsRiskId", newCrsRiskId);
                     definitionRow.setAttribute("MeddraQualifier", row.getAttribute("MeddraQualifier"));
+                    definitionRow.setAttribute("CrsQualifier", row.getAttribute("MeddraQualifier"));
                     definitionRow.setAttribute("MeddraCode", row.getAttribute("MeddraCode"));
                     definitionRow.setAttribute("MeddraLevel", row.getAttribute("MeddraLevel"));
                     definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
@@ -967,7 +969,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      * @param domainName - DataDomain Name
      * @return - Domain Id
      */
-    private Integer fetchDomainIdFromName(String domainName){
+    public Integer fetchDomainIdFromName(String domainName){
         Integer domainId = 0;
         ViewObject domainVO = this.getDomainVO();
         domainVO.setWhereClause("DOMAIN_NAME = '"+domainName+"'");
@@ -1034,9 +1036,9 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         return (ViewObjectImpl)findViewObject("UserFullNameVO");
     }
     
-    public Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId){
+    public Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId, Integer domainId){
         ViewObject relationVO = this.getFetchCrsRiskRelationVO();
-        relationVO.setWhereClause("CRS_ID = "+crsId+" and SAFETY_TOPIC_OF_INTEREST = '"+safetyTopic+"' and RISK_PURPOSE_LIST = '"+rpList+"' and CRS_RISK_ID <> "+crsRiskId);
+        relationVO.setWhereClause("CRS_ID = "+crsId+" and SAFETY_TOPIC_OF_INTEREST = '"+safetyTopic+"' and RISK_PURPOSE_LIST = '"+rpList+"' and DOMAIN_ID = "+domainId+"and CRS_RISK_ID <> "+crsRiskId);
         relationVO.executeQuery();
         if(relationVO.getEstimatedRowCount() > 0)
             return Boolean.TRUE;

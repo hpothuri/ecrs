@@ -56,6 +56,11 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return (String)_ret;
     }
 
+    public Integer fetchDomainIdFromName(String domainName) {
+        Object _ret = this.riInvokeExportedMethod(this,"fetchDomainIdFromName",new String [] {"java.lang.String"},new Object[] {domainName});
+        return (Integer)_ret;
+    }
+
     public void filterCRSContent(String userInRole, String userName, boolean isInboxDisable, String flowType) {
         Object _ret =
             this.riInvokeExportedMethod(this,"filterCRSContent",new String [] {"java.lang.String","java.lang.String","boolean","java.lang.String"},new Object[] {userInRole, userName, new Boolean(isInboxDisable), flowType});
@@ -96,9 +101,10 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return (String)_ret;
     }
 
-    public Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId) {
+    public Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId,
+                                       Integer domainId) {
         Object _ret =
-            this.riInvokeExportedMethod(this,"validateSafetyTopic",new String [] {"java.lang.Long","java.lang.String","java.lang.String","java.lang.Long"},new Object[] {crsId, safetyTopic, rpList, crsRiskId});
+            this.riInvokeExportedMethod(this,"validateSafetyTopic",new String [] {"java.lang.Long","java.lang.String","java.lang.String","java.lang.Long","java.lang.Integer"},new Object[] {crsId, safetyTopic, rpList, crsRiskId, domainId});
         return (Boolean)_ret;
     }
 }

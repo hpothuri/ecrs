@@ -158,7 +158,7 @@
                   </af:panelLabelAndMessage>
                 </f:facet>
               </af:column>
-              <af:column id="c23" headerText="#{ecrsviewcontrollerBundle.CRS_DEFINTION}">
+              <af:column id="c23" headerText="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_DEFINITION}">
                 <af:column sortProperty="#{bindings.CrsRiskVO.hints.MeddraTerm.name}" filterable="true"
                            headerText="#{bindings.CrsRiskVO.hints.MeddraTerm.label}" id="c14" width="200">
                   <af:panelGroupLayout id="pgl9">
@@ -313,7 +313,7 @@
                   </af:panelLabelAndMessage>
                 </f:facet>
               </af:column>
-              <af:column id="c81" headerText="#{ecrsviewcontrollerBundle.CRS_DEFINTION}">
+              <af:column id="c81" headerText="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_DEFINITION}">
                 <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.MeddraTerm.name}" filterable="true"
                            sortable="true" headerText="#{ecrsviewcontrollerBundle.MEDDRA_TERM}" id="c74" width="200">
                   <af:outputText value="#{row.MeddraTerm}"
@@ -547,13 +547,20 @@
               </af:column>
               <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.name}" sortable="false"
                          headerText="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.label}" id="c26">
+                <af:selectOneChoice label="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.label}" id="soc1"
+                                    value="#{row.bindings.CrsQualifier.inputValue}"
+                                    readOnly="#{row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}">
+                  <af:selectItem label="BROAD" value="BROAD" id="si24"/>
+                  <af:selectItem label="NARROW" value="NARROW" id="si25"/>
+                </af:selectOneChoice>
                 <af:inputText value="#{row.bindings.CrsQualifier.inputValue}"
                               label="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.label}"
                               required="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.mandatory}"
                               columns="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.displayWidth}"
                               maximumLength="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.precision}"
                               shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.tooltip}" id="it18"
-                              readOnly="#{row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}">
+                              readOnly="#{row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}" visible="false"
+                              autoSubmit="true">
                   <f:validator binding="#{row.bindings.MeddraQualifier.validator}"/>
                 </af:inputText>
               </af:column>
@@ -963,7 +970,7 @@
                         fetchSize="#{bindings.CrsRiskDefinitionsVO1.rangeSize}" rowBandingInterval="0"
                         selectedRowKeys="#{bindings.CrsRiskDefinitionsVO1.collectionModel.selectedRow}"
                         selectionListener="#{bindings.CrsRiskDefinitionsVO1.collectionModel.makeCurrent}"
-                        rowSelection="multiple" id="t8" partialTriggers="::pc2:cb7 :::pc2:cb7"
+                        rowSelection="multiple" id="t8" partialTriggers=":::pc2:cb7 ::cb81"
                         columnStretching="column:c55" binding="#{pageFlowScope.manageCRSBean.copyRiskDefTable}"
                         styleClass="AFStretchWidth">
                 <af:column id="c86" width="20" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
@@ -987,7 +994,13 @@
                   <af:outputText value="#{row.CrsQualifier}"
                                  shortDesc="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraQualifier.tooltip}" id="ot35"
                                  rendered="false"/>
-                  <af:inputText id="it8" value="#{row.CrsQualifier}" readOnly="#{row.MeddraQualifierUpdFlag ne 'Y'}"/>
+                  <af:inputText id="it8" value="#{row.CrsQualifier}" readOnly="#{row.MeddraQualifierUpdFlag ne 'Y'}"
+                                rendered="false"/>
+                  <af:selectOneChoice id="soc11" readOnly="#{row.MeddraQualifierUpdFlag ne 'Y'}"
+                                      value="#{row.CrsQualifier}">
+                    <af:selectItem label="BROAD" value="BROAD" id="si26"/>
+                    <af:selectItem label="NARROW" value="NARROW" id="si27"/>
+                  </af:selectOneChoice>
                 </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraCode.name}" sortable="false"
                            headerText="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraCode.label}" id="c58">
