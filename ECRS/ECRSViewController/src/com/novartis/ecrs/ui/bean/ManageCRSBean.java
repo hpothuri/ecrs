@@ -3245,7 +3245,7 @@ public class ManageCRSBean implements Serializable {
                 columnMap.put("PtCode", rsBundle.getString("PT_CODE"));
                 workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
                 Sheet sheet = workbook.getSheetAt(0);
-                writeHeaderData(sheet,0,1,3,4);
+                writeHeaderData(sheet,0,2,3,4);
                 ExcelExportUtils.writeExcelSheet(sheet, rowSet, rowStartIndex,
                                                  cellStartIndex, columnMap, null,
                                                  dateCellFormat, emptyValReplace,
