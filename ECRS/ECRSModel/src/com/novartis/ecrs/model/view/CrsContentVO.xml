@@ -184,6 +184,7 @@
     ListVOName="BSLUserVA"
     ListRangeSize="-1"
     NullValueFlag="start"
+    Delimiter=","
     NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
     MRUCount="0">
     <AttrArray Name="AttrNames">
@@ -380,7 +381,7 @@ WHERE
     <Properties>
       <SchemaBasedProperties>
         <CONTROLTYPE
-          Value="choice"/>
+          Value="delimited_ids_choice"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
