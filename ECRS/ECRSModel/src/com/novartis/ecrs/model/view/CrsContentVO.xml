@@ -233,7 +233,8 @@
     CrsContentEO.MEDICAL_LEAD_REJECT_COMMENT, 
     CrsContentEO.CRS_EFFECTIVE_DT, 
     CrsContentEO.REVIEW_APPROVE_REQUIRED_FLAG, 
-    CrsContentEO.UI_VERSION_NUMBER, 
+    CrsContentEO.UI_VERSION_NUMBER,
+    CrsContentEO.REASON_FOR_CHANGE,
     CrsCompoundEO.COMPOUND_TYPE AS CRS_COMPOUND_TYPE, 
     CrsCompoundEO.COMPOUND_CODE AS CRS_COMPOUND_CODE 
 FROM CRS_CONTENT_STG CrsContentEO,CRS_COMPOUNDS CrsCompoundEO 
@@ -454,6 +455,13 @@ WHERE
     EntityAttrName="UiVersionNumber"
     EntityUsage="CrsContentEO"
     AliasName="UI_VERSION_NUMBER"/>
+  <ViewAttribute
+    Name="ReasonForChange"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ReasonForChange"
+    EntityUsage="CrsContentEO"
+    AliasName="REASON_FOR_CHANGE"/>
   <ViewAttribute
     Name="CrsCompoundType"
     IsUpdateable="false"

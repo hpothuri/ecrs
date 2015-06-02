@@ -215,6 +215,16 @@ public class CrsContentVORowImpl extends ViewRowImpl {
             }
         }
         ,
+        ReasonForChange {
+            public Object get(CrsContentVORowImpl obj) {
+                return obj.getReasonForChange();
+            }
+
+            public void put(CrsContentVORowImpl obj, Object value) {
+                obj.setReasonForChange((String)value);
+            }
+        }
+        ,
         CrsCompoundType {
             public Object get(CrsContentVORowImpl obj) {
                 return obj.getCrsCompoundType();
@@ -402,6 +412,7 @@ public class CrsContentVORowImpl extends ViewRowImpl {
     public static final int CRSEFFECTIVEDT = AttributesEnum.CrsEffectiveDt.index();
     public static final int REVIEWAPPROVEREQUIREDFLAG = AttributesEnum.ReviewApproveRequiredFlag.index();
     public static final int UIVERSIONNUMBER = AttributesEnum.UiVersionNumber.index();
+    public static final int REASONFORCHANGE = AttributesEnum.ReasonForChange.index();
     public static final int CRSCOMPOUNDTYPE = AttributesEnum.CrsCompoundType.index();
     public static final int CRSCOMPOUNDCODE = AttributesEnum.CrsCompoundCode.index();
     public static final int COMPOUNDTYPE = AttributesEnum.CompoundType.index();
@@ -803,6 +814,22 @@ public class CrsContentVORowImpl extends ViewRowImpl {
      */
     public void setEntityState(String value) {
         setAttributeInternal(ENTITYSTATE, value);
+    }
+
+    /**
+     * Gets the attribute value for REASON_FOR_CHANGE using the alias name ReasonForChange.
+     * @return the REASON_FOR_CHANGE
+     */
+    public String getReasonForChange() {
+        return (String) getAttributeInternal(REASONFORCHANGE);
+    }
+
+    /**
+     * Sets <code>value</code> as attribute value for REASON_FOR_CHANGE using the alias name ReasonForChange.
+     * @param value value to set the REASON_FOR_CHANGE
+     */
+    public void setReasonForChange(String value) {
+        setAttributeInternal(REASONFORCHANGE, value);
     }
 
     /**

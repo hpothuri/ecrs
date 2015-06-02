@@ -256,5 +256,10 @@
           DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
     <list IterBinding="CrsContentBaseVOIterator" StaticList="false" Uses="LOV_MedicalLeadName" id="MedicalLeadNameBase"
           DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+    <attributeValues IterBinding="CrsContentVOIterator" id="ReasonForChange">
+      <AttrNames>
+        <Item Value="ReasonForChange"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

@@ -2929,8 +2929,15 @@ public class ManageCRSBean implements Serializable {
      * @param actionEvent
      */
     public void onClickPublish(ActionEvent actionEvent) {
+        //check if already reasonForChange is popultaed ,then show it
+        String reason =
+            (String)ADFUtils.evaluateEL("#{bindings.ReasonForChange.inputValue}");
         //default reason for change to initial version
-        reasonForChange = ViewConstants.REASON_DEFAULT_VALUE;
+        if (ViewConstants.isNotEmpty(reason) &&
+            !"None".equalsIgnoreCase(reason))
+            reasonForChange = reason;
+        else
+            reasonForChange = ViewConstants.REASON_DEFAULT_VALUE;
         ADFUtils.showPopup(getPublishPopupBinding());
     }
 
