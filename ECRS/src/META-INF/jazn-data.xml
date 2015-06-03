@@ -254,6 +254,36 @@
                 <name>/WEB-INF/taskflows/ManageDomainsTF.xml#ManageDomainsTF</name>
                 <actions>view</actions>
               </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.reports.AdminDashBoardReportPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.reports.CRSCountperMedDRAReportPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.CrsCreatePageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.reports.CRSCurrentPendingReportPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.reports.MedDRACompStardardReportPageDef</name>
+                <actions>view</actions>
+              </permission>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.reports.RetiredNMQsCMQsReportPageDef</name>
+                <actions>view</actions>
+              </permission>
             </permissions>
           </grant>
           <grant>
@@ -278,22 +308,7 @@
               </permission>
               <permission>
                 <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.reports.AdminDashBoardReportPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.reports.CRSCurrentPendingReportPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
                 <name>pages.reports.MedDRAComponentsReportPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.reports.MedDRACompStardardReportPageDef</name>
                 <actions>view</actions>
               </permission>
               <permission>
@@ -303,27 +318,7 @@
               </permission>
               <permission>
                 <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.reports.CRSCountperMedDRAReportPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.CrsCreatePageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
                 <name>ui.pageFragments.ecrs.createCRSPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.SearchCRSPageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.reports.RetiredNMQsCMQsReportPageDef</name>
                 <actions>view</actions>
               </permission>
               <permission>
@@ -350,17 +345,29 @@
               </permission>
               <permission>
                 <class>oracle.adf.share.security.authorization.RegionPermission</class>
-                <name>pages.CrsCreatePageDef</name>
-                <actions>view</actions>
-              </permission>
-              <permission>
-                <class>oracle.adf.share.security.authorization.RegionPermission</class>
                 <name>ui.pageFragments.ecrs.createCRSPageDef</name>
                 <actions>view</actions>
               </permission>
               <permission>
                 <class>oracle.adf.share.security.authorization.RegionPermission</class>
                 <name>pages.SearchCRSPageDef</name>
+                <actions>view</actions>
+              </permission>
+            </permissions>
+          </grant>
+          <grant>
+            <grantee>
+              <principals>
+                <principal>
+                  <name>CRS_BSL</name>
+                  <class>oracle.security.jps.internal.core.principals.JpsXmlEnterpriseRoleImpl</class>
+                </principal>
+              </principals>
+            </grantee>
+            <permissions>
+              <permission>
+                <class>oracle.adf.share.security.authorization.RegionPermission</class>
+                <name>pages.CrsCreatePageDef</name>
                 <actions>view</actions>
               </permission>
             </permissions>

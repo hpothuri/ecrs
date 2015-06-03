@@ -6,6 +6,12 @@
     <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
     <param-value>client</param-value>
   </context-param>
+  <!--context-param>
+  <param-name>
+     oracle.adf.view.rich.sessionHandling.WARNING_BEFORE_TIMEOUT
+  </param-name>
+    <param-value>0</param-value>
+</context-param-->
   <context-param>
     <param-name>javax.faces.PARTIAL_STATE_SAVING</param-name>
     <param-value>false</param-value>
@@ -176,6 +182,10 @@
   <welcome-file-list>
     <welcome-file>/index.html</welcome-file>
   </welcome-file-list>
+<error-page>
+    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+    <location>/index.html</location>
+</error-page>
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>adfAuthentication</web-resource-name>
