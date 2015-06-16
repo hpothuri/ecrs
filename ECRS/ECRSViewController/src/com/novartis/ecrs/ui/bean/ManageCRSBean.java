@@ -1624,7 +1624,7 @@ public class ManageCRSBean implements Serializable {
                           rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.MeddraCode_LABEL"));
             columnMap.put("MeddraTerm", rsBundle.getString("MEDDRA_TERM"));
             columnMap.put("MeddraLevel", rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.MeddraLevel_LABEL"));
-            columnMap.put("MeddraQualifier",
+            columnMap.put("CrsQualifier",
                           rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.MeddraQualifier_LABEL"));
             columnMap.put("SearchCriteriaDetails",
                           rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.SearchCriteriaDetails_LABEL"));

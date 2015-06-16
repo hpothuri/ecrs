@@ -43,15 +43,15 @@
       <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsRiskVO" Name="CrsRiskVO0">
         <AttrNames>
           <Item Value="SafetyTopicOfInterest"/>
-          <Item Value="RiskPurposeSpFlag" Binds="RiskPurposeSpFlag"/>
-          <Item Value="RiskPurposeDsFlag" Binds="RiskPurposeDsFlag"/>
-          <Item Value="RiskPurposeRmFlag" Binds="RiskPurposeRmFlag"/>
-          <Item Value="RiskPurposePsFlag" Binds="RiskPurposePsFlag"/>
-          <Item Value="RiskPurposeIbFlag" Binds="RiskPurposeIbFlag"/>
-          <Item Value="RiskPurposeCdFlag" Binds="RiskPurposeCdFlag"/>
-          <Item Value="RiskPurposeOsFlag" Binds="RiskPurposeOsFlag"/>
-          <Item Value="RiskPurposeMiFlag" Binds="RiskPurposeMiFlag"/>
-          <Item Value="RiskPurposeErFlag" Binds="RiskPurposeErFlag"/>
+          <Item Value="RiskPurposeSpFlag"/>
+          <Item Value="RiskPurposeDsFlag"/>
+          <Item Value="RiskPurposeRmFlag"/>
+          <Item Value="RiskPurposePsFlag"/>
+          <Item Value="RiskPurposeIbFlag"/>
+          <Item Value="RiskPurposeCdFlag"/>
+          <Item Value="RiskPurposeOsFlag"/>
+          <Item Value="RiskPurposeMiFlag"/>
+          <Item Value="RiskPurposeErFlag"/>
           <Item Value="SocTerm"/>
           <Item Value="DataDomain"/>
           <Item Value="MeddraTerm"/>
@@ -78,6 +78,7 @@
           <Item Value="CrsEffectiveDtRel"/>
           <Item Value="MeddraDict"/>
           <Item Value="MeddraExtension"/>
+          <Item Value="CrsQualifier"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -262,15 +263,15 @@
           <Item Value="DataDomain"/>
           <Item Value="MqmComment"/>
           <Item Value="NonMeddraComponentComment"/>
-          <Item Value="RiskPurposeCdFlag" Binds="RiskPurposeCdFlag1"/>
-          <Item Value="RiskPurposeDsFlag" Binds="RiskPurposeDsFlag1"/>
-          <Item Value="RiskPurposeErFlag" Binds="RiskPurposeErFlag1"/>
-          <Item Value="RiskPurposeIbFlag" Binds="RiskPurposeIbFlag1"/>
-          <Item Value="RiskPurposeMiFlag" Binds="RiskPurposeMiFlag1"/>
-          <Item Value="RiskPurposeOsFlag" Binds="RiskPurposeOsFlag1"/>
-          <Item Value="RiskPurposePsFlag" Binds="RiskPurposePsFlag1"/>
-          <Item Value="RiskPurposeRmFlag" Binds="RiskPurposeRmFlag1"/>
-          <Item Value="RiskPurposeSpFlag" Binds="RiskPurposeSpFlag1"/>
+          <Item Value="RiskPurposeCdFlag"/>
+          <Item Value="RiskPurposeDsFlag"/>
+          <Item Value="RiskPurposeErFlag"/>
+          <Item Value="RiskPurposeIbFlag"/>
+          <Item Value="RiskPurposeMiFlag"/>
+          <Item Value="RiskPurposeOsFlag"/>
+          <Item Value="RiskPurposePsFlag"/>
+          <Item Value="RiskPurposeRmFlag"/>
+          <Item Value="RiskPurposeSpFlag"/>
           <Item Value="SafetyTopicOfInterest"/>
           <Item Value="SocDictContentEntryTs"/>
           <Item Value="SocDictContentId"/>
@@ -293,6 +294,7 @@
           <Item Value="CrsEffectiveDtRel"/>
           <Item Value="CrsEffectiveDtDef"/>
           <Item Value="MeddraExtension"/>
+          <Item Value="CrsQualifier"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -472,15 +474,15 @@
       <nodeDefinition DefName="com.novartis.ecrs.model.view.riskdefs.CrsRiskBaseVO" Name="CrsRiskBaseVO0">
         <AttrNames>
           <Item Value="SafetyTopicOfInterest"/>
-          <Item Value="RiskPurposeSpFlag" Binds="RiskPurposeSpFlag2"/>
-          <Item Value="RiskPurposeDsFlag" Binds="RiskPurposeDsFlag2"/>
-          <Item Value="RiskPurposeRmFlag" Binds="RiskPurposeRmFlag2"/>
-          <Item Value="RiskPurposePsFlag" Binds="RiskPurposePsFlag2"/>
-          <Item Value="RiskPurposeIbFlag" Binds="RiskPurposeIbFlag2"/>
-          <Item Value="RiskPurposeCdFlag" Binds="RiskPurposeCdFlag2"/>
-          <Item Value="RiskPurposeOsFlag" Binds="RiskPurposeOsFlag2"/>
-          <Item Value="RiskPurposeMiFlag" Binds="RiskPurposeMiFlag2"/>
-          <Item Value="RiskPurposeErFlag" Binds="RiskPurposeErFlag2"/>
+          <Item Value="RiskPurposeSpFlag"/>
+          <Item Value="RiskPurposeDsFlag"/>
+          <Item Value="RiskPurposeRmFlag"/>
+          <Item Value="RiskPurposePsFlag"/>
+          <Item Value="RiskPurposeIbFlag"/>
+          <Item Value="RiskPurposeCdFlag"/>
+          <Item Value="RiskPurposeOsFlag"/>
+          <Item Value="RiskPurposeMiFlag"/>
+          <Item Value="RiskPurposeErFlag"/>
           <Item Value="SocTerm"/>
           <Item Value="DataDomain"/>
           <Item Value="MeddraTerm"/>
@@ -507,6 +509,7 @@
           <Item Value="TmsEndTs"/>
           <Item Value="TmsUpdateFlag"/>
           <Item Value="TmsUpdateFlagDt"/>
+          <Item Value="CrsQualifier"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

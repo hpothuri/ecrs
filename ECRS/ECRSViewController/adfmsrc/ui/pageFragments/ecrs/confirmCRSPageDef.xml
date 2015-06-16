@@ -128,5 +128,10 @@
         <Item Value="ReleaseStatusFlag"/>
       </AttrNames>
     </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="ReasonForChange">
+      <AttrNames>
+        <Item Value="ReasonForChange"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

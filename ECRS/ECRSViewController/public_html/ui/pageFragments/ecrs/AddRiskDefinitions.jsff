@@ -1,3 +1,4 @@
+
 <?xml version='1.0' encoding='UTF-8'?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:f="http://java.sun.com/jsf/core"
@@ -180,7 +181,7 @@
                 </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskVO.hints.MeddraQualifier.name}" filterable="true"
                            headerText="#{bindings.CrsRiskVO.hints.MeddraQualifier.label}" id="c16" width="60">
-                  <af:outputText value="#{row.MeddraQualifier}"
+                  <af:outputText value="#{row.CrsQualifier}"
                                  shortDesc="#{bindings.CrsRiskVO.hints.MeddraQualifier.tooltip}" id="ot16"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.name}" filterable="true"
@@ -345,7 +346,7 @@
                 <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.MeddraQualifier.name}" filterable="true"
                            sortable="true" headerText="#{ecrsviewcontrollerBundle.MEDDRA_QUALIFIER}" id="c76"
                            width="60">
-                  <af:outputText value="#{row.MeddraQualifier}"
+                  <af:outputText value="#{row.CrsQualifier}"
                                  shortDesc="#{bindings.CrsRiskBaseVO.hints.MeddraQualifier.tooltip}" id="ot53"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.SearchCriteriaDetails.name}" filterable="true"
@@ -899,7 +900,7 @@
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraQualifier.name}" sortable="true"
                          headerText="#{ecrsviewcontrollerBundle.MEDDRA_QUALIFIER}" id="c485" width="50">
-                <af:outputText value="#{copyRow.MeddraQualifier}"
+                <af:outputText value="#{copyRow.CrsQualifier}"
                                shortDesc="#{bindings.CopyCrsRiskVO.hints.MeddraQualifier.tooltip}" id="ot30"/>
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraCode.name}" sortable="true"

@@ -212,6 +212,14 @@
                                         <f:validator binding="#{bindings.CrsEffectiveDt.validator}"/>
                                         <af:convertDateTime pattern="#{bindings.CrsEffectiveDt.format}"/>
                                     </af:inputDate>
+                                    <af:inputText value="#{bindings.ReasonForChange.inputValue}" simple="true"
+                                                  required="#{bindings.ReasonForChange.hints.mandatory}"
+                                                  columns="#{bindings.ReasonForChange.hints.displayWidth}"
+                                                  maximumLength="#{bindings.ReasonForChange.hints.precision}"
+                                                  visible="false"
+                                                  shortDesc="#{bindings.ReasonForChange.hints.tooltip}" id="it8">
+                                        <f:validator binding="#{bindings.ReasonForChange.validator}"/>
+                                    </af:inputText>
                                 </af:panelFormLayout>
                                 <af:panelGroupLayout id="pgl7"
                                                      layout="horizontal"

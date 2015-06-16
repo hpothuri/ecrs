@@ -59,7 +59,8 @@ MEDDRA_DICT,
 CRS_EFFECTIVE_DT_REL,
 CRS_EFFECTIVE_DT_DEF CRS_EFFECTIVE_DT_DEF,
 MEDDRA_EXTENSION,
-MEDDRA_QUALIFIER_UPD_FLAG
+MEDDRA_QUALIFIER_UPD_FLAG,
+CRS_QUALIFIER
 FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
   <ViewAttribute
     Name="CrsId"
@@ -568,6 +569,21 @@ FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CrsQualifier"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="15"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CRS_QUALIFIER"
+    Expression="CRS_QUALIFIER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
     </DesignTime>
   </ViewAttribute>
   <ResourceBundle>
