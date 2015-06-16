@@ -261,5 +261,15 @@
         <Item Value="ReasonForChange"/>
       </AttrNames>
     </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CrsEffectiveDt">
+      <AttrNames>
+        <Item Value="CrsEffectiveDt"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="CrsEffectiveDtBase">
+      <AttrNames>
+        <Item Value="CrsEffectiveDt"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

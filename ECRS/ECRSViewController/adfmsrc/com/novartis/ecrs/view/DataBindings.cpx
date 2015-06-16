@@ -79,6 +79,7 @@
           usageId="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_ExecutePageDef"/>
     <page path="/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF@Rollback"
           usageId="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_RollbackPageDef"/>
+    <page path="/ui/pageFragments/ecrs/confirmCRS.jsff" usageId="com_novartis_ecrs_view_confirmCRSPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -147,6 +148,7 @@
           path="taskflows.ManageCRSTF_ManageCRSTF_ExecutePageDef"/>
     <page id="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_RollbackPageDef"
           path="taskflows.ManageCRSTF_ManageCRSTF_RollbackPageDef"/>
+    <page id="com_novartis_ecrs_view_confirmCRSPageDef" path="ui.pageFragments.ecrs.confirmCRSPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

@@ -65,6 +65,7 @@ import oracle.javatools.resourcebundle.BundleFactory;
 import oracle.jbo.Row;
 import oracle.jbo.RowIterator;
 import oracle.jbo.RowSetIterator;
+import oracle.jbo.ViewCriteria;
 import oracle.jbo.ViewObject;
 import oracle.jbo.server.ViewObjectImpl;
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
@@ -170,6 +171,7 @@ public class ManageCRSBean implements Serializable {
     private transient RichTable stagingTable;
     private transient ResourceBundle uiBundle =
         BundleFactory.getBundle("com.novartis.ecrs.view.ECRSViewControllerBundle");
+    private transient RichPanelGroupLayout workflowPG;
 
     public ManageCRSBean() {
         super();
@@ -250,8 +252,8 @@ public class ManageCRSBean implements Serializable {
 //                    ADFUtils.addPartialTarget(getWorkflowPanelBox());
 //                }
 //            } else {
-                ADFUtils.showPopup(getSuccessPopupBinding());
-                ADFUtils.addPartialTarget(getWorkflowPanelBox());
+                 ADFUtils.showPopup(getSuccessPopupBinding());
+               // ADFUtils.addPartialTarget(getWorkflowPanelBox());
 //            }
         }
     }
@@ -1041,8 +1043,8 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
         else {
             ADFUtils.showPopup(infoPopup);
-            ADFUtils.addPartialTarget(getCrsStateSOC());
-            ADFUtils.addPartialTarget(getWorkflowPanelBox());
+           // ADFUtils.addPartialTarget(getCrsStateSOC());
+            ADFUtils.addPartialTarget(getWorkflowPG());
         }
     }
 
@@ -1618,6 +1620,8 @@ public class ManageCRSBean implements Serializable {
 //                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.DatabaseId_LABEL"));
             columnMap.put("DataDomain",
                           rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.DataDomain_LABEL"));
+            columnMap.put("MeddraCode",
+                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskVO.MeddraCode_LABEL"));
             columnMap.put("MeddraTerm", rsBundle.getString("MEDDRA_TERM"));
             columnMap.put("MeddraLevel", rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.MeddraLevel_LABEL"));
             columnMap.put("MeddraQualifier",
@@ -2801,21 +2805,28 @@ public class ManageCRSBean implements Serializable {
      */
     public void onOkFilter(ActionEvent actionEvent) {
         logger.info("Performing advanced filter on the table");
-        DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskVOIterator");
-        ViewObject riskVO = iter.getViewObject();
-        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
-        StringBuilder whereClause = new StringBuilder("CRS_ID = "+crsId);
-        if(filterBy1 != null && filterValue1 != null)
-            whereClause.append(" AND ("+filterBy1 + " LIKE '"+filterValue1+"' ");
-        if(filterBy2 != null && filterValue2 != null)
-            whereClause.append(filterCri1 + " " + filterBy2 + " LIKE '"+filterValue2+"' ");
-        if(filterBy3 != null && filterValue3 != null)
-            whereClause.append(filterCri2 + " " + filterBy3 + " LIKE '"+filterValue3+"' ");  
-        if(filterBy1 != null && filterValue1 != null)
-            whereClause.append(")");
-        riskVO.setWhereClause(whereClause.toString());
-        System.err.println(riskVO.getQuery());
-        riskVO.executeQuery();
+        DCIteratorBinding iter = null;
+        if (null != this.baseOrStaging && ViewConstants.STAGING.equals(this.baseOrStaging)){
+            iter = ADFUtils.findIterator("CrsRiskVOIterator");
+        } else {
+            iter = ADFUtils.findIterator("CrsRiskBaseVOIterator"); 
+        }
+        if (null != iter){
+            ViewObject riskVO = iter.getViewObject();
+            Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
+            StringBuilder whereClause = new StringBuilder("CRS_ID = "+crsId);
+            if(filterBy1 != null && filterValue1 != null)
+                whereClause.append(" AND ("+filterBy1 + " LIKE '"+filterValue1+"' ");
+            if(filterBy2 != null && filterValue2 != null)
+                whereClause.append(filterCri1 + " " + filterBy2 + " LIKE '"+filterValue2+"' ");
+            if(filterBy3 != null && filterValue3 != null)
+                whereClause.append(filterCri2 + " " + filterBy3 + " LIKE '"+filterValue3+"' ");  
+            if(filterBy1 != null && filterValue1 != null)
+                whereClause.append(")");
+            riskVO.setWhereClause(whereClause.toString());
+            System.err.println(riskVO.getQuery());
+            riskVO.executeQuery(); 
+        }
         advancedFilterPopup.hide();
     }
 
@@ -3347,5 +3358,66 @@ public class ManageCRSBean implements Serializable {
 
     public RichTable getStagingTable() {
         return stagingTable;
+    }
+    public String initConfirmPage(){
+        logger.info("initConfirmPage....enter");
+        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
+        String flowTypeConfirm = (String) ADFUtils.getPageFlowScopeValue("flowType");
+        logger.info("initConfirmPage : current flowType :: " + flowTypeConfirm);
+        logger.info("initConfirmPage : current Crs ID :: " + crsId);
+        logger.info("initConfirmPage : Base or Staging :: " + getBaseOrStaging());
+       /* DCBindingContainer bc =  ADFUtils.findBindingContainerByName("com_novartis_ecrs_view_confirmCRSPageDef");
+        if (null != bc){
+            DCIteratorBinding iter = null;
+            
+            if (null != getBaseOrStaging() && getBaseOrStaging().equalsIgnoreCase(ViewConstants.STAGING)){
+                iter = bc.findIteratorBinding("CrsContentVOIterator"); 
+            } else {
+                iter = bc.findIteratorBinding("CrsContentBaseVOIterator");
+            }
+            ViewObject crsContentVO = iter.getViewObject();
+            logger.info("initConfirmPage : current flowType :: " + flowTypeConfirm);
+            logger.info("initConfirmPage : current Crs ID :: " + crsId);
+            logger.info("initConfirmPage : Base or Staging :: " + getBaseOrStaging());
+            logger.info("initConfirmPage : User Role :: " + loggedInUserRole);
+            if (null != crsContentVO){
+                ViewCriteria vc = crsContentVO.getViewCriteriaManager().getViewCriteria("findByCrsId");
+                if (null != vc){
+                    crsContentVO.setNamedWhereClauseParam("pCrsId", crsId);
+                    crsContentVO.applyViewCriteria(vc);
+                    crsContentVO.executeQuery();
+                    Row currentRow = crsContentVO.first();
+                    crsContentVO.setCurrentRow(currentRow);
+                    //loadDesineeList((String)currentRow.getAttribute("Designee"));
+                    crsContentVO.applyViewCriteria(null);                    
+                }
+                
+            }
+        } else {
+            logger.info("initConfirmPage....binding container is null");
+        }
+        */
+        logger.info("Exit initConfirmPage....");
+        return "confirm"; 
+    }
+    private void loadDesineeList(String designee){
+        List<String> designeeList = new ArrayList<String>();
+        if (designee != null) {
+            String[] designeeArray = designee.split("[,]");
+            if (designeeArray.length > 0) {
+                for (int i = 0; i < designeeArray.length; i++) {
+                    designeeList.add(designeeArray[i]);
+                }
+            }
+            setSelDesigneeList(designeeList);
+        }
+    }
+
+    public void setWorkflowPG(RichPanelGroupLayout workflowPG) {
+        this.workflowPG = workflowPG;
+    }
+
+    public RichPanelGroupLayout getWorkflowPG() {
+        return workflowPG;
     }
 }

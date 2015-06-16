@@ -158,6 +158,10 @@
                   </af:panelLabelAndMessage>
                 </f:facet>
               </af:column>
+              <af:column headerText="#{bindings.CrsRiskVO.hints.MeddraCode.label}" id="c88">
+                <af:outputText value="#{row.MeddraCode}" shortDesc="#{bindings.CrsRiskVO.hints.MeddraCode.tooltip}"
+                               id="ot27"/>
+              </af:column>
               <af:column id="c23" headerText="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_DEFINITION}">
                 <af:column sortProperty="#{bindings.CrsRiskVO.hints.MeddraTerm.name}" filterable="true"
                            headerText="#{bindings.CrsRiskVO.hints.MeddraTerm.label}" id="c14" width="200">
@@ -207,7 +211,15 @@
         </f:facet>
         <f:facet name="BASE">
           <af:panelCollection id="pc4" styleClass="AFStretchWidth">
-            <f:facet name="menus"/>
+            <f:facet name="menus">
+             <af:menu text="#{ecrsviewcontrollerBundle.FILTER}" id="m3">
+                <af:commandMenuItem text="#{ecrsviewcontrollerBundle.ADVANCED_FILTER}" id="cmi3">
+                  <af:showPopupBehavior triggerType="action" popupId="::p9"/>
+                </af:commandMenuItem>
+                <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CLEAR_FILTERS}" id="cmi4"
+                                    actionListener="#{pageFlowScope.manageCRSBean.clearFilters}"/>
+              </af:menu>
+            </f:facet>
             <f:facet name="statusbar"/>
             <af:table value="#{bindings.CrsRiskBaseVO.collectionModel}" var="row"
                       rows="#{bindings.CrsRiskBaseVO.rangeSize}"
@@ -313,6 +325,10 @@
                   </af:panelLabelAndMessage>
                 </f:facet>
               </af:column>
+              <af:column headerText="#{bindings.CrsRiskBaseVO.hints.MeddraCode.label}" id="c87">
+                <af:outputText value="#{row.MeddraCode}" shortDesc="#{bindings.CrsRiskBaseVO.hints.MeddraCode.tooltip}"
+                               id="ot82"/>
+              </af:column>
               <af:column id="c81" headerText="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_DEFINITION}">
                 <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.MeddraTerm.name}" filterable="true"
                            sortable="true" headerText="#{ecrsviewcontrollerBundle.MEDDRA_TERM}" id="c74" width="200">
@@ -366,7 +382,7 @@
       <af:panelGroupLayout id="pgl6" layout="horizontal">
         <af:commandButton text="#{ecrsviewcontrollerBundle.BACK}" id="cb8"
                           action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}"/>
-        <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}" id="cb11" disabled="true"/>
+        <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}" id="cb11" action="#{pageFlowScope.manageCRSBean.onClickNext}"/>
         <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb12" action="home" immediate="true"
                           actionListener="#{bindings.Rollback.execute}"/>
         <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}" id="plam4">
@@ -713,7 +729,7 @@
               <af:outputText value="#{node.levelName}" id="ot22"/>
             </af:column>
             <af:column id="c37" headerText="#{ecrsviewcontrollerBundle.SCOPE}">
-              <af:outputText value="#{pageFlowScope.manageCRSBean.childScope}" id="ot23"/>
+              <af:outputText value="#{node.scopeName}" id="ot23"/>
             </af:column>
           </af:column>
           <af:dragSource actions="COPY" defaultAction="COPY" discriminant="copyRows"/>
@@ -858,11 +874,17 @@
                 <af:outputText value="#{copyRow.DatabaseList}"
                                shortDesc="#{bindings.CopyCrsRiskVO.hints.DatabaseList.tooltip}" id="ot26"/>
               </af:column>-->
-              <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.DataDomain.name}" sortable="true"
+               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.DataDomain.name}" sortable="true"
                          headerText="#{ecrsviewcontrollerBundle.DATA_DOMAIN}" id="c50">
                 <af:outputText value="#{copyRow.DataDomain}"
-                               shortDesc="#{bindings.CopyCrsRiskVO.hints.DataDomain.tooltip}" id="ot27"/>
+                               shortDesc="#{bindings.CopyCrsRiskVO.hints.DataDomain.tooltip}" id="ot84"/>
               </af:column>
+              <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraCode.name}" sortable="true"
+                         headerText="#{bindings.CopyCrsRiskVO.hints.MeddraCode.label}" id="c89">
+                <af:outputText value="#{copyRow.MeddraCode}"
+                               shortDesc="#{bindings.CopyCrsRiskVO.hints.MeddraCode.tooltip}" id="ot83"/>
+              </af:column>
+              
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraTerm.name}" sortable="true"
                          headerText="#{ecrsviewcontrollerBundle.MEDDRA_TERM}" id="c51">
                 <af:outputText value="#{copyRow.MeddraTerm}"

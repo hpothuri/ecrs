@@ -34,6 +34,11 @@
               DataControl="ECRSAppModuleDataControl" RangeSize="25"/>
   </executables>
   <bindings>
+    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="SafetyTopicOfInterest">
+      <AttrNames>
+        <Item Value="SafetyTopicOfInterest"/>
+      </AttrNames>
+    </attributeValues>
     <tree IterBinding="CrsRiskVOIterator" id="CrsRiskVO">
       <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsRiskVO" Name="CrsRiskVO0">
         <AttrNames>
@@ -76,11 +81,6 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
-    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="SafetyTopicOfInterest">
-      <AttrNames>
-        <Item Value="SafetyTopicOfInterest"/>
-      </AttrNames>
-    </attributeValues>
     <attributeValues IterBinding="CrsRiskRelationVOIterator" id="MqmComment">
       <AttrNames>
         <Item Value="MqmComment"/>
@@ -691,5 +691,15 @@
                   ReturnName="data.ECRSAppModuleDataControl.methodResults.fetchDomainIdFromName_ECRSAppModuleDataControl_dataProvider_fetchDomainIdFromName_result">
       <NamedData NDName="domainName" NDType="java.lang.String"/>
     </methodAction>
+    <attributeValues IterBinding="CrsRiskVOIterator" id="MeddraCode">
+      <AttrNames>
+        <Item Value="MeddraCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsRiskBaseVOIterator" id="MeddraCodeBase">
+      <AttrNames>
+        <Item Value="MeddraCode"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

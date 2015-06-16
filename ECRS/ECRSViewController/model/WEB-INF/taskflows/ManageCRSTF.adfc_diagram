@@ -344,7 +344,7 @@
       <property
          name="fromOutcome">init</property>
       <property
-         name="sdm:polyPoints">B50,189.6836,150.69531,220.0,186.11816,T50</property>
+         name="sdm:polyPoints">B50,189.6836,149.99414,220.0,186.11816,T50</property>
    </ControlFlowCase>
    <MethodCall
       id="MethodCall36">
@@ -425,6 +425,76 @@
       <property
          name="fromOutcome">Rollback</property>
       <property
-         name="sdm:polyPoints">B50,93.5,4.798828,189.6836,41.99414,T50</property>
+         name="sdm:polyPoints">B50,93.5,4.0976562,189.6836,41.99414,T50</property>
+   </ControlFlowCase>
+   <View
+      id="View46">
+      <property
+         name="activityId">confirm</property>
+      <property
+         name="page">/ui/pageFragments/ecrs/confirmCRS.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>confirm&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="trainStop">true</property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">152.09766</property>
+      <property
+         name="x">1101.5</property>
+      <property
+         name="pageFragment">true</property>
+   </View>
+   <TrainFlow
+      islink="true"
+      id="TrainFlow47"
+      from="View8"
+      to="View46">
+      <property
+         name="sdm:polyPoints">R50,943.0,151.19531,1060.5,151.74707,L50</property>
+   </TrainFlow>
+   <MethodCall
+      id="MethodCall48">
+      <property
+         name="activityId">initConfirmPage</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>initConfirmPage&lt;/b>&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">-246.25293</property>
+      <property
+         name="x">1133.6855</property>
+   </MethodCall>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase49"
+      from="WildcardControlFlowRule20"
+      to="MethodCall48">
+      <property
+         name="fromOutcome">initConfirmPage</property>
+      <property
+         name="sdm:polyPoints">T50,804.0,-193.4541,1092.6855,-246.60352,L50</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase50"
+      from="MethodCall48"
+      to="View46">
+      <property
+         name="fromOutcome">confirm</property>
+      <property
+         name="sdm:polyPoints">B50,1133.6855,-192.60352,1101.5,97.74707,T50</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase51"
+      from="View46"
+      to="ParentAction17">
+      <property
+         name="fromOutcome">home</property>
+      <property
+         name="sdm:polyPoints">L54,1060.5,155.24707,877.0,293.24707,R50</property>
    </ControlFlowCase>
 </SDM>

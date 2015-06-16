@@ -1,5 +1,7 @@
 package com.novartis.ecrs.ui.bean;
 
+import java.math.BigDecimal;
+
 import java.sql.Timestamp;
 
 import java.util.List;
@@ -25,15 +27,22 @@ public class HierarchyChildUIBean {
     private String qual;
     private String qualFlag;
     private List<HierarchyChildUIBean> children;
+    private String formattedScope;
+    private String scopeName;
     
     public HierarchyChildUIBean(Row row){
         this.term = (String)row.getAttribute("Term");
         this.dictContentCode = (String)row.getAttribute("DictContentCode");
         this.levelName = (String)row.getAttribute("LevelName");
-        if(this.levelName != null && ("SOC".equalsIgnoreCase(this.levelName.trim()) || "PT".equalsIgnoreCase(this.levelName.trim()) || "HLGT".equalsIgnoreCase(this.levelName.trim()) || "HLT".equalsIgnoreCase(this.levelName.trim())))
+        if(this.levelName != null 
+           && ("SOC".equalsIgnoreCase(this.levelName.trim()) || "PT".equalsIgnoreCase(this.levelName.trim()) 
+            || "HLGT".equalsIgnoreCase(this.levelName.trim()) || "HLT".equalsIgnoreCase(this.levelName.trim()))){
             this.dictShortName = "NMATMED";
-        else
+        } else {
             this.dictShortName = "NMATSMQ";
+            this.formattedScope = ((BigDecimal)row.getAttribute("FormattedScope")).toString();
+            this.scopeName = getScopeName();
+        }
 //        this.dictShortName = (String)row.getAttribute("DictShortName");
         this.dictContentAltCode = (String)row.getAttribute("DictContentAltCode");
         this.level = (Long)row.getAttribute("Level");
@@ -138,5 +147,27 @@ public class HierarchyChildUIBean {
 
     public String getQualFlag() {
         return qualFlag;
+    }
+    
+    public String getScopeName() {
+        String scopeName="";
+           if (formattedScope == null) return null;
+           if (formattedScope.equals("0")) scopeName = "Full";
+           if (formattedScope.equals("1")) scopeName = "Broad";
+           if (formattedScope.equals("2")) scopeName = "Narrow";
+           if (formattedScope.equals("3")) scopeName = "Child/Narrow";
+           return scopeName;
+    }
+
+    public void setFormattedScope(String formattedScope) {
+        this.formattedScope = formattedScope;
+    }
+
+    public String getFormattedScope() {
+        return formattedScope;
+    }
+
+    public void setScopeName(String scopeName) {
+        this.scopeName = scopeName;
     }
 }

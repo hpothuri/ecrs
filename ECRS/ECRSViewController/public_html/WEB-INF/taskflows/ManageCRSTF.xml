@@ -96,6 +96,20 @@
         <fixed-outcome>Rollback</fixed-outcome>
       </outcome>
     </method-call>
+    <view id="confirm">      
+      <page>/ui/pageFragments/ecrs/confirmCRS.jsff</page>
+      <train-stop>
+      <display-name>Confirm</display-name>
+        <outcome>initConfirmPage</outcome>
+        <ignore>#{pageFlowScope.flowType == 'S'}</ignore>
+      </train-stop>
+    </view>
+    <method-call id="initConfirmPage">
+      <method>#{pageFlowScope.manageCRSBean.initConfirmPage}</method>
+      <outcome>
+        <fixed-outcome>confirm</fixed-outcome>
+      </outcome>
+    </method-call>
     <train/>
     <control-flow-rule id="__5">
       <from-activity-id>crsFlowRouter</from-activity-id>
@@ -150,6 +164,10 @@
       <control-flow-case id="__30">
         <from-outcome>reloadSearch</from-outcome>
         <to-activity-id>reloadResults</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__37">
+        <from-outcome>initConfirmPage</from-outcome>
+        <to-activity-id>initConfirmPage</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__19">
@@ -210,6 +228,20 @@
       <control-flow-case id="__36">
         <from-outcome>Rollback</from-outcome>
         <to-activity-id>initManageCrs</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__38">
+      <from-activity-id>initConfirmPage</from-activity-id>
+      <control-flow-case id="__39">
+        <from-outcome>confirm</from-outcome>
+        <to-activity-id>confirm</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__40">
+      <from-activity-id>confirm</from-activity-id>
+      <control-flow-case id="__41">
+        <from-outcome>home</from-outcome>
+        <to-activity-id>home</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

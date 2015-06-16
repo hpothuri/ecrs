@@ -201,7 +201,17 @@
                                                               autoSubmit="true"
                                                               readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                                                               disabled="#{bindings.StateId.inputValue ne 1 || bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"
-                                                              partialTriggers="pgl2"/>
+                                                              />
+                                    <af:inputDate value="#{bindings.CrsEffectiveDt.inputValue}"
+                                                  label="#{bindings.CrsEffectiveDt.hints.label}"
+                                                  required="#{bindings.CrsEffectiveDt.hints.mandatory}"
+                                                  columns="#{bindings.CrsEffectiveDt.hints.displayWidth}"
+                                                  autoSubmit="true" readOnly="true"
+                                                  visible="#{pageFlowScope.flowType eq 'S' or pageFlowScope.flowType eq 'U'}"
+                                                  shortDesc="#{bindings.CrsEffectiveDt.hints.tooltip}" id="id1">
+                                        <f:validator binding="#{bindings.CrsEffectiveDt.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.CrsEffectiveDt.format}"/>
+                                    </af:inputDate>
                                 </af:panelFormLayout>
                                 <af:panelGroupLayout id="pgl7"
                                                      layout="horizontal"
@@ -223,153 +233,6 @@
                                 <af:inputText label="#{ecrsviewcontrollerBundle.CRS_ID} #{ecrsviewcontrollerBundle.COLON}"
                                               id="it6" readOnly="true"
                                               value="#{bindings.CrsId.inputValue &lt; 0 ? '' : bindings.CrsId.inputValue}"/>
-                            </af:panelFormLayout>
-                        </af:panelBox>
-                        <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}"
-                                     id="pb2"
-                                     binding="#{pageFlowScope.manageCRSBean.workflowPanelBox}">
-                            <f:facet name="toolbar">
-                                <af:panelGroupLayout id="pgl2"
-                                                     visible="#{pageFlowScope.flowType ne 'S'}">
-                                    <af:commandButton text="#{ecrsviewcontrollerBundle.DEMOTE_TO_DRAFT}"
-                                                      id="cb1"
-                                                      disabled="#{bindings.StateId.inputValue eq 1}"
-                                                      visible="#{(securityContext.userInRole['CRS_BSL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      partialSubmit="true"
-                                                      inlineStyle="margin-right:10px;">
-                                        <af:showPopupBehavior popupId="demtodft"
-                                                              triggerType="action"/>
-                                    </af:commandButton>
-                                    <af:commandButton text="#{ecrsviewcontrollerBundle.REVIEW}"
-                                                      id="cb2"
-                                                      visible="#{(securityContext.userInRole['CRS_BSL']  || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      disabled="#{bindings.EntityState eq 'NEW' or bindings.StateId.inputValue ne 1 or (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag eq 'N')}"
-                                                      partialSubmit="true"
-                                                      inlineStyle="margin-right:10px;" partialTriggers="sbc1">
-                                        <af:showPopupBehavior popupId="review"
-                                                              triggerType="action"/>
-                                    </af:commandButton>
-                                    <af:commandButton text="#{ecrsviewcontrollerBundle.REVIEWED}"
-                                                      id="cb11"
-                                                      visible="#{(securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      partialSubmit="true"
-                                                      disabled="#{bindings.StateId.inputValue ne 2}"
-                                                      inlineStyle="margin-right:10px;">
-                                        <af:showPopupBehavior popupId="reviewed"
-                                                              triggerType="action"/>
-                                    </af:commandButton>
-                                    <af:commandButton text="#{ecrsviewcontrollerBundle.SUBMIT_FOR_TASL_APPROVAL}"
-                                                      id="cb9"
-                                                      visible="#{(securityContext.userInRole['CRS_BSL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      partialSubmit="true"
-                                                      disabled="#{bindings.StateId.inputValue ne 3}"
-                                                      inlineStyle="margin-right:10px;">
-                                        <af:showPopupBehavior popupId="taslRevSubmit"
-                                                              triggerType="action"/>
-                                    </af:commandButton>
-                                    <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.TASL_APPROVE : ecrsviewcontrollerBundle.APPROVE}"
-                                                      id="cb8"
-                                                      disabled="#{bindings.StateId.inputValue ne 4}"
-                                                      visible="#{(securityContext.userInRole['CRS_TASL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      partialSubmit="true"
-                                                      inlineStyle="margin-right:10px;">
-                                        <af:showPopupBehavior popupId="taslApprove"
-                                                              triggerType="action"/>
-                                    </af:commandButton>
-                                    <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.TASL_REJECT : ecrsviewcontrollerBundle.REJECT}"
-                                                      id="cb10"
-                                                      partialSubmit="true"
-                                                      disabled="#{bindings.StateId.inputValue ne 4}"
-                                                      visible="#{(securityContext.userInRole['CRS_TASL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      inlineStyle="margin-right:10px;">
-                                        <af:showPopupBehavior popupId="taslReject"
-                                                              triggerType="action"/>
-                                    </af:commandButton>
-                                    <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.ML_APPROVE : ecrsviewcontrollerBundle.APPROVE}"
-                                                      id="cb15"
-                                                      disabled="#{bindings.StateId.inputValue ne 5}"
-                                                      visible="#{(securityContext.userInRole['CRS_ML'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      partialSubmit="true"
-                                                      inlineStyle="margin-right:10px;">
-                                        <af:showPopupBehavior popupId="mlApprv"
-                                                              triggerType="action"/>
-                                    </af:commandButton>
-                                    <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.ML_REJECT : ecrsviewcontrollerBundle.REJECT}"
-                                                      id="cb16"
-                                                      partialSubmit="true"
-                                                      disabled="#{bindings.StateId.inputValue ne 5}"
-                                                      visible="#{(securityContext.userInRole['CRS_ML'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      inlineStyle="margin-right:10px;">
-                                        <af:showPopupBehavior popupId="mlReject"
-                                                              triggerType="action"/>
-                                    </af:commandButton>
-                                    <af:commandButton text="#{ecrsviewcontrollerBundle.PUBLISHED}"
-                                                      id="cb14"
-                                                      disabled="#{bindings.EntityState eq 'NEW' or !(bindings.StateId.inputValue eq 6 || (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag.inputValue eq 'N'))}"
-                                                      visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      inlineStyle="margin-right:10px;"
-                                                      actionListener="#{pageFlowScope.manageCRSBean.onClickPublish}"
-                                                      partialTriggers="sbc1">
-                                        <!--af:setActionListener from="#{''}"
-                                                              to="#{pageFlowScope.manageCRSBean.reasonForChange}"/>
-                                        <af:showPopupBehavior popupId="publish"
-                                                              triggerType="action"/-->
-                                    </af:commandButton>
-                                    <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE}"
-                                                      id="cb3"
-                                                      visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                                      partialSubmit="true"
-                                                      inlineStyle="margin-right:10px;">
-                                        <af:showPopupBehavior popupId="delConfPopup"
-                                                              triggerType="action"/>
-                                    </af:commandButton>
-                                    <f:facet name="separator"/>
-                                </af:panelGroupLayout>
-                            </f:facet>
-                            <af:panelFormLayout id="pfl2"
-                                                styleClass="AFStretchWidth"
-                                                rows="3" maxColumns="1"
-                                                fieldWidth="90%"
-                                                labelWidth="10%"
-                                                partialTriggers="cb11 cb9 cb8 cb10">
-                                <af:inputText value="#{bindings.MqmComment.inputValue}"
-                                              required="#{bindings.MqmComment.hints.mandatory}"
-                                              columns="100"
-                                              maximumLength="#{bindings.MqmComment.hints.precision}"
-                                              shortDesc="#{bindings.MqmComment.hints.tooltip}"
-                                              id="it7"
-                                              styleClass="AFStretchWidth"
-                                              label="#{ecrsviewcontrollerBundle.MQM_COMMENT}"
-                                              rows="3" contentStyle="width:75%;"
-                                              disabled="#{!((securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN']) and bindings.StateId.inputValue eq 2)}"
-                                              visible="#{securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_MQM']}"
-                                              autoSubmit="true">
-                                    <f:validator binding="#{bindings.MqmComment.validator}"/>
-                                </af:inputText>
-                                <af:inputText value="#{bindings.TaslRejectComment.inputValue}"
-                                              columns="100"
-                                              maximumLength="#{bindings.TaslRejectComment.hints.precision}"
-                                              shortDesc="#{bindings.TaslRejectComment.hints.tooltip}"
-                                              id="it8"
-                                              label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}"
-                                              rows="3" contentStyle="width:75%;"
-                                              styleClass="AFStretchWidth"
-                                              autoSubmit="true" disabled="true"
-                                              visible="#{securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_TASL']}">
-                                    <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
-                                </af:inputText>
-                                <af:inputText value="#{bindings.MedicalLeadRejectComment.inputValue}"
-                                              columns="100"
-                                              maximumLength="#{bindings.MedicalLeadRejectComment.hints.precision}"
-                                              shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}"
-                                              id="it9"
-                                              label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}"
-                                              rows="3" contentStyle="width:75%;"
-                                              styleClass="AFStretchWidth"
-                                              autoSubmit="true" disabled="true"
-                                              visible="#{securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ML']}">
-                                    <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
-                                </af:inputText>
                             </af:panelFormLayout>
                         </af:panelBox>
                     </af:panelGroupLayout>
@@ -456,6 +319,16 @@
                                         <af:selectItem label="Current" id="si12"
                                                        value="C"/>
                                     </af:selectOneChoice>
+                                    <af:inputDate value="#{bindings.CrsEffectiveDtBase.inputValue}"
+                                                  label="#{bindings.CrsEffectiveDtBase.hints.label}"
+                                                  required="#{bindings.CrsEffectiveDtBase.hints.mandatory}"
+                                                  columns="#{bindings.CrsEffectiveDtBase.hints.displayWidth}"
+                                                  readOnly="true"
+                                                  visible="#{pageFlowScope.flowType eq 'S' or pageFlowScope.flowType eq 'U'}"
+                                                  shortDesc="#{bindings.CrsEffectiveDtBase.hints.tooltip}" id="id2">
+                                        <f:validator binding="#{bindings.CrsEffectiveDtBase.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.CrsEffectiveDtBase.format}"/>
+                                    </af:inputDate>
                                     <af:spacer width="10" height="10"
                                                id="sp23"/>
                                 </af:panelFormLayout>
@@ -478,51 +351,6 @@
                                 <af:inputText label="#{ecrsviewcontrollerBundle.CRS_ID} #{ecrsviewcontrollerBundle.COLON}"
                                               id="it18" readOnly="true"
                                               value="#{bindings.CrsIdBase.inputValue}"/>
-                            </af:panelFormLayout>
-                        </af:panelBox>
-                        <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}"
-                                     id="pb4"
-                                     visible="#{!(bindings.ReleaseStatusFlagBase eq 'C' and pageFlowScope.flowType  eq 'S')}">
-                            <f:facet name="toolbar"/>
-                            <af:panelFormLayout id="pfl5"
-                                                styleClass="AFStretchWidth"
-                                                rows="3" maxColumns="1"
-                                                fieldWidth="90%"
-                                                labelWidth="10%"
-                                                partialTriggers="cb11 cb9 cb8 cb10">
-                                <af:inputText value="#{bindings.MqmCommentBase.inputValue}"
-                                              columns="100"
-                                              maximumLength="#{bindings.MqmComment.hints.precision}"
-                                              shortDesc="#{bindings.MqmComment.hints.tooltip}"
-                                              id="it19"
-                                              styleClass="AFStretchWidth"
-                                              label="#{ecrsviewcontrollerBundle.MQM_COMMENT}"
-                                              rows="3" contentStyle="width:75%;"
-                                              readOnly="true">
-                                    <f:validator binding="#{bindings.MqmComment.validator}"/>
-                                </af:inputText>
-                                <af:inputText value="#{bindings.TaslRejectCommentBase.inputValue}"
-                                              columns="100"
-                                              maximumLength="#{bindings.TaslRejectComment.hints.precision}"
-                                              shortDesc="#{bindings.TaslRejectComment.hints.tooltip}"
-                                              id="it20"
-                                              label="#{ecrsviewcontrollerBundle.TASL_REJECT_COMMENT}"
-                                              rows="3" contentStyle="width:75%;"
-                                              styleClass="AFStretchWidth"
-                                              readOnly="true">
-                                    <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
-                                </af:inputText>
-                                <af:inputText value="#{bindings.MedicalLeadRejectCommentBase.inputValue}"
-                                              columns="100"
-                                              maximumLength="#{bindings.MedicalLeadRejectComment.hints.precision}"
-                                              shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}"
-                                              id="it21"
-                                              label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}"
-                                              rows="3" contentStyle="width:75%;"
-                                              styleClass="AFStretchWidth"
-                                              readOnly="true">
-                                    <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
-                                </af:inputText>
                             </af:panelFormLayout>
                         </af:panelBox>
                     </af:panelGroupLayout>

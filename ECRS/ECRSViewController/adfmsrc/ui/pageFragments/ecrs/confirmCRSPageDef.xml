@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="confirmCRSPageDef"
+                Package="ui.pageFragments.ecrs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="CrsContentVO" RangeSize="10" DataControl="ECRSAppModuleDataControl" id="CrsContentVOIterator"/>
+    <iterator Binds="CrsContentBaseVO" RangeSize="10" DataControl="ECRSAppModuleDataControl"
+              id="CrsContentBaseVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CrsId">
+      <AttrNames>
+        <Item Value="CrsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CrsName">
+      <AttrNames>
+        <Item Value="CrsName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CompoundId">
+      <AttrNames>
+        <Item Value="CompoundId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="StateId">
+      <AttrNames>
+        <Item Value="StateId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="TradeName">
+      <AttrNames>
+        <Item Value="TradeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="GenericName">
+      <AttrNames>
+        <Item Value="GenericName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="Indication">
+      <AttrNames>
+        <Item Value="Indication"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="ReleaseStatusFlag">
+      <AttrNames>
+        <Item Value="ReleaseStatusFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="BslName">
+      <AttrNames>
+        <Item Value="BslName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="TaslName">
+      <AttrNames>
+        <Item Value="TaslName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="MqmComment">
+      <AttrNames>
+        <Item Value="MqmComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="TaslRejectComment">
+      <AttrNames>
+        <Item Value="TaslRejectComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="MedicalLeadName">
+      <AttrNames>
+        <Item Value="MedicalLeadName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="MedicalLeadRejectComment">
+      <AttrNames>
+        <Item Value="MedicalLeadRejectComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="ReviewApproveRequiredFlag">
+      <AttrNames>
+        <Item Value="ReviewApproveRequiredFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="CrsIdBase">
+      <AttrNames>
+        <Item Value="CrsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="MqmCommentBase">
+      <AttrNames>
+        <Item Value="MqmComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="TaslRejectCommentBase">
+      <AttrNames>
+        <Item Value="TaslRejectComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="MedicalLeadRejectCommentBase">
+      <AttrNames>
+        <Item Value="MedicalLeadRejectComment"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="activateCrs" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="activateCrs" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.activateCrs_ECRSAppModuleDataControl_dataProvider_activateCrs_result">
+      <NamedData NDName="pCRSId" NDType="java.lang.Long"/>
+      <NamedData NDName="pReasonForChange" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="deleteCrs" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="deleteCrs" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.deleteCrs_ECRSAppModuleDataControl_dataProvider_deleteCrs_result"/>
+    <methodAction id="fetchDesignees" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="fetchDesignees" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.fetchDesignees_ECRSAppModuleDataControl_dataProvider_fetchDesignees_result"/>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="ReleaseStatusFlagBase">
+      <AttrNames>
+        <Item Value="ReleaseStatusFlag"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>
