@@ -158,7 +158,8 @@
                   </af:panelLabelAndMessage>
                 </f:facet>
               </af:column>
-              <af:column headerText="#{bindings.CrsRiskVO.hints.MeddraCode.label}" id="c88">
+              <af:column headerText="#{bindings.CrsRiskVO.hints.MeddraCode.label}" id="c88" sortable="true" filterable="true"
+                    sortProperty="#{bindings.CrsRiskVO.hints.MeddraCode.name}">
                 <af:outputText value="#{row.MeddraCode}" shortDesc="#{bindings.CrsRiskVO.hints.MeddraCode.tooltip}"
                                id="ot27"/>
               </af:column>
@@ -325,7 +326,8 @@
                   </af:panelLabelAndMessage>
                 </f:facet>
               </af:column>
-              <af:column headerText="#{bindings.CrsRiskBaseVO.hints.MeddraCode.label}" id="c87">
+              <af:column headerText="#{bindings.CrsRiskBaseVO.hints.MeddraCode.label}" id="c87" sortable="true" filterable="true" 
+                sortProperty="#{bindings.CrsRiskBaseVO.hints.MeddraCode.name}">
                 <af:outputText value="#{row.MeddraCode}" shortDesc="#{bindings.CrsRiskBaseVO.hints.MeddraCode.tooltip}"
                                id="ot82"/>
               </af:column>
