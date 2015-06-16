@@ -439,7 +439,14 @@ WHERE
     PrecisionRule="true"
     EntityAttrName="CrsEffectiveDt"
     EntityUsage="CrsContentEO"
-    AliasName="CRS_EFFECTIVE_DT"/>
+    AliasName="CRS_EFFECTIVE_DT">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.novartis.ecrs.model.view.CrsContentVO.CrsEffectiveDt_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ViewAttribute
     Name="ReviewApproveRequiredFlag"
     IsNotNull="true"

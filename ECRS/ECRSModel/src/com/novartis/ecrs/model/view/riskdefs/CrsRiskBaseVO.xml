@@ -341,6 +341,12 @@ FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
     <DesignTime>
       <Attr Name="_DisplaySize" Value="30"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.novartis.ecrs.model.view.riskdefs.CrsRiskBaseVO.MeddraCode_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="MeddraLevel"

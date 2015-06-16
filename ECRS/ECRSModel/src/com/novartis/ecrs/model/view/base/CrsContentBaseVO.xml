@@ -498,7 +498,14 @@ ORDER BY
     ColumnType="DATE"
     AliasName="CRS_EFFECTIVE_DT"
     Expression="CRS_EFFECTIVE_DT"
-    SQLType="DATE"/>
+    SQLType="DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.novartis.ecrs.model.view.base.CrsContentBaseVO.CrsEffectiveDt_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ViewAttribute
     Name="ReviewApproveRequiredFlag"
     IsUpdateable="false"
