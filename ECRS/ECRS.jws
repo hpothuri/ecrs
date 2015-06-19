@@ -101,5 +101,6 @@
       <list n="profileList">
          <string v="ECRS_Project1_ECRS"/>
       </list>
+      <value n="Weblogic-JDBC-Auto-Sync-Key" v="false"/>
    </hash>
 </jws:workspace>
