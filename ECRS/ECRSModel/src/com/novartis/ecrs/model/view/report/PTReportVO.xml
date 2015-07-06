@@ -20,8 +20,7 @@
         ResId="com.novartis.ecrs.model.view.report.PTReportVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
-  <SQLQuery><![CDATA[SELECT crs_id,safety_topic_of_interest, pt_name, pt_code
-       FROM TABLE(CRS_UI_TMS_UTILS.GET_TMS_ASSOCIATED_PTS())]]></SQLQuery>
+  <SQLQuery><![CDATA[SELECT crs_id,safety_topic_of_interest, meddra_component, pt_name, pt_code FROM TABLE(CRS_UI_TMS_UTILS.GET_ALL_CRS_ASSOCIATED_PTS())]]></SQLQuery>
   <ViewAttribute
     Name="CrsId"
     IsUpdateable="false"
@@ -45,6 +44,21 @@
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MeddraComponent"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="300"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_COMPONENT"
+    Expression="MEDDRA_COMPONENT"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="300"/>
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute

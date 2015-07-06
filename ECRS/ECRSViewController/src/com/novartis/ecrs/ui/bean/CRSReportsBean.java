@@ -533,6 +533,7 @@ public class CRSReportsBean {
             //Here Key will be ViewObject Attribute
             columnMap.put("SafetyTopicOfInterest",
                           rsBundle.getString("SAFETY_TOPIC_OF_INTEREST"));
+            columnMap.put("MeddraComponent", rsBundle.getString("MEDDRA_COMPONENT"));
             columnMap.put("PtName", rsBundle.getString("PT_NAME"));
             columnMap.put("PtCode", rsBundle.getString("PT_CODE"));
             workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
