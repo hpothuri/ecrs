@@ -206,7 +206,8 @@
                                                   label="#{bindings.CrsEffectiveDt.hints.label}"
                                                   required="#{bindings.CrsEffectiveDt.hints.mandatory}"
                                                   columns="#{bindings.CrsEffectiveDt.hints.displayWidth}"
-                                                  autoSubmit="true" readOnly="true"
+                                                  autoSubmit="true"
+                                                  readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable || pageFlowScope.flowType ne 'U'}"
                                                   visible="#{pageFlowScope.flowType eq 'S' or pageFlowScope.flowType eq 'U'}"
                                                   shortDesc="#{bindings.CrsEffectiveDt.hints.tooltip}" id="id1">
                                         <f:validator binding="#{bindings.CrsEffectiveDt.validator}"/>

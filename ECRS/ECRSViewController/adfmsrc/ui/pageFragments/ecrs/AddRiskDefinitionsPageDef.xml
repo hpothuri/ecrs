@@ -99,7 +99,6 @@
           <Item Value="MeddraLevel"/>
           <Item Value="MeddraQualifier"/>
           <Item Value="MeddraCode"/>
-          <Item Value="SearchCriteriaDetails"/>
           <Item Value="TmsUpdateFlag"/>
           <Item Value="CrsQualifier"/>
           <Item Value="MeddraQualifierUpdFlag"/>
@@ -396,7 +395,6 @@
           <Item Value="MeddraTerm"/>
           <Item Value="MeddraVersion"/>
           <Item Value="MeddraVersionDate"/>
-          <Item Value="SearchCriteriaDetails"/>
           <Item Value="TmsDictContentEntryTs"/>
           <Item Value="TmsDictContentId"/>
           <Item Value="TmsEndTs"/>
@@ -599,7 +597,7 @@
                   MethodName="refreshRepository" IsViewObjectMethod="false">
       <NamedData NDName="crsId" NDType="java.lang.Long"/>
     </methodAction>
-    <attributeValues IterBinding="CrsRiskDefinitionsVOIterator" id="SearchCriteriaDetails">
+    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="SearchCriteriaDetails">
       <AttrNames>
         <Item Value="SearchCriteriaDetails"/>
       </AttrNames>

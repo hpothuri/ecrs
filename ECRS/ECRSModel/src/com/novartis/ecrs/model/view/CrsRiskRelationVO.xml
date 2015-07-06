@@ -53,8 +53,9 @@
     Name="LOV_DomainId"
     ListVOName="DomainLOVVA"
     ListRangeSize="-1"
-    NullValueFlag="none"
-    MRUCount="0">
+    NullValueFlag="start"
+    MRUCount="0"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}">
     <AttrArray Name="AttrNames">
       <Item Value="DomainId"/>
     </AttrArray>
@@ -81,7 +82,8 @@
        CrsRiskRelationsEO.CREATED_BY,
        CrsRiskRelationsEO.CREATION_TS,
        CrsRiskRelationsEO.MODIFIED_BY,
-       CrsRiskRelationsEO.MODIFICATION_TS
+       CrsRiskRelationsEO.MODIFICATION_TS,
+       CrsRiskRelationsEO.SEARCH_CRITERIA_DETAILS
 FROM CRS_RISK_RELATIONS_STG CrsRiskRelationsEO]]></SQLQuery>
   <EntityUsage
     Name="CrsRiskRelationsEO"
@@ -214,26 +216,43 @@ FROM CRS_RISK_RELATIONS_STG CrsRiskRelationsEO]]></SQLQuery>
     PrecisionRule="true"
     EntityAttrName="CreatedBy"
     EntityUsage="CrsRiskRelationsEO"
-    AliasName="CREATED_BY"/>
+    AliasName="CREATED_BY"
+    />
   <ViewAttribute
     Name="CreationTs"
     IsNotNull="true"
     PrecisionRule="true"
     EntityAttrName="CreationTs"
     EntityUsage="CrsRiskRelationsEO"
-    AliasName="CREATION_TS"/>
+    AliasName="CREATION_TS"
+    />
   <ViewAttribute
     Name="ModifiedBy"
     PrecisionRule="true"
     EntityAttrName="ModifiedBy"
     EntityUsage="CrsRiskRelationsEO"
-    AliasName="MODIFIED_BY"/>
+    AliasName="MODIFIED_BY"
+    />
   <ViewAttribute
     Name="ModificationTs"
     PrecisionRule="true"
     EntityAttrName="ModificationTs"
     EntityUsage="CrsRiskRelationsEO"
-    AliasName="MODIFICATION_TS"/>
+    AliasName="MODIFICATION_TS"
+    />
+  <ViewAttribute
+    Name="SearchCriteriaDetails"
+    PrecisionRule="true"
+    EntityAttrName="SearchCriteriaDetails"
+    EntityUsage="CrsRiskRelationsEO"
+    AliasName="SEARCH_CRITERIA_DETAILS">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.novartis.ecrs.model.view.CrsRiskRelationVO.SearchCriteriaDetails_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ViewLinkAccessor
     Name="CrsRiskDefinitionsVO"
     ViewLink="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"

@@ -172,6 +172,10 @@ public class ManageCRSBean implements Serializable {
     private transient ResourceBundle uiBundle =
         BundleFactory.getBundle("com.novartis.ecrs.view.ECRSViewControllerBundle");
     private transient RichPanelGroupLayout workflowPG;
+    private transient RichPopup delSTIConfPopup;
+    private transient RichSelectOneChoice socTermSOC;
+    private boolean socTermRequired = true;
+    private boolean disableSocTerm = false;
 
     public ManageCRSBean() {
         super();
@@ -672,7 +676,7 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.showPopup(riskDefPopup);
     }
 
-    public void deleteRiskDefinitions(ActionEvent actionEvent) {
+    public void deleteRiskDefinitions() {
         logger.info("Deleting Selected Risk Definitions");
         DCIteratorBinding riskDefIter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
         ViewObject riskDefVO = riskDefIter.getViewObject();
@@ -1626,8 +1630,8 @@ public class ManageCRSBean implements Serializable {
             columnMap.put("MeddraLevel", rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.MeddraLevel_LABEL"));
             columnMap.put("CrsQualifier",
                           rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.MeddraQualifier_LABEL"));
-            columnMap.put("SearchCriteriaDetails",
-                          rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.SearchCriteriaDetails_LABEL"));
+            //columnMap.put("SearchCriteriaDetails",
+            //              rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.SearchCriteriaDetails_LABEL"));
             columnMap.put("NonMeddraComponentComment", rsBundle.getString("com.novartis.ecrs.model.view.CrsRiskRelationVO.NonMeddraComponentComment_LABEL"));
             //BSL, LoggedinUser in Designee, Admin,MQM
             String bsl = "";
@@ -3324,7 +3328,7 @@ public class ManageCRSBean implements Serializable {
         return riskDefPopupPanel;
     }
 
-    public void deleteSafetyTopicOfInterest(ActionEvent actionEvent) {
+    public void deleteSafetyTopicOfInterest() {
         DCIteratorBinding relationIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
         DCIteratorBinding definitionIter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
         ViewObject definitionVO = definitionIter.getViewObject();
@@ -3419,5 +3423,75 @@ public class ManageCRSBean implements Serializable {
 
     public RichPanelGroupLayout getWorkflowPG() {
         return workflowPG;
+    }
+    public void processDeleteRiskDefinitionsDialog(DialogEvent dialogEvent) {
+        logger.info("Showing delete confirmation popup.");
+        if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())){
+            deleteRiskDefinitions();
+        }
+    }
+    public void processDeleteSaftyTopicOfIntDialog(DialogEvent dialogEvent) {
+        logger.info("Showing delete safty topic of intereset confirmation popup.");
+        if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())){
+            deleteSafetyTopicOfInterest();
+        }
+    }
+
+    public void setDelSTIConfPopup(RichPopup delSTIConfPopup) {
+        this.delSTIConfPopup = delSTIConfPopup;
+    }
+
+    public RichPopup getDelSTIConfPopup() {
+        return delSTIConfPopup;
+    }
+    public void onDomainIdChange(ValueChangeEvent valueChangeEvent) {
+        logger.info("Refreshing SOC LOV based on the domain selected");
+        Integer newValue = (Integer)valueChangeEvent.getNewValue();
+        Map params2 = new HashMap<String, Object>();
+        params2.put("domainName", ViewConstants.DOMAIN_OTHER);
+        Integer domainIdOther = 0;
+        try {
+            domainIdOther = (Integer) ADFUtils.executeAction("fetchDomainIdFromName", params2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        logger.info("Domain selected :: " + newValue);
+        if(null != newValue && valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue()){
+            if(domainIdOther.intValue() == newValue.intValue()){
+                this.socTermSOC.setValue(null);
+                this.socTermSOC.resetValue();
+                this.setSocTermRequired(false);
+                this.setDisableSocTerm(true);
+            } else {
+                this.setSocTermRequired(true);
+                this.setDisableSocTerm(false);
+            }
+        }
+        AdfFacesContext.getCurrentInstance().addPartialTarget(socTermSOC);
+        AdfFacesContext.getCurrentInstance().partialUpdateNotify(socTermSOC);
+    }
+
+    public void setSocTermSOC(RichSelectOneChoice socTermSOC) {
+        this.socTermSOC = socTermSOC;
+    }
+
+    public RichSelectOneChoice getSocTermSOC() {
+        return socTermSOC;
+    }
+
+    public void setSocTermRequired(boolean socTermRequired) {
+        this.socTermRequired = socTermRequired;
+    }
+
+    public boolean isSocTermRequired() {
+        return socTermRequired;
+    }
+
+    public void setDisableSocTerm(boolean disableSocTerm) {
+        this.disableSocTerm = disableSocTerm;
+    }
+
+    public boolean isDisableSocTerm() {
+        return disableSocTerm;
     }
 }

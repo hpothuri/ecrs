@@ -420,7 +420,8 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         ViewObject definitionVO = this.getCrsRiskDefinitionsVO();
         ViewObjectImpl crsContentVO = this.getFetchCrsContentBaseVO();
         //Fetch the crs details for CRS with name as ROUTINE
-        crsContentVO.setWhereClause("CRS_NAME = 'ROUTINE'");
+        //crsContentVO.setWhereClause("CRS_NAME = 'ROUTINE'");
+        crsContentVO.setWhereClause("CRS_COMPOUND_CODE = 'ROUTINE'");
         crsContentVO.executeQuery(); 
         crsContentVO.setWhereClause(null);
         crsContentVO.applyViewCriteria(null);
@@ -457,6 +458,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         relationRow.setAttribute("SocDictContentEntryTs", row.getAttribute("SocDictContentEntryTs"));
                         relationRow.setAttribute("SocDictContentId", row.getAttribute("SocDictContentId"));
                         relationRow.setAttribute("SocTerm", row.getAttribute("SocTerm"));
+                        relationRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
                         relationVO.insertRow(relationRow);
                         Row definitionRow = definitionVO.createRow();
                         newCrsRiskId = (Long)relationRow.getAttribute("CrsRiskId");
@@ -468,7 +470,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
                         definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
                         definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
-                        definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
+                       // definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
                         definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
                         definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
                         definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
@@ -487,7 +489,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
                         definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
                         definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
-                        definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
+                        //definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
                         definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
                         definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
                         definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
@@ -636,6 +638,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     relationRow.setAttribute("SocDictContentEntryTs", row.getAttribute("SocDictContentEntryTs"));
                     relationRow.setAttribute("SocDictContentId", row.getAttribute("SocDictContentId"));
                     relationRow.setAttribute("SocTerm", row.getAttribute("SocTerm"));
+                    relationRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
                     relationVO.insertRow(relationRow);
                     Row definitionRow = definitionVO.createRow();
                     newCrsRiskId = (Long)relationRow.getAttribute("CrsRiskId");
@@ -647,7 +650,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
                     definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
                     definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
-                    definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
+                    //definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
                     definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
                     definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
                     definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
@@ -667,7 +670,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
                     definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
                     definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
-                    definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
+                   // definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
                     definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
                     definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
                     definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
@@ -1038,7 +1041,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     
     public Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId, Integer domainId){
         ViewObject relationVO = this.getFetchCrsRiskRelationVO();
-        relationVO.setWhereClause("CRS_ID = "+crsId+" and SAFETY_TOPIC_OF_INTEREST = '"+safetyTopic+"' and RISK_PURPOSE_LIST = '"+rpList+"' and DOMAIN_ID = "+domainId+"and CRS_RISK_ID <> "+crsRiskId);
+        relationVO.setWhereClause("CRS_ID = "+crsId+" and SAFETY_TOPIC_OF_INTEREST = '"+safetyTopic+"' and RISK_PURPOSE_LIST = '"+rpList+"' and DOMAIN_ID = "+domainId+" and CRS_RISK_ID <> "+crsRiskId);
         relationVO.executeQuery();
         if(relationVO.getEstimatedRowCount() > 0)
             return Boolean.TRUE;

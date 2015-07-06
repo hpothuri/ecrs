@@ -1,4 +1,3 @@
-
 <?xml version='1.0' encoding='UTF-8'?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:f="http://java.sun.com/jsf/core"
@@ -351,7 +350,7 @@
                 </af:column>
                 <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.SearchCriteriaDetails.name}" filterable="true"
                            sortable="true" headerText="#{ecrsviewcontrollerBundle.SEARCH_CRITERIA_DETAILS}" id="c77"
-                           width="80">
+                           width="80" rendered="false">
                   <af:outputText value="#{row.SearchCriteriaDetails}"
                                  shortDesc="#{bindings.CrsRiskBaseVO.hints.SearchCriteriaDetails.tooltip}" id="ot54"/>
                 </af:column>
@@ -445,7 +444,8 @@
             </af:selectManyChoice>-->
             <af:selectOneChoice value="#{bindings.DomainId.inputValue}" label="#{ecrsviewcontrollerBundle.DATA_DOMAIN}"
                                 shortDesc="#{bindings.DomainId.hints.tooltip}" id="soc9" autoSubmit="true"
-                                readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}" required="true">
+                                readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}" required="true"
+                                valueChangeListener="#{pageFlowScope.manageCRSBean.onDomainIdChange}">
               <f:selectItems value="#{bindings.DomainId.items}" id="si65"/>
             </af:selectOneChoice>
             <!--<af:selectOneChoice label="#{bindings.DataDomain.hints.label}" id="soc1"
@@ -456,9 +456,11 @@
               <af:selectItem label="Other" value="OTHER" id="si2"/>
             </af:selectOneChoice>-->
             <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
-                                shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc4" required="true"
-                                autoSubmit="true" contentStyle="width:200px;"
-                                readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
+                                shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc4" required="#{pageFlowScope.manageCRSBean.socTermRequired}"
+                                disabled="#{pageFlowScope.manageCRSBean.disableSocTerm}"
+                                contentStyle="width:200px;" autoSubmit="true"
+                                readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                                binding="#{pageFlowScope.manageCRSBean.socTermSOC}">
               <f:selectItems value="#{bindings.SocTerm.items}" id="si17"/>
             </af:selectOneChoice>
             <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc2"
@@ -476,6 +478,17 @@
             </af:selectManyChoice>
           </af:panelFormLayout>
           <af:panelFormLayout id="pfl3">
+            <af:inputText value="#{bindings.SearchCriteriaDetails.inputValue}"
+                          label="#{bindings.SearchCriteriaDetails.hints.label}"
+                          required="#{bindings.SearchCriteriaDetails.hints.mandatory}"
+                          columns="#{bindings.SearchCriteriaDetails.hints.displayWidth}"
+                          maximumLength="#{bindings.SearchCriteriaDetails.hints.precision}"
+                          disabled="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                          contentStyle="width:500px;" rows="3" autoSubmit="true"
+                          visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
+                          shortDesc="#{bindings.SearchCriteriaDetails.hints.tooltip}" id="it14">
+              <f:validator binding="#{bindings.SearchCriteriaDetails.validator}"/>
+            </af:inputText>
             <af:inputText value="#{bindings.NonMeddraComponentComment.inputValue}"
                           label="#{bindings.NonMeddraComponentComment.hints.label}"
                           required="#{bindings.NonMeddraComponentComment.hints.mandatory}"
@@ -595,8 +608,8 @@
                   <f:validator binding="#{row.bindings.MeddraCode.validator}"/>
                 </af:inputText>
               </af:column>
-              <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.name}"
-                         sortable="false"
+              <!-- <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.name}"
+                         sortable="false" rendered="false"
                          headerText="#{bindings.CrsRiskDefinitionsVO.hints.SearchCriteriaDetails.label}" id="c28">
                 <af:panelGroupLayout id="pgl11">
                   <af:commandImageLink id="cil4" icon="/images/edit.png"
@@ -613,7 +626,7 @@
                     <f:validator binding="#{row.bindings.SearchCriteriaDetails.validator}"/>
                   </af:inputText>
                 </af:panelGroupLayout>
-              </af:column>
+              </af:column>-->
               <af:column id="c29" width="20" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                          rendered="false">
                 <f:facet name="header">
@@ -629,9 +642,11 @@
               <af:toolbar id="t5">
                 <af:commandButton text="#{ecrsviewcontrollerBundle.ADD}" id="cb7" icon="/images/Create.png"
                                   actionListener="#{bindings.CreateRiskDefinition.execute}" visible="false"/>
-                <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SELECTED}" id="cb4" icon="/images/delete.png"
-                                  actionListener="#{pageFlowScope.manageCRSBean.deleteRiskDefinitions}"
-                                  visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+               <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SELECTED}" id="cb4" icon="/images/delete.png"
+                                       visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
+                  <af:showPopupBehavior popupId="::delConfPopup"
+                              triggerType="action"/>
+                  </af:commandButton>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb5" icon="/images/filesave.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.saveRiskDefs}"
                                   visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}" partialSubmit="true"/>
@@ -648,8 +663,10 @@
                                   icon="/images/database-refresh-icon.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.refreshRepoInPopup}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SAFETY_TOPIC_OF_INTERES}" id="cb27" icon="/images/delete.png"
-                                  actionListener="#{pageFlowScope.manageCRSBean.deleteSafetyTopicOfInterest}"
-                                  visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
+                          visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
+                  <af:showPopupBehavior popupId="::delSTIConfPopup"
+                              triggerType="action"/>
+                </af:commandButton>
                 <af:commandImageLink id="cil7" icon="/images/Help-icon.png" rendered="false">
                   <af:showPopupBehavior triggerType="action"
                                         popupId="::prplegend"/>
@@ -909,11 +926,11 @@
                 <af:outputText value="#{copyRow.MeddraCode}"
                                shortDesc="#{bindings.CopyCrsRiskVO.hints.MeddraCode.tooltip}" id="ot31"/>
               </af:column>
-              <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.name}" sortable="true"
-                         headerText="#{ecrsviewcontrollerBundle.SEARCH_CRITERIA_DETAILS}" id="c54" width="50">
+             <!-- <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.name}" sortable="true"
+                         headerText="#{ecrsviewcontrollerBundle.SEARCH_CRITERIA_DETAILS}" id="c54" width="50" rendered="false">
                 <af:outputText value="#{copyRow.SearchCriteriaDetails}"
                                shortDesc="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.tooltip}" id="ot32"/>
-              </af:column>
+              </af:column> -->
             </af:table>
             <f:facet name="prompt"/>
           </af:showDetail>
@@ -934,9 +951,9 @@
                 <f:selectItems value="#{pageFlowScope.manageCRSBean.databaseList}" id="si16"/>
               </af:selectManyChoice>-->
               <af:selectOneChoice value="#{bindings.DomainId.inputValue}"
-                                  label="#{ecrsviewcontrollerBundle.DATA_DOMAIN}"
+                                  label="#{ecrsviewcontrollerBundle.DATA_DOMAIN}" autoSubmit="true"
                                   shortDesc="#{bindings.DomainId.hints.tooltip}" id="soc10" required="true"
-                                  autoSubmit="true">
+                                  valueChangeListener="#{pageFlowScope.manageCRSBean.onDomainIdChange}">
                 <f:selectItems value="#{bindings.DomainId.items}" id="si66"/>
               </af:selectOneChoice>
               <!--<af:inputText value="#{bindings.DataDomain.inputValue}" label="#{bindings.DataDomain.hints.label}"
@@ -949,7 +966,10 @@
               </af:inputText>-->
               <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
                                   shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc5" contentStyle="width:200px;"
-                                  required="true" autoSubmit="true">
+                                  required="#{pageFlowScope.manageCRSBean.socTermRequired}"
+                                  binding="#{pageFlowScope.manageCRSBean.socTermSOC}" autoSubmit="true"
+                                  disabled="#{pageFlowScope.manageCRSBean.disableSocTerm}"
+                                  >
                 <f:selectItems value="#{bindings.SocTerm.items}" id="si18"/>
               </af:selectOneChoice>
               <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc4"
@@ -1032,13 +1052,13 @@
                   <af:outputText value="#{row.MeddraCode}"
                                  shortDesc="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraCode.tooltip}" id="ot36"/>
                 </af:column>
-                <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO1.hints.SearchCriteriaDetails.name}"
-                           sortable="false"
+               <!-- <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO1.hints.SearchCriteriaDetails.name}"
+                           sortable="false" rendered="false"
                            headerText="#{bindings.CrsRiskDefinitionsVO1.hints.SearchCriteriaDetails.label}" id="c59">
                   <af:outputText value="#{row.SearchCriteriaDetails}"
                                  shortDesc="#{bindings.CrsRiskDefinitionsVO1.hints.SearchCriteriaDetails.tooltip}"
                                  id="ot371"/>
-                </af:column>
+                </af:column> -->
                 <af:column id="c60" width="20" rendered="false">
                   <f:facet name="header">
                     <af:image source="/images/delete.png" id="i3"/>
@@ -1180,5 +1200,25 @@
         </af:table>
       </af:dialog>
     </af:popup>
+    <af:popup childCreation="deferred" autoCancel="disabled" id="delConfPopup"
+                  binding="#{pageFlowScope.manageCRSBean.delConfPopupBinding}">
+            <af:dialog id="d11" type="yesNo"
+                       title="#{ecrsviewcontrollerBundle.INFO}"
+                       titleIconSource="/images/info_icon.png"
+                       closeIconVisible="false" inlineStyle="width:250px;"
+                       dialogListener="#{pageFlowScope.manageCRSBean.processDeleteRiskDefinitionsDialog}">
+                <af:outputText value="#{ecrsviewcontrollerBundle.ARE_YOU_SURE_THAT_YOU_WANT_TO_DELETE_RISK_RELATION}" id="ot85"/>
+            </af:dialog>
+        </af:popup>
+        <af:popup childCreation="deferred" autoCancel="disabled" id="delSTIConfPopup"
+                  binding="#{pageFlowScope.manageCRSBean.delSTIConfPopup}">
+            <af:dialog id="d12" type="yesNo"
+                       title="#{ecrsviewcontrollerBundle.INFO}"
+                       titleIconSource="/images/info_icon.png"
+                       closeIconVisible="false" inlineStyle="width:250px;"
+                       dialogListener="#{pageFlowScope.manageCRSBean.processDeleteSaftyTopicOfIntDialog}">
+                <af:outputText value="#{ecrsviewcontrollerBundle.ARE_YOU_SURE_THAT_YOU_WANT_TO_DELETE_SAFTY_TOPIC}" id="ot86"/>
+            </af:dialog>
+        </af:popup>
   </af:panelGroupLayout>
 </jsp:root>

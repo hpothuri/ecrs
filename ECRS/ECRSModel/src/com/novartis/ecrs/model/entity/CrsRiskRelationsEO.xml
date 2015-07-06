@@ -357,6 +357,18 @@
     ColumnType="DATE"
     TableName="CRS_RISK_RELATIONS_STG"
     HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="SearchCriteriaDetails"
+    Precision="200"
+    ColumnName="SEARCH_CRITERIA_DETAILS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="CRS_RISK_RELATIONS_STG">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </Attribute>
   <AccessorAttribute
     Name="CrsContentEO"
     Association="com.novartis.ecrs.model.entity.assoc.CrsRiskRelationsIdxCrsFkAssoc"

@@ -26,7 +26,6 @@
        CrsRiskDefinitionsEO.MEDDRA_TERM, 
        CrsRiskDefinitionsEO.MEDDRA_VERSION, 
        CrsRiskDefinitionsEO.MEDDRA_VERSION_DATE, 
-       CrsRiskDefinitionsEO.SEARCH_CRITERIA_DETAILS, 
        CrsRiskDefinitionsEO.TMS_DICT_CONTENT_ENTRY_TS, 
        CrsRiskDefinitionsEO.TMS_DICT_CONTENT_ID, 
        CrsRiskDefinitionsEO.TMS_END_TS, 
@@ -129,19 +128,6 @@ FROM CRS_RISK_DEFINITIONS_STG CrsRiskDefinitionsEO]]></SQLQuery>
     EntityAttrName="MeddraVersionDate"
     EntityUsage="CrsRiskDefinitionsEO"
     AliasName="MEDDRA_VERSION_DATE"/>
-  <ViewAttribute
-    Name="SearchCriteriaDetails"
-    PrecisionRule="true"
-    EntityAttrName="SearchCriteriaDetails"
-    EntityUsage="CrsRiskDefinitionsEO"
-    AliasName="SEARCH_CRITERIA_DETAILS">
-    <Properties>
-      <SchemaBasedProperties>
-        <LABEL
-          ResId="com.novartis.ecrs.model.view.CrsRiskDefinitionsVO.SearchCriteriaDetails_LABEL"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </ViewAttribute>
   <ViewAttribute
     Name="TmsDictContentEntryTs"
     IsNotNull="true"

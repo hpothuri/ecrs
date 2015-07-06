@@ -88,16 +88,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
             }
         }
         ,
-        SearchCriteriaDetails {
-            public Object get(CrsRiskDefinitionsEOImpl obj) {
-                return obj.getSearchCriteriaDetails();
-            }
-
-            public void put(CrsRiskDefinitionsEOImpl obj, Object value) {
-                obj.setSearchCriteriaDetails((String)value);
-            }
-        }
-        ,
         TmsDictContentId {
             public Object get(CrsRiskDefinitionsEOImpl obj) {
                 return obj.getTmsDictContentId();
@@ -293,7 +283,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
     public static final int MEDDRATERM = AttributesEnum.MeddraTerm.index();
     public static final int MEDDRAVERSION = AttributesEnum.MeddraVersion.index();
     public static final int MEDDRAVERSIONDATE = AttributesEnum.MeddraVersionDate.index();
-    public static final int SEARCHCRITERIADETAILS = AttributesEnum.SearchCriteriaDetails.index();
     public static final int TMSDICTCONTENTID = AttributesEnum.TmsDictContentId.index();
     public static final int TMSDICTCONTENTENTRYTS = AttributesEnum.TmsDictContentEntryTs.index();
     public static final int TMSENDTS = AttributesEnum.TmsEndTs.index();
@@ -439,21 +428,6 @@ public class CrsRiskDefinitionsEOImpl extends EntityImpl {
         setAttributeInternal(MEDDRAVERSIONDATE, value);
     }
 
-    /**
-     * Gets the attribute value for SearchCriteriaDetails, using the alias name SearchCriteriaDetails.
-     * @return the value of SearchCriteriaDetails
-     */
-    public String getSearchCriteriaDetails() {
-        return (String)getAttributeInternal(SEARCHCRITERIADETAILS);
-    }
-
-    /**
-     * Sets <code>value</code> as the attribute value for SearchCriteriaDetails.
-     * @param value value to set the SearchCriteriaDetails
-     */
-    public void setSearchCriteriaDetails(String value) {
-        setAttributeInternal(SEARCHCRITERIADETAILS, value);
-    }
 
     /**
      * Gets the attribute value for TmsDictContentId, using the alias name TmsDictContentId.

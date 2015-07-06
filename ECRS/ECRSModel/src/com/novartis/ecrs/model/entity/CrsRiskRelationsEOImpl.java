@@ -298,6 +298,16 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
             }
         }
         ,
+        SearchCriteriaDetails {
+            public Object get(CrsRiskRelationsEOImpl obj) {
+                return obj.getSearchCriteriaDetails();
+            }
+
+            public void put(CrsRiskRelationsEOImpl obj, Object value) {
+                obj.setSearchCriteriaDetails((String)value);
+            }
+        }
+        ,
         CrsContentEO {
             public Object get(CrsRiskRelationsEOImpl obj) {
                 return obj.getCrsContentEO();
@@ -374,6 +384,7 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
     public static final int CREATIONTS = AttributesEnum.CreationTs.index();
     public static final int MODIFIEDBY = AttributesEnum.ModifiedBy.index();
     public static final int MODIFICATIONTS = AttributesEnum.ModificationTs.index();
+    public static final int SEARCHCRITERIADETAILS = AttributesEnum.SearchCriteriaDetails.index();
     public static final int CRSCONTENTEO = AttributesEnum.CrsContentEO.index();
     public static final int CRSDOMAINSEO = AttributesEnum.CrsDomainsEO.index();
 
@@ -796,6 +807,22 @@ public class CrsRiskRelationsEOImpl extends EntityImpl {
         return (Timestamp)getAttributeInternal(MODIFICATIONTS);
     }
 
+
+    /**
+     * Gets the attribute value for SearchCriteriaDetails, using the alias name SearchCriteriaDetails.
+     * @return the value of SearchCriteriaDetails
+     */
+    public String getSearchCriteriaDetails() {
+        return (String)getAttributeInternal(SEARCHCRITERIADETAILS);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for SearchCriteriaDetails.
+     * @param value value to set the SearchCriteriaDetails
+     */
+    public void setSearchCriteriaDetails(String value) {
+        setAttributeInternal(SEARCHCRITERIADETAILS, value);
+    }
 
     /**
      * getAttrInvokeAccessor: generated method. Do not modify.
