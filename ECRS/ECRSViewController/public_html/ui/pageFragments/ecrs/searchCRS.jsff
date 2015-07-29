@@ -281,7 +281,7 @@
                        sortable="false"
                        headerText="#{bindings.CrsContentBaseVO.hints.Designee.label}"
                        id="c21">
-              <af:outputText value="#{row.Designee}" id="ot18"/>
+              <af:outputText value="#{row.DesigneeName}" id="ot18"/>
             </af:column>
             <af:column sortProperty="#{bindings.CrsContentBaseVO.hints.BslName.name}"
                        sortable="false"
@@ -433,7 +433,7 @@
                        sortable="false"
                        headerText="#{bindings.CrsContentVO.hints.Designee.label}"
                        id="c9" width="150">
-              <af:outputText value="#{row.Designee}"
+              <af:outputText value="#{row.DesigneeName}"
                              shortDesc="#{bindings.CrsContentVO.hints.Designee.tooltip}"
                              id="ot7"/>
             </af:column>

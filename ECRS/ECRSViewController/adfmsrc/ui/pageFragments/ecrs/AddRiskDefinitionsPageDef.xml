@@ -32,6 +32,8 @@
               DataControl="ECRSAppModuleDataControl" id="PTReportVOIterator"/>
     <iterator id="UserFullNameIterator" Binds="UserFullNameVO"
               DataControl="ECRSAppModuleDataControl" RangeSize="25"/>
+    <iterator id="DesigneeFullNameVOIterator" Binds="DesigneeFullNameVO" DataControl="ECRSAppModuleDataControl"
+              RangeSize="25"/>
   </executables>
   <bindings>
     <attributeValues IterBinding="CrsRiskRelationVOIterator" id="SafetyTopicOfInterest">

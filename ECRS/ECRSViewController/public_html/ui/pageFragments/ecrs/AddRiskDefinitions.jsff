@@ -749,7 +749,8 @@
               <af:outputText value="#{node.levelName}" id="ot22"/>
             </af:column>
             <af:column id="c37" headerText="#{ecrsviewcontrollerBundle.SCOPE}">
-              <af:outputText value="#{node.scopeName}" id="ot23"/>
+              <af:outputText value="#{node.scopeName}" id="ot23"
+                             rendered="#{!pageFlowScope.manageCRSBean.meddraSearch}"/>
             </af:column>
           </af:column>
           <af:dragSource actions="COPY" defaultAction="COPY" discriminant="copyRows"/>

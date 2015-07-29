@@ -103,7 +103,7 @@
                                                   id="it3"
                                                   contentStyle="width:150px;"
                                                   autoSubmit="true"
-                                                  readOnly="#{bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || !pageFlowScope.manageCRSBean.crsFieldsUpdatable || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"
+                                                  readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                                                   valueChangeListener="#{pageFlowScope.manageCRSBean.onChangeIndication}">
                                         <f:validator binding="#{bindings.Indication.validator}"/>
                                     </af:inputText>

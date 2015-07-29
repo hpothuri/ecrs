@@ -40,9 +40,9 @@ public class HierarchyChildUIBean {
             this.dictShortName = "NMATMED";
         } else {
             this.dictShortName = "NMATSMQ";
-            this.formattedScope = ((BigDecimal)row.getAttribute("FormattedScope")).toString();
-            this.scopeName = getScopeName();
         }
+        this.formattedScope = ((BigDecimal)row.getAttribute("FormattedScope")).toString();
+        this.scopeName = getScopeName();
 //        this.dictShortName = (String)row.getAttribute("DictShortName");
         this.dictContentAltCode = (String)row.getAttribute("DictContentAltCode");
         this.level = (Long)row.getAttribute("Level");

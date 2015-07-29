@@ -176,6 +176,7 @@ public class ManageCRSBean implements Serializable {
     private transient RichSelectOneChoice socTermSOC;
     private boolean socTermRequired = true;
     private boolean disableSocTerm = false;
+    private boolean meddraSearch = false;
 
     public ManageCRSBean() {
         super();
@@ -1173,6 +1174,9 @@ public class ManageCRSBean implements Serializable {
         hierVO.setNamedWhereClauseParam("pLevel", level != null ? level : null);
         hierVO.setNamedWhereClauseParam("pDict", dictionary != null ? dictionary : null);
         hierVO.executeQuery();
+        if (null != this.childTreeTable){
+            this.childTreeTable.setVisible(false);
+        }
     }
 
     public void onClickHierarchySearch(ActionEvent actionEvent) {
@@ -1794,8 +1798,10 @@ public class ManageCRSBean implements Serializable {
         if(valueChangeEvent.getNewValue() != null && valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue()){
             if(ViewConstants.MEDDRA_DICTIONARY.equalsIgnoreCase((String)valueChangeEvent.getNewValue())){
                 setLevelItems(getMeddraItems());
+                this.setMeddraSearch(true);
             }else{
                 setLevelItems(getFilterItems());
+                this.setMeddraSearch(false);
             }
         }
     }
@@ -3147,9 +3153,10 @@ public class ManageCRSBean implements Serializable {
         } else
             designee =
                     (String)ADFUtils.evaluateEL("#{bindings.Designee.inputValue}");
-        designee = getFullNamesForAccName(designee);
+        //designee = getFullNamesForAccName(designee);
+        String designeeName = getFullNamesForDesignee(designee);
         Cell cell61 = row6.createCell((short)firstPalletStartIndx);
-        cell61.setCellValue("Designee: " + designee);
+        cell61.setCellValue("Designee: " + designeeName);
         ExcelExportUtils.setHeaderCellStyle(sheet, count,
                                             cell61.getColumnIndex(), false,
                                             CellStyle.ALIGN_LEFT);
@@ -3493,5 +3500,32 @@ public class ManageCRSBean implements Serializable {
 
     public boolean isDisableSocTerm() {
         return disableSocTerm;
+    }
+
+    public void setMeddraSearch(boolean meddraSearch) {
+        this.meddraSearch = meddraSearch;
+    }
+
+    public boolean isMeddraSearch() {
+        return meddraSearch;
+    }
+    /**
+     * This method returns fullname from input account name of the user.
+     * @param accName
+     * @return
+     */
+    private String getFullNamesForDesignee(String designee){
+        //invoke AMImpl with bsl,tasl,ml,designee acc names as keys
+        DCIteratorBinding iter = ADFUtils.findIterator("DesigneeFullNameVOIterator");
+        String fullName = "";
+        if(iter!=null && iter.getViewObject()!=null){
+            ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
+            vo.setNamedWhereClauseParam("pDesignee", designee);
+            vo.executeQuery();
+            if(vo.first()!=null)
+               fullName = (String) vo.first().getAttribute("DesigneeName");
+            logger.info("FullName for designee :-"+designee+" is -"+fullName);
+        }
+        return fullName;
     }
 }

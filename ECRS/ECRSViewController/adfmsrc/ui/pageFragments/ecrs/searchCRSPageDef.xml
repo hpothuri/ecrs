@@ -70,8 +70,7 @@
       </AttrNames>
     </attributeValues>
     <tree IterBinding="CrsContentVOIterator" id="CrsContentVO">
-      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsContentVO"
-                      Name="CrsContentVO0">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsContentVO" Name="CrsContentVO0">
         <AttrNames>
           <Item Value="CrsName"/>
           <Item Value="StateId"/>
@@ -85,6 +84,7 @@
           <Item Value="TaslName"/>
           <Item Value="MedicalLeadName"/>
           <Item Value="BslName"/>
+          <Item Value="DesigneeName"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -101,8 +101,7 @@
     <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
             RequiresUpdateModel="false" Action="rollbackTransaction"/>
     <tree IterBinding="CrsContentBaseVOIterator" id="CrsContentBaseVO">
-      <nodeDefinition DefName="com.novartis.ecrs.model.view.base.CrsContentBaseVO"
-                      Name="CrsContentBaseVO0">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.base.CrsContentBaseVO" Name="CrsContentBaseVO0">
         <AttrNames>
           <Item Value="CrsId"/>
           <Item Value="CrsName"/>
@@ -118,6 +117,7 @@
           <Item Value="MedicalLeadName"/>
           <Item Value="StateName"/>
           <Item Value="CrsCompoundCode"/>
+          <Item Value="DesigneeName"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
