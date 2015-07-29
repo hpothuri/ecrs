@@ -236,6 +236,16 @@ public class CrsContentBaseVORowImpl extends ViewRowImpl {
             }
         }
         ,
+        DesigneeName {
+            public Object get(CrsContentBaseVORowImpl obj) {
+                return obj.getDesigneeName();
+            }
+
+            public void put(CrsContentBaseVORowImpl obj, Object value) {
+                obj.setDesigneeName((String)value);
+            }
+        }
+        ,
         BSLUserVA {
             public Object get(CrsContentBaseVORowImpl obj) {
                 return obj.getBSLUserVA();
@@ -316,6 +326,7 @@ public class CrsContentBaseVORowImpl extends ViewRowImpl {
     public static final int CRSCOMPOUNDTYPE = AttributesEnum.CrsCompoundType.index();
     public static final int CRSCOMPOUNDCODE = AttributesEnum.CrsCompoundCode.index();
     public static final int STATENAME = AttributesEnum.StateName.index();
+    public static final int DESIGNEENAME = AttributesEnum.DesigneeName.index();
     public static final int BSLUSERVA = AttributesEnum.BSLUserVA.index();
     public static final int TASLUSERVA = AttributesEnum.TASLUserVA.index();
     public static final int MLUSERVA = AttributesEnum.MLUserVA.index();
@@ -676,6 +687,23 @@ public class CrsContentBaseVORowImpl extends ViewRowImpl {
      */
     public void setStateName(String value) {
         setAttributeInternal(STATENAME, value);
+    }
+
+
+    /**
+     * Gets the attribute value for the calculated attribute DesigneeName.
+     * @return the DesigneeName
+     */
+    public String getDesigneeName() {
+        return (String) getAttributeInternal(DESIGNEENAME);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for the calculated attribute DesigneeName.
+     * @param value value to set the  DesigneeName
+     */
+    public void setDesigneeName(String value) {
+        setAttributeInternal(DESIGNEENAME, value);
     }
 
     /**

@@ -1056,4 +1056,12 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public ViewObjectImpl getFetchCrsRiskRelationVO() {
         return (ViewObjectImpl)findViewObject("FetchCrsRiskRelationVO");
     }
+
+    /**
+     * Container's getter for DesigneeFullNameVO1.
+     * @return DesigneeFullNameVO1
+     */
+    public ViewObjectImpl getDesigneeFullNameVO() {
+        return (ViewObjectImpl)findViewObject("DesigneeFullNameVO");
+    }
 }

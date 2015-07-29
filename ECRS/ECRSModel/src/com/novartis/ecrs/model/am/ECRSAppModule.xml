@@ -141,6 +141,9 @@
   <ViewUsage
     Name="FetchCrsRiskRelationVO"
     ViewObjectName="com.novartis.ecrs.model.view.CrsRiskRelationVO"/>
+  <ViewUsage
+    Name="DesigneeFullNameVO"
+    ViewObjectName="com.novartis.ecrs.model.view.DesigneeFullNameVO"/>
   <ViewLinkUsage
     Name="CrsRiskRelationToRiskDefintionLink1"
     ViewLinkObjectName="com.novartis.ecrs.model.view.link.CrsRiskRelationToRiskDefintionLink"
