@@ -478,6 +478,16 @@
             </af:selectManyChoice>
           </af:panelFormLayout>
           <af:panelFormLayout id="pfl3">
+            <af:inputText value="#{bindings.NonMeddraComponentComment.inputValue}"
+                          label="#{bindings.NonMeddraComponentComment.hints.label}"
+                          required="#{bindings.NonMeddraComponentComment.hints.mandatory}"
+                          columns="#{bindings.NonMeddraComponentComment.hints.displayWidth}"
+                          maximumLength="#{bindings.NonMeddraComponentComment.hints.precision}"
+                          shortDesc="#{bindings.NonMeddraComponentComment.hints.tooltip}" id="it6"
+                          contentStyle="width:500px;" rows="3"
+                          disabled="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}" autoSubmit="true">
+              <f:validator binding="#{bindings.NonMeddraComponentComment.validator}"/>
+            </af:inputText>
             <af:inputText value="#{bindings.SearchCriteriaDetails.inputValue}"
                           label="#{bindings.SearchCriteriaDetails.hints.label}"
                           required="#{bindings.SearchCriteriaDetails.hints.mandatory}"
@@ -488,16 +498,6 @@
                           visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
                           shortDesc="#{bindings.SearchCriteriaDetails.hints.tooltip}" id="it14">
               <f:validator binding="#{bindings.SearchCriteriaDetails.validator}"/>
-            </af:inputText>
-            <af:inputText value="#{bindings.NonMeddraComponentComment.inputValue}"
-                          label="#{bindings.NonMeddraComponentComment.hints.label}"
-                          required="#{bindings.NonMeddraComponentComment.hints.mandatory}"
-                          columns="#{bindings.NonMeddraComponentComment.hints.displayWidth}"
-                          maximumLength="#{bindings.NonMeddraComponentComment.hints.precision}"
-                          shortDesc="#{bindings.NonMeddraComponentComment.hints.tooltip}" id="it6"
-                          contentStyle="width:500px;" rows="3"
-                          disabled="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}" autoSubmit="true">
-              <f:validator binding="#{bindings.NonMeddraComponentComment.validator}"/>
             </af:inputText>
             <af:inputText value="#{bindings.MqmComment.inputValue}" label="#{bindings.MqmComment.hints.label}"
                           required="#{bindings.MqmComment.hints.mandatory}"
@@ -730,7 +730,7 @@
           <af:dragSource actions="COPY" defaultAction="COPY" discriminant="copyRows"/>
         </af:table>
         <af:treeTable value="#{pageFlowScope.manageCRSBean.hierChildTreeModel}" var="node" rowSelection="multiple"
-                      id="tt1" styleClass="AFStretchWidth"
+                      id="tt1" styleClass="AFStretchWidth" partialTriggers="::cb10"
                       binding="#{pageFlowScope.manageCRSBean.childTreeTable}" initiallyExpanded="true"
                       contentDelivery="immediate" visible="false">
           <f:facet name="nodeStamp">

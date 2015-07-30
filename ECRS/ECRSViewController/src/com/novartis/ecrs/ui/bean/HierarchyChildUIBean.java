@@ -41,7 +41,7 @@ public class HierarchyChildUIBean {
         } else {
             this.dictShortName = "NMATSMQ";
         }
-        this.formattedScope = ((BigDecimal)row.getAttribute("FormattedScope")).toString();
+        this.formattedScope = row.getAttribute("FormattedScope")!= null ? row.getAttribute("FormattedScope").toString() : null;
         this.scopeName = getScopeName();
 //        this.dictShortName = (String)row.getAttribute("DictShortName");
         this.dictContentAltCode = (String)row.getAttribute("DictContentAltCode");
@@ -151,7 +151,7 @@ public class HierarchyChildUIBean {
     
     public String getScopeName() {
         String scopeName="";
-           if (formattedScope == null) return null;
+           if (formattedScope == null) return scopeName;
            if (formattedScope.equals("0")) scopeName = "Full";
            if (formattedScope.equals("1")) scopeName = "Broad";
            if (formattedScope.equals("2")) scopeName = "Narrow";

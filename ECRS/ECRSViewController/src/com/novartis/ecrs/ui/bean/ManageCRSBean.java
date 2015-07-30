@@ -1885,32 +1885,32 @@ public class ManageCRSBean implements Serializable {
      * @param actionEvent
      */
     public void executeHierarchyChild(ActionEvent actionEvent) {
-        DCIteratorBinding childIter = ADFUtils.findIterator("HierarchyChildVOIterator");
-        ViewObject childVO = childIter.getViewObject();
-        logger.info("Executing hierachy child for selected content ID");
-        childVO.setNamedWhereClauseParam("bContentId", ADFUtils.evaluateEL("#{row.ContentId}"));
-        childVO.executeQuery();
-        if(childVO.getEstimatedRowCount() > 0){
-            HierarchyChildUIBean parRow = new HierarchyChildUIBean(childVO.first());
-            childVO.setCurrentRow(childVO.first());
-            HierarchyChildVORowImpl parVORow = (HierarchyChildVORowImpl)childVO.first();
-            RowIterator rs = parVORow.getHierarchyChildDetailVO();
-            List<HierarchyChildUIBean> childRows = new ArrayList<HierarchyChildUIBean>();
-            while(rs.hasNext()){
-                Row childRow = rs.next();
-                childRows.add(new HierarchyChildUIBean(childRow));                
+            DCIteratorBinding childIter = ADFUtils.findIterator("HierarchyChildVOIterator");
+            ViewObject childVO = childIter.getViewObject();
+            logger.info("Executing hierachy child for selected content ID");
+            childVO.setNamedWhereClauseParam("bContentId", ADFUtils.evaluateEL("#{row.ContentId}"));
+            childVO.executeQuery();
+            if (childVO.getEstimatedRowCount() > 0) {
+                HierarchyChildUIBean parRow = new HierarchyChildUIBean(childVO.first());
+                childVO.setCurrentRow(childVO.first());
+                HierarchyChildVORowImpl parVORow = (HierarchyChildVORowImpl)childVO.first();
+                RowIterator rs = parVORow.getHierarchyChildDetailVO();
+                List<HierarchyChildUIBean> childRows = new ArrayList<HierarchyChildUIBean>();
+                while (rs.hasNext()) {
+                    Row childRow = rs.next();
+                    childRows.add(new HierarchyChildUIBean(childRow));
+                }
+                parRow.setChildren(childRows);
+                hierChildList = new ArrayList<HierarchyChildUIBean>();
+                hierChildList.add(parRow);
             }
-            parRow.setChildren(childRows);
-            hierChildList = new ArrayList<HierarchyChildUIBean>();
-            hierChildList.add(parRow);
-        }
-        hierChildTreeModel = new ChildPropertyTreeModel(hierChildList, "children");
-        getChildTreeTable().setVisible(Boolean.TRUE);
+            hierChildTreeModel = new ChildPropertyTreeModel(hierChildList, "children");
+            getChildTreeTable().setVisible(Boolean.TRUE);
         
-        ADFUtils.setPageFlowScopeValue("childVersion", ADFUtils.evaluateEL("#{row.DictVersion}"));
-        ADFUtils.setPageFlowScopeValue("childDate", ADFUtils.evaluateEL("#{row.DictVersionDate}"));
-        
-        ADFUtils.addPartialTarget(getChildTreeTable());
+            ADFUtils.setPageFlowScopeValue("childVersion", ADFUtils.evaluateEL("#{row.DictVersion}"));
+            ADFUtils.setPageFlowScopeValue("childDate", ADFUtils.evaluateEL("#{row.DictVersionDate}"));
+
+            ADFUtils.addPartialTarget(getChildTreeTable());
     }
 
     /**
@@ -3435,6 +3435,7 @@ public class ManageCRSBean implements Serializable {
         logger.info("Showing delete confirmation popup.");
         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())){
             deleteRiskDefinitions();
+            ADFUtils.addPartialTarget(riskDefTable);
         }
     }
     public void processDeleteSaftyTopicOfIntDialog(DialogEvent dialogEvent) {
