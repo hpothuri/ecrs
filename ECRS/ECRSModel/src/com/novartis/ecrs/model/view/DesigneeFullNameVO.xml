@@ -23,7 +23,7 @@
     Kind="where"
     Type="java.lang.String"
     DefaultValue="-1"/>
-  <SQLQuery><![CDATA[select crs_ui_tms_utils.get_name_list_from_roles(:pDesignee) designee_name from dual]]></SQLQuery>
+  <SQLQuery><![CDATA[select crs_ui_tms_utils.get_name_list_from_usernames(:pDesignee) designee_name from dual]]></SQLQuery>
   <ViewAttribute
     Name="DesigneeName"
     IsUpdateable="false"

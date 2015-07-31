@@ -528,7 +528,8 @@
             <f:facet name="statusbar">
               <af:toolbar id="t12">
                 <af:panelLabelAndMessage id="plam8" visible="false"
-                                         binding="#{pageFlowScope.manageCRSBean.savedSuccessMessage}">
+                                         binding="#{pageFlowScope.manageCRSBean.savedSuccessMessage}"
+                                         partialTriggers="cb5">
                   <af:image source="/images/tick.png" id="i4"/>
                   <af:outputText value="#{ecrsviewcontrollerBundle.SAVED_SUCCESSFULLY}" id="ot66"/>
                 </af:panelLabelAndMessage>
@@ -725,7 +726,7 @@
                            id="ot7"/>
           </af:column>
           <af:column id="c32" width="20">
-            <af:commandButton id="cb9" actionListener="#{pageFlowScope.manageCRSBean.executeHierarchyChild}"/>
+            <af:commandButton id="cb9" actionListener="#{pageFlowScope.manageCRSBean.executeHierarchyChildNew}"/>
           </af:column>
           <af:dragSource actions="COPY" defaultAction="COPY" discriminant="copyRows"/>
         </af:table>
@@ -735,7 +736,10 @@
                       contentDelivery="immediate" visible="false">
           <f:facet name="nodeStamp">
             <af:column id="c33" width="150">
-              <af:outputText value="#{node.term}" id="ot19"/>
+              <af:outputText value="#{node.term}" id="ot19" rendered="#{!node.showHasChildrenButton}"/>
+              <af:commandLink text="#{node.term}" id="cl2"
+              rendered="#{node.showHasChildrenButton}" partialSubmit="true"
+                              actionListener="#{pageFlowScope.manageCRSBean.expandHierarchyChild}"/>
             </af:column>
           </f:facet>
           <f:facet name="pathStamp">

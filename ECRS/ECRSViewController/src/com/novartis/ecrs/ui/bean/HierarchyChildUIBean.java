@@ -29,6 +29,13 @@ public class HierarchyChildUIBean {
     private List<HierarchyChildUIBean> children;
     private String formattedScope;
     private String scopeName;
+    private boolean showHasChildrenButton = false;
+    private String childExists;
+    private HierarchyChildUIBean parentNode;
+    private boolean isExpanded = false;
+    private String parent;
+    private String prikey;
+    private boolean isRoot = false;
     
     public HierarchyChildUIBean(Row row){
         this.term = (String)row.getAttribute("Term");
@@ -51,6 +58,14 @@ public class HierarchyChildUIBean {
         this.tmsEndTs = (Timestamp)row.getAttribute("CEndTs");
         this.qual = (String)row.getAttribute("Qual");
         this.qualFlag = (String)row.getAttribute("QualFlag");
+        this.childExists = (String) row.getAttribute("ChildExists");
+        if (null != this.childExists && "Y".equalsIgnoreCase(this.childExists)){
+            this.setShowHasChildrenButton(true);
+        } else {
+            this.setShowHasChildrenButton(false);
+        }
+        this.setPrikey((String) row.getAttribute("Prikey"));
+        this.setParent((String) row.getAttribute("Parent"));
     }
 
     public void setTerm(String term) {
@@ -169,5 +184,53 @@ public class HierarchyChildUIBean {
 
     public void setScopeName(String scopeName) {
         this.scopeName = scopeName;
+    }
+
+    public void setShowHasChildrenButton(boolean showHasChildrenButton) {
+        this.showHasChildrenButton = showHasChildrenButton;
+    }
+
+    public boolean isShowHasChildrenButton() {
+        return showHasChildrenButton;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
+
+    public String getParent() {
+        return parent;
+    }
+
+    public void setIsExpanded(boolean isExpanded) {
+        this.isExpanded = isExpanded;
+    }
+
+    public boolean isIsExpanded() {
+        return isExpanded;
+    }
+
+    public void setParentNode(HierarchyChildUIBean parentNode) {
+        this.parentNode = parentNode;
+    }
+
+    public HierarchyChildUIBean getParentNode() {
+        return parentNode;
+    }
+
+    public void setPrikey(String prikey) {
+        this.prikey = prikey;
+    }
+
+    public String getPrikey() {
+        return prikey;
+    }
+
+    public void setIsRoot(boolean isRoot) {
+        this.isRoot = isRoot;
+    }
+
+    public boolean isIsRoot() {
+        return isRoot;
     }
 }

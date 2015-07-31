@@ -68,7 +68,7 @@ FROM TABLE (HIERARCHY_PKG.GET_HIERARCHY(
         I_IGNORE_PREDICT => NULL,
         i_dict_version => NULL
 	))
-   where dict_content_id = 0
+  -- where dict_content_id = 0
 ORDER BY SORT_ORDER]]></SQLQuery>
   <ViewAttribute
     Name="Prikey"

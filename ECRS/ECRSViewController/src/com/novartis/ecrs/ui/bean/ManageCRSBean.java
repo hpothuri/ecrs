@@ -19,12 +19,15 @@ import java.io.OutputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import java.util.Set;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -78,6 +81,7 @@ import org.apache.myfaces.trinidad.event.SelectionEvent;
 import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
 import org.apache.myfaces.trinidad.model.CollectionModel;
 import org.apache.myfaces.trinidad.model.RowKeySet;
+import org.apache.myfaces.trinidad.model.RowKeySetTreeImpl;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -177,6 +181,10 @@ public class ManageCRSBean implements Serializable {
     private boolean socTermRequired = true;
     private boolean disableSocTerm = false;
     private boolean meddraSearch = false;
+    
+    private transient HierarchyChildUIBean root;
+    private transient Enumeration rows;
+    private HashMap <String , HierarchyChildUIBean> parentNodesByLevel;
 
     public ManageCRSBean() {
         super();
@@ -1892,6 +1900,8 @@ public class ManageCRSBean implements Serializable {
             childVO.executeQuery();
             if (childVO.getEstimatedRowCount() > 0) {
                 HierarchyChildUIBean parRow = new HierarchyChildUIBean(childVO.first());
+                parRow = new HierarchyChildUIBean(childVO.first());
+                logger.info("Executing hierachy child for selected content ID==" + parRow.getTmsDictContentId());
                 childVO.setCurrentRow(childVO.first());
                 HierarchyChildVORowImpl parVORow = (HierarchyChildVORowImpl)childVO.first();
                 RowIterator rs = parVORow.getHierarchyChildDetailVO();
@@ -3529,4 +3539,169 @@ public class ManageCRSBean implements Serializable {
         }
         return fullName;
     }
+    /**
+     * @param actionEvent
+     */
+    public void executeHierarchyChildNew(ActionEvent actionEvent) {
+            DCIteratorBinding childIter = ADFUtils.findIterator("HierarchyChildVOIterator");
+            ViewObject childVO = childIter.getViewObject();
+            logger.info("executeHierarchyChildNew for selected content ID");
+            childVO.setNamedWhereClauseParam("bContentId", ADFUtils.evaluateEL("#{row.ContentId}"));
+            childVO.executeQuery();
+            if (childVO.getEstimatedRowCount() > 0) {
+               // HierarchyChildUIBean parRow = new HierarchyChildUIBean(childVO.first());
+                root = new HierarchyChildUIBean(childVO.first());
+                logger.info("executeHierarchyChildNew for selected content ID==" + root.getTmsDictContentId());
+                childVO.setCurrentRow(childVO.first());
+                HierarchyChildVORowImpl parVORow = (HierarchyChildVORowImpl)childVO.first();
+                rows = childIter.getRowSetIterator().enumerateRowsInRange();
+                rows.nextElement();
+                parentNodesByLevel = new HashMap <String, HierarchyChildUIBean>();
+                parentNodesByLevel.put(root.getTmsDictContentId().toString(), root);
+                List<HierarchyChildUIBean> childRows = new ArrayList<HierarchyChildUIBean>();
+                Row childRow = null;
+                HierarchyChildUIBean childNode = null;
+                while (rows.hasMoreElements()) {
+                    childRow = (Row)rows.nextElement();
+                    childNode = new HierarchyChildUIBean(childRow);
+                    childNode.setParentNode(root);
+                    parentNodesByLevel.put(childNode.getTmsDictContentId().toString(), childNode);
+                    childRows.add(childNode);
+                }
+                root.setChildren(childRows);
+                hierChildList = new ArrayList<HierarchyChildUIBean>();
+                hierChildList.add(root);
+            }
+            hierChildTreeModel = new ChildPropertyTreeModel(hierChildList, "children");
+            getChildTreeTable().setVisible(Boolean.TRUE);
+        
+            ADFUtils.setPageFlowScopeValue("childVersion", ADFUtils.evaluateEL("#{row.DictVersion}"));
+            ADFUtils.setPageFlowScopeValue("childDate", ADFUtils.evaluateEL("#{row.DictVersionDate}"));
+
+            ADFUtils.addPartialTarget(getChildTreeTable());
+    }
+
+    /**
+         * @param actionEvent
+         */
+        public void expandHierarchyChild(ActionEvent actionEvent) {
+            HierarchyChildUIBean newRootNode = null;
+            RichTreeTable tree = this.getChildTreeTable();
+            clearKeys(tree);
+            RowKeySet droppedValue = tree.getSelectedRowKeys();
+            logger.info("In expandHierarchyChild--1");
+            Object[] keys = droppedValue.toArray();
+            Object oldRowKey = tree.getRowKey();
+            try{
+                for (int i = 0; i <keys.length; i++) {
+                    List list = (List)keys[i];
+                    int depth = list.size();
+                    //int rootKey = Integer.parseInt(list.get(0).toString());
+                    HierarchyChildUIBean c1 = null;
+                    HierarchyChildUIBean c2 = null;
+                    HierarchyChildUIBean c3 = null;
+                    HierarchyChildUIBean c4 = null;
+
+                    int c1key;
+                    int c2key;
+                    int c3key;
+                    int c4key;
+
+                    switch (depth) {
+
+                        case 1:
+                            newRootNode = root;
+                            break;
+                        case 2:
+                            c1key = Integer.parseInt(list.get(1).toString());
+                            c1 = (HierarchyChildUIBean)root.getChildren().get(c1key);
+                            newRootNode = c1;
+                            break;
+                        case 3:
+                            c1key = Integer.parseInt(list.get(1).toString());
+                            c1 = (HierarchyChildUIBean)root.getChildren().get(c1key);
+                            c2key = Integer.parseInt(list.get(2).toString());
+                            c2 = (HierarchyChildUIBean)c1.getChildren().get(c2key);
+                            newRootNode = c2;
+                            break;
+                        case 4:
+                            c1key = Integer.parseInt(list.get(1).toString());
+                            c1 = (HierarchyChildUIBean)root.getChildren().get(c1key);
+                            c2key = Integer.parseInt(list.get(2).toString());
+                            c2 = (HierarchyChildUIBean)c1.getChildren().get(c2key);
+                            c3key = Integer.parseInt(list.get(3).toString());
+                            c3 = (HierarchyChildUIBean)c2.getChildren().get(c3key);
+                            newRootNode = c3;
+                            break;
+                        case 5:
+                            c1key = Integer.parseInt(list.get(1).toString());
+                            c1 = (HierarchyChildUIBean)root.getChildren().get(c1key);
+                            c2key = Integer.parseInt(list.get(2).toString());
+                            c2 = (HierarchyChildUIBean)c1.getChildren().get(c2key);
+                            c3key = Integer.parseInt(list.get(3).toString());
+                            c3 = (HierarchyChildUIBean)c2.getChildren().get(c3key);
+                            c4key = Integer.parseInt(list.get(4).toString());
+                            c4 = (HierarchyChildUIBean)c3.getChildren().get(c4key);
+                            newRootNode = c4;
+                            break;
+                        }
+                    }
+                    logger.info("newRootNode content id ==" + newRootNode.getTmsDictContentId() + "::"
+                                + newRootNode.getTerm());
+                    logger.info("newRootNode parent content id ==" + newRootNode.getParent());
+                    if (newRootNode.isIsExpanded()) return; // don't requery if already done
+                    DCIteratorBinding childIter = ADFUtils.findIterator("HierarchyChildVOIterator");
+                    ViewObject childVO = childIter.getViewObject();
+                    childVO.setNamedWhereClauseParam("bContentId", newRootNode.getTmsDictContentId());
+                    childVO.executeQuery();
+                    rows = childIter.getRowSetIterator().enumerateRowsInRange();
+                    // skip the first row, since it is the parent
+                    rows.nextElement();                    
+                    populateTreeNodesInHierarchy(newRootNode);
+                    newRootNode.setIsExpanded(true); // prevent it from being called again
+                    RowKeySet rks = new RowKeySetTreeImpl(true);
+                    rks.setCollectionModel(hierChildTreeModel);
+                    tree.setDisclosedRowKeys(rks);
+                }finally{
+                   //Restore the original rowKey
+                    tree.setRowKey(oldRowKey);
+            }
+            AdfFacesContext.getCurrentInstance().addPartialTarget(tree);
+            AdfFacesContext.getCurrentInstance().partialUpdateNotify(tree);
+        }
+        private void clearKeys (RichTreeTable tree) {
+            if (tree != null && tree.getDisclosedRowKeys()!=null ){
+                    tree.getDisclosedRowKeys().clear();//to resolve NoRowAvailableException
+            }
+        }
+        private HierarchyChildUIBean populateTreeNodesInHierarchy(HierarchyChildUIBean node) {
+            logger.info("In populateTreeNodesInHierarchy for selected content ID:::" + node.getTmsDictContentId());
+            if (parentNodesByLevel == null) return null;
+                Row childRow = null;
+                while (rows.hasMoreElements()) {
+                    childRow = (Row)rows.nextElement();
+                    HierarchyChildUIBean termNode = new HierarchyChildUIBean(childRow);
+                    String showMoreChildren = (String)childRow.getAttribute("ChildExists");
+                    if ("Y".equals(showMoreChildren)) {
+                        termNode.setShowHasChildrenButton(true);
+                    }
+                    HierarchyChildUIBean parentNode = (HierarchyChildUIBean)parentNodesByLevel.get(termNode.getParent());
+                    String levelName = termNode.getLevelName();
+                    parentNodesByLevel.put(termNode.getTmsDictContentId().toString(), termNode);
+                    if (null != levelName && !levelName.equalsIgnoreCase("LLT")){
+                        if (null != parentNode) {
+                            termNode.setParentNode(parentNode);      // set the parent for the child
+                            if (null ==  parentNode.getChildren()){
+                                parentNode.setChildren(new ArrayList<HierarchyChildUIBean>());
+                            }
+                            parentNode.getChildren().add(termNode);  // add to the parent
+                        } else {
+                            logger.info("In populateTreeNodesInHierarchy parentNode is null....");
+                        }
+                    }
+                    populateTreeNodesInHierarchy(termNode);
+                }
+            return node;
+
+        }
 }
