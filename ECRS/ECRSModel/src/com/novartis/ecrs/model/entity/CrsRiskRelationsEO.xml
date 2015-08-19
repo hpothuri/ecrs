@@ -359,7 +359,7 @@
     HistoryColumn="DateHistory"/>
   <Attribute
     Name="SearchCriteriaDetails"
-    Precision="200"
+    Precision="500"
     ColumnName="SEARCH_CRITERIA_DETAILS"
     SQLType="VARCHAR"
     Type="java.lang.String"

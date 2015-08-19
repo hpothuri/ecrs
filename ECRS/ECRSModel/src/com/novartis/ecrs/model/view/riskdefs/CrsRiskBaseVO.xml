@@ -424,7 +424,7 @@ FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Precision="200"
+    Precision="500"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
     AliasName="SEARCH_CRITERIA_DETAILS"

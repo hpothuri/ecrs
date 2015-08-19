@@ -36,15 +36,15 @@ RISK_PURPOSE_SP_FLAG,
 SAFETY_TOPIC_OF_INTEREST, 
 SOC_DICT_CONTENT_ENTRY_TS, 
 SOC_DICT_CONTENT_ID, 
-SOC_TERM, 
+SOC_TERM,
+SEARCH_CRITERIA_DETAILS, 
 CRS_RISK_DEFN_ID,
 MEDDRA_CODE, 
 MEDDRA_LEVEL, 
 MEDDRA_QUALIFIER, 
 MEDDRA_TERM, 
 MEDDRA_VERSION, 
-MEDDRA_VERSION_DATE, 
-SEARCH_CRITERIA_DETAILS, 
+MEDDRA_VERSION_DATE,
 TMS_DICT_CONTENT_ENTRY_TS, 
 TMS_DICT_CONTENT_ID, 
 TMS_END_TS, 
@@ -397,6 +397,27 @@ FROM CRS_RISK_RELATIONS_STG_FLAT_VW]]></SQLQuery>
     </Properties>
   </ViewAttribute>
   <ViewAttribute
+    Name="SearchCriteriaDetails"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="500"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="SEARCH_CRITERIA_DETAILS"
+    Expression="SEARCH_CRITERIA_DETAILS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.novartis.ecrs.model.view.CrsRiskVO.SearchCriteriaDetails_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
     Name="CrsRiskDefnId"
     IsUpdateable="false"
     IsPersistent="false"
@@ -517,27 +538,6 @@ FROM CRS_RISK_RELATIONS_STG_FLAT_VW]]></SQLQuery>
     AliasName="MEDDRA_VERSION_DATE"
     Expression="MEDDRA_VERSION_DATE"
     SQLType="DATE"/>
-  <ViewAttribute
-    Name="SearchCriteriaDetails"
-    IsUpdateable="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Precision="200"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    AliasName="SEARCH_CRITERIA_DETAILS"
-    Expression="SEARCH_CRITERIA_DETAILS"
-    SQLType="VARCHAR">
-    <DesignTime>
-      <Attr Name="_DisplaySize" Value="200"/>
-    </DesignTime>
-    <Properties>
-      <SchemaBasedProperties>
-        <LABEL
-          ResId="com.novartis.ecrs.model.view.CrsRiskVO.SearchCriteriaDetails_LABEL"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </ViewAttribute>
   <ViewAttribute
     Name="TmsDictContentEntryTs"
     IsUpdateable="false"
