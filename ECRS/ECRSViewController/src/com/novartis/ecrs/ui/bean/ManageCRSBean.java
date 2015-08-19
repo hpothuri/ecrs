@@ -187,6 +187,7 @@ public class ManageCRSBean implements Serializable {
     private transient HashMap <String , HierarchyChildUIBean> parentNodesByLevel;
     private boolean searchCriteriaRequired = false;
     private transient RichInputText searchCriteriaDetails;
+    private boolean routineRiskRelationCopied = false;
 
     public ManageCRSBean() {
         super();
@@ -237,6 +238,25 @@ public class ManageCRSBean implements Serializable {
      * @param actionEvent
      */
     public void onClickCreateSave(ActionEvent actionEvent) {
+        //Code to copy routine risk relations on creation of compound crs
+        if (ViewConstants.FLOW_TYPE_CREATE.equalsIgnoreCase(this.flowType) && !this.isRoutineRiskRelationCopied()){
+            DCBindingContainer bc = ADFUtils.getDCBindingContainer();
+            DCIteratorBinding iter = bc.findIteratorBinding("CrsContentVOIterator");
+            logger.info("--After createInsert--");
+            if (iter != null && iter.getCurrentRow() != null){
+                CrsContentVORowImpl row = (CrsContentVORowImpl)iter.getCurrentRow();
+                if (row.getCompoundType() != null &&
+                        ModelConstants.COMPOUND_TYPE_COMPOUND.equalsIgnoreCase(row.getCompoundType())) {
+                        logger.info("--Before  copyRoutineDefinition--");
+                        OperationBinding copyOper = bc.getOperationBinding("copyRoutineDefinition");
+                        copyOper.getParamsMap().put("crsId", row.getCrsId());
+                        copyOper.execute();
+                        this.setRoutineRiskRelationCopied(true);
+                        logger.info("--After-ManageCRSBean:onClickSearch--");
+                }
+            }
+        }
+        
         if(selDesigneeList != null && selDesigneeList.size() > 0){
             String designees = "";
             for(String des : selDesigneeList){
@@ -276,12 +296,12 @@ public class ManageCRSBean implements Serializable {
      */
     public void createCrsRow() {
         // Add event code here...
+        logger.info("--Start-ManageCRSBean:createCrsRow--");
         DCBindingContainer bc =  ADFUtils.findBindingContainerByName("com_novartis_ecrs_view_createCRSPageDef");
         OperationBinding ob =  bc.getOperationBinding("CreateInsert");
         ob.execute();
-
         DCIteratorBinding iter = bc.findIteratorBinding("CrsContentVOIterator");
-
+        logger.info("--After createInsert--");
         if (iter != null && iter.getCurrentRow() != null){
             CrsContentVORowImpl row = (CrsContentVORowImpl)iter.getCurrentRow();
             row.setBslName(ADFContext.getCurrent().getSecurityContext().getUserName().toUpperCase());
@@ -289,15 +309,18 @@ public class ManageCRSBean implements Serializable {
             row.setReviewApproveRequiredFlag(ModelConstants.REVIEW_REQD_YES);
             row.setReleaseStatusFlag(ModelConstants.STATUS_PENDING);
             row.setCrsEffectiveDt(ADFUtils.getJBOTimeStamp());
-            
             Long crsId = row.getCrsId();
             if (row.getCompoundType() != null &&
                   ModelConstants.COMPOUND_TYPE_COMPOUND.equalsIgnoreCase(row.getCompoundType())) {
+                logger.info("--Before  copyRoutineDefinition--");
                 OperationBinding copyOper = bc.getOperationBinding("copyRoutineDefinition");
                 copyOper.getParamsMap().put("crsId", crsId);
                 copyOper.execute();
+                this.setRoutineRiskRelationCopied(true);
+                logger.info("--After-ManageCRSBean:onClickSearch--");
             }
         }
+        logger.info("--End-ManageCRSBean:createCrsRow--");
     }
 
     /**
@@ -3779,5 +3802,13 @@ public class ManageCRSBean implements Serializable {
         else {
             ADFUtils.showPopup(getSuccessPopup());
         }
+    }
+
+    public void setRoutineRiskRelationCopied(boolean routineRiskRelationCopied) {
+        this.routineRiskRelationCopied = routineRiskRelationCopied;
+    }
+
+    public boolean isRoutineRiskRelationCopied() {
+        return routineRiskRelationCopied;
     }
 }
