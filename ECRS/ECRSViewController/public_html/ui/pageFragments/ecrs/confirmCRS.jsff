@@ -17,7 +17,8 @@
     <af:panelGroupLayout id="pgl2" layout="vertical">
       <af:switcher id="s1" defaultFacet="BASE" facetName="#{pageFlowScope.manageCRSBean.baseOrStaging}">
         <f:facet name="STAGING">
-            <af:panelGroupLayout id="pgl3" layout="vertical" binding="#{pageFlowScope.manageCRSBean.workflowPG}">
+            <af:panelGroupLayout id="pgl3" layout="vertical" binding="#{pageFlowScope.manageCRSBean.workflowPG}"
+                                 partialTriggers="sbc1">
             <af:panelBox text="#{ecrsviewcontrollerBundle.WORKFLOW}" id="pb1">
             <f:facet name="toolbar">
                 <af:panelGroupLayout id="pgl4"
@@ -34,7 +35,7 @@
                     <af:commandButton text="#{ecrsviewcontrollerBundle.REVIEW}"
                                       id="cb2"
                                       visible="#{(securityContext.userInRole['CRS_BSL']  || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
-                                      disabled="#{bindings.StateId.inputValue ne 1 or (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag eq 'N')}"
+                                      disabled="#{bindings.StateId.inputValue ne 1 or (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag1 eq 'N')}"
                                       partialSubmit="true"
                                       inlineStyle="margin-right:10px;">
                         <af:showPopupBehavior popupId="review"
@@ -96,7 +97,7 @@
                     </af:commandButton>
                     <af:commandButton text="#{ecrsviewcontrollerBundle.PUBLISHED}"
                                       id="cb14"
-                                      disabled="#{!(bindings.StateId.inputValue eq 6 || (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag.inputValue eq 'N'))}"
+                                      disabled="#{!(bindings.StateId.inputValue eq 6 || (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag1.inputValue eq 'N'))}"
                                       visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
                                       inlineStyle="margin-right:10px;"
                                       actionListener="#{pageFlowScope.manageCRSBean.onClickPublish}"
@@ -119,7 +120,7 @@
                 </f:facet>
               <af:panelFormLayout id="pfl1" partialTriggers="cb11 cb9 cb8 cb10"
               styleClass="AFStretchWidth"
-              maxColumns="1" rows="3" fieldWidth="90%" labelWidth="10%">
+              maxColumns="1" rows="4" fieldWidth="90%" labelWidth="10%">
                 <af:inputText value="#{bindings.MqmComment.inputValue}" 
                               styleClass="AFStretchWidth"
                               label="#{ecrsviewcontrollerBundle.MQM_COMMENT}"
@@ -129,7 +130,7 @@
                               maximumLength="#{bindings.MqmComment.hints.precision}"
                               rows="3"
                               shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it1"
-                              disabled="#{!((securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN']) and bindings.StateId.inputValue eq 2 and bindings.ReviewApproveRequiredFlag.inputValue eq 'Y')}"                              
+                              disabled="#{!((securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN']) and (bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3) and bindings.ReviewApproveRequiredFlag1.inputValue eq 'Y')}"                              
                     autoSubmit="true">
                   <f:validator binding="#{bindings.MqmComment.validator}"/>
                 </af:inputText>
@@ -142,7 +143,7 @@
                               contentStyle="width:75%;"
                               maximumLength="#{bindings.TaslRejectComment.hints.precision}"
                               shortDesc="#{bindings.TaslRejectComment.hints.tooltip}" id="it2"
-                              disabled="#{!((securityContext.userInRole['CRS_TASL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.StateId.inputValue eq 4 and bindings.ReviewApproveRequiredFlag.inputValue eq 'Y')}"
+                              disabled="#{!((securityContext.userInRole['CRS_TASL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.StateId.inputValue eq 4 and bindings.ReviewApproveRequiredFlag1.inputValue eq 'Y')}"
                               >
                   <f:validator binding="#{bindings.TaslRejectComment.validator}"/>
                 </af:inputText>
@@ -151,12 +152,18 @@
                               required="#{bindings.MedicalLeadRejectComment.hints.mandatory}"
                               columns="100" rows="3"
                               contentStyle="width:75%;"
-                              disabled="#{!((securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ML']) and bindings.StateId.inputValue eq 5 and bindings.ReviewApproveRequiredFlag.inputValue eq 'Y')}"
+                              disabled="#{!((securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ML']) and bindings.StateId.inputValue eq 5 and bindings.ReviewApproveRequiredFlag1.inputValue eq 'Y')}"
                               styleClass="AFStretchWidth"
                               maximumLength="#{bindings.MedicalLeadRejectComment.hints.precision}"
                               shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}" id="it3" autoSubmit="true">
                   <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
                 </af:inputText>
+               <af:selectBooleanCheckbox value="#{bindings.ReviewApproveRequiredFlag.inputValue}"
+                                          label="#{ecrsviewcontrollerBundle.REVIEW_APPROVAL_REQUIRED}"
+                                          shortDesc="#{bindings.ReviewApproveRequiredFlag.hints.tooltip}" id="sbc1"
+                                          autoSubmit="true"
+                      readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                      disabled="#{bindings.StateId.inputValue ne 1 || bindings.CrsCompoundType.inputValue eq 'NON-COMPOUND' || bindings.CompoundType.inputValue eq 'NON-COMPOUND'}"/>
               </af:panelFormLayout>
             </af:panelBox>
           </af:panelGroupLayout>
@@ -167,7 +174,7 @@
             visible="#{!(bindings.ReleaseStatusFlagBase.inputValue eq 'C' and pageFlowScope.flowType eq 'S')}">
               <f:facet name="toolbar"/>
               <af:panelFormLayout id="pfl2"  styleClass="AFStretchWidth"
-                    rows="3" maxColumns="1"
+                    rows="4" maxColumns="1"
                     fieldWidth="90%"
                     labelWidth="10%"
                 >
@@ -204,6 +211,10 @@
                               shortDesc="#{bindings.MedicalLeadRejectCommentBase.hints.tooltip}" id="it6">
                   <f:validator binding="#{bindings.MedicalLeadRejectCommentBase.validator}"/>
                 </af:inputText>
+                <af:selectBooleanCheckbox value="#{bindings.ReviewApproveRequiredFlagBase.inputValue}"
+                                          label="#{ecrsviewcontrollerBundle.REVIEW_APPROVAL_REQUIRED}"
+                                          shortDesc="#{bindings.ReviewApproveRequiredFlagBase.hints.tooltip}" id="sbc2"
+                      disabled="true"/>
               </af:panelFormLayout>
             </af:panelBox>
           </af:panelGroupLayout>
@@ -432,7 +443,7 @@
                                   shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}" id="it11"
                                   label="#{ecrsviewcontrollerBundle.MEDICAL_LEAD_REJECT_COMMENT}" rows="3"
                                   styleClass="AFStretchWidth" autoSubmit="true"
-                                  binding="#{pageFlowScope.manageCRSBean.taslCommentsInputText}"
+                                  binding="#{pageFlowScope.manageCRSBean.mlCommentsInputText}"
                                   showRequired="true" labelStyle="vertical-align: middle;  white-space: nowrap;">
                         <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>
                     </af:inputText>

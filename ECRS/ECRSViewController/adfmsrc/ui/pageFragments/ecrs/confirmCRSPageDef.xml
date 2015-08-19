@@ -79,7 +79,7 @@
         <Item Value="MedicalLeadRejectComment"/>
       </AttrNames>
     </attributeValues>
-    <attributeValues IterBinding="CrsContentVOIterator" id="ReviewApproveRequiredFlag">
+    <attributeValues IterBinding="CrsContentVOIterator" id="ReviewApproveRequiredFlag1">
       <AttrNames>
         <Item Value="ReviewApproveRequiredFlag"/>
       </AttrNames>
@@ -133,5 +133,33 @@
         <Item Value="ReasonForChange"/>
       </AttrNames>
     </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CrsCompoundType">
+      <AttrNames>
+        <Item Value="CrsCompoundType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsContentVOIterator" id="CompoundType">
+      <AttrNames>
+        <Item Value="CompoundType"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="CrsContentVOIterator" id="ReviewApproveRequiredFlag" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ReviewApproveRequiredFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="CrsContentBaseVOIterator" id="ReviewApproveRequiredFlagBase" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ReviewApproveRequiredFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
   </bindings>
 </pageDefinition>

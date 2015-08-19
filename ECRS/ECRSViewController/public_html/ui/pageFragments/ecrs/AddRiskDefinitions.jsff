@@ -401,7 +401,7 @@
     <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
               binding="#{pageFlowScope.manageCRSBean.riskDefPopup}" contentDelivery="lazyUncached"
               popupCanceledListener="#{pageFlowScope.manageCRSBean.onCloseRiskPopup}">
-      <af:dialog id="d1" title="#{pageFlowScope.popupMode} Risk Definition" contentWidth="800" type="none">
+      <af:dialog id="d1" title="Detail Risk Definitions" contentWidth="900" type="none">
         <f:facet name="buttonBar">
           <af:panelGroupLayout id="pgl3">
             <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb14"
@@ -458,9 +458,9 @@
             <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
                                 shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc4" required="#{pageFlowScope.manageCRSBean.socTermRequired}"
                                 disabled="#{pageFlowScope.manageCRSBean.disableSocTerm}"
-                                contentStyle="width:200px;" autoSubmit="true"
+                                contentStyle="width:300px;" autoSubmit="true"
                                 readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                binding="#{pageFlowScope.manageCRSBean.socTermSOC}">
+                                binding="#{pageFlowScope.manageCRSBean.socTermSOC}" >
               <f:selectItems value="#{bindings.SocTerm.items}" id="si17"/>
             </af:selectOneChoice>
             <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc2"
@@ -485,18 +485,20 @@
                           maximumLength="#{bindings.NonMeddraComponentComment.hints.precision}"
                           shortDesc="#{bindings.NonMeddraComponentComment.hints.tooltip}" id="it6"
                           contentStyle="width:500px;" rows="3"
+                          readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                           disabled="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}" autoSubmit="true">
               <f:validator binding="#{bindings.NonMeddraComponentComment.validator}"/>
             </af:inputText>
             <af:inputText value="#{bindings.SearchCriteriaDetails.inputValue}"
                           label="#{bindings.SearchCriteriaDetails.hints.label}"
-                          required="#{bindings.SearchCriteriaDetails.hints.mandatory}"
+                          required="#{pageFlowScope.manageCRSBean.searchCriteriaRequired}"
                           columns="#{bindings.SearchCriteriaDetails.hints.displayWidth}"
                           maximumLength="#{bindings.SearchCriteriaDetails.hints.precision}"
-                          disabled="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                           contentStyle="width:500px;" rows="3" autoSubmit="true"
+                          readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                           visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
-                          shortDesc="#{bindings.SearchCriteriaDetails.hints.tooltip}" id="it14">
+                          shortDesc="#{bindings.SearchCriteriaDetails.hints.tooltip}" id="it14"
+                          binding="#{pageFlowScope.manageCRSBean.searchCriteriaDetails}">
               <f:validator binding="#{bindings.SearchCriteriaDetails.validator}"/>
             </af:inputText>
             <af:inputText value="#{bindings.MqmComment.inputValue}" label="#{bindings.MqmComment.hints.label}"
@@ -505,8 +507,9 @@
                           maximumLength="#{bindings.MqmComment.hints.precision}"
                           shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it5" rows="3"
                           contentStyle="width:500px;"
-                          disabled="#{!securityContext.userInRole['CRS_MQM'] &amp;&amp; !securityContext.userInRole['CRS_ADMIN']}"
+                          disabled="#{!(securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN'])}"
                           autoSubmit="true"
+                          readOnly="#{pageFlowScope.manageCRSBean.flowType eq 'S' or !(bindings.StateId.inputValue eq 1 || bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)}"
                           visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
                           rendered="false">
               <f:validator binding="#{bindings.MqmComment.validator}"/>
@@ -517,8 +520,9 @@
                           maximumLength="#{bindings.MqmComment.hints.precision}"
                           shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it13" contentStyle="width:500px;"
                           rows="3" autoSubmit="true"
+                          readOnly="#{pageFlowScope.manageCRSBean.flowType eq 'S' or !(bindings.StateId.inputValue eq 1 || bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)}"
                           visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
-                          disabled="#{!securityContext.userInRole['CRS_MQM'] &amp;&amp; !securityContext.userInRole['CRS_ADMIN']}">
+                          disabled="#{!(securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN'])}">
               <f:validator binding="#{bindings.MqmComment.validator}"/>
             </af:inputText>
           </af:panelFormLayout>
@@ -582,7 +586,7 @@
                          headerText="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.label}" id="c26">
                 <af:selectOneChoice label="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.label}" id="soc1"
                                     value="#{row.bindings.CrsQualifier.inputValue}"
-                                    readOnly="#{row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}">
+                                    readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable or row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}">
                   <af:selectItem label="BROAD" value="BROAD" id="si24"/>
                   <af:selectItem label="NARROW" value="NARROW" id="si25"/>
                 </af:selectOneChoice>
@@ -592,7 +596,7 @@
                               columns="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.displayWidth}"
                               maximumLength="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.precision}"
                               shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.tooltip}" id="it18"
-                              readOnly="#{row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}" visible="false"
+                              readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable or row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}" visible="false"
                               autoSubmit="true">
                   <f:validator binding="#{row.bindings.MeddraQualifier.validator}"/>
                 </af:inputText>
@@ -644,9 +648,8 @@
                 <af:commandButton text="#{ecrsviewcontrollerBundle.ADD}" id="cb7" icon="/images/Create.png"
                                   actionListener="#{bindings.CreateRiskDefinition.execute}" visible="false"/>
                <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SELECTED}" id="cb4" icon="/images/delete.png"
-                                       visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
-                  <af:showPopupBehavior popupId="::delConfPopup"
-                              triggerType="action"/>
+                                       visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}" partialSubmit="true"
+                                 actionListener="#{pageFlowScope.manageCRSBean.onClickOfRiskDefDelete}">
                   </af:commandButton>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb5" icon="/images/filesave.png"
                                   actionListener="#{pageFlowScope.manageCRSBean.saveRiskDefs}"
@@ -656,9 +659,8 @@
                                   actionListener="#{pageFlowScope.manageCRSBean.onClickHierarchySearch}"
                                   visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb13"
-                                  actionListener="#{bindings.Commit.execute}"
-                                  visible="#{securityContext.userInRole['CRS_MQM']}">
-                  <af:showPopupBehavior triggerType="action" popupId="::p2"/>
+                                  visible="#{securityContext.userInRole['CRS_MQM']}"
+                                  actionListener="#{pageFlowScope.manageCRSBean.onClickRiskDefSave}">
                 </af:commandButton>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.REFRESH_REPOSITORY}" id="cb23"
                                   icon="/images/database-refresh-icon.png"
@@ -692,7 +694,7 @@
                  contentWidth="350">
         <f:facet name="buttonBar"/>
         <af:panelFormLayout id="pfl1" rows="2" maxColumns="2">
-          <af:selectOneChoice label="#{ecrsviewcontrollerBundle.DICTIONARY}" id="soc2"
+          <af:selectOneChoice label="#{ecrsviewcontrollerBundle.DICTIONARY}" id="soc2" required="true"
                               value="#{pageFlowScope.manageCRSBean.dictionary}" autoSubmit="true"
                               valueChangeListener="#{pageFlowScope.manageCRSBean.dictionaryVC}">
             <af:selectItem label="MedDRA" value="NMATMED" id="si13"/>
@@ -958,6 +960,7 @@
               <af:selectOneChoice value="#{bindings.DomainId.inputValue}"
                                   label="#{ecrsviewcontrollerBundle.DATA_DOMAIN}" autoSubmit="true"
                                   shortDesc="#{bindings.DomainId.hints.tooltip}" id="soc10" required="true"
+                                  readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                                   valueChangeListener="#{pageFlowScope.manageCRSBean.onDomainIdChange}">
                 <f:selectItems value="#{bindings.DomainId.items}" id="si66"/>
               </af:selectOneChoice>
@@ -970,11 +973,11 @@
                 <f:validator binding="#{bindings.DataDomain.validator}"/>
               </af:inputText>-->
               <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
-                                  shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc5" contentStyle="width:200px;"
+                                  shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc5" contentStyle="width:300px;"
                                   required="#{pageFlowScope.manageCRSBean.socTermRequired}"
                                   binding="#{pageFlowScope.manageCRSBean.socTermSOC}" autoSubmit="true"
                                   disabled="#{pageFlowScope.manageCRSBean.disableSocTerm}"
-                                  >
+                                  partialTriggers="soc10">
                 <f:selectItems value="#{bindings.SocTerm.items}" id="si18"/>
               </af:selectOneChoice>
               <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc4"
@@ -1001,6 +1004,18 @@
                             contentStyle="width:500px;" autoSubmit="true">
                 <f:validator binding="#{bindings.NonMeddraComponentComment.validator}"/>
               </af:inputText>
+              <af:inputText value="#{bindings.SearchCriteriaDetails.inputValue}"
+                          label="#{bindings.SearchCriteriaDetails.hints.label}"
+                          required="#{pageFlowScope.manageCRSBean.searchCriteriaRequired}"
+                          columns="#{bindings.SearchCriteriaDetails.hints.displayWidth}"
+                          maximumLength="#{bindings.SearchCriteriaDetails.hints.precision}"
+                          contentStyle="width:500px;" rows="3" autoSubmit="true"
+                          readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                          visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
+                          shortDesc="#{bindings.SearchCriteriaDetails.hints.tooltip}" id="it15"
+                          binding="#{pageFlowScope.manageCRSBean.searchCriteriaDetails}">
+              <f:validator binding="#{bindings.SearchCriteriaDetails.validator}"/>
+            </af:inputText>
             </af:panelFormLayout>
             <af:panelCollection id="pc3" styleClass="AFStretchWidth">
               <f:facet name="menus"/>
@@ -1044,9 +1059,9 @@
                   <af:outputText value="#{row.CrsQualifier}"
                                  shortDesc="#{bindings.CrsRiskDefinitionsVO1.hints.MeddraQualifier.tooltip}" id="ot35"
                                  rendered="false"/>
-                  <af:inputText id="it8" value="#{row.CrsQualifier}" readOnly="#{row.MeddraQualifierUpdFlag ne 'Y'}"
+                  <af:inputText id="it8" value="#{row.CrsQualifier}" readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable or row.MeddraQualifierUpdFlag ne 'Y'}"
                                 rendered="false"/>
-                  <af:selectOneChoice id="soc11" readOnly="#{row.MeddraQualifierUpdFlag ne 'Y'}"
+                  <af:selectOneChoice id="soc11" readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable or row.MeddraQualifierUpdFlag ne 'Y'}"
                                       value="#{row.CrsQualifier}">
                     <af:selectItem label="BROAD" value="BROAD" id="si26"/>
                     <af:selectItem label="NARROW" value="NARROW" id="si27"/>
@@ -1222,7 +1237,7 @@
                        titleIconSource="/images/info_icon.png"
                        closeIconVisible="false" inlineStyle="width:250px;"
                        dialogListener="#{pageFlowScope.manageCRSBean.processDeleteSaftyTopicOfIntDialog}">
-                <af:outputText value="#{ecrsviewcontrollerBundle.ARE_YOU_SURE_THAT_YOU_WANT_TO_DELETE_SAFTY_TOPIC}" id="ot86"/>
+                <af:outputText value="#{ecrsviewcontrollerBundle.ARE_YOU_SURE_THAT_YOU_WANT_TO_DELETE_SAFETY_TOPIC}" id="ot86"/>
             </af:dialog>
         </af:popup>
   </af:panelGroupLayout>

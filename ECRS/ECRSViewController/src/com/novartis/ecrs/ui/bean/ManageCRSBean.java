@@ -178,13 +178,15 @@ public class ManageCRSBean implements Serializable {
     private transient RichPanelGroupLayout workflowPG;
     private transient RichPopup delSTIConfPopup;
     private transient RichSelectOneChoice socTermSOC;
-    private boolean socTermRequired = true;
+    private boolean socTermRequired = false;
     private boolean disableSocTerm = false;
     private boolean meddraSearch = false;
     
     private transient HierarchyChildUIBean root;
     private transient Enumeration rows;
-    private HashMap <String , HierarchyChildUIBean> parentNodesByLevel;
+    private transient HashMap <String , HierarchyChildUIBean> parentNodesByLevel;
+    private boolean searchCriteriaRequired = false;
+    private transient RichInputText searchCriteriaDetails;
 
     public ManageCRSBean() {
         super();
@@ -235,8 +237,6 @@ public class ManageCRSBean implements Serializable {
      * @param actionEvent
      */
     public void onClickCreateSave(ActionEvent actionEvent) {
-        // Add event code here...
-       
         if(selDesigneeList != null && selDesigneeList.size() > 0){
             String designees = "";
             for(String des : selDesigneeList){
@@ -757,6 +757,11 @@ public class ManageCRSBean implements Serializable {
         
         Integer domain = (Integer)ADFUtils.evaluateEL("#{bindings.DomainId.attributeValue}");
         if(domain != null && (domain == 1)){
+            String soc = (String)ADFUtils.evaluateEL("#{bindings.SocTerm.inputValue}");
+            if(soc == null || "".equals(soc)){
+                ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("SOC_MANDATE_ERROR"));
+                return;
+            }
             DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
             ViewObject riskDefVO = iter.getViewObject();
             if(riskDefVO.getEstimatedRowCount() == 0){
@@ -766,18 +771,21 @@ public class ManageCRSBean implements Serializable {
         }
         
         logger.info("Saving risk defs.");
-        String soc = (String)ADFUtils.evaluateEL("#{bindings.SocTerm.inputValue}");
-        if(soc == null || "".equals(soc)){
-            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("SOC_MANDATE_ERROR"));
-            return;
+        
+        if (domain != null && domain != 1){
+            String searchCriteriaDetails = (String)ADFUtils.evaluateEL("#{bindings.SearchCriteriaDetails.inputValue}");
+            if(searchCriteriaDetails == null || "".equals(searchCriteriaDetails)){
+                ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("SCD_MANDATE_ERROR"));
+                return;
+            }
         }
+        
         String stoi = (String)ADFUtils.evaluateEL("#{bindings.SafetyTopicOfInterest.inputValue}");
         if(stoi == null || "".equals(stoi)){
             ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("STOI_MANDATE_ERROR"));
             return;
         }
-        Integer domainId = (Integer)ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}");
-        if(domainId == null || "".equals(domainId)){
+        if(domain == null){
             ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("DATA_DOMAIN_MANDATE_ERROR"));
             return;
         }
@@ -979,7 +987,7 @@ public class ManageCRSBean implements Serializable {
         logger.info("--------processing TaslReject action---------");
         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
             String taslComments = (String)ADFUtils.evaluateEL("#{bindings.TaslRejectComment.inputValue}");
-            if (taslComments==null || (taslComments != null && "".equals(taslComments.trim()))){
+            if (taslComments == null || (taslComments != null && "".equals(taslComments.trim()))){
                 ADFUtils.showFacesMessage("Please enter your comments for rejection.",
                                           FacesMessage.SEVERITY_ERROR, getTaslCommentsInputText());                
                 return;
@@ -1482,12 +1490,13 @@ public class ManageCRSBean implements Serializable {
             if (oper.getErrors().size() > 0)
                 ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
             else{
-                String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}");
-                if(returnValue == null){
-                    ADFUtils.navigateToControlFlowCase("home");
-                }else{
-                    ADFUtils.navigateToControlFlowCase(returnValue);
-                }
+                ADFUtils.navigateToControlFlowCase("home");
+//                String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}");
+//                if(returnValue == null){
+//                    ADFUtils.navigateToControlFlowCase("home");
+//                }else{
+//                    ADFUtils.navigateToControlFlowCase(returnValue);
+//                }
             }
         }
     }
@@ -2458,26 +2467,31 @@ public class ManageCRSBean implements Serializable {
         // Add event code here...
         if (DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
             logger.info("Start- ManageCRSBean:retireConfirmDialogListener--");
+            String reasonForChangeText = getReasonForChange();
             CrsContentBaseVORowImpl row =
                 (CrsContentBaseVORowImpl)ADFUtils.evaluateEL("#{bindings.CrsContentBaseVOIterator.currentRow}");
             if (row.getCrsId() != null) {
-                Map<String, Object> params = new HashMap<String, Object>();
-                params.put("pCRSId", row.getCrsId());
-                params.put("pReasonForChange", getReasonForChange());
-                try {
-                    String msg =
-                        (String)ADFUtils.executeAction("retireCrs", params);
-                    logger.info("Model result message--"+msg);
-                    if (!ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
-                        ADFUtils.setEL("#{pageFlowScope.plsqlerror}", msg);
-                        ADFUtils.showPopup(getErrorPLSqlPopup());
-                        return;
+                if (null == reasonForChangeText || reasonForChangeText.isEmpty()){
+                    ADFUtils.showFacesMessage(uiBundle.getString("REASON_FOR_CHANGE_REQUIRED"), FacesMessage.SEVERITY_ERROR);
+                } else {
+                    Map<String, Object> params = new HashMap<String, Object>();
+                    params.put("pCRSId", row.getCrsId());
+                    params.put("pReasonForChange", getReasonForChange());
+                    try {
+                        String msg =
+                            (String)ADFUtils.executeAction("retireCrs", params);
+                        logger.info("Model result message--"+msg);
+                        if (!ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
+                            ADFUtils.setEL("#{pageFlowScope.plsqlerror}", msg);
+                            ADFUtils.showPopup(getErrorPLSqlPopup());
+                            return;
+                        }
+                        onClickSearch(new ActionEvent((UIComponent)dialogEvent.getSource()));
+                        getSearchBaseTableBinding().resetStampState();
+                        ADFUtils.addPartialTarget(getSearchBaseTableBinding());
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    onClickSearch(new ActionEvent((UIComponent)dialogEvent.getSource()));
-                    getSearchBaseTableBinding().resetStampState();
-                    ADFUtils.addPartialTarget(getSearchBaseTableBinding());
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
             logger.info("End- ManageCRSBean:retireConfirmDialogListener--");
@@ -3473,20 +3487,34 @@ public class ManageCRSBean implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        logger.info("domainIdOther :: " + domainIdOther);
         logger.info("Domain selected :: " + newValue);
         if(null != newValue && valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue()){
-            if(domainIdOther.intValue() == newValue.intValue()){
+            if(newValue.intValue() != 1){
+                logger.info("Domain selected is Others....");
                 this.socTermSOC.setValue(null);
                 this.socTermSOC.resetValue();
+                this.socTermSOC.setShowRequired(false);
                 this.setSocTermRequired(false);
                 this.setDisableSocTerm(true);
+                this.setSearchCriteriaRequired(true);
+                this.searchCriteriaDetails.setShowRequired(true);
             } else {
+                logger.info("onDomainIdChange else block....");
+                this.setSocTermRequired(true);
+                this.socTermSOC.setShowRequired(true);
                 this.setSocTermRequired(true);
                 this.setDisableSocTerm(false);
+                this.setSearchCriteriaRequired(false);
+                this.searchCriteriaDetails.setShowRequired(false);
             }
         }
+        AdfFacesContext.getCurrentInstance().addPartialTarget(searchCriteriaDetails);
+        AdfFacesContext.getCurrentInstance().partialUpdateNotify(searchCriteriaDetails);
         AdfFacesContext.getCurrentInstance().addPartialTarget(socTermSOC);
         AdfFacesContext.getCurrentInstance().partialUpdateNotify(socTermSOC);
+        //ADFUtils.addPartialTarget(searchCriteriaDetails);
+        //ADFUtils.addPartialTarget(socTermSOC);
     }
 
     public void setSocTermSOC(RichSelectOneChoice socTermSOC) {
@@ -3704,4 +3732,52 @@ public class ManageCRSBean implements Serializable {
             return node;
 
         }
+
+    public void setSearchCriteriaRequired(boolean searchCriteriaRequired) {
+        this.searchCriteriaRequired = searchCriteriaRequired;
+    }
+
+    public boolean isSearchCriteriaRequired() {
+        return searchCriteriaRequired;
+    }
+
+    public void setSearchCriteriaDetails(RichInputText searchCriteriaDetails) {
+        this.searchCriteriaDetails = searchCriteriaDetails;
+    }
+
+    public RichInputText getSearchCriteriaDetails() {
+        return searchCriteriaDetails;
+    }
+    public void onClickOfRiskDefDelete(ActionEvent event){
+        //Check any risk definition records selected
+        DCIteratorBinding riskDefIter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
+        ViewObject riskDefVO = riskDefIter.getViewObject();
+        long rowCount = riskDefVO.getEstimatedRowCount();
+        if (rowCount == 0){
+            ADFUtils.showFacesMessage(uiBundle.getString("NO_RISK_DEFINITIONS_TO_DELETE"), FacesMessage.SEVERITY_INFO);
+        } else {
+            Row[] rows = riskDefVO.getFilteredRows("SelectAttr", Boolean.TRUE);
+            if (null != rows && rows.length > 0){
+                RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                this.getDelConfPopupBinding().show(hints);
+            } else {
+                // Show error message
+                ADFUtils.showFacesMessage(uiBundle.getString("SELECT_RISK_DEFINITIONS_TO_DELETE"), FacesMessage.SEVERITY_INFO);
+            }
+        }
+    }
+    /**
+     * Invoke commit operation of DB.
+     * @param actionEvent
+     */
+    public void onClickRiskDefSave(ActionEvent actionEvent) {
+        // Add event code here...
+        OperationBinding oper = ADFUtils.findOperation("Commit");
+        oper.execute();
+        if (oper.getErrors().size() > 0)
+            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
+        else {
+            ADFUtils.showPopup(getSuccessPopup());
+        }
+    }
 }

@@ -52,7 +52,7 @@ public class ViewConstants {
     public static final String CURRENT = "Current"; 
     
     public static final String STAGING = "STAGING";
-    public static final String DOMAIN_OTHER = "OTHER TRIALS";
+    public static final String DOMAIN_OTHER = "OTHER";
     
     public static boolean isNotEmpty(String str) {
         return str != null && str.trim().length() > 0;

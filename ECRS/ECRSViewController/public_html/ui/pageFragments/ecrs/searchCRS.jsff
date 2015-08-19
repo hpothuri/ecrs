@@ -580,7 +580,7 @@
                       label="#{ecrsviewcontrollerBundle.REASON_FOR_CHANGE}"
                       rows="2" autoSubmit="true"
                       value="#{pageFlowScope.manageCRSBean.reasonForChange}"
-                      required="true"></af:inputText>
+                      showRequired="true"></af:inputText>
       </af:panelGroupLayout>
     </af:dialog>
   </af:popup>
