@@ -50,6 +50,8 @@ import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
 import oracle.adf.view.rich.component.rich.layout.RichPanelGroupLayout;
 import oracle.adf.view.rich.component.rich.layout.RichPanelLabelAndMessage;
+import oracle.adf.view.rich.component.rich.layout.RichToolbar;
+import oracle.adf.view.rich.component.rich.output.RichImage;
 import oracle.adf.view.rich.component.rich.output.RichOutputText;
 import oracle.adf.view.rich.context.AdfFacesContext;
 import oracle.adf.view.rich.datatransfer.DataFlavor;
@@ -111,8 +113,8 @@ public class ManageCRSBean implements Serializable {
     private transient RichPopup crsRejectPopup;
     private transient RichInputText taslCommentsInputText;
     private transient RichInputText mlCommentsInputText;
-    private String dictionary;
-    private String level;
+    private String dictionary = ViewConstants.MEDDRA_DICTIONARY;
+    private String level = ViewConstants.SOC;
     private String term;
     private transient RichPopup hierPopup;
     private boolean crsFieldsUpdatable;
@@ -144,8 +146,8 @@ public class ManageCRSBean implements Serializable {
     private transient UIXSwitcher searchSwitherBinding;
     private Boolean repoRefreshed;
     private String baseOrStaging=ModelConstants.BASE_FACET;
-    private ChildPropertyTreeModel hierChildTreeModel;
-    private List<HierarchyChildUIBean> hierChildList;
+    private transient ChildPropertyTreeModel hierChildTreeModel;
+    private transient List<HierarchyChildUIBean> hierChildList;
     private transient RichTable searchBaseTableBinding;
     private transient RichDialog reasonChangePopup;
     private transient RichPopup modifyReasonChngPopup;
@@ -188,6 +190,12 @@ public class ManageCRSBean implements Serializable {
     private boolean searchCriteriaRequired = false;
     private transient RichInputText searchCriteriaDetails;
     private boolean routineRiskRelationCopied = false;
+    
+    private transient RichToolbar cntrlStatusBar;
+
+    private transient  RichImage iconCRSChanged;
+    private transient RichImage iconCRSSaveError;
+    private transient RichImage iconCRSSaved;
 
     public ManageCRSBean() {
         super();
@@ -594,6 +602,7 @@ public class ManageCRSBean implements Serializable {
             String indication = (String)ADFUtils.evaluateEL("#{bindings.Indication.inputValue}");
             ADFUtils.setEL("#{bindings.CrsName.inputValue}",
                            (compCode != null ? compCode : crsCompCode) + (indication != null ? (" "+indication) : ""));
+            resetCrsName(indication, compCode, crsCompCode);
             //ResetUtils.reset(vce.getComponent().getParent());
             ADFUtils.addPartialTarget(vce.getComponent().getParent());
         }
@@ -647,6 +656,7 @@ public class ManageCRSBean implements Serializable {
             savedSuccessMessage.setVisible(Boolean.FALSE);
             ResetUtils.reset(savedSuccessMessage);
         }
+        showStatus(ViewConstants.CRS_MODIFIED);
         if(riskDefPopupPanel != null)
             ResetUtils.reset(riskDefPopupPanel);
         ADFUtils.showPopup(riskDefPopup);
@@ -716,6 +726,7 @@ public class ManageCRSBean implements Serializable {
         for(Row row : rows){
             row.remove();
         }
+        showStatus(ViewConstants.CRS_MODIFIED);
 //        RowKeySet rowKeySet = (RowKeySet)riskDefTable.getSelectedRowKeys();
 //        CollectionModel cm = (CollectionModel)riskDefTable.getValue();
 //        for (Object facesTreeRowKey : rowKeySet) {
@@ -827,6 +838,7 @@ public class ManageCRSBean implements Serializable {
                 ADFUtils.addPartialTarget(copySuccessMessage);
                 ResetUtils.reset(savedSuccessMessage);
             }
+            showStatus(ViewConstants.CRS_SAVE_ERROR);
         }
         else{
 //            ADFUtils.showPopup(successPopup);
@@ -840,6 +852,7 @@ public class ManageCRSBean implements Serializable {
                 ADFUtils.addPartialTarget(copySuccessMessage);
                 ResetUtils.reset(copySuccessMessage);
             }
+            showStatus(ViewConstants.CRS_SAVED);
         }
     }
 
@@ -1209,7 +1222,7 @@ public class ManageCRSBean implements Serializable {
         DCIteratorBinding iter = ADFUtils.findIterator("HierarchySearchVOIterator");
         ViewObject hierVO = iter.getViewObject();
         logger.info("Entered search criteria : term : "+term+" level : "+level+" dictionary : "+dictionary);
-        hierVO.setNamedWhereClauseParam("pTerm", term != null ? term : null);
+        hierVO.setNamedWhereClauseParam("pTerm", (term != null && !term.isEmpty()) ? term : "%");
         hierVO.setNamedWhereClauseParam("pLevel", level != null ? level : null);
         hierVO.setNamedWhereClauseParam("pDict", dictionary != null ? dictionary : null);
         hierVO.executeQuery();
@@ -1246,9 +1259,13 @@ public class ManageCRSBean implements Serializable {
         ViewObject childVO = childIter.getViewObject();
         childVO.executeEmptyRowSet();
         setTerm(null);
-        setLevel(null);
-        setDictionary(null);
+        //setLevel(null);
+        //setDictionary(null);
+        setLevel(ViewConstants.SOC);
+        setDictionary(ViewConstants.MEDDRA_DICTIONARY);
         setContentId(null);
+        setLevelItems(getMeddraItems());
+        this.setMeddraSearch(true);
         if(childTreeTable != null)
             childTreeTable.setVisible(false);
     }
@@ -1455,6 +1472,7 @@ public class ManageCRSBean implements Serializable {
         dragTable.setRowKey(dragCurrentRowKey);
         AdfFacesContext.getCurrentInstance().addPartialTarget(dragTable);
         AdfFacesContext.getCurrentInstance().addPartialTarget(dropTable);
+        showStatus(ViewConstants.CRS_MODIFIED);
         return DnDAction.COPY;
     }
 
@@ -1488,10 +1506,12 @@ public class ManageCRSBean implements Serializable {
 
             } else if (ModelConstants.STATUS_PENDING.equals(crsStatus)) {
                 
-                if(ModelConstants.STATE_DRAFT.equals(crsState) ||
-                    ModelConstants.STATE_REVIEWED.equals(crsState) ||
-                    ModelConstants.STATE_APPROVED.equals(crsState) ||
-                    ModelConstants.STATE_PUBLISHED.equals(crsState) )
+                if(ModelConstants.STATE_DRAFT.equals(crsState) 
+                   || ModelConstants.STATE_REVIEWED.equals(crsState)
+                   || ModelConstants.STATE_RETIRED.equals(crsState)
+                   || ModelConstants.STATE_ACTIVATED.equals(crsState)
+                   || ModelConstants.STATE_PUBLISHED.equals(crsState)
+                )
                     isCrsFieldsUpdatable = true;                                
             }
             logger.info("--End : isCrsFieldsUpdatable:  BSL Loggedin block-------------");
@@ -1603,6 +1623,8 @@ public class ManageCRSBean implements Serializable {
                                    (compCode != null ? compCode :
                                     crsCompCode) + " " + indication);
                 }
+                resetCrsName(indication, compCode, crsCompCode);
+                
             }
         }
     }
@@ -1842,6 +1864,7 @@ public class ManageCRSBean implements Serializable {
             }else{
                 setLevelItems(getFilterItems());
                 this.setMeddraSearch(false);
+                this.setLevel(ViewConstants.MQ1);
             }
         }
     }
@@ -1887,10 +1910,18 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
         if(riskDefTable != null)
             ADFUtils.addPartialTarget(riskDefTable);
-        if(riskDefPopup != null)
+        if(riskDefPopup != null){
+            this.iconCRSSaved.setVisible(false);
+            this.iconCRSSaveError.setVisible(false);
+            this.iconCRSChanged.setVisible(false);
             riskDefPopup.hide();
-        if(copyPopup != null)
+        }
+        if(copyPopup != null){
+            this.iconCRSSaved.setVisible(false);
+            this.iconCRSSaveError.setVisible(false);
+            this.iconCRSChanged.setVisible(false);
             copyPopup.hide();
+        }
     }
 
     /**
@@ -1985,10 +2016,12 @@ public class ManageCRSBean implements Serializable {
     
     public void searchCrs(ActionEvent actionEvent) {
         String stoi = getSafetyTopicOfInterest();
-        logger.info("Searching exisitng current safety topic of interests with entered value : "+stoi);
+        logger.info("Searching exisitng current safety topic of interests with entered value : " + stoi);
         DCIteratorBinding iter = ADFUtils.findIterator("CopyCrsRiskVOIterator");
         ViewObject crsSearchVO = iter.getViewObject();
-        crsSearchVO.setWhereClause("SAFETY_TOPIC_OF_INTEREST like '"+stoi+"'");
+        String stoiParam = "%";
+        stoiParam = (null != stoi && !stoi.isEmpty()) ? stoi : stoiParam;
+        crsSearchVO.setWhereClause("SAFETY_TOPIC_OF_INTEREST like '"+stoiParam+"'");
         System.err.println(crsSearchVO.getQuery());
         crsSearchVO.executeQuery();
     }
@@ -2088,6 +2121,7 @@ public class ManageCRSBean implements Serializable {
         } catch (Exception e) {
             logger.error("Exception occured in copyCrsRiskRelation()"+e);
         }
+        showStatus(ViewConstants.CRS_MODIFIED);
         copyPanel.setVisible(true);
         ADFUtils.addPartialTarget(copyPanel);
     }
@@ -2185,6 +2219,7 @@ public class ManageCRSBean implements Serializable {
         for(Row row : rows){
             row.remove();
         }
+        showStatus(ViewConstants.CRS_MODIFIED);
     }
 
     /**
@@ -3317,6 +3352,8 @@ public class ManageCRSBean implements Serializable {
                 //Here Key will be ViewObject Attribute
                 columnMap.put("SafetyTopicOfInterest",
                               rsBundle.getString("SAFETY_TOPIC_OF_INTEREST"));
+                columnMap.put("MeddraComponent",
+                              rsBundle.getString("MEDDRA_COMPONENT"));
                 columnMap.put("PtName", rsBundle.getString("PT_NAME"));
                 columnMap.put("PtCode", rsBundle.getString("PT_CODE"));
                 workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
@@ -3797,9 +3834,11 @@ public class ManageCRSBean implements Serializable {
         // Add event code here...
         OperationBinding oper = ADFUtils.findOperation("Commit");
         oper.execute();
-        if (oper.getErrors().size() > 0)
+        if (oper.getErrors().size() > 0){
+            showStatus(ViewConstants.CRS_SAVE_ERROR);
             ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
-        else {
+        }else {
+            showStatus(ViewConstants.CRS_SAVED);
             ADFUtils.showPopup(getSuccessPopup());
         }
     }
@@ -3810,5 +3849,68 @@ public class ManageCRSBean implements Serializable {
 
     public boolean isRoutineRiskRelationCopied() {
         return routineRiskRelationCopied;
+    }
+    private void resetCrsName(String indication, String compCode, String crsCompCode){
+          this.selectedCrsName =  (compCode != null ? compCode : crsCompCode) + (indication != null ? (" "+indication) : "");
+    }
+    
+
+    public void setCntrlStatusBar(RichToolbar cntrlStatusBar) {
+        this.cntrlStatusBar = cntrlStatusBar;
+    }
+
+    public RichToolbar getCntrlStatusBar() {
+        return cntrlStatusBar;
+    }
+
+
+    public void setIconCRSChanged(RichImage iconCRSChanged) {
+        this.iconCRSChanged = iconCRSChanged;
+    }
+
+    public RichImage getIconCRSChanged() {
+        return iconCRSChanged;
+    }
+
+    public void setIconCRSSaveError(RichImage iconCRSSaveError) {
+        this.iconCRSSaveError = iconCRSSaveError;
+    }
+
+    public RichImage getIconCRSSaveError() {
+        return iconCRSSaveError;
+    }
+
+    public void setIconCRSSaved(RichImage iconCRSSaved) {
+        this.iconCRSSaved = iconCRSSaved;
+    }
+
+    public RichImage getIconCRSSaved() {
+        return iconCRSSaved;
+    }
+    
+    public void showStatus (int code) {
+
+        try {
+            this.iconCRSSaved.setVisible(false);
+            this.iconCRSSaveError.setVisible(false);
+            this.iconCRSChanged.setVisible(false);
+            
+            switch (code) {
+                    case ViewConstants.CRS_SAVED:
+                            this.iconCRSSaved.setVisible(true);
+                            break;
+                    case ViewConstants.CRS_SAVE_ERROR:
+                            this.iconCRSSaveError.setVisible(true);
+                            break;
+                    case ViewConstants.CRS_MODIFIED:
+                            this.iconCRSChanged.setVisible(true);
+                            break;
+                    }
+            
+            AdfFacesContext.getCurrentInstance().addPartialTarget(cntrlStatusBar); 
+            AdfFacesContext.getCurrentInstance().partialUpdateNotify(cntrlStatusBar);
+        }
+        catch (java.lang.NullPointerException e) {} //ignore it
+            
     }
 }

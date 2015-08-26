@@ -257,7 +257,7 @@
     <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
             RequiresUpdateModel="false" Action="rollbackTransaction"/>
     <tree IterBinding="CopyCrsRiskVOIterator" id="CopyCrsRiskVO">
-      <nodeDefinition DefName="com.novartis.ecrs.model.view.CrsRiskVO" Name="CopyCrsRiskVO0">
+      <nodeDefinition DefName="com.novartis.ecrs.model.view.riskdefs.CrsRiskBaseVO" Name="CopyCrsRiskVO0">
         <AttrNames>
           <Item Value="CrsId"/>
           <Item Value="CrsRiskId"/>

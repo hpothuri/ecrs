@@ -61,7 +61,7 @@
                     </af:commandButton>
                     <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.TASL_APPROVE : ecrsviewcontrollerBundle.APPROVE}"
                                       id="cb8"
-                                      disabled="#{bindings.StateId.inputValue ne 4}"
+                                      disabled="#{bindings.StateId.inputValue ne 4 or (securityContext.userInRole['CRS_TASL'] and sessionBean.username  ne bindings.TaslName.inputValue)}"
                                       visible="#{(securityContext.userInRole['CRS_TASL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
                                       partialSubmit="true"
                                       inlineStyle="margin-right:10px;">
@@ -130,7 +130,7 @@
                               maximumLength="#{bindings.MqmComment.hints.precision}"
                               rows="3"
                               shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it1"
-                              disabled="#{!((securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN']) and (bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3) and bindings.ReviewApproveRequiredFlag1.inputValue eq 'Y')}"                              
+                              disabled="#{!(securityContext.userInRole['CRS_ADMIN'] or (securityContext.userInRole['CRS_MQM'] and (bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)) and bindings.ReviewApproveRequiredFlag1.inputValue eq 'Y')}"                              
                     autoSubmit="true">
                   <f:validator binding="#{bindings.MqmComment.validator}"/>
                 </af:inputText>

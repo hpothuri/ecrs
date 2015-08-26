@@ -231,15 +231,18 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 whereClause += "CRS_ID LIKE '%" + row.getCrsId() + "%' AND ";
             
             if(flowType != null && "S".equalsIgnoreCase(flowType)){
-            // DATA SECUTIRY - BSL/MQM/TASL/ML can view only their corresponding records
-            if (ModelConstants.ROLE_MQM.equals(userInRole))
-                whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID IN (2,3)) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";
-            if (ModelConstants.ROLE_TASL.equals(userInRole))
-                whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 4 AND TASL_NAME ='"+userName+"') OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";
-            if (ModelConstants.ROLE_ML.equals(userInRole))
-                whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 5 AND MEDICAL_LEAD_NAME ='"+userName+"') OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
-            if (ModelConstants.ROLE_BSL.equals(userInRole))
-                whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID NOT IN (2,4,5) AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
+                // DATA SECUTIRY - BSL/MQM/TASL/ML can view only their corresponding records
+                if (ModelConstants.ROLE_MQM.equals(userInRole))
+                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID NOT IN (1)) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";
+                if (ModelConstants.ROLE_TASL.equals(userInRole))
+                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID IN (4,5,6,7,8) AND TASL_NAME ='"+userName
+                                   +"') OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";
+                if (ModelConstants.ROLE_ML.equals(userInRole))
+                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID IN (5,6,7,8) AND MEDICAL_LEAD_NAME ='"
+                                   +userName+"') OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
+                if (ModelConstants.ROLE_BSL.equals(userInRole))
+                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND ( BSL_NAME ='"
+                                   +userName+"' OR DESIGNEE LIKE '%"+ userName+"%')) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
             }
             else{
                 if (ModelConstants.ROLE_MQM.equals(userInRole))
@@ -249,7 +252,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 if (ModelConstants.ROLE_ML.equals(userInRole))
                     whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 5 AND MEDICAL_LEAD_NAME ='"+userName+"') OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND MEDICAL_LEAD_NAME ='"+userName+"'))";        
                 if (ModelConstants.ROLE_BSL.equals(userInRole))
-                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID NOT IN (2,4,5) AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')) OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')))";       
+                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID NOT IN (2,4,5,6) AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')) OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')))";       
             }
 //        }
         
@@ -625,8 +628,10 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     public void copyCurrentRiskRelation(Long srcRiskId, Long destCrsId) {
         logger.info("--In copyCurrentRiskRelation--srcRiskId==" + srcRiskId);
         ViewObject relationVO = this.getCrsRiskRelationVO();
+        //ViewObject relationVO = this.getCrsRiskBaseVO();
         ViewObject definitionVO = this.getCrsRiskDefinitionsVO();
-        ViewObject crsRiskVO = this.getFetchCrsRiskVO();
+        //ViewObject crsRiskVO = this.getFetchCrsRiskVO();
+        ViewObject crsRiskVO = this.getCrsRiskBaseVO();
         //Fetch the source risk relation details
         crsRiskVO.setWhereClause("CRS_RISK_ID = " + srcRiskId);
         crsRiskVO.executeQuery();
@@ -681,25 +686,27 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         definitionVO.insertRow(definitionRow);
                     }
                 } else { //If it is a risk definitons (child) row, set all attributes from source
-                    Row definitionRow = definitionVO.createRow();
-                    definitionRow.setAttribute("CrsRiskId", newCrsRiskId);
-                    definitionRow.setAttribute("MeddraQualifier", row.getAttribute("MeddraQualifier"));
-                    definitionRow.setAttribute("CrsQualifier", row.getAttribute("MeddraQualifier"));
-                    definitionRow.setAttribute("MeddraCode", row.getAttribute("MeddraCode"));
-                    definitionRow.setAttribute("MeddraLevel", row.getAttribute("MeddraLevel"));
-                    definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
-                    definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
-                    definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
-                   // definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
-                    definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
-                    definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
-                    definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
-                    definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
-                    definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
-                    definitionRow.setAttribute("MeddraQualifierUpdFlag", row.getAttribute("MeddraQualifierUpdFlag"));
-//                    definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
-//                    definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
-                    definitionVO.insertRow(definitionRow);
+                    if (null != row.getAttribute("CrsRiskDefnId")){
+                        Row definitionRow = definitionVO.createRow();
+                        definitionRow.setAttribute("CrsRiskId", newCrsRiskId);
+                        definitionRow.setAttribute("MeddraQualifier", row.getAttribute("MeddraQualifier"));
+                        definitionRow.setAttribute("CrsQualifier", row.getAttribute("MeddraQualifier"));
+                        definitionRow.setAttribute("MeddraCode", row.getAttribute("MeddraCode"));
+                        definitionRow.setAttribute("MeddraLevel", row.getAttribute("MeddraLevel"));
+                        definitionRow.setAttribute("MeddraTerm", row.getAttribute("MeddraTerm"));
+                        definitionRow.setAttribute("MeddraVersion", row.getAttribute("MeddraVersion"));
+                        definitionRow.setAttribute("MeddraVersionDate", row.getAttribute("MeddraVersionDate"));
+                       // definitionRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
+                        definitionRow.setAttribute("MeddraDict", row.getAttribute("MeddraDict"));
+                        definitionRow.setAttribute("MeddraExtension", row.getAttribute("MeddraExtension"));
+                        definitionRow.setAttribute("TmsDictContentEntryTs", row.getAttribute("TmsDictContentEntryTs"));
+                        definitionRow.setAttribute("TmsDictContentId", row.getAttribute("TmsDictContentId"));
+                        definitionRow.setAttribute("TmsEndTs", row.getAttribute("TmsEndTs"));
+                        definitionRow.setAttribute("MeddraQualifierUpdFlag", row.getAttribute("MeddraQualifierUpdFlag"));
+    //                    definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
+    //                    definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
+                        definitionVO.insertRow(definitionRow);
+                    }
                 }
             }
             rs.closeRowSetIterator();
@@ -814,6 +821,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
 
             } catch (Exception e) {
                 returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
+                logger.error("Error while activate crs", e);
             } finally {
                 try {
                     if (cstmt != null && !cstmt.isClosed())

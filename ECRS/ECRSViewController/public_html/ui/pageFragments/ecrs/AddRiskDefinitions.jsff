@@ -507,7 +507,7 @@
                           maximumLength="#{bindings.MqmComment.hints.precision}"
                           shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it5" rows="3"
                           contentStyle="width:500px;"
-                          disabled="#{!(securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN'])}"
+                          disabled="#{!(securityContext.userInRole['CRS_ADMIN'] or (securityContext.userInRole['CRS_MQM'] and (bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)))}"
                           autoSubmit="true"
                           readOnly="#{pageFlowScope.manageCRSBean.flowType eq 'S' or !(bindings.StateId.inputValue eq 1 || bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)}"
                           visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
@@ -522,7 +522,7 @@
                           rows="3" autoSubmit="true"
                           readOnly="#{pageFlowScope.manageCRSBean.flowType eq 'S' or !(bindings.StateId.inputValue eq 1 || bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)}"
                           visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
-                          disabled="#{!(securityContext.userInRole['CRS_MQM'] or securityContext.userInRole['CRS_ADMIN'])}">
+                          disabled="#{!(securityContext.userInRole['CRS_ADMIN'] or (securityContext.userInRole['CRS_MQM'] and (bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)))}">
               <f:validator binding="#{bindings.MqmComment.validator}"/>
             </af:inputText>
           </af:panelFormLayout>
@@ -530,13 +530,22 @@
             <f:facet name="menus"/>
             <f:facet name="toolbar"/>
             <f:facet name="statusbar">
-              <af:toolbar id="t12">
-                <af:panelLabelAndMessage id="plam8" visible="false"
+              <af:toolbar id="t12" binding="#{pageFlowScope.manageCRSBean.cntrlStatusBar}" partialTriggers="cb5 cb4">
+                <af:image id="iconWarn" source="/images/alert.png" rendered="true"
+		  binding="#{pageFlowScope.manageCRSBean.iconCRSChanged}" visible="false"
+		  shortDesc="Risk Def Modified"/>
+                <af:image id="iconError" source="/images/error.png" rendered="true"
+		  binding="#{pageFlowScope.manageCRSBean.iconCRSSaveError}" visible="false"
+		  shortDesc="Error saving Risk Def"/>
+                <af:image id="iconSave" source="/images/tick.png"
+		  binding="#{pageFlowScope.manageCRSBean.iconCRSSaved}" rendered="true"
+		  visible="false" shortDesc="Risk Def saved"/>
+               <!-- <af:panelLabelAndMessage id="plam8" visible="false"
                                          binding="#{pageFlowScope.manageCRSBean.savedSuccessMessage}"
                                          partialTriggers="cb5">
                   <af:image source="/images/tick.png" id="i4"/>
                   <af:outputText value="#{ecrsviewcontrollerBundle.SAVED_SUCCESSFULLY}" id="ot66"/>
-                </af:panelLabelAndMessage>
+                </af:panelLabelAndMessage> -->
               </af:toolbar>
             </f:facet>
             <af:table value="#{bindings.CrsRiskDefinitionsVO.collectionModel}" var="row"
@@ -1021,12 +1030,21 @@
               <f:facet name="menus"/>
               <f:facet name="toolbar"/>
               <f:facet name="statusbar">
-                <af:toolbar id="t13" visible="false">
-                  <af:panelLabelAndMessage id="plam9"
+                <af:toolbar id="t13" visible="true" partialTriggers="::t7:cl1 cb81 cb18">
+                <af:image id="iconWarn1" source="/images/alert.png" rendered="true"
+		  binding="#{pageFlowScope.manageCRSBean.iconCRSChanged}" visible="false"
+		  shortDesc="Risk Def Modified"/>
+                <af:image id="iconError1" source="/images/error.png" rendered="true"
+		  binding="#{pageFlowScope.manageCRSBean.iconCRSSaveError}" visible="false"
+		  shortDesc="Error saving Risk Def"/>
+                <af:image id="iconSave1" source="/images/tick.png"
+		  binding="#{pageFlowScope.manageCRSBean.iconCRSSaved}" rendered="true"
+		  visible="false" shortDesc="Risk Def saved"/>
+                <!-- <af:panelLabelAndMessage id="plam9"
                                            binding="#{pageFlowScope.manageCRSBean.copySuccessMessage}">
                     <af:image source="/images/tick.png" id="i5"/>
                     <af:outputText value="#{ecrsviewcontrollerBundle.SAVED_SUCCESSFULLY}" id="ot67"/>
-                  </af:panelLabelAndMessage>
+                  </af:panelLabelAndMessage> -->
                 </af:toolbar>
               </f:facet>
               <af:table value="#{bindings.CrsRiskDefinitionsVO1.collectionModel}" var="row"

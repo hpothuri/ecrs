@@ -54,6 +54,10 @@ public class ViewConstants {
     public static final String STAGING = "STAGING";
     public static final String DOMAIN_OTHER = "OTHER";
     
+    public static final int CRS_SAVED = 1;
+    public static final int CRS_MODIFIED = 2;
+    public static final int CRS_SAVE_ERROR = 3;
+    
     public static boolean isNotEmpty(String str) {
         return str != null && str.trim().length() > 0;
     }

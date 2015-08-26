@@ -95,7 +95,7 @@
     ViewObjectName="com.novartis.ecrs.model.view.HierarchyChildVO"/>
   <ViewUsage
     Name="CopyCrsRiskVO"
-    ViewObjectName="com.novartis.ecrs.model.view.CrsRiskVO"/>
+    ViewObjectName="com.novartis.ecrs.model.view.riskdefs.CrsRiskBaseVO"/>
   <ViewUsage
     Name="FetchCrsRiskVO"
     ViewObjectName="com.novartis.ecrs.model.view.CrsRiskVO"/>
