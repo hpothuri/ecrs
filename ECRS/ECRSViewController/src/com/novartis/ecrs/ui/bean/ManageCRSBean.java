@@ -1508,6 +1508,7 @@ public class ManageCRSBean implements Serializable {
                 
                 if(ModelConstants.STATE_DRAFT.equals(crsState) 
                    || ModelConstants.STATE_REVIEWED.equals(crsState)
+                   || ModelConstants.STATE_APPROVED.equals(crsState)
                    || ModelConstants.STATE_RETIRED.equals(crsState)
                    || ModelConstants.STATE_ACTIVATED.equals(crsState)
                    || ModelConstants.STATE_PUBLISHED.equals(crsState)
