@@ -433,6 +433,7 @@
                           maximumLength="#{bindings.SafetyTopicOfInterest.hints.precision}"
                           shortDesc="#{bindings.SafetyTopicOfInterest.hints.tooltip}" id="it1"
                           contentStyle="width:200px;" autoSubmit="true"
+                          valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
                           readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}" required="true">
               <f:validator binding="#{bindings.SafetyTopicOfInterest.validator}"/>
             </af:inputText>
@@ -460,11 +461,13 @@
                                 disabled="#{pageFlowScope.manageCRSBean.disableSocTerm}"
                                 contentStyle="width:300px;" autoSubmit="true"
                                 readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                                valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
                                 binding="#{pageFlowScope.manageCRSBean.socTermSOC}" >
               <f:selectItems value="#{bindings.SocTerm.items}" id="si17"/>
             </af:selectOneChoice>
             <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc2"
                                  value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true"
+                                 valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
                                  readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}" required="true">
               <af:selectItem label="SP (SPP)" id="si4" value="SP"/>
               <af:selectItem label="DS (DSUR)" id="si5" value="DS"/>
@@ -486,6 +489,7 @@
                           shortDesc="#{bindings.NonMeddraComponentComment.hints.tooltip}" id="it6"
                           contentStyle="width:500px;" rows="3"
                           readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                          valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
                           disabled="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}" autoSubmit="true">
               <f:validator binding="#{bindings.NonMeddraComponentComment.validator}"/>
             </af:inputText>
@@ -496,6 +500,7 @@
                           maximumLength="#{bindings.SearchCriteriaDetails.hints.precision}"
                           contentStyle="width:500px;" rows="3" autoSubmit="true"
                           readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                          valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
                           visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
                           shortDesc="#{bindings.SearchCriteriaDetails.hints.tooltip}" id="it14"
                           binding="#{pageFlowScope.manageCRSBean.searchCriteriaDetails}">
@@ -509,6 +514,7 @@
                           contentStyle="width:500px;"
                           disabled="#{!(securityContext.userInRole['CRS_ADMIN'] or (securityContext.userInRole['CRS_MQM'] and (bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)))}"
                           autoSubmit="true"
+                          valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
                           readOnly="#{pageFlowScope.manageCRSBean.flowType eq 'S' or !(bindings.StateId.inputValue eq 1 || bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)}"
                           visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
                           rendered="false">
@@ -520,6 +526,7 @@
                           maximumLength="#{bindings.MqmComment.hints.precision}"
                           shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it13" contentStyle="width:500px;"
                           rows="3" autoSubmit="true"
+                          valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
                           readOnly="#{pageFlowScope.manageCRSBean.flowType eq 'S' or !(bindings.StateId.inputValue eq 1 || bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)}"
                           visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
                           disabled="#{!(securityContext.userInRole['CRS_ADMIN'] or (securityContext.userInRole['CRS_MQM'] and (bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)))}">
@@ -826,9 +833,13 @@
                       fetchSize="#{bindings.CopyCrsRiskVO.rangeSize}" rowBandingInterval="0"
                       selectedRowKeys="#{bindings.CopyCrsRiskVO.collectionModel.selectedRow}"
                       selectionListener="#{bindings.CopyCrsRiskVO.collectionModel.makeCurrent}" rowSelection="single"
-                      id="t7" styleClass="AFStretchWidth" partialTriggers="::cb17">
+                      id="t7" styleClass="AFStretchWidth" partialTriggers="::cb17" >
+              <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.CrsName.name}" sortable="true"
+                         headerText="#{ecrsviewcontrollerBundle.CRS_NAME}" id="c38">
+                         <af:outputText value="#{copyRow.CrsName}" id="ot68"/>
+              </af:column>        
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.SafetyTopicOfInterest.name}" sortable="true"
-                         headerText="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_OF_INTEREST}" id="c38">
+                         headerText="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_OF_INTEREST}" id="c28">
                 <af:commandLink shortDesc="#{bindings.CopyCrsRiskVO.hints.SafetyTopicOfInterest.tooltip}" id="cl1"
                                 text="#{copyRow.SafetyTopicOfInterest}" partialSubmit="true"
                                 actionListener="#{pageFlowScope.manageCRSBean.copyCrsRiskRelation}" immediate="true"/>
@@ -837,7 +848,7 @@
                 <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeSpFlag.name}" sortable="true"
                            headerText="#{ecrsviewcontrollerBundle.SP}" id="c39" width="20"
                            shortDesc="#{ecrsviewcontrollerBundle.SPP}">
-                  <af:outputText value="#{copyRow.RiskPurposeSpFlag eq 'Y' ? 'Y' : ''}" id="ot68"
+                  <af:outputText value="#{copyRow.RiskPurposeSpFlag eq 'Y' ? 'Y' : ''}" id="ot32"
                                  shortDesc="#{ecrsviewcontrollerBundle.SPP}"/>
                 </af:column>
                 <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.RiskPurposeDsFlag.name}" sortable="true"

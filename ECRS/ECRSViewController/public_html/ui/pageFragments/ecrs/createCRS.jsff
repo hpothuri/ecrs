@@ -207,7 +207,7 @@
                                                   columns="#{bindings.CrsEffectiveDt.hints.displayWidth}"
                                                   autoSubmit="true"
                                                   readOnly="true"
-                                                  visible="#{pageFlowScope.flowType eq 'S' or pageFlowScope.flowType eq 'U'}"
+                                                  visible="#{(pageFlowScope.flowType eq 'S' or pageFlowScope.flowType eq 'U') and (bindings.StateId.inputValue eq 8)}"
                                                   shortDesc="#{bindings.CrsEffectiveDt.hints.tooltip}" id="id1">
                                         <f:validator binding="#{bindings.CrsEffectiveDt.validator}"/>
                                         <af:convertDateTime pattern="#{bindings.CrsEffectiveDt.format}"/>
@@ -332,7 +332,7 @@
                                                   required="#{bindings.CrsEffectiveDtBase.hints.mandatory}"
                                                   columns="#{bindings.CrsEffectiveDtBase.hints.displayWidth}"
                                                   readOnly="true"
-                                                  visible="#{pageFlowScope.flowType eq 'S' or pageFlowScope.flowType eq 'U'}"
+                                                  visible="#{(pageFlowScope.flowType eq 'S' or pageFlowScope.flowType eq 'U') and (bindings.StateId.inputValue eq 8)}"
                                                   shortDesc="#{bindings.CrsEffectiveDtBase.hints.tooltip}" id="id2">
                                         <f:validator binding="#{bindings.CrsEffectiveDtBase.validator}"/>
                                         <af:convertDateTime pattern="#{bindings.CrsEffectiveDtBase.format}"/>

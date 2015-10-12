@@ -296,6 +296,7 @@
           <Item Value="CrsEffectiveDtDef"/>
           <Item Value="MeddraExtension"/>
           <Item Value="CrsQualifier"/>
+          <Item Value="CrsName"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

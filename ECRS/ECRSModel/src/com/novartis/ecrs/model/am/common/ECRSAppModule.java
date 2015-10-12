@@ -9,38 +9,6 @@ import oracle.jbo.ApplicationModule;
 // ---------------------------------------------------------------------
 public interface ECRSAppModule extends ApplicationModule {
 
-    void copyCurrentRiskRelation(Long srcRiskId, Long destCrsId);
 
-    void copyRoutineDefinition(Long crsId);
-
-    void deleteCrs();
-
-    List fetchDatabases();
-
-    List fetchDesignees();
-
-
-    void initRiskRelation(Long crsId, String status);
-
-    String modifyCrs(Long pCRSId, String pReasonForChange);
-
-
-    boolean refreshRepository(Long crsId);
-
-
-    boolean findByCrsFromStg(Long pCrsId);
-
-    String reactivateCrs(Long pCRSId, String pReasonForChange);
-
-    String retireCrs(Long pCRSId, String pReasonForChange);
-
-    String activateCrs(Long pCRSId, String pReasonForChange);
-
-    String fetchDictionaryVersion();
-
-    void filterCRSContent(String userInRole, String userName, boolean isInboxDisable, String flowType);
-
-    Integer fetchDomainIdFromName(String domainName);
-
-    Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId, Integer domainId);
+    Boolean isRiskRelationsExistForCRS(Long crsId);
 }

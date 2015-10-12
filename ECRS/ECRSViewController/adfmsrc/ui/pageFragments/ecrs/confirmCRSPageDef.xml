@@ -161,5 +161,11 @@
         <Item Value="N"/>
       </ValueList>
     </button>
+    <methodAction id="isRiskRelationsExistForCRS" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="isRiskRelationsExistForCRS" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.isRiskRelationsExistForCRS_ECRSAppModuleDataControl_dataProvider_isRiskRelationsExistForCRS_result">
+      <NamedData NDName="crsId" NDValue="#{bindings.CrsId.inputValue}" NDType="java.lang.Long"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

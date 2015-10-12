@@ -177,7 +177,8 @@
     SQLType="NUMERIC"
     Type="java.lang.Long"
     ColumnType="NUMBER"
-    TableName="CRS_RISK_RELATIONS_STG"/>
+    TableName="CRS_RISK_RELATIONS_STG"
+    IsUnique="true"/>
   <Attribute
     Name="DatabaseId"
     Precision="5"
@@ -398,12 +399,12 @@
     <DesignTime>
       <Attr Name="_isUnique" Value="true"/>
       <Attr Name="_DBObjectName" Value="CRS_RISK_REL_STG_IDX_UK1"/>
-      <Attr Name="_isDisabledConstraint" Value="true"/>
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.SafetyTopicOfInterest"/>
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.RiskPurposeList"/>
       <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.DomainId"/>
+      <Item Value="com.novartis.ecrs.model.entity.CrsRiskRelationsEO.CrsId"/>
     </AttrArray>
   </Key>
   <Key

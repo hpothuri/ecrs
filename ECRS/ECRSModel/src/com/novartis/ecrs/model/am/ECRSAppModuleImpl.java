@@ -240,19 +240,20 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 if (ModelConstants.ROLE_ML.equals(userInRole))
                     whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID IN (5,6,7,8) AND MEDICAL_LEAD_NAME ='"
                                    +userName+"') OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
-                if (ModelConstants.ROLE_BSL.equals(userInRole))
-                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND ( BSL_NAME ='"
-                                   +userName+"' OR DESIGNEE LIKE '%"+ userName+"%')) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
+//                if (ModelConstants.ROLE_BSL.equals(userInRole))
+//                    whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND ( BSL_NAME ='"
+//                                   +userName+"' OR DESIGNEE LIKE '%"+ userName+"%')) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";        
             }
             else{
-                if (ModelConstants.ROLE_MQM.equals(userInRole))
+                if (ModelConstants.ROLE_MQM.equals(userInRole)){
                     whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID IN (2,3)) OR RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "')";
-                if (ModelConstants.ROLE_TASL.equals(userInRole))
+                } else if (ModelConstants.ROLE_TASL.equals(userInRole)) {
                     whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 4 AND TASL_NAME ='"+userName+"') OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND TASL_NAME ='"+userName+"'))";
-                if (ModelConstants.ROLE_ML.equals(userInRole))
+                } else if (ModelConstants.ROLE_ML.equals(userInRole)) {
                     whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID = 5 AND MEDICAL_LEAD_NAME ='"+userName+"') OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND MEDICAL_LEAD_NAME ='"+userName+"'))";        
-                if (ModelConstants.ROLE_BSL.equals(userInRole))
+                } else if (ModelConstants.ROLE_BSL.equals(userInRole)) {
                     whereClause += "((RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_PENDING + "' AND STATE_ID NOT IN (2,4,5) AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')) OR (RELEASE_STATUS_FLAG = '" + ModelConstants.STATUS_CURRENT + "' AND ( BSL_NAME ='"+userName+"' OR DESIGNEE LIKE '%"+ userName+"%')))";       
+                }
             }
 //        }
         
@@ -429,7 +430,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         ViewObjectImpl crsContentVO = this.getFetchCrsContentBaseVO();
         //Fetch the crs details for CRS with name as ROUTINE
         //crsContentVO.setWhereClause("CRS_NAME = 'ROUTINE'");
-        crsContentVO.setWhereClause("CRS_COMPOUND_CODE = 'ROUTINE'");
+        crsContentVO.setWhereClause("CRS_COMPOUND_CODE = 'ROUTINE' and STATE_ID = " + ModelConstants.STATE_ACTIVATED);
         crsContentVO.executeQuery();
         logger.info("-- Crs Routine query ==" + crsContentVO.getQuery());
         crsContentVO.setWhereClause(null);
@@ -471,6 +472,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         relationRow.setAttribute("SocTerm", row.getAttribute("SocTerm"));
                         relationRow.setAttribute("SearchCriteriaDetails", row.getAttribute("SearchCriteriaDetails"));
                         relationVO.insertRow(relationRow);
+                        relationVO.setCurrentRow(relationRow);
                         if (null != row.getAttribute("CrsRiskDefnId")){
                             Row definitionRow = definitionVO.createRow();
                             newCrsRiskId = (Long)relationRow.getAttribute("CrsRiskId");
@@ -513,7 +515,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                         definitionRow.setAttribute("MeddraQualifierUpdFlag", row.getAttribute("MeddraQualifierUpdFlag"));
 //                        definitionRow.setAttribute("TmsUpdateFlag", row.getAttribute("TmsUpdateFlag"));
 //                        definitionRow.setAttribute("TmsUpdateFlagDt", row.getAttribute("TmsUpdateFlagDt"));
-                        definitionVO.insertRow(definitionRow); 
+                        definitionVO.insertRow(definitionRow);
                     }
                 }
                 rs.closeRowSetIterator();
@@ -1070,8 +1072,11 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     
     public Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId, Integer domainId){
         ViewObject relationVO = this.getFetchCrsRiskRelationVO();
-        relationVO.setWhereClause("CRS_ID = "+crsId+" and SAFETY_TOPIC_OF_INTEREST = '"+safetyTopic+"' and RISK_PURPOSE_LIST = '"+rpList+"' and DOMAIN_ID = "+domainId+" and CRS_RISK_ID <> "+crsRiskId);
+       // relationVO.setWhereClause("CRS_ID = "+crsId+" and SAFETY_TOPIC_OF_INTEREST = '"+safetyTopic+"' and RISK_PURPOSE_LIST = '"+rpList+"' and DOMAIN_ID = "+domainId+" and CRS_RISK_ID <> "+crsRiskId);
+       relationVO.setWhereClause(
+                    "CRS_ID = " + crsId + " and SAFETY_TOPIC_OF_INTEREST = '" + safetyTopic + "' and RISK_PURPOSE_LIST = '" + rpList + "' and DOMAIN_ID = " + domainId + " and CRS_RISK_ID <> " + crsRiskId);
         relationVO.executeQuery();
+        logger.info("validateSafetyTopic Qry...." + relationVO.getQuery());
         if(relationVO.getEstimatedRowCount() > 0)
             return Boolean.TRUE;
         else
@@ -1092,5 +1097,22 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public ViewObjectImpl getDesigneeFullNameVO() {
         return (ViewObjectImpl)findViewObject("DesigneeFullNameVO");
+    }
+    /**
+     *
+     * @param crsId -- ID of the CRS that is being created or updated
+     * 
+     * Info : Metdod to show the risk definitions (if any) for the selected CRS on load of risk definitions page.
+     */
+    public Boolean isRiskRelationsExistForCRS(Long crsId){
+            Boolean riskRelExists = Boolean.FALSE;
+            ViewObject riskVO = this.getCrsRiskVO();
+            //for the selected CRSID
+            riskVO.setWhereClause("CRS_ID = " + crsId);
+            riskVO.executeQuery();
+            if (riskVO.getEstimatedRowCount() > 0 ){
+                riskRelExists = Boolean.TRUE;
+            }
+            return riskRelExists;
     }
 }

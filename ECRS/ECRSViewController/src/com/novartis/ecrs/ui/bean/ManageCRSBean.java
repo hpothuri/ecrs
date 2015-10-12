@@ -384,7 +384,8 @@ public class ManageCRSBean implements Serializable {
         else if (ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType()) &&
                  (ModelConstants.ROLE_ML.equals(loggedInUserRole) ||
                   ModelConstants.ROLE_MQM.equals(loggedInUserRole) ||
-                  ModelConstants.ROLE_TASL.equals(loggedInUserRole)))
+                  ModelConstants.ROLE_TASL.equals(loggedInUserRole) ||
+                  ModelConstants.ROLE_CRSADMIN.equals(loggedInUserRole)))
             releaseStatus = ModelConstants.STATUS_PENDING;
         else
             releaseStatus = getCurrReleaseStatus();
@@ -507,26 +508,27 @@ public class ManageCRSBean implements Serializable {
     }
     
     public void initRisRel(){
-        String crsName = (String)ADFUtils.evaluateEL("#{bindings.CrsName.inputValue}");
-        Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
-        if(crsId == null){
-            crsName = (String)ADFUtils.evaluateEL("#{bindings.CrsNameBase.inputValue}");
-            crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsIdBase.inputValue}");
-        }
-        ADFUtils.setPageFlowScopeValue("crsId", crsId);
-        ADFUtils.setPageFlowScopeValue("crsName", crsName);
-        Map params = new HashMap<String, Object>();
-        params.put("crsId", crsId);
-        params.put("status", getBaseOrStaging());
-        logger.info("Init risk Relation : current Crs ID :: "+crsId);
-        logger.info("Init risk Relation : Base or Staging :: "+getBaseOrStaging());
-        try {
-            logger.info("Calling AM method initRiskRelation");
-            ADFUtils.executeAction("initRiskRelation", params);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        setRepoRefreshed(Boolean.FALSE);
+            String crsName = (String)ADFUtils.evaluateEL("#{bindings.CrsName.inputValue}");
+            Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
+            if(crsId == null){
+                crsName = (String)ADFUtils.evaluateEL("#{bindings.CrsNameBase.inputValue}");
+                crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsIdBase.inputValue}");
+            }
+            ADFUtils.setPageFlowScopeValue("crsId", crsId);
+            ADFUtils.setPageFlowScopeValue("crsName", crsName);
+            Map params = new HashMap<String, Object>();
+            params.put("crsId", crsId);
+            params.put("status", getBaseOrStaging());
+            logger.info("Init risk Relation : current Crs ID :: "+crsId);
+            logger.info("Init risk Relation : Base or Staging :: "+getBaseOrStaging());
+            try {
+                logger.info("Calling AM method initRiskRelation");
+                ADFUtils.executeAction("initRiskRelation", params);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            setRepoRefreshed(Boolean.FALSE);
+        
     }
 
     public void onSelectInbox(ValueChangeEvent vce) {
@@ -762,23 +764,7 @@ public class ManageCRSBean implements Serializable {
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");  
         String riskPurposeList = riskPurposes.substring(1);
         String safetyTopic = (String)ADFUtils.evaluateEL("#{bindings.SafetyTopicOfInterest.inputValue}");
-        Map params1 = new HashMap<String, Object>();
-        logger.info("Validating it this CRS "+crsId+" has this safety topic already.");
-        params1.put("crsId", crsId);
-        params1.put("safetyTopic", safetyTopic);
-        params1.put("rpList", riskPurposeList);
-        params1.put("crsRiskId", ADFUtils.evaluateEL("#{bindings.CrsRiskId.inputValue}"));
-        params1.put("domainId", ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}"));
-        try {
-            logger.info("Calling model method validateSafetyTopic");
-            Boolean invalid = (Boolean)ADFUtils.executeAction("validateSafetyTopic", params1);
-            if(invalid){
-                ADFUtils.showFacesMessage(uiBundle.getString("STOI_UNIQUE_ERROR"), FacesMessage.SEVERITY_ERROR);
-                return;
-            }
-        } catch (Exception e) {
-            logger.error("Exception occured in validateSafetyTopic()"+e);
-        }
+        
         
 //        if(selDatabases != null && selDatabases.size() > 0){
 //            String databases = "";
@@ -822,6 +808,31 @@ public class ManageCRSBean implements Serializable {
         if(domain == null){
             ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("DATA_DOMAIN_MANDATE_ERROR"));
             return;
+        }
+        
+        Map params1 = new HashMap<String, Object>();
+        logger.info("Validating it this CRS "+crsId+" has this safety topic already.");
+        Integer domainIdCurrent = (Integer) ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}");
+        Long currentRiskId = (Long) ADFUtils.evaluateEL("#{bindings.CrsRiskId.inputValue}");
+        Boolean riskRelAlreadyExists = this.validateRiskRelationsInSession(safetyTopic, riskPurposeList, currentRiskId, domainIdCurrent);
+        if (riskRelAlreadyExists){
+            ADFUtils.showFacesMessage(uiBundle.getString("STOI_UNIQUE_ERROR"), FacesMessage.SEVERITY_ERROR);
+            return;
+        }
+        params1.put("crsId", crsId);
+        params1.put("safetyTopic", safetyTopic);
+        params1.put("rpList", riskPurposeList);
+        params1.put("crsRiskId", ADFUtils.evaluateEL("#{bindings.CrsRiskId.inputValue}"));
+        params1.put("domainId", ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}"));
+        try {
+            logger.info("Calling model method validateSafetyTopic");
+            Boolean invalid = (Boolean)ADFUtils.executeAction("validateSafetyTopic", params1);
+            if(invalid){
+                ADFUtils.showFacesMessage(uiBundle.getString("STOI_UNIQUE_ERROR"), FacesMessage.SEVERITY_ERROR);
+                return;
+            }
+        } catch (Exception e) {
+            logger.error("Exception occured in validateSafetyTopic()"+e);
         }
         
         OperationBinding oper = ADFUtils.findOperation("Commit");
@@ -1093,15 +1104,19 @@ public class ManageCRSBean implements Serializable {
     private void processStateChange(Integer newState, RichPopup infoPopup) {
         logger.info("--------processing StateChange ---------");
         ADFUtils.setEL("#{bindings.StateId.inputValue}", newState);
-
-        OperationBinding oper = ADFUtils.findOperation("Commit");
-        oper.execute();
-        if (oper.getErrors().size() > 0)
-            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
-        else {
-            ADFUtils.showPopup(infoPopup);
-           // ADFUtils.addPartialTarget(getCrsStateSOC());
-            ADFUtils.addPartialTarget(getWorkflowPG());
+        // before save, check atleast one risk relation exists exists for the crs 
+        if (newState != ModelConstants.STATE_DRAFT && !isRiskRelationsExistsForCRS()){
+            ADFUtils.showFacesMessage(uiBundle.getString("RISK_RELATION_REQURIED_MSG"), FacesMessage.SEVERITY_ERROR);
+        } else {
+            OperationBinding oper = ADFUtils.findOperation("Commit");
+            oper.execute();
+            if (oper.getErrors().size() > 0)
+                ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
+            else {
+                ADFUtils.showPopup(infoPopup);
+               // ADFUtils.addPartialTarget(getCrsStateSOC());
+                ADFUtils.addPartialTarget(getWorkflowPG());
+            }
         }
     }
 
@@ -1895,7 +1910,12 @@ public class ManageCRSBean implements Serializable {
         if(currRow != null){
             currRow.refresh(Row.REFRESH_WITH_DB_FORGET_CHANGES | Row.REFRESH_UNDO_CHANGES);
         }
-        
+        DCIteratorBinding relIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
+        ViewObject riskRelVO = relIter.getViewObject();
+        Row relCurrRow = riskRelVO.getCurrentRow();
+        if(relCurrRow != null){
+            relCurrRow.refresh(Row.REFRESH_WITH_DB_FORGET_CHANGES | Row.REFRESH_UNDO_CHANGES);
+        }
         
 //        OperationBinding oper = ADFUtils.findOperation("Rollback");
 //        oper.execute();
@@ -2022,8 +2042,8 @@ public class ManageCRSBean implements Serializable {
         ViewObject crsSearchVO = iter.getViewObject();
         String stoiParam = "%";
         stoiParam = (null != stoi && !stoi.isEmpty()) ? stoi : stoiParam;
-        crsSearchVO.setWhereClause("SAFETY_TOPIC_OF_INTEREST like '"+stoiParam+"'");
-        System.err.println(crsSearchVO.getQuery());
+        crsSearchVO.setWhereClause("SAFETY_TOPIC_OF_INTEREST like '"+stoiParam+"'"+ " and STATE_ID = " + ModelConstants.STATE_ACTIVATED);
+        logger.info("Searching Safety tpoic of Interest:: " + crsSearchVO.getQuery());
         crsSearchVO.executeQuery();
     }
 
@@ -3574,6 +3594,7 @@ public class ManageCRSBean implements Serializable {
         AdfFacesContext.getCurrentInstance().partialUpdateNotify(searchCriteriaDetails);
         AdfFacesContext.getCurrentInstance().addPartialTarget(socTermSOC);
         AdfFacesContext.getCurrentInstance().partialUpdateNotify(socTermSOC);
+        showStatus(ViewConstants.CRS_MODIFIED);
         //ADFUtils.addPartialTarget(searchCriteriaDetails);
         //ADFUtils.addPartialTarget(socTermSOC);
     }
@@ -3913,5 +3934,49 @@ public class ManageCRSBean implements Serializable {
         }
         catch (java.lang.NullPointerException e) {} //ignore it
             
+    }
+
+    public void onRiskDetailsUpdate(ValueChangeEvent valueChangeEvent) {
+        // Add event code here...
+        showStatus(ViewConstants.CRS_MODIFIED);
+    }
+    
+    public Boolean isRiskRelationsExistsForCRS(){
+        logger.info("In isRiskRelationsExistsForCRS...");
+        OperationBinding oper = ADFUtils.findOperation("isRiskRelationsExistForCRS");
+        Boolean retVal = (Boolean)oper.execute();
+        logger.info("isRiskRelationsExistsForCRS..." + retVal);
+        return retVal;
+    }
+    
+    private Boolean validateRiskRelationsInSession(String safetyTopic, String rpList, Long crsRiskId, Integer domainId){
+        logger.info("Calling validateRiskRelationsInSession...");
+        Boolean isRiskRelExistsAlready = Boolean.FALSE;
+        DCIteratorBinding riskRelVOIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
+        ViewObject riskRelVO = riskRelVOIter.getViewObject();
+        Row [] riskRelRows = riskRelVO.getAllRowsInRange();
+        if (null != riskRelRows && riskRelRows.length > 1){
+            logger.info("validateRiskRelationsInSession row count..." + riskRelRows.length);
+            String tempSTOI = null;
+            String tempRPList = null;
+            Long tempRiskId = null;
+            Integer tempDomainId = null;
+            for (Row row : riskRelRows){
+                tempRiskId = (Long)row.getAttribute("CrsRiskId");
+                if (null != tempRiskId && tempRiskId != crsRiskId){
+                    tempSTOI = (String) row.getAttribute("SafetyTopicOfInterest");
+                    tempDomainId = (Integer) row.getAttribute("DomainId");
+                    tempRPList = (String) row.getAttribute("RiskPurposeList");
+                    if (null != tempRPList && tempRPList.equals(rpList) 
+                        && null != tempDomainId && tempDomainId == domainId 
+                        && null != tempSTOI && tempSTOI.equalsIgnoreCase(safetyTopic)){
+                        isRiskRelExistsAlready = Boolean.TRUE;
+                        logger.info("validateRiskRelationsInSession Failed..." + isRiskRelExistsAlready);
+                        break;
+                    }
+                }
+            }
+        }
+        return isRiskRelExistsAlready;
     }
 }

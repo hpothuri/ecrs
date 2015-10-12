@@ -18,8 +18,14 @@
         ResId="com.novartis.ecrs.model.view.riskdefs.CrsRiskBaseVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <Variable
+    Name="crsStateId"
+    Kind="viewcriteria"
+    Type="java.math.BigInteger"
+    DefaultValue="8"/>
   <SQLQuery><![CDATA[SELECT CRS_ID,
 CRS_RISK_ID,
+CRS_NAME,
 DOMAIN_NAME DATA_DOMAIN,
 --DATABASE_LIST,
 MQM_COMMENT,
@@ -60,7 +66,8 @@ CRS_EFFECTIVE_DT_REL,
 CRS_EFFECTIVE_DT_DEF CRS_EFFECTIVE_DT_DEF,
 MEDDRA_EXTENSION,
 MEDDRA_QUALIFIER_UPD_FLAG,
-CRS_QUALIFIER
+CRS_QUALIFIER,
+STATE_ID
 FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
   <ViewAttribute
     Name="CrsId"
@@ -84,6 +91,21 @@ FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
     AliasName="CRS_RISK_ID"
     Expression="CRS_RISK_ID"
     SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="CrsName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="65"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CRS_NAME"
+    Expression="CRS_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="65"/>
+    </DesignTime>
+  </ViewAttribute>
   <ViewAttribute
     Name="DataDomain"
     IsUpdateable="false"
@@ -586,6 +608,55 @@ FROM CRS_RISK_RELATIONS_FLAT_VW]]></SQLQuery>
       <Attr Name="_DisplaySize" Value="15"/>
     </DesignTime>
   </ViewAttribute>
+  <ViewAttribute
+    Name="StateId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Scale="0"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="STATE_ID"
+    Expression="STATE_ID"
+    SQLType="INTEGER"/>
+  <ViewCriteria
+    Name="CopyCrsRiskVOCriteria"
+    ViewObjectName="com.novartis.ecrs.model.view.riskdefs.CrsRiskBaseVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="CrsRiskBaseVOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="StateId"
+        ViewAttribute="StateId"
+        Operator="="
+        Conjunction="AND"
+        Value=":crsStateId"
+        IsBindVarValue="true"
+        Required="Optional"
+        GenerateIsNullClauseForBindVars="false"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>
