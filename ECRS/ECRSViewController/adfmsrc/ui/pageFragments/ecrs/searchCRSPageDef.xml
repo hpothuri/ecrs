@@ -85,6 +85,8 @@
           <Item Value="MedicalLeadName"/>
           <Item Value="BslName"/>
           <Item Value="DesigneeName"/>
+          <Item Value="CreationTs"/>
+          <Item Value="ModificationTs"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -118,6 +120,8 @@
           <Item Value="StateName"/>
           <Item Value="CrsCompoundCode"/>
           <Item Value="DesigneeName"/>
+          <Item Value="ModificationTs"/>
+          <Item Value="CreationTs"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

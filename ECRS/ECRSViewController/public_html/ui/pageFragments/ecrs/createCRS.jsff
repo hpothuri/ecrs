@@ -210,7 +210,7 @@
                                                   visible="#{(pageFlowScope.flowType eq 'S' or pageFlowScope.flowType eq 'U') and (bindings.StateId.inputValue eq 8)}"
                                                   shortDesc="#{bindings.CrsEffectiveDt.hints.tooltip}" id="id1">
                                         <f:validator binding="#{bindings.CrsEffectiveDt.validator}"/>
-                                        <af:convertDateTime pattern="#{bindings.CrsEffectiveDt.format}"/>
+                                        <af:convertDateTime pattern="dd-MMM-yyyy"/>
                                     </af:inputDate>
                                     <af:inputText value="#{bindings.ReasonForChange.inputValue}" simple="true"
                                                   required="#{bindings.ReasonForChange.hints.mandatory}"
@@ -332,10 +332,10 @@
                                                   required="#{bindings.CrsEffectiveDtBase.hints.mandatory}"
                                                   columns="#{bindings.CrsEffectiveDtBase.hints.displayWidth}"
                                                   readOnly="true"
-                                                  visible="#{(pageFlowScope.flowType eq 'S' or pageFlowScope.flowType eq 'U') and (bindings.StateId.inputValue eq 8)}"
+                                                  visible="#{(pageFlowScope.flowType eq 'S' or pageFlowScope.flowType eq 'U') and (bindings.StateIdBase.inputValue eq 8)}"
                                                   shortDesc="#{bindings.CrsEffectiveDtBase.hints.tooltip}" id="id2">
                                         <f:validator binding="#{bindings.CrsEffectiveDtBase.validator}"/>
-                                        <af:convertDateTime pattern="#{bindings.CrsEffectiveDtBase.format}"/>
+                                        <af:convertDateTime pattern="dd-MMM-yyyy"/>
                                     </af:inputDate>
                                     <af:spacer width="10" height="10"
                                                id="sp23"/>

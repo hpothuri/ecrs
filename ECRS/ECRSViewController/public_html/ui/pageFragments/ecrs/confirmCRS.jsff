@@ -97,7 +97,7 @@
                     </af:commandButton>
                     <af:commandButton text="#{ecrsviewcontrollerBundle.PUBLISHED}"
                                       id="cb14"
-                                      disabled="#{!(bindings.StateId.inputValue eq 6 || (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag1.inputValue eq 'N'))}"
+                                      disabled="#{!(bindings.StateId.inputValue eq 6 || (bindings.StateId.inputValue eq 1 and bindings.ReviewApproveRequiredFlag1.inputValue eq 'N')) || (securityContext.userInRole['CRS_BSL'] and (null != bindings.TaslRejectComment.inputValue || null != bindings.MedicalLeadRejectComment.inputValue))}"
                                       visible="#{(securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
                                       inlineStyle="margin-right:10px;"
                                       actionListener="#{pageFlowScope.manageCRSBean.onClickPublish}"

@@ -271,5 +271,10 @@
         <Item Value="CrsEffectiveDt"/>
       </AttrNames>
     </attributeValues>
+    <attributeValues IterBinding="CrsContentBaseVOIterator" id="StateIdBase">
+      <AttrNames>
+        <Item Value="StateId"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

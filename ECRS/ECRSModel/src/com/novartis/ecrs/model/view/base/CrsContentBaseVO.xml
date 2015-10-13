@@ -147,7 +147,9 @@
     CrsCompoundEO.COMPOUND_TYPE AS CRS_COMPOUND_TYPE, 
     CrsCompoundEO.COMPOUND_CODE AS CRS_COMPOUND_CODE, 
     CrsStatesEO.STATE_NAME STATE_NAME,
-crs_ui_tms_utils.get_name_list_from_usernames(CrsContentEO.DESIGNEE) designee_name 
+crs_ui_tms_utils.get_name_list_from_usernames(CrsContentEO.DESIGNEE) designee_name,
+    CrsContentEO.CREATION_TS,
+CrsContentEO.MODIFICATION_TS  
 FROM 
     CRS_CONTENT CrsContentEO, 
     CRS_COMPOUNDS CrsCompoundEO, 
@@ -612,6 +614,26 @@ ORDER BY
       <Attr Name="_DisplaySize" Value="4000"/>
     </DesignTime>
   </ViewAttribute>
+  <ViewAttribute
+    Name="CreationTs"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="CREATION_TS"
+    Expression="CREATION_TS"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="ModificationTs"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="MODIFICATION_TS"
+    Expression="MODIFICATION_TS"
+    SQLType="DATE"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>

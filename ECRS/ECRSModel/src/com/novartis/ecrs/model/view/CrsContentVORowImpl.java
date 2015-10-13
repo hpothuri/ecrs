@@ -255,6 +255,26 @@ public class CrsContentVORowImpl extends ViewRowImpl {
             }
         }
         ,
+        CreationTs {
+            public Object get(CrsContentVORowImpl obj) {
+                return obj.getCreationTs();
+            }
+
+            public void put(CrsContentVORowImpl obj, Object value) {
+                obj.setCreationTs((Timestamp)value);
+            }
+        }
+        ,
+        ModificationTs {
+            public Object get(CrsContentVORowImpl obj) {
+                return obj.getModificationTs();
+            }
+
+            public void put(CrsContentVORowImpl obj, Object value) {
+                obj.setModificationTs((Timestamp)value);
+            }
+        }
+        ,
         CompoundType {
             public Object get(CrsContentVORowImpl obj) {
                 return obj.getCompoundType();
@@ -426,6 +446,8 @@ public class CrsContentVORowImpl extends ViewRowImpl {
     public static final int CRSCOMPOUNDTYPE = AttributesEnum.CrsCompoundType.index();
     public static final int CRSCOMPOUNDCODE = AttributesEnum.CrsCompoundCode.index();
     public static final int DESIGNEENAME = AttributesEnum.DesigneeName.index();
+    public static final int CREATIONTS = AttributesEnum.CreationTs.index();
+    public static final int MODIFICATIONTS = AttributesEnum.ModificationTs.index();
     public static final int COMPOUNDTYPE = AttributesEnum.CompoundType.index();
     public static final int COMPOUNDCODE = AttributesEnum.CompoundCode.index();
     public static final int ENTITYSTATE = AttributesEnum.EntityState.index();
@@ -842,6 +864,38 @@ public class CrsContentVORowImpl extends ViewRowImpl {
      */
     public void setEntityState(String value) {
         setAttributeInternal(ENTITYSTATE, value);
+    }
+
+    /**
+     * Gets the attribute value for CREATION_TS using the alias name CreationTs.
+     * @return the CREATION_TS
+     */
+    public Timestamp getCreationTs() {
+        return (Timestamp) getAttributeInternal(CREATIONTS);
+    }
+
+    /**
+     * Sets <code>value</code> as attribute value for CREATION_TS using the alias name CreationTs.
+     * @param value value to set the CREATION_TS
+     */
+    public void setCreationTs(Timestamp value) {
+        setAttributeInternal(CREATIONTS, value);
+    }
+
+    /**
+     * Gets the attribute value for MODIFICATION_TS using the alias name ModificationTs.
+     * @return the MODIFICATION_TS
+     */
+    public Timestamp getModificationTs() {
+        return (Timestamp) getAttributeInternal(MODIFICATIONTS);
+    }
+
+    /**
+     * Sets <code>value</code> as attribute value for MODIFICATION_TS using the alias name ModificationTs.
+     * @param value value to set the MODIFICATION_TS
+     */
+    public void setModificationTs(Timestamp value) {
+        setAttributeInternal(MODIFICATIONTS, value);
     }
 
     /**

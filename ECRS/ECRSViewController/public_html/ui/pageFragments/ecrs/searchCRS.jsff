@@ -44,7 +44,7 @@
               <af:selectOneChoice value="#{pageFlowScope.manageCRSBean.currReleaseStatus}"
                                   label="#{ecrsviewcontrollerBundle.RELEASE_STATUS}"
                                   shortDesc="#{bindings.ReleaseStatus.hints.tooltip}"
-                                  id="it8" contentStyle="width:170px;" required="true"
+                                  id="soc20" contentStyle="width:170px;" required="true"
                                   autoSubmit="true"
                                   valueChangeListener="#{pageFlowScope.manageCRSBean.onChangeReleaseStatus}">
                 <af:selectItem label="CURRENT" id="si8" value="C"/>
@@ -86,7 +86,7 @@
                               label="#{bindings.State.label}"
                               shortDesc="#{bindings.State.hints.tooltip}"
                               id="soc3" contentStyle="width:170px;"
-                              partialTriggers="it8"
+                              partialTriggers="soc20"
                               value="#{bindings.State.inputValue}"
                                 autoSubmit="true">
                 <af:selectItem id="si24"/>
@@ -98,7 +98,7 @@
               <af:selectOneChoice label="#{bindings.State.label}"
                                   shortDesc="#{bindings.State.hints.tooltip}"
                                   id="soc19" contentStyle="width:170px;"
-                                  partialTriggers="it8"
+                                  partialTriggers="soc20"
                                   value="#{bindings.State.inputValue}"
                                   autoSubmit="true">
                 <f:selectItems value="#{bindings.State.items}" id="si22"/>
@@ -317,7 +317,12 @@
                 <f:selectItems value="#{row.bindings.MedicalLeadName.items}" id="si18"/>
               </af:selectOneChoice>
             </af:column>
-            <af:column headerText="#{ecrsviewcontrollerBundle.ACTION}"
+            <af:column id="c25" headerText="#{ecrsviewcontrollerBundle.RELEASE_DATE}" rendered="#{pageFlowScope.flowType eq 'S'}">
+              <af:outputText value="#{null != row.ModificationTs ? row.ModificationTs : row.CreationTs}" id="ot19">
+                <af:convertDateTime pattern="dd-MMM-yyy HH:mm:ss"/>
+              </af:outputText>
+            </af:column>
+            <af:column headerText="#{ecrsviewcontrollerBundle.ACTION}" sortable="false"
                        id="c26"
                        rendered="#{pageFlowScope.flowType eq 'U' and (securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ADMIN'])}" align="center" width="80">
               <af:switcher id="s6"
@@ -474,6 +479,11 @@
                 <f:selectItems value="#{row.bindings.MedicalLeadName.items}"
                                id="si14"/>
               </af:selectOneChoice>
+            </af:column>
+            <af:column id="c27" headerText="#{ecrsviewcontrollerBundle.RELEASE_DATE}" rendered="#{pageFlowScope.flowType eq 'S'}">
+              <af:outputText value="#{null != row.ModificationTs ? row.ModificationTs : row.CreationTs}" id="ot20">
+              <af:convertDateTime pattern="dd-MMM-yyy HH:mm:ss"/>
+              </af:outputText>
             </af:column>
           </af:table>
         </f:facet>

@@ -237,7 +237,9 @@
     CrsContentEO.REASON_FOR_CHANGE,
     CrsCompoundEO.COMPOUND_TYPE AS CRS_COMPOUND_TYPE, 
     CrsCompoundEO.COMPOUND_CODE AS CRS_COMPOUND_CODE,
-crs_ui_tms_utils.get_name_list_from_usernames(CrsContentEO.DESIGNEE) designee_name 
+crs_ui_tms_utils.get_name_list_from_usernames(CrsContentEO.DESIGNEE) designee_name,
+CrsContentEO.CREATION_TS,
+CrsContentEO.MODIFICATION_TS 
 FROM CRS_CONTENT_STG CrsContentEO,CRS_COMPOUNDS CrsCompoundEO 
 WHERE 
     CrsContentEO.COMPOUND_ID(+) = CrsCompoundEO.COMPOUND_ID]]></SQLQuery>
@@ -519,6 +521,21 @@ WHERE
       <Attr Name="_DisplaySize" Value="4000"/>
     </DesignTime>
   </ViewAttribute>
+  <ViewAttribute
+    Name="CreationTs"
+    IsUpdateable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreationTs"
+    EntityUsage="CrsContentEO"
+    AliasName="CREATION_TS"/>
+  <ViewAttribute
+    Name="ModificationTs"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="ModificationTs"
+    EntityUsage="CrsContentEO"
+    AliasName="MODIFICATION_TS"/>
   <ViewAttribute
     Name="CompoundType"
     IsSelected="false"

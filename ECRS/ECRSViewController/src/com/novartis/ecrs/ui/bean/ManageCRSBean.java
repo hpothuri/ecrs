@@ -260,7 +260,7 @@ public class ManageCRSBean implements Serializable {
                         copyOper.getParamsMap().put("crsId", row.getCrsId());
                         copyOper.execute();
                         this.setRoutineRiskRelationCopied(true);
-                        logger.info("--After-ManageCRSBean:onClickSearch--");
+                        logger.info("--After-ManageCRSBean:onClickCreateSave--");
                 }
             }
         }
@@ -325,7 +325,7 @@ public class ManageCRSBean implements Serializable {
                 copyOper.getParamsMap().put("crsId", crsId);
                 copyOper.execute();
                 this.setRoutineRiskRelationCopied(true);
-                logger.info("--After-ManageCRSBean:onClickSearch--");
+                logger.info("--After-ManageCRSBean:createCrsRow--");
             }
         }
         logger.info("--End-ManageCRSBean:createCrsRow--");
