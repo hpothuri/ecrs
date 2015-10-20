@@ -384,7 +384,8 @@
       <af:panelGroupLayout id="pgl6" layout="horizontal">
         <af:commandButton text="#{ecrsviewcontrollerBundle.BACK}" id="cb8"
                           action="#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}"/>
-        <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}" id="cb11" action="#{pageFlowScope.manageCRSBean.onClickNext}"/>
+        <af:commandButton text="#{ecrsviewcontrollerBundle.NEXT}" id="cb11" action="#{pageFlowScope.manageCRSBean.onClickNext}"
+        disabled="#{pageFlowScope.manageCRSBean.flowType eq 'S'}"/>
         <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb12" action="home" immediate="true"
                           actionListener="#{bindings.Rollback.execute}"/>
         <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.DICTIONARY_VERSION_}" id="plam4">

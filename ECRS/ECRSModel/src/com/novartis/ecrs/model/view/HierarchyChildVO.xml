@@ -42,7 +42,7 @@
 	STATUS TERMCAT,
 	COMMENT_TEXT TERMWEIG,
 	predict_group_id,
-	tms_def_pkg.termscope_code(DEF_NAMED_REL_ID) FORMATTED_SCOPE, 
+	nmat.tms_def_pkg.termscope_code(DEF_NAMED_REL_ID) FORMATTED_SCOPE, 
 	TERM_PATH, 
 	PRIM_LINK_FLAG,
         SORT_ORDER,
@@ -51,12 +51,12 @@
         C_END_TS,
         CRS_UI_TMS_UTILS.DERIVE_QUALIFIER(DICT_CONTENT_REF_ID, 'N') QUAL,
         CRS_UI_TMS_UTILS.DERIVE_QUALIFIER(dict_content_ref_id, 'Y') QUAL_FLAG 
-FROM TABLE (HIERARCHY_PKG.GET_HIERARCHY(
+FROM TABLE (nmat.HIERARCHY_PKG.GET_HIERARCHY(
 	i_dict_content_id => :bContentId, 
 	--i_group_names => :activationGroup,
-        i_group_names => smq_codelist_pkg.meddra_ag_nm || ',' || 
-                            smq_codelist_pkg.cmq_draft_ag_nm || ',' ||
-                            SMQ_CODELIST_PKG.CMQ_RELEASE_AG_NM,
+        i_group_names => nmat.smq_codelist_pkg.meddra_ag_nm || ',' || 
+                            nmat.smq_codelist_pkg.cmq_draft_ag_nm || ',' ||
+                            nmat.SMQ_CODELIST_PKG.CMQ_RELEASE_AG_NM,
 	I_RETURN_DICT => NULL,
 	I_RETURN_LLT =>  NULL,
         I_SORT_SIBLINGS => NULL,

@@ -1549,7 +1549,7 @@ public class ManageCRSBean implements Serializable {
             if (oper.getErrors().size() > 0)
                 ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
             else{
-                ADFUtils.navigateToControlFlowCase("home");
+                ADFUtils.navigateToControlFlowCase("toSearch");
 //                String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}");
 //                if(returnValue == null){
 //                    ADFUtils.navigateToControlFlowCase("home");
