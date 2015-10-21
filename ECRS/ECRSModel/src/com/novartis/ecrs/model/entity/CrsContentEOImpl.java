@@ -295,6 +295,26 @@ public class CrsContentEOImpl extends EntityImpl {
             }
         }
         ,
+        CrsStateEO1 {
+            public Object get(CrsContentEOImpl obj) {
+                return obj.getCrsStateEO1();
+            }
+
+            public void put(CrsContentEOImpl obj, Object value) {
+                obj.setCrsStateEO1((CrsStateEOImpl)value);
+            }
+        }
+        ,
+        CrsCompoundEO1 {
+            public Object get(CrsContentEOImpl obj) {
+                return obj.getCrsCompoundEO1();
+            }
+
+            public void put(CrsContentEOImpl obj, Object value) {
+                obj.setCrsCompoundEO1((CrsCompoundEOImpl)value);
+            }
+        }
+        ,
         CrsContentStagingVA {
             public Object get(CrsContentEOImpl obj) {
                 return obj.getCrsContentStagingVA();
@@ -371,6 +391,8 @@ public class CrsContentEOImpl extends EntityImpl {
     public static final int CRSSTATEEO = AttributesEnum.CrsStateEO.index();
     public static final int CRSCOMPOUNDEO = AttributesEnum.CrsCompoundEO.index();
     public static final int CRSRISKRELATIONSEO = AttributesEnum.CrsRiskRelationsEO.index();
+    public static final int CRSSTATEEO1 = AttributesEnum.CrsStateEO1.index();
+    public static final int CRSCOMPOUNDEO1 = AttributesEnum.CrsCompoundEO1.index();
     public static final int CRSCONTENTSTAGINGVA = AttributesEnum.CrsContentStagingVA.index();
     public static final int CRSCONTENTBASEVA = AttributesEnum.CrsContentBaseVA.index();
 
@@ -807,6 +829,34 @@ public class CrsContentEOImpl extends EntityImpl {
 
 
     /**
+     * @return the associated entity CrsStateEOImpl.
+     */
+    public CrsStateEOImpl getCrsStateEO1() {
+        return (CrsStateEOImpl)getAttributeInternal(CRSSTATEEO1);
+    }
+
+    /**
+     * Sets <code>value</code> as the associated entity CrsStateEOImpl.
+     */
+    public void setCrsStateEO1(CrsStateEOImpl value) {
+        setAttributeInternal(CRSSTATEEO1, value);
+    }
+
+    /**
+     * @return the associated entity CrsCompoundEOImpl.
+     */
+    public CrsCompoundEOImpl getCrsCompoundEO1() {
+        return (CrsCompoundEOImpl)getAttributeInternal(CRSCOMPOUNDEO1);
+    }
+
+    /**
+     * Sets <code>value</code> as the associated entity CrsCompoundEOImpl.
+     */
+    public void setCrsCompoundEO1(CrsCompoundEOImpl value) {
+        setAttributeInternal(CRSCOMPOUNDEO1, value);
+    }
+
+    /**
      * Gets the view accessor <code>RowSet</code> CrsContentStagingVA.
      */
     public RowSet getCrsContentStagingVA() {
@@ -819,6 +869,7 @@ public class CrsContentEOImpl extends EntityImpl {
     public RowSet getCrsContentBaseVA() {
         return (RowSet)getAttributeInternal(CRSCONTENTBASEVA);
     }
+
 
     /**
      * @param crsId key constituent

@@ -11,4 +11,36 @@ public interface ECRSAppModule extends ApplicationModule {
 
 
     Boolean isRiskRelationsExistForCRS(Long crsId);
+
+    String deleteCrs(Long crsId);
+
+    String activateCrs(Long pCRSId, String pReasonForChange);
+
+    void copyCurrentRiskRelation(Long srcRiskId, Long destCrsId);
+
+    void copyRoutineDefinition(Long crsId);
+
+    List fetchDatabases();
+
+    List fetchDesignees();
+
+    String fetchDictionaryVersion();
+
+    Integer fetchDomainIdFromName(String domainName);
+
+    void filterCRSContent(String userInRole, String userName, boolean isInboxDisable, String flowType);
+
+    boolean findByCrsFromStg(Long pCrsId);
+
+    void initRiskRelation(Long crsId, String status);
+
+    String modifyCrs(Long pCRSId, String pReasonForChange);
+
+    String reactivateCrs(Long pCRSId, String pReasonForChange);
+
+    boolean refreshRepository(Long crsId);
+
+    String retireCrs(Long pCRSId, String pReasonForChange);
+
+    Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId, Integer domainId);
 }

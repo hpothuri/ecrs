@@ -13,6 +13,18 @@
           <Item Value="SafetyTopicOfInterest"/>
           <Item Value="PtName"/>
           <Item Value="PtCode"/>
+          <Item Value="CompoundType"/>
+          <Item Value="CrsId"/>
+          <Item Value="CrsRiskId"/>
+          <Item Value="CrsVersionEndDate"/>
+          <Item Value="CrsVersionStartDate"/>
+          <Item Value="MeddraCode"/>
+          <Item Value="MeddraDict"/>
+          <Item Value="MeddraExtension"/>
+          <Item Value="MeddraLevel"/>
+          <Item Value="MeddraTerm"/>
+          <Item Value="PtContentId"/>
+          <Item Value="RiskPurposeList"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

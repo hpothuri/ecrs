@@ -58,6 +58,9 @@ public class ViewConstants {
     public static final int CRS_MODIFIED = 2;
     public static final int CRS_SAVE_ERROR = 3;
     
+    public static final String STAGE = "STAGE";
+    public static final String PROD = "PROD";
+    
     public static boolean isNotEmpty(String str) {
         return str != null && str.trim().length() > 0;
     }

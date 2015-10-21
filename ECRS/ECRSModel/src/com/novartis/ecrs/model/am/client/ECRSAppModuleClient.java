@@ -36,9 +36,9 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return;
     }
 
-    public void deleteCrs() {
-        Object _ret = this.riInvokeExportedMethod(this,"deleteCrs",null,null);
-        return;
+    public String deleteCrs(Long crsId) {
+        Object _ret = this.riInvokeExportedMethod(this,"deleteCrs",new String [] {"java.lang.Long"},new Object[] {crsId});
+        return (String)_ret;
     }
 
     public List fetchDatabases() {
@@ -112,5 +112,5 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         Object _ret =
             this.riInvokeExportedMethod(this,"isRiskRelationsExistForCRS",new String [] {"java.lang.Long"},new Object[] {crsId});
         return (Boolean)_ret;
-    }
+}
 }

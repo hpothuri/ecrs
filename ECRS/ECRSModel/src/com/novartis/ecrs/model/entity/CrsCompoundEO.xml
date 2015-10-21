@@ -85,6 +85,13 @@
     AssociationOtherEnd="com.novartis.ecrs.model.entity.assoc.CrsContentIdxCompoundFkAssoc.CrsCompoundEO"
     Type="oracle.jbo.RowIterator"
     IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="CrsContentEO1"
+    Association="com.novartis.ecrs.model.entity.CrsConStgIdxCompoundFkAssoc"
+    AssociationEnd="com.novartis.ecrs.model.entity.CrsConStgIdxCompoundFkAssoc.CrsContentEO1"
+    AssociationOtherEnd="com.novartis.ecrs.model.entity.CrsConStgIdxCompoundFkAssoc.CrsCompoundEO1"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
   <Key
     Name="CrsCompoundsChkAct">
     <DesignTime>

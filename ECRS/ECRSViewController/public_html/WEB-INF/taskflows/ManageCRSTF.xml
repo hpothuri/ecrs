@@ -245,7 +245,7 @@
       </control-flow-case>
       <control-flow-case id="__42">
         <from-outcome>toSearch</from-outcome>
-        <to-activity-id>serach</to-activity-id>
+        <to-activity-id>invokeEmptyRowSet</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

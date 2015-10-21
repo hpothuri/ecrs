@@ -68,6 +68,15 @@
     Type="oracle.jbo.RowIterator"
     IsUpdateable="false"/>
   <Key
+    Name="CrsUserRolesChkAct">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_USER_ROLES_CHK_ACT"/>
+      <Attr Name="_checkCondition" Value="ACTIVE_FLAG IN ('N', 'Y')"/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
     Name="CrsUserRolesIdxPk"
     PrimaryKey="true">
     <DesignTime>

@@ -115,10 +115,6 @@
       <NamedData NDName="pCRSId" NDType="java.lang.Long"/>
       <NamedData NDName="pReasonForChange" NDType="java.lang.String"/>
     </methodAction>
-    <methodAction id="deleteCrs" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
-                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
-                  MethodName="deleteCrs" IsViewObjectMethod="false"
-                  ReturnName="data.ECRSAppModuleDataControl.methodResults.deleteCrs_ECRSAppModuleDataControl_dataProvider_deleteCrs_result"/>
     <methodAction id="fetchDesignees" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
                   DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="fetchDesignees" IsViewObjectMethod="false"
@@ -166,6 +162,12 @@
                   MethodName="isRiskRelationsExistForCRS" IsViewObjectMethod="false"
                   ReturnName="data.ECRSAppModuleDataControl.methodResults.isRiskRelationsExistForCRS_ECRSAppModuleDataControl_dataProvider_isRiskRelationsExistForCRS_result">
       <NamedData NDName="crsId" NDValue="#{bindings.CrsId.inputValue}" NDType="java.lang.Long"/>
+    </methodAction>
+    <methodAction id="deleteCrs" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="deleteCrs" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.deleteCrs_ECRSAppModuleDataControl_dataProvider_deleteCrs_result">
+      <NamedData NDName="crsId" NDValue="" NDType="java.lang.Long"/>
     </methodAction>
   </bindings>
 </pageDefinition>

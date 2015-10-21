@@ -10,9 +10,11 @@
   PageIterMode="Full"
   UseGlueCode="false"
   FetchSize="100"
-  FetchMode="FETCH_AS_NEEDED">
+  FetchMode="FETCH_AS_NEEDED"
+  ComponentClass="com.novartis.ecrs.model.view.report.PTReportVOImpl">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Coll|VarAccess"/>
   </DesignTime>
   <Properties>
     <SchemaBasedProperties>
@@ -20,7 +22,12 @@
         ResId="com.novartis.ecrs.model.view.report.PTReportVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
-  <SQLQuery><![CDATA[SELECT crs_id,safety_topic_of_interest, meddra_component, pt_name, pt_code FROM TABLE(CRS_UI_TMS_UTILS.GET_ALL_CRS_ASSOCIATED_PTS())]]></SQLQuery>
+  <Variable
+    Name="pCRSStatus"
+    Kind="where"
+    Type="java.lang.String"
+    DefaultValue="PROD"/>
+  <SQLQuery><![CDATA[SELECT crs_id, safety_topic_of_interest, meddra_term, pt_name, pt_code, compound_type,risk_purpose_list,meddra_dict,meddra_level,meddra_extension,meddra_code, crs_risk_id, crs_version_start_date, crs_version_end_date, pt_content_id FROM TABLE(CRS_UI_TMS_UTILS.GET_ALL_CRS_ASSOCIATED_PTS(pCRSStatus => :pCRSStatus))]]></SQLQuery>
   <ViewAttribute
     Name="CrsId"
     IsUpdateable="false"
@@ -47,15 +54,15 @@
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute
-    Name="MeddraComponent"
+    Name="MeddraTerm"
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
     Precision="300"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    AliasName="MEDDRA_COMPONENT"
-    Expression="MEDDRA_COMPONENT"
+    AliasName="MEDDRA_TERM"
+    Expression="MEDDRA_TERM"
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="300"/>
@@ -91,6 +98,136 @@
       <Attr Name="_DisplaySize" Value="30"/>
     </DesignTime>
   </ViewAttribute>
+  <ViewAttribute
+    Name="CompoundType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="12"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="COMPOUND_TYPE"
+    Expression="COMPOUND_TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="12"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RiskPurposeList"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="RISK_PURPOSE_LIST"
+    Expression="RISK_PURPOSE_LIST"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MeddraDict"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="10"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_DICT"
+    Expression="MEDDRA_DICT"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MeddraLevel"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_LEVEL"
+    Expression="MEDDRA_LEVEL"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="5"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MeddraExtension"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_EXTENSION"
+    Expression="MEDDRA_EXTENSION"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="5"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MeddraCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="30"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MEDDRA_CODE"
+    Expression="MEDDRA_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CrsRiskId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="CRS_RISK_ID"
+    Expression="CRS_RISK_ID"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="CrsVersionStartDate"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="CRS_VERSION_START_DATE"
+    Expression="CRS_VERSION_START_DATE"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="CrsVersionEndDate"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    AliasName="CRS_VERSION_END_DATE"
+    Expression="CRS_VERSION_END_DATE"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="PtContentId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="PT_CONTENT_ID"
+    Expression="PT_CONTENT_ID"
+    SQLType="NUMERIC"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="com.novartis.ecrs.model.ECRSModelBundle"/>

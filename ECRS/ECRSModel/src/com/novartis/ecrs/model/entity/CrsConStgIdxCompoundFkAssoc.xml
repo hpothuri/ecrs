@@ -3,19 +3,20 @@
 <!---->
 <Association
   xmlns="http://xmlns.oracle.com/bc4j"
-  Name="CrsContentIdxCompoundFkAssoc"
+  Name="CrsConStgIdxCompoundFkAssoc"
   Version="11.1.2.64.36">
   <DesignTime>
     <Attr Name="_isCodegen" Value="true"/>
   </DesignTime>
   <AssociationEnd
-    Name="CrsCompoundEO"
+    Name="CrsCompoundEO1"
     Cardinality="1"
     Source="true"
     Owner="com.novartis.ecrs.model.entity.CrsCompoundEO">
     <DesignTime>
       <Attr Name="_aggregation" Value="0"/>
-      <Attr Name="_finderName" Value="CrsCompoundEO"/>
+      <Attr Name="_finderName" Value="CrsCompoundEO1"/>
+      <Attr Name="_foreignKey" Value="com.novartis.ecrs.model.entity.CrsCompoundEO.CrsCompoundsIdxPk"/>
       <Attr Name="_isUpdateable" Value="true"/>
       <Attr Name="_minCardinality" Value="1"/>
     </DesignTime>
@@ -24,12 +25,13 @@
     </AttrArray>
   </AssociationEnd>
   <AssociationEnd
-    Name="CrsContentEO"
+    Name="CrsContentEO1"
     Cardinality="-1"
     Owner="com.novartis.ecrs.model.entity.CrsContentEO">
     <DesignTime>
       <Attr Name="_aggregation" Value="0"/>
-      <Attr Name="_finderName" Value="CrsContentEO"/>
+      <Attr Name="_finderName" Value="CrsContentEO1"/>
+      <Attr Name="_foreignKey" Value="com.novartis.ecrs.model.entity.CrsContentEO.CrsConStgIdxCompoundFk"/>
       <Attr Name="_isUpdateable" Value="true"/>
     </DesignTime>
     <AttrArray Name="Attributes">

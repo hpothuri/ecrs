@@ -67,6 +67,16 @@ public class CrsStateEOImpl extends EntityImpl {
                 obj.setAttributeInternal(index(), value);
             }
         }
+        ,
+        CrsContentEO1 {
+            public Object get(CrsStateEOImpl obj) {
+                return obj.getCrsContentEO1();
+            }
+
+            public void put(CrsStateEOImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
         ;
         private static AttributesEnum[] vals = null;
         private static int firstIndex = 0;
@@ -95,17 +105,20 @@ public class CrsStateEOImpl extends EntityImpl {
         }
     }
 
+
     public static final int STATEID = AttributesEnum.StateId.index();
     public static final int STATENAME = AttributesEnum.StateName.index();
     public static final int STATEDESC = AttributesEnum.StateDesc.index();
     public static final int ACTIVEFLAG = AttributesEnum.ActiveFlag.index();
     public static final int CRSCONTENTEO = AttributesEnum.CrsContentEO.index();
+    public static final int CRSCONTENTEO1 = AttributesEnum.CrsContentEO1.index();
 
     /**
      * This is the default constructor (do not remove).
      */
     public CrsStateEOImpl() {
     }
+
 
     /**
      * @return the definition object for this instance class.
@@ -216,6 +229,13 @@ public class CrsStateEOImpl extends EntityImpl {
         return (RowIterator)getAttributeInternal(CRSCONTENTEO);
     }
 
+
+    /**
+     * @return the associated entity oracle.jbo.RowIterator.
+     */
+    public RowIterator getCrsContentEO1() {
+        return (RowIterator)getAttributeInternal(CRSCONTENTEO1);
+    }
 
     /**
      * @param stateId key constituent

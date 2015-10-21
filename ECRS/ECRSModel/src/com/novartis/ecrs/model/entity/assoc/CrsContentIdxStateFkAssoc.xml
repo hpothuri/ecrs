@@ -16,7 +16,6 @@
     <DesignTime>
       <Attr Name="_aggregation" Value="0"/>
       <Attr Name="_finderName" Value="CrsStateEO"/>
-      <Attr Name="_foreignKey" Value="com.novartis.ecrs.model.entity.CrsStateEO.CrsStatesIdxPk"/>
       <Attr Name="_isUpdateable" Value="true"/>
       <Attr Name="_minCardinality" Value="1"/>
     </DesignTime>
@@ -31,7 +30,6 @@
     <DesignTime>
       <Attr Name="_aggregation" Value="0"/>
       <Attr Name="_finderName" Value="CrsContentEO"/>
-      <Attr Name="_foreignKey" Value="com.novartis.ecrs.model.entity.CrsContentEO.CrsContentIdxStateFk"/>
       <Attr Name="_isUpdateable" Value="true"/>
     </DesignTime>
     <AttrArray Name="Attributes">

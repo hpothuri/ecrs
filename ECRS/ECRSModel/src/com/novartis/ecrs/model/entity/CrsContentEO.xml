@@ -342,6 +342,20 @@
     AssociationOtherEnd="com.novartis.ecrs.model.entity.assoc.CrsRiskRelationsIdxCrsFkAssoc.CrsContentEO"
     Type="oracle.jbo.RowIterator"
     IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="CrsStateEO1"
+    Association="com.novartis.ecrs.model.entity.CrsConStgIdxStateFkAssoc"
+    AssociationEnd="com.novartis.ecrs.model.entity.CrsConStgIdxStateFkAssoc.CrsStateEO1"
+    AssociationOtherEnd="com.novartis.ecrs.model.entity.CrsConStgIdxStateFkAssoc.CrsContentEO1"
+    Type="com.novartis.ecrs.model.entity.CrsStateEOImpl"
+    IsUpdateable="true"/>
+  <AccessorAttribute
+    Name="CrsCompoundEO1"
+    Association="com.novartis.ecrs.model.entity.CrsConStgIdxCompoundFkAssoc"
+    AssociationEnd="com.novartis.ecrs.model.entity.CrsConStgIdxCompoundFkAssoc.CrsCompoundEO1"
+    AssociationOtherEnd="com.novartis.ecrs.model.entity.CrsConStgIdxCompoundFkAssoc.CrsContentEO1"
+    Type="com.novartis.ecrs.model.entity.CrsCompoundEOImpl"
+    IsUpdateable="true"/>
   <Key
     Name="CoumpoundCodeInditcationAltKey"
     AltKey="true">
@@ -355,6 +369,24 @@
     </AttrArray>
   </Key>
   <Key
+    Name="CrsConStgChkAppr">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_CON_STG_CHK_APPR"/>
+      <Attr Name="_checkCondition" Value="REVIEW_APPROVE_REQUIRED_FLAG IN ('Y', 'N')"/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="CrsConStgChkMrktflg">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="CRS_CON_STG_CHK_MRKTFLG"/>
+      <Attr Name="_checkCondition" Value="IS_MARKETED_FLAG IN ('Y', 'N')"/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
     Name="CrsConStgIdxPk"
     PrimaryKey="true">
     <DesignTime>
@@ -365,50 +397,22 @@
     </AttrArray>
   </Key>
   <Key
-    Name="CrsContentChkAppr">
-    <DesignTime>
-      <Attr Name="_DBObjectName" Value="CRS_CONTENT_CHK_APPR"/>
-      <Attr Name="_checkCondition"
-        Value="REVIEW_APPROVE_REQUIRED_FLAG IN ('Y', 'N')"/>
-      <Attr Name="_isCheck" Value="true"/>
-    </DesignTime>
-    <AttrArray Name="Attributes"/>
-  </Key>
-  <Key
-    Name="CrsContentChkMrktflg">
-    <DesignTime>
-      <Attr Name="_DBObjectName" Value="CRS_CONTENT_CHK_MRKTFLG"/>
-      <Attr Name="_checkCondition" Value="IS_MARKETED_FLAG IN ('Y', 'N')"/>
-      <Attr Name="_isCheck" Value="true"/>
-    </DesignTime>
-    <AttrArray Name="Attributes"/>
-  </Key>
-  <Key
-    Name="CrsContentChkStatus">
-    <DesignTime>
-      <Attr Name="_DBObjectName" Value="CRS_CONTENT_CHK_STATUS"/>
-      <Attr Name="_checkCondition" Value="RELEASE_STATUS_FLAG IN ('P', 'C')"/>
-      <Attr Name="_isCheck" Value="true"/>
-    </DesignTime>
-    <AttrArray Name="Attributes"/>
-  </Key>
-  <Key
-    Name="CrsContentIdxCompoundFk">
+    Name="CrsConStgIdxCompoundFk">
     <DesignTime>
       <Attr Name="_referencedKey" Value="CRS_COMPOUNDS_IDX_PK"/>
       <Attr Name="_isForeign" Value="true"/>
-      <Attr Name="_DBObjectName" Value="CRS_CONTENT_IDX_COMPOUND_FK"/>
+      <Attr Name="_DBObjectName" Value="CRS_CON_STG_IDX_COMPOUND_FK"/>
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsContentEO.CompoundId"/>
     </AttrArray>
   </Key>
   <Key
-    Name="CrsContentIdxStateFk">
+    Name="CrsConStgIdxStateFk">
     <DesignTime>
       <Attr Name="_referencedKey" Value="CRS_STATES_IDX_PK"/>
       <Attr Name="_isForeign" Value="true"/>
-      <Attr Name="_DBObjectName" Value="CRS_CONTENT_IDX_STATE_FK"/>
+      <Attr Name="_DBObjectName" Value="CRS_CON_STG_IDX_STATE_FK"/>
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="com.novartis.ecrs.model.entity.CrsContentEO.StateId"/>

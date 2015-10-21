@@ -6,6 +6,7 @@ import com.novartis.ecrs.model.constants.ModelConstants;
 import com.novartis.ecrs.model.lov.UserRoleVORowImpl;
 import com.novartis.ecrs.model.view.ECrsSearchVORowImpl;
 import com.novartis.ecrs.model.view.HierarchyChildDetailVOImpl;
+import com.novartis.ecrs.model.view.report.PTReportVOImpl;
 import com.novartis.ecrs.model.view.trans.CompoundTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.DomainsTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.RiskPurposeTransientVOImpl;
@@ -556,43 +557,36 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      * 
      * Info : Method to delete the current CRS, which internally deletes risk relations and risk definitions attached to it.
      */
-    public void deleteCrs(){
-        ViewObject crsContentVO = this.getCrsContentVO();
-        ViewObject relationVO = this.getCrsRiskRelationVO();
-        ViewObject definitionVO = this.getCrsRiskDefinitionsVO();
-        Row crsRow = crsContentVO.getCurrentRow();
-        if(crsRow != null){
-            Long crsId = (Long)crsRow.getAttribute("CrsId");
-            //Fetch the required CRS details (that needs to be deleted)
-            relationVO.setWhereClause("CRS_ID = "+crsId);
-            relationVO.executeQuery();
-            //Fetch all risk relations.
-            if(relationVO.getEstimatedRowCount() > 0){
-                RowSetIterator relationRs = relationVO.createRowSetIterator(null);
-                while(relationRs.hasNext()){
-                    Row relationRow = relationRs.next();
-                    relationVO.setCurrentRow(relationRow);
-//                    Long riskId = (Long)relationRow.getAttribute("CrsRiskId");
-//                    definitionVO.setWhereClause("CRS_RISK_ID = "+riskId);
-//                    definitionVO.executeQuery();
-                    //Fetch all risk defintions
-                    if(definitionVO.getEstimatedRowCount() > 0){
-                        RowSetIterator definitionRs = definitionVO.createRowSetIterator(null);
-                        while(definitionRs.hasNext()){
-                            Row definitionRow = definitionRs.next();
-                            //delete risk defintions
-                            definitionRow.remove();
-                        }
-                    }
-                    //delete risk relations
-                    relationRow.remove();
+    public String deleteCrs(Long crsId){
+        
+        DBTransaction txn = getDBTransaction();
+        OracleCallableStatement cstmt = null;
+        String cs = null;
+        String returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
+        if (crsId != null) {
+            cs = "{?=call CRS_UI_TMS_UTILS.delete_crs(?)}";
+            cstmt = (OracleCallableStatement)txn.createCallableStatement(cs, DBTransaction.DEFAULT);
+            try {
+                cstmt.registerOutParameter(1, Types.VARCHAR);
+                cstmt.setNUMBER(2, new oracle.jbo.domain.Number(crsId));
+                cstmt.execute();
+                returnMessage = cstmt.getString(1);
+
+            } catch (Exception e) {
+                returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
+                logger.error("Error while deleting crs", e);
+            } finally {
+                try {
+                    if (cstmt != null && !cstmt.isClosed())
+                        cstmt.close();
+                } catch (Exception e) {
+                    throw new JboException(e);
                 }
             }
-            //delete crs
-            crsRow.remove();
-            //commit
-            this.getDBTransaction().commit();
+        } else {
+            returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
         }
+        return returnMessage;
     }
 
     /**
@@ -1058,8 +1052,8 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      * Container's getter for PTReportVO.
      * @return PTReportVO
      */
-    public ViewObjectImpl getPTReportVO() {
-        return (ViewObjectImpl)findViewObject("PTReportVO");
+    public PTReportVOImpl getPTReportVO() {
+        return (PTReportVOImpl)findViewObject("PTReportVO");
     }
 
     /**

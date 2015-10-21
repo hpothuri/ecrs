@@ -17,9 +17,9 @@
       <property
          name="y">146.89648</property>
       <property
-         name="pageFragment">true</property>
-      <property
          name="x">529.0</property>
+      <property
+         name="pageFragment">true</property>
    </View>
    <View
       id="View4">
@@ -36,9 +36,9 @@
       <property
          name="y">152.79297</property>
       <property
-         name="pageFragment">true</property>
-      <property
          name="x">713.0</property>
+      <property
+         name="pageFragment">true</property>
    </View>
    <ControlFlowCase
       islink="true"
@@ -73,9 +73,9 @@
       <property
          name="y">151.5459</property>
       <property
-         name="pageFragment">true</property>
-      <property
          name="x">902.0</property>
+      <property
+         name="pageFragment">true</property>
    </View>
    <TrainFlow
       islink="true"
@@ -239,7 +239,7 @@
       <property
          name="fromOutcome">home</property>
       <property
-         name="sdm:polyPoints">R58,570.0,153.5459,792.46967,296.74707,L54</property>
+         name="sdm:polyPoints">R62,570.0,157.0459,792.49084,296.74707,L54</property>
    </ControlFlowCase>
    <View
       id="View26">
@@ -254,9 +254,9 @@
       <property
          name="y">32.0459</property>
       <property
-         name="x">-100.22363</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">-100.22363</property>
    </View>
    <MethodCall
       id="MethodCall27">
@@ -377,7 +377,7 @@
       <property
          name="fromOutcome">toSearchPage</property>
       <property
-         name="sdm:polyPoints">L50,808.0,-14.557617,570.0,139.5459,R42</property>
+         name="sdm:polyPoints">L50,808.0,-14.557617,570.0,136.0459,R38</property>
    </ControlFlowCase>
    <MethodCall
       id="MethodCall42">
@@ -442,9 +442,9 @@
       <property
          name="y">199.39648</property>
       <property
-         name="pageFragment">true</property>
-      <property
          name="x">1154.5</property>
+      <property
+         name="pageFragment">true</property>
    </View>
    <TrainFlow
       islink="true"
@@ -501,7 +501,7 @@
       islink="true"
       id="ControlFlowCase52"
       from="View46"
-      to="View3">
+      to="MethodCall14">
       <property
          name="fromOutcome">toSearch</property>
       <property

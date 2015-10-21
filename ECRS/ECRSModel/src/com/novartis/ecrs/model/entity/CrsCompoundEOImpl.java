@@ -77,6 +77,16 @@ public class CrsCompoundEOImpl extends EntityImpl {
                 obj.setAttributeInternal(index(), value);
             }
         }
+        ,
+        CrsContentEO1 {
+            public Object get(CrsCompoundEOImpl obj) {
+                return obj.getCrsContentEO1();
+            }
+
+            public void put(CrsCompoundEOImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
         ;
         private static AttributesEnum[] vals = null;
         private static int firstIndex = 0;
@@ -105,18 +115,21 @@ public class CrsCompoundEOImpl extends EntityImpl {
         }
     }
 
+
     public static final int COMPOUNDID = AttributesEnum.CompoundId.index();
     public static final int COMPOUNDCODE = AttributesEnum.CompoundCode.index();
     public static final int COMPOUNDTYPE = AttributesEnum.CompoundType.index();
     public static final int COMPOUNDDESC = AttributesEnum.CompoundDesc.index();
     public static final int ACTIVEFLAG = AttributesEnum.ActiveFlag.index();
     public static final int CRSCONTENTEO = AttributesEnum.CrsContentEO.index();
+    public static final int CRSCONTENTEO1 = AttributesEnum.CrsContentEO1.index();
 
     /**
      * This is the default constructor (do not remove).
      */
     public CrsCompoundEOImpl() {
     }
+
 
     /**
      * @return the definition object for this instance class.
@@ -243,6 +256,13 @@ public class CrsCompoundEOImpl extends EntityImpl {
         return (RowIterator)getAttributeInternal(CRSCONTENTEO);
     }
 
+
+    /**
+     * @return the associated entity oracle.jbo.RowIterator.
+     */
+    public RowIterator getCrsContentEO1() {
+        return (RowIterator)getAttributeInternal(CRSCONTENTEO1);
+    }
 
     /**
      * @param compoundId key constituent

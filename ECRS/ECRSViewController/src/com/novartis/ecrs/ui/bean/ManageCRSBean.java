@@ -6,6 +6,7 @@ import com.novartis.ecrs.model.lov.UserRoleVORowImpl;
 import com.novartis.ecrs.model.view.CrsContentVORowImpl;
 import com.novartis.ecrs.model.view.HierarchyChildVORowImpl;
 import com.novartis.ecrs.model.view.base.CrsContentBaseVORowImpl;
+import com.novartis.ecrs.model.view.report.PTReportVOImpl;
 import com.novartis.ecrs.ui.constants.ViewConstants;
 import com.novartis.ecrs.ui.utility.ADFUtils;
 import com.novartis.ecrs.ui.utility.ExcelExportUtils;
@@ -1543,9 +1544,14 @@ public class ManageCRSBean implements Serializable {
 
     public void processDeleteDialog(DialogEvent dialogEvent) {
         logger.info("Showing delete confirmation popup.");
+        String returnMessage = "";
         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())){
             OperationBinding oper = ADFUtils.findOperation("deleteCrs");
-            oper.execute();
+            Map params1 = oper.getParamsMap();
+            Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.crsId.inputValue}");
+            params1.put("crsId" , crsId);
+            returnMessage = (String) oper.execute();
+            logger.info("returnMessage from deleteCrs call..." + returnMessage);
             if (oper.getErrors().size() > 0)
                 ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
             else{
@@ -3343,11 +3349,17 @@ public class ManageCRSBean implements Serializable {
                                OutputStream outputStream) {
         // Add event code here...
         logger.info("Start of CRSReportsBean:exportPTReport()");
+       
         Workbook workbook = null;
         DCIteratorBinding iter =
             ADFUtils.findIterator("PTReportVOIterator");
         if(iter!=null&& iter.getViewObject()!=null){
-            ViewObjectImpl vo = (ViewObjectImpl)iter.getViewObject();
+            PTReportVOImpl vo = (PTReportVOImpl)iter.getViewObject();
+            if (this.currReleaseStatus.equalsIgnoreCase(ViewConstants.PENDING)){
+                vo.setpCRSStatus(ViewConstants.STAGE);
+            } else if (this.currReleaseStatus.equalsIgnoreCase(ViewConstants.PENDING)){
+                vo.setpCRSStatus(ViewConstants.PROD);
+            }
             String wrClause = "CRS_ID = "+ADFUtils.getPageFlowScopeValue("crsId");
             vo.setWhereClause(wrClause);
             vo.executeQuery();
@@ -3373,7 +3385,7 @@ public class ManageCRSBean implements Serializable {
                 //Here Key will be ViewObject Attribute
                 columnMap.put("SafetyTopicOfInterest",
                               rsBundle.getString("SAFETY_TOPIC_OF_INTEREST"));
-                columnMap.put("MeddraComponent",
+                columnMap.put("MeddraTerm",
                               rsBundle.getString("MEDDRA_COMPONENT"));
                 columnMap.put("PtName", rsBundle.getString("PT_NAME"));
                 columnMap.put("PtCode", rsBundle.getString("PT_CODE"));
