@@ -3357,7 +3357,7 @@ public class ManageCRSBean implements Serializable {
             PTReportVOImpl vo = (PTReportVOImpl)iter.getViewObject();
             if (this.currReleaseStatus.equalsIgnoreCase(ViewConstants.PENDING)){
                 vo.setpCRSStatus(ViewConstants.STAGE);
-            } else if (this.currReleaseStatus.equalsIgnoreCase(ViewConstants.PENDING)){
+            } else if (this.currReleaseStatus.equalsIgnoreCase(ViewConstants.CURRENT)){
                 vo.setpCRSStatus(ViewConstants.PROD);
             }
             String wrClause = "CRS_ID = "+ADFUtils.getPageFlowScopeValue("crsId");
