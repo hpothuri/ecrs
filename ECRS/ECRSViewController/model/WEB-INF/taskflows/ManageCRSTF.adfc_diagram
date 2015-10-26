@@ -17,9 +17,9 @@
       <property
          name="y">146.89648</property>
       <property
-         name="x">529.0</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">529.0</property>
    </View>
    <View
       id="View4">
@@ -36,9 +36,9 @@
       <property
          name="y">152.79297</property>
       <property
-         name="x">713.0</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">713.0</property>
    </View>
    <ControlFlowCase
       islink="true"
@@ -73,9 +73,9 @@
       <property
          name="y">151.5459</property>
       <property
-         name="x">902.0</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">902.0</property>
    </View>
    <TrainFlow
       islink="true"
@@ -254,9 +254,9 @@
       <property
          name="y">32.0459</property>
       <property
-         name="pageFragment">true</property>
-      <property
          name="x">-100.22363</property>
+      <property
+         name="pageFragment">true</property>
    </View>
    <MethodCall
       id="MethodCall27">
@@ -442,9 +442,9 @@
       <property
          name="y">199.39648</property>
       <property
-         name="x">1154.5</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">1154.5</property>
    </View>
    <TrainFlow
       islink="true"
@@ -501,10 +501,10 @@
       islink="true"
       id="ControlFlowCase52"
       from="View46"
-      to="MethodCall14">
+      to="MethodCall36">
       <property
          name="fromOutcome">toSearch</property>
       <property
-         name="sdm:polyPoints">L50,1112.9288,199.0459,571.15564,150.0459,R54</property>
+         name="sdm:polyPoints">L42,1113.5,192.0459,849.0,39.442383,B50</property>
    </ControlFlowCase>
 </SDM>
