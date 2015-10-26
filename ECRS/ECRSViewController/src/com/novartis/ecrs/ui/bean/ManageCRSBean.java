@@ -197,6 +197,8 @@ public class ManageCRSBean implements Serializable {
     private transient  RichImage iconCRSChanged;
     private transient RichImage iconCRSSaveError;
     private transient RichImage iconCRSSaved;
+    
+    private Boolean currentUserInDesignee = Boolean.FALSE;
 
     public ManageCRSBean() {
         super();
@@ -660,6 +662,9 @@ public class ManageCRSBean implements Serializable {
             ResetUtils.reset(savedSuccessMessage);
         }
         showStatus(ViewConstants.CRS_MODIFIED);
+        if (null != this.socTermSOC){
+            this.socTermSOC.setVisible(true);
+        }
         if(riskDefPopupPanel != null)
             ResetUtils.reset(riskDefPopupPanel);
         ADFUtils.showPopup(riskDefPopup);
@@ -1085,7 +1090,7 @@ public class ManageCRSBean implements Serializable {
             params.put("pCRSId", ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}"));
             params.put("pReasonForChange", getReasonForChange());
             String msg = (String)op.execute();
-
+            logger.info("activate crs..msg==" + msg);
             if (op.getErrors() != null && op.getErrors().size() > 0) {
                 ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"),
                                           FacesMessage.SEVERITY_ERROR);
@@ -1093,8 +1098,13 @@ public class ManageCRSBean implements Serializable {
 
                 // if NOT a success
                 if (!ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
-                    ADFUtils.showFacesMessage("<html> <body> <p> An internal error has occured. Please contact the Administrator </p> <p>"+msg+"</p> </body> </html>",
-                                              FacesMessage.SEVERITY_ERROR);
+                    if (msg.indexOf(ModelConstants.CRS_ACTIVATION_ERROR_CODE) > -1 ){
+                        ADFUtils.showFacesMessage(uiBundle.getString("CRS_ACTIVATION_ERROR_ON_SAME_DAY"),
+                                   FacesMessage.SEVERITY_ERROR);
+                    } else {
+                        ADFUtils.showFacesMessage("<html> <body> <p> An internal error has occured. Please contact the Administrator </p> <p>"+msg+"</p> </body> </html>",
+                                               FacesMessage.SEVERITY_ERROR);
+                    }
                     // if success - show popup which on ack takes user to search page
                 } else
                     ADFUtils.showPopup(getCrsPublishPopupBinding());
@@ -2079,7 +2089,7 @@ public class ManageCRSBean implements Serializable {
         params2.put("domainName", ADFUtils.evaluateEL("#{copyRow.DataDomain}"));
         Integer domainId = 0;
         try {
-            ADFUtils.executeAction("fetchDomainIdFromName", params2);
+           domainId = (Integer) ADFUtils.executeAction("fetchDomainIdFromName", params2);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2150,6 +2160,15 @@ public class ManageCRSBean implements Serializable {
         }
         showStatus(ViewConstants.CRS_MODIFIED);
         copyPanel.setVisible(true);
+        if (null != domainId && domainId != 1){
+            if (null != this.socTermSOC){
+                this.socTermSOC.setVisible(false);
+            }
+        } else {
+            if (null != this.socTermSOC){
+                this.socTermSOC.setVisible(true);
+            }
+        }
         ADFUtils.addPartialTarget(copyPanel);
     }
 
@@ -3383,10 +3402,11 @@ public class ManageCRSBean implements Serializable {
                 ResourceBundle rsBundle =
                     BundleFactory.getBundle("com.novartis.ecrs.view.ECRSViewControllerBundle");
                 //Here Key will be ViewObject Attribute
-                columnMap.put("SafetyTopicOfInterest",
-                              rsBundle.getString("SAFETY_TOPIC_OF_INTEREST"));
-                columnMap.put("MeddraTerm",
-                              rsBundle.getString("MEDDRA_COMPONENT"));
+                //columnMap.put("CrsName", rsBundle.getString("CRS_NAME"));
+                //columnMap.put("CrsId", rsBundle.getString("CRS_ID"));
+                columnMap.put("SafetyTopicOfInterest", rsBundle.getString("SAFETY_TOPIC_OF_INTEREST"));
+                columnMap.put("RiskPurposeList", rsBundle.getString("RISK_PURPOSE_LIST"));
+                columnMap.put("MeddraTerm", rsBundle.getString("MEDDRA_TERM"));
                 columnMap.put("PtName", rsBundle.getString("PT_NAME"));
                 columnMap.put("PtCode", rsBundle.getString("PT_CODE"));
                 workbook.setMissingCellPolicy(org.apache.poi.ss.usermodel.Row.CREATE_NULL_AS_BLANK);
@@ -3572,15 +3592,6 @@ public class ManageCRSBean implements Serializable {
     public void onDomainIdChange(ValueChangeEvent valueChangeEvent) {
         logger.info("Refreshing SOC LOV based on the domain selected");
         Integer newValue = (Integer)valueChangeEvent.getNewValue();
-        Map params2 = new HashMap<String, Object>();
-        params2.put("domainName", ViewConstants.DOMAIN_OTHER);
-        Integer domainIdOther = 0;
-        try {
-            domainIdOther = (Integer) ADFUtils.executeAction("fetchDomainIdFromName", params2);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        logger.info("domainIdOther :: " + domainIdOther);
         logger.info("Domain selected :: " + newValue);
         if(null != newValue && valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue()){
             if(newValue.intValue() != 1){
@@ -3588,6 +3599,7 @@ public class ManageCRSBean implements Serializable {
                 this.socTermSOC.setValue(null);
                 this.socTermSOC.resetValue();
                 this.socTermSOC.setShowRequired(false);
+                this.socTermSOC.setVisible(false);
                 this.setSocTermRequired(false);
                 this.setDisableSocTerm(true);
                 this.setSearchCriteriaRequired(true);
@@ -3598,6 +3610,7 @@ public class ManageCRSBean implements Serializable {
                 this.socTermSOC.setShowRequired(true);
                 this.setSocTermRequired(true);
                 this.setDisableSocTerm(false);
+                this.socTermSOC.setVisible(true);
                 this.setSearchCriteriaRequired(false);
                 this.searchCriteriaDetails.setShowRequired(false);
             }
@@ -3990,5 +4003,18 @@ public class ManageCRSBean implements Serializable {
             }
         }
         return isRiskRelExistsAlready;
+    }
+    
+    public void setIsCurrentUserInDesignee(Boolean currentUserInDesignee) {
+        this.currentUserInDesignee = currentUserInDesignee;
+    }
+
+    public Boolean isCurrentUserInDesignee() {
+        if (!this.userName.equalsIgnoreCase(ViewConstants.ANONYMOUS_ROLE) && null != selDesigneeList){
+            if (selDesigneeList.contains(this.userName)){
+                this.currentUserInDesignee = Boolean.TRUE;
+            }
+        }
+        return this.currentUserInDesignee;
     }
 }

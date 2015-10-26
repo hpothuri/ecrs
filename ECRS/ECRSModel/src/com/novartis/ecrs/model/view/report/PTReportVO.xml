@@ -11,7 +11,8 @@
   UseGlueCode="false"
   FetchSize="100"
   FetchMode="FETCH_AS_NEEDED"
-  ComponentClass="com.novartis.ecrs.model.view.report.PTReportVOImpl">
+  ComponentClass="com.novartis.ecrs.model.view.report.PTReportVOImpl"
+  OrderBy="SAFETY_TOPIC_OF_INTEREST, RISK_PURPOSE_LIST, MEDDRA_TERM, PT_NAME">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
     <Attr Name="_codeGenFlag2" Value="Coll|VarAccess"/>
@@ -27,7 +28,22 @@
     Kind="where"
     Type="java.lang.String"
     DefaultValue="PROD"/>
-  <SQLQuery><![CDATA[SELECT crs_id, safety_topic_of_interest, meddra_term, pt_name, pt_code, compound_type,risk_purpose_list,meddra_dict,meddra_level,meddra_extension,meddra_code, crs_risk_id, crs_version_start_date, crs_version_end_date, pt_content_id FROM TABLE(CRS_UI_TMS_UTILS.GET_ALL_CRS_ASSOCIATED_PTS(pCRSStatus => :pCRSStatus))]]></SQLQuery>
+  <SQLQuery><![CDATA[SELECT crs_name, crs_id, safety_topic_of_interest, meddra_term, pt_name, pt_code, compound_type,risk_purpose_list,meddra_dict,meddra_level,meddra_extension,meddra_code, crs_risk_id, crs_version_start_date, crs_version_end_date, pt_content_id FROM TABLE(CRS_UI_TMS_UTILS.GET_ALL_CRS_ASSOCIATED_PTS(pCRSStatus => :pCRSStatus))]]></SQLQuery>
+  <ViewAttribute
+    Name="CrsName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CRS_NAME"
+    Expression="CRS_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </ViewAttribute>
   <ViewAttribute
     Name="CrsId"
     IsUpdateable="false"

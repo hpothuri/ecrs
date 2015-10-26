@@ -42,6 +42,7 @@ public class ModelConstants {
     public static final String COMPOUND_TYPE_COMPOUND = "COMPOUND";
     public static final String CRS_ACTIVE = "Active";
     public static final String CRS_INACTIVE = "Inactive";
+    public static final String CRS_ACTIVATION_ERROR_CODE = "ORA-20101";
     
     static public String getCustomTimeStamp() {
         String timeStamp =

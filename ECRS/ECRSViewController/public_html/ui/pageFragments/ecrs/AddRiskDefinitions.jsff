@@ -457,15 +457,6 @@
               <af:selectItem label="MedDRA" value="MEDDRA" id="si1"/>
               <af:selectItem label="Other" value="OTHER" id="si2"/>
             </af:selectOneChoice>-->
-            <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
-                                shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc4" required="#{pageFlowScope.manageCRSBean.socTermRequired}"
-                                disabled="#{pageFlowScope.manageCRSBean.disableSocTerm}"
-                                contentStyle="width:300px;" autoSubmit="true"
-                                readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
-                                binding="#{pageFlowScope.manageCRSBean.socTermSOC}" >
-              <f:selectItems value="#{bindings.SocTerm.items}" id="si17"/>
-            </af:selectOneChoice>
             <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc2"
                                  value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true"
                                  valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
@@ -480,6 +471,17 @@
               <af:selectItem label="MI (Missing Information)" id="si11" value="MI"/>
               <af:selectItem label="ER (Expediting Rules)" id="si12" value="ER"/>
             </af:selectManyChoice>
+            
+            <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
+                                shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc4" required="#{pageFlowScope.manageCRSBean.socTermRequired}"
+                                disabled="#{pageFlowScope.manageCRSBean.disableSocTerm}"
+                                contentStyle="width:300px;" autoSubmit="true"
+                                readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
+                                valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
+                                binding="#{pageFlowScope.manageCRSBean.socTermSOC}" >
+              <f:selectItems value="#{bindings.SocTerm.items}" id="si17"/>
+            </af:selectOneChoice>
+            
           </af:panelFormLayout>
           <af:panelFormLayout id="pfl3">
             <af:inputText value="#{bindings.NonMeddraComponentComment.inputValue}"
@@ -993,14 +995,7 @@
                             rendered="false">
                 <f:validator binding="#{bindings.DataDomain.validator}"/>
               </af:inputText>-->
-              <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
-                                  shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc5" contentStyle="width:300px;"
-                                  required="#{pageFlowScope.manageCRSBean.socTermRequired}"
-                                  binding="#{pageFlowScope.manageCRSBean.socTermSOC}" autoSubmit="true"
-                                  disabled="#{pageFlowScope.manageCRSBean.disableSocTerm}"
-                                  partialTriggers="soc10">
-                <f:selectItems value="#{bindings.SocTerm.items}" id="si18"/>
-              </af:selectOneChoice>
+              
               <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc4"
                                    value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true"
                                    binding="#{pageFlowScope.manageCRSBean.copyRPListBinding}">
@@ -1014,6 +1009,16 @@
                 <af:selectItem label="MI (Missing Information)" id="si22" value="MI"/>
                 <af:selectItem label="ER (Expediting Rules)" id="si23" value="ER"/>
               </af:selectManyChoice>
+              
+              <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
+                                  shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc5" contentStyle="width:300px;"
+                                  required="#{pageFlowScope.manageCRSBean.socTermRequired}"
+                                  binding="#{pageFlowScope.manageCRSBean.socTermSOC}" autoSubmit="true"
+                                  disabled="#{pageFlowScope.manageCRSBean.disableSocTerm}"
+                                  partialTriggers="soc10">
+                <f:selectItems value="#{bindings.SocTerm.items}" id="si18"/>
+              </af:selectOneChoice>
+              
             </af:panelFormLayout>
             <af:panelFormLayout id="pfl5">
               <af:inputText value="#{bindings.NonMeddraComponentComment.inputValue}"
