@@ -1,5 +1,7 @@
 package com.novartis.ecrs.ui.bean;
 
+import com.novartis.ecrs.ui.constants.ViewConstants;
+
 import java.math.BigDecimal;
 
 import java.sql.Timestamp;
@@ -44,9 +46,9 @@ public class HierarchyChildUIBean {
         if(this.levelName != null 
            && ("SOC".equalsIgnoreCase(this.levelName.trim()) || "PT".equalsIgnoreCase(this.levelName.trim()) 
             || "HLGT".equalsIgnoreCase(this.levelName.trim()) || "HLT".equalsIgnoreCase(this.levelName.trim()))){
-            this.dictShortName = "NMATMED";
+            this.dictShortName = ViewConstants.MEDDRA_DICTIONARY;
         } else {
-            this.dictShortName = "NMATSMQ";
+            this.dictShortName = ViewConstants.FILTER_DICTIONARY;
         }
         this.formattedScope = row.getAttribute("FormattedScope")!= null ? row.getAttribute("FormattedScope").toString() : null;
         this.scopeName = getScopeName();
