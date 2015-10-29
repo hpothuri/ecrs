@@ -169,5 +169,11 @@
                   ReturnName="data.ECRSAppModuleDataControl.methodResults.deleteCrs_ECRSAppModuleDataControl_dataProvider_deleteCrs_result">
       <NamedData NDName="crsId" NDValue="" NDType="java.lang.Long"/>
     </methodAction>
+    <methodAction id="isCRSVersionInitial" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="isCRSVersionInitial" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.isCRSVersionInitial_ECRSAppModuleDataControl_dataProvider_isCRSVersionInitial_result">
+      <NamedData NDName="crsId" NDValue="#{bindings.CrsId.inputValue}" NDType="java.lang.Long"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

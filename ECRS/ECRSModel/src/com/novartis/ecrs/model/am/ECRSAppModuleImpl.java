@@ -14,6 +14,9 @@ import com.novartis.ecrs.model.view.trans.RolesTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.StateTransientVOImpl;
 import com.novartis.ecrs.model.view.trans.UserRolesTransientVOImpl;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ import oracle.jbo.ViewCriteria;
 import oracle.jbo.ViewObject;
 import oracle.jbo.server.ApplicationModuleImpl;
 import oracle.jbo.server.DBTransaction;
+import oracle.jbo.server.DBTransactionImpl;
 import oracle.jbo.server.ViewLinkImpl;
 import oracle.jbo.server.ViewObjectImpl;
 
@@ -273,6 +277,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
         }
         crsContentVO.setWhereClause(whereClause);
         crsContentVO.executeQuery();
+        logger.info("Search Query..." + crsContentVO.getQuery());
         crsContentVO.setWhereClause(null);
         crsContentVO.applyViewCriteria(null);
         
@@ -816,7 +821,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 returnMessage = cstmt.getString(1);
 
             } catch (Exception e) {
-                returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
+                    returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
                 logger.error("Error while activate crs", e);
             } finally {
                 try {
@@ -1094,9 +1099,9 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
     }
     /**
      *
-     * @param crsId -- ID of the CRS that is being created or updated
+     * @param crsId -- ID of the CRS that is being is being activated.
      * 
-     * Info : Metdod to show the risk definitions (if any) for the selected CRS on load of risk definitions page.
+     * Info : Metdod to check any risk relations exists for the crs before activation.
      */
     public Boolean isRiskRelationsExistForCRS(Long crsId){
             Boolean riskRelExists = Boolean.FALSE;
@@ -1108,5 +1113,41 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                 riskRelExists = Boolean.TRUE;
             }
             return riskRelExists;
+    }
+    /**
+     *
+     * @param crsId -- ID of the CRS that is being created or updated.
+     * 
+     * Info : Metdod to check whether the CRS is previously activated or not.
+     */
+    public Boolean isCRSVersionInitial(Long crsId){
+            Boolean initialVersion = Boolean.TRUE;
+            String query = "SELECT COUNT(*) as count FROM crs_content WHERE crs_id = ?";
+            //for the selected CRSID
+            PreparedStatement pstmt = null;
+            ResultSet rs = null;
+            try {
+                DBTransaction txn = getDBTransaction();
+                pstmt = txn.createPreparedStatement(query, DBTransactionImpl.DEFAULT);
+                pstmt.setLong(1, crsId);
+                rs = pstmt.executeQuery();
+                if (null != rs && rs.next()){
+                    int count = rs.getInt("count");
+                    logger.info("row count in crs_content==" + count);
+                    if (count > 0) {
+                        initialVersion = Boolean.FALSE;
+                    }
+                }
+            } catch (SQLException e){
+                logger.error("Error while querying crs_content table", e);
+            } finally{
+                try{
+                    rs.close();
+                    pstmt.close();
+                }catch (SQLException e){
+                    logger.error("Error while closing pstmt", e);
+                }
+            }
+            return initialVersion;
     }
 }

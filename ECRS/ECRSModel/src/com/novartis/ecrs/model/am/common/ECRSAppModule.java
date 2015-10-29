@@ -43,4 +43,6 @@ public interface ECRSAppModule extends ApplicationModule {
     String retireCrs(Long pCRSId, String pReasonForChange);
 
     Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId, Integer domainId);
+
+    Boolean isCRSVersionInitial(Long crsId);
 }

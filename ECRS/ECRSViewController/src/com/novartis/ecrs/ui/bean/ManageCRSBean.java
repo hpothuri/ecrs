@@ -79,6 +79,7 @@ import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
 import oracle.security.crypto.util.InvalidFormatException;
 
 import org.apache.myfaces.trinidad.component.UIXCollection;
+import org.apache.myfaces.trinidad.component.UIXEditableValue;
 import org.apache.myfaces.trinidad.component.UIXSwitcher;
 import org.apache.myfaces.trinidad.event.SelectionEvent;
 import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
@@ -387,8 +388,7 @@ public class ManageCRSBean implements Serializable {
         else if (ViewConstants.FLOW_TYPE_UPDATE.equals(getFlowType()) &&
                  (ModelConstants.ROLE_ML.equals(loggedInUserRole) ||
                   ModelConstants.ROLE_MQM.equals(loggedInUserRole) ||
-                  ModelConstants.ROLE_TASL.equals(loggedInUserRole) ||
-                  ModelConstants.ROLE_CRSADMIN.equals(loggedInUserRole)))
+                  ModelConstants.ROLE_TASL.equals(loggedInUserRole)))
             releaseStatus = ModelConstants.STATUS_PENDING;
         else
             releaseStatus = getCurrReleaseStatus();
@@ -596,6 +596,8 @@ public class ManageCRSBean implements Serializable {
                 ADFUtils.setEL("#{bindings.TaslName.inputValue}", null);
                 ADFUtils.setEL("#{bindings.MedicalLeadName.inputValue}", null);
                 ADFUtils.setEL("#{bindings.ReviewApproveRequiredFlag1.inputValue}",
+                               "N");
+                ADFUtils.setEL("#{bindings.ReviewApproveRequiredFlag.inputValue}",
                                "N");
                 ADFUtils.setEL("#{bindings.MedicalLeadName.inputValue}", null);
                 setSelDesigneeList(null);
@@ -1085,30 +1087,40 @@ public class ManageCRSBean implements Serializable {
      public void processPublishDialog(DialogEvent dialogEvent) {
          logger.info("--------processing Publish action---------");
         if(DialogEvent.Outcome.yes.equals(dialogEvent.getOutcome())) {
-            OperationBinding op = ADFUtils.findOperation("activateCrs");
-            Map params = op.getParamsMap();
-            params.put("pCRSId", ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}"));
-            params.put("pReasonForChange", getReasonForChange());
-            String msg = (String)op.execute();
-            logger.info("activate crs..msg==" + msg);
-            if (op.getErrors() != null && op.getErrors().size() > 0) {
-                ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"),
-                                          FacesMessage.SEVERITY_ERROR);
-            } else {
-
-                // if NOT a success
-                if (!ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
-                    if (msg.indexOf(ModelConstants.CRS_ACTIVATION_ERROR_CODE) > -1 ){
-                        ADFUtils.showFacesMessage(uiBundle.getString("CRS_ACTIVATION_ERROR_ON_SAME_DAY"),
-                                   FacesMessage.SEVERITY_ERROR);
-                    } else {
-                        ADFUtils.showFacesMessage("<html> <body> <p> An internal error has occured. Please contact the Administrator </p> <p>"+msg+"</p> </body> </html>",
-                                               FacesMessage.SEVERITY_ERROR);
-                    }
-                    // if success - show popup which on ack takes user to search page
-                } else
-                    ADFUtils.showPopup(getCrsPublishPopupBinding());
+            if (!isRiskRelationsExistsForCRS()){
+                ADFUtils.showFacesMessage(uiBundle.getString("RISK_RELATION_REQURIED_MSG"), FacesMessage.SEVERITY_ERROR);
+                return;
             }
+//            OperationBinding oper = ADFUtils.findOperation("Commit");
+//            oper.execute();
+//            if (oper.getErrors().size() > 0){
+//                ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
+//            } else {
+                OperationBinding op = ADFUtils.findOperation("activateCrs");
+                Map params = op.getParamsMap();
+                params.put("pCRSId", ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}"));
+                params.put("pReasonForChange", getReasonForChange());
+                String msg = (String)op.execute();
+                logger.info("activate crs..msg==" + msg);
+                if (op.getErrors() != null && op.getErrors().size() > 0) {
+                    ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"),
+                                              FacesMessage.SEVERITY_ERROR);
+                } else {
+
+                    // if NOT a success
+                    if (!ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
+                        if (msg.indexOf(ModelConstants.CRS_ACTIVATION_ERROR_CODE) > -1 ){
+                            ADFUtils.showFacesMessage(uiBundle.getString("CRS_ACTIVATION_ERROR_ON_SAME_DAY"),
+                                       FacesMessage.SEVERITY_ERROR);
+                        } else {
+                            ADFUtils.showFacesMessage("<html> <body> <p> An internal error has occured. Please contact the Administrator </p> <p>"+msg+"</p> </body> </html>",
+                                                   FacesMessage.SEVERITY_ERROR);
+                        }
+                        // if success - show popup which on ack takes user to search page
+                    } else
+                        ADFUtils.showPopup(getCrsPublishPopupBinding());
+                }
+//            }
         }
      }
     
@@ -4016,5 +4028,24 @@ public class ManageCRSBean implements Serializable {
             }
         }
         return this.currentUserInDesignee;
+    }
+
+    public void onChangeOfReviewApprovalRequiredFlag(ValueChangeEvent valueChangeEvent) {
+        // Add event code here...
+        logger.info("ReviewApprovalRequiredFlag..." + valueChangeEvent.getNewValue());
+        if (isCRSVersionInitial() && valueChangeEvent.getNewValue().equals(Boolean.FALSE)){
+            ((UIXEditableValue)valueChangeEvent.getComponent()).resetValue();
+            ADFUtils.showFacesMessage(uiBundle.getString("CRS_REVIEW_APPROVAL_REQ_MSG"), FacesMessage.SEVERITY_ERROR);
+        }
+    }
+    
+    private Boolean isCRSVersionInitial(){
+        Boolean initialVersion = Boolean.TRUE;
+        OperationBinding oper = ADFUtils.findOperation("isCRSVersionInitial");
+        if (null != oper){
+            initialVersion = (Boolean) oper.execute();
+            logger.info("isCRSVersionInitial..." + initialVersion.booleanValue());
+        }
+        return initialVersion;
     }
 }

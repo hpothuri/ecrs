@@ -23,8 +23,7 @@
           meddra_extension                        meddra_comp_defn,
           COUNT(*)                                number_of_crs
    FROM (SELECT d.meddra_term,
-                d.meddra_extension,
-                c.crs_id 
+                d.meddra_extension
          FROM crs_content           c,
               crs_risk_relations    r,
               crs_risk_definitions  d 

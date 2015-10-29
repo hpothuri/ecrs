@@ -340,5 +340,14 @@
         Name="domainId"
         Type="java.lang.Integer"/>
     </Method>
+    <Method
+      Name="isCRSVersionInitial"
+      MethodName="isCRSVersionInitial">
+      <Return
+        Type="java.lang.Boolean"/>
+      <Parameter
+        Name="crsId"
+        Type="java.lang.Long"/>
+    </Method>
   </ClientInterface>
 </AppModule>

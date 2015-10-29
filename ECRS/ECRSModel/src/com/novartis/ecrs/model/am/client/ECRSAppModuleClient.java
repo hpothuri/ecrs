@@ -78,6 +78,17 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return;
     }
 
+    public Boolean isCRSVersionInitial(Long crsId) {
+        Object _ret = this.riInvokeExportedMethod(this,"isCRSVersionInitial",new String [] {"java.lang.Long"},new Object[] {crsId});
+        return (Boolean)_ret;
+    }
+
+    public Boolean isRiskRelationsExistForCRS(Long crsId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"isRiskRelationsExistForCRS",new String [] {"java.lang.Long"},new Object[] {crsId});
+        return (Boolean)_ret;
+    }
+
     public String modifyCrs(Long pCRSId, String pReasonForChange) {
         Object _ret =
             this.riInvokeExportedMethod(this,"modifyCrs",new String [] {"java.lang.Long","java.lang.String"},new Object[] {pCRSId, pReasonForChange});
@@ -107,10 +118,4 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
             this.riInvokeExportedMethod(this,"validateSafetyTopic",new String [] {"java.lang.Long","java.lang.String","java.lang.String","java.lang.Long","java.lang.Integer"},new Object[] {crsId, safetyTopic, rpList, crsRiskId, domainId});
         return (Boolean)_ret;
     }
-
-    public Boolean isRiskRelationsExistForCRS(Long crsId) {
-        Object _ret =
-            this.riInvokeExportedMethod(this,"isRiskRelationsExistForCRS",new String [] {"java.lang.Long"},new Object[] {crsId});
-        return (Boolean)_ret;
-}
 }
