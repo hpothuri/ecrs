@@ -4021,12 +4021,13 @@ public class ManageCRSBean implements Serializable {
         this.currentUserInDesignee = currentUserInDesignee;
     }
 
-    public Boolean isCurrentUserInDesignee() {
+    public Boolean getCurrentUserInDesignee() {
         if (!this.userName.equalsIgnoreCase(ViewConstants.ANONYMOUS_ROLE) && null != selDesigneeList){
             if (selDesigneeList.contains(this.userName)){
                 this.currentUserInDesignee = Boolean.TRUE;
             }
         }
+        logger.info("isCurrentUserInDesignee..." + this.currentUserInDesignee);
         return this.currentUserInDesignee;
     }
 
