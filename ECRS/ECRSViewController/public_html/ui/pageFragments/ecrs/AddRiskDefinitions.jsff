@@ -604,8 +604,9 @@
               <af:column sortProperty="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.name}" sortable="false"
                          headerText="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.label}" id="c26">
                 <af:selectOneChoice label="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.label}" id="soc1"
-                                    value="#{row.bindings.CrsQualifier.inputValue}"
-                                    readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable or row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}">
+                                    value="#{row.bindings.CrsQualifier.inputValue}" autoSubmit="true" 
+                                    readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable or row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}"
+                                    valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}">
                   <af:selectItem label="BROAD" value="BROAD" id="si24"/>
                   <af:selectItem label="NARROW" value="NARROW" id="si25"/>
                 </af:selectOneChoice>
@@ -616,7 +617,8 @@
                               maximumLength="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.precision}"
                               shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.tooltip}" id="it18"
                               readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable or row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}" visible="false"
-                              autoSubmit="true">
+                              autoSubmit="true"
+                              valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}">
                   <f:validator binding="#{row.bindings.MeddraQualifier.validator}"/>
                 </af:inputText>
               </af:column>
@@ -1097,7 +1099,8 @@
                   <af:inputText id="it8" value="#{row.CrsQualifier}" readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable or row.MeddraQualifierUpdFlag ne 'Y'}"
                                 rendered="false"/>
                   <af:selectOneChoice id="soc11" readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable or row.MeddraQualifierUpdFlag ne 'Y'}"
-                                      value="#{row.CrsQualifier}">
+                                      value="#{row.CrsQualifier}" autoSubmit="true"
+                                      valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}">
                     <af:selectItem label="BROAD" value="BROAD" id="si26"/>
                     <af:selectItem label="NARROW" value="NARROW" id="si27"/>
                   </af:selectOneChoice>

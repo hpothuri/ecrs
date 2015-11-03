@@ -783,7 +783,7 @@ public class ManageCRSBean implements Serializable {
 //        } else
 //            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}",null);
         
-        Integer domain = (Integer)ADFUtils.evaluateEL("#{bindings.DomainId.attributeValue}");
+        Integer domain = (Integer)ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}");
         if(domain != null && (domain == 1)){
             String soc = (String)ADFUtils.evaluateEL("#{bindings.SocTerm.inputValue}");
             if(soc == null || "".equals(soc)){
