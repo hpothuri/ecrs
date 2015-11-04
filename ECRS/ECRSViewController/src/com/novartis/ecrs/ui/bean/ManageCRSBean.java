@@ -877,6 +877,21 @@ public class ManageCRSBean implements Serializable {
 
     public void onCloseRiskPopup(PopupCanceledEvent popupCanceledEvent) {
         logger.info("Closing risk defintions popup");
+        DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
+        ViewObject riskDefVO = iter.getViewObject();
+        Row currRow = riskDefVO.getCurrentRow();
+        if(currRow != null){
+            currRow.refresh(Row.REFRESH_REMOVE_NEW_ROWS | Row.REFRESH_WITH_DB_FORGET_CHANGES | Row.REFRESH_UNDO_CHANGES);
+            logger.info("Closing CrsRisk Popup -- refresh risk def row.");
+        }
+        DCIteratorBinding relIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
+        ViewObject riskRelVO = relIter.getViewObject();
+        Row relCurrRow = riskRelVO.getCurrentRow();
+        if(relCurrRow != null){
+            relCurrRow.refresh(Row.REFRESH_REMOVE_NEW_ROWS | Row.REFRESH_WITH_DB_FORGET_CHANGES | Row.REFRESH_UNDO_CHANGES);
+            logger.info("Closing CrsRisk Popup -- refresh risk relations row.");
+        }
+        
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");
         OperationBinding oper = ADFUtils.findOperation("initRiskRelation");
         logger.info("Reexecuting the table with crsId : "+crsId+" state : "+getBaseOrStaging());
@@ -886,7 +901,23 @@ public class ManageCRSBean implements Serializable {
         if (oper.getErrors().size() > 0) 
             ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
 //        ADFUtils.addPartialTarget(riskDefTable);
-        ADFUtils.addPartialTarget(stagingTable);
+        if(riskDefTable != null)
+            ADFUtils.addPartialTarget(riskDefTable);
+        if(stagingTable != null){
+            ADFUtils.addPartialTarget(stagingTable);
+        }
+        if(riskDefPopup != null){
+            this.iconCRSSaved.setVisible(false);
+            this.iconCRSSaveError.setVisible(false);
+            this.iconCRSChanged.setVisible(false);
+            riskDefPopup.hide();
+        }
+        if(copyPopup != null){
+            this.iconCRSSaved.setVisible(false);
+            this.iconCRSSaveError.setVisible(false);
+            this.iconCRSChanged.setVisible(false);
+            copyPopup.hide();
+        }
         setRepoRefreshed(Boolean.FALSE);
     }
 
@@ -1930,13 +1961,15 @@ public class ManageCRSBean implements Serializable {
         ViewObject riskDefVO = iter.getViewObject();
         Row currRow = riskDefVO.getCurrentRow();
         if(currRow != null){
-            currRow.refresh(Row.REFRESH_WITH_DB_FORGET_CHANGES | Row.REFRESH_UNDO_CHANGES);
+            currRow.refresh(Row.REFRESH_REMOVE_NEW_ROWS | Row.REFRESH_WITH_DB_FORGET_CHANGES | Row.REFRESH_UNDO_CHANGES);
+            logger.info("Closing CrsRisk Popup -- refresh risk def row.");
         }
         DCIteratorBinding relIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
         ViewObject riskRelVO = relIter.getViewObject();
         Row relCurrRow = riskRelVO.getCurrentRow();
         if(relCurrRow != null){
-            relCurrRow.refresh(Row.REFRESH_WITH_DB_FORGET_CHANGES | Row.REFRESH_UNDO_CHANGES);
+            relCurrRow.refresh(Row.REFRESH_REMOVE_NEW_ROWS | Row.REFRESH_WITH_DB_FORGET_CHANGES | Row.REFRESH_UNDO_CHANGES);
+            logger.info("Closing CrsRisk Popup -- refresh risk relations row.");
         }
         
 //        OperationBinding oper = ADFUtils.findOperation("Rollback");
