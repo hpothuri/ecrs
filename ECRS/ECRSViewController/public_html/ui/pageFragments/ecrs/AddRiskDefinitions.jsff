@@ -606,11 +606,11 @@
                 <af:selectOneChoice label="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.label}" id="soc1"
                                     value="#{row.bindings.CrsQualifier.inputValue}" autoSubmit="true" 
                                     readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable or row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}"
-                                    valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}">
+                                    valueChangeListener="#{pageFlowScope.manageCRSBean.onMedDRAQualifierUpdate}">
                   <af:selectItem label="BROAD" value="BROAD" id="si24"/>
                   <af:selectItem label="NARROW" value="NARROW" id="si25"/>
                 </af:selectOneChoice>
-                <af:inputText value="#{row.bindings.CrsQualifier.inputValue}"
+                <af:inputText value="#{row.bindings.MeddraQualifier.inputValue}"
                               label="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.label}"
                               required="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.mandatory}"
                               columns="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.displayWidth}"
@@ -618,7 +618,7 @@
                               shortDesc="#{bindings.CrsRiskDefinitionsVO.hints.MeddraQualifier.tooltip}" id="it18"
                               readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable or row.bindings.MeddraQualifierUpdFlag.inputValue ne 'Y'}" visible="false"
                               autoSubmit="true"
-                              valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}">
+                              partialTriggers="soc1">
                   <f:validator binding="#{row.bindings.MeddraQualifier.validator}"/>
                 </af:inputText>
               </af:column>

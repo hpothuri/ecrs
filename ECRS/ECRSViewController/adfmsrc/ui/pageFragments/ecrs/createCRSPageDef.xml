@@ -276,5 +276,11 @@
         <Item Value="StateId"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="isCRSVersionInitial" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="isCRSVersionInitial" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.isCRSVersionInitial_ECRSAppModuleDataControl_dataProvider_isCRSVersionInitial_result">
+      <NamedData NDName="crsId" NDValue="#{bindings.CrsId}" NDType="java.lang.Long"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

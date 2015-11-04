@@ -819,14 +819,6 @@ public class ManageCRSBean implements Serializable {
         }
         
         Map params1 = new HashMap<String, Object>();
-        logger.info("Validating it this CRS "+crsId+" has this safety topic already.");
-        Integer domainIdCurrent = (Integer) ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}");
-        Long currentRiskId = (Long) ADFUtils.evaluateEL("#{bindings.CrsRiskId.inputValue}");
-        Boolean riskRelAlreadyExists = this.validateRiskRelationsInSession(safetyTopic, riskPurposeList, currentRiskId, domainIdCurrent);
-        if (riskRelAlreadyExists){
-            ADFUtils.showFacesMessage(uiBundle.getString("STOI_UNIQUE_ERROR"), FacesMessage.SEVERITY_ERROR);
-            return;
-        }
         params1.put("crsId", crsId);
         params1.put("safetyTopic", safetyTopic);
         params1.put("rpList", riskPurposeList);
@@ -893,7 +885,8 @@ public class ManageCRSBean implements Serializable {
         oper.execute();
         if (oper.getErrors().size() > 0) 
             ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
-        ADFUtils.addPartialTarget(riskDefTable);
+//        ADFUtils.addPartialTarget(riskDefTable);
+        ADFUtils.addPartialTarget(stagingTable);
         setRepoRefreshed(Boolean.FALSE);
     }
 
@@ -1263,6 +1256,7 @@ public class ManageCRSBean implements Serializable {
         hierVO.setNamedWhereClauseParam("pTerm", (term != null && !term.isEmpty()) ? term : "%");
         hierVO.setNamedWhereClauseParam("pLevel", level != null ? level : null);
         hierVO.setNamedWhereClauseParam("pDict", dictionary != null ? dictionary : null);
+        logger.info(" Hierarchy search Query..." + hierVO.getQuery());
         hierVO.executeQuery();
         if (null != this.childTreeTable){
             this.childTreeTable.setVisible(false);
@@ -1959,6 +1953,9 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
         if(riskDefTable != null)
             ADFUtils.addPartialTarget(riskDefTable);
+        if(stagingTable != null){
+            ADFUtils.addPartialTarget(stagingTable);
+        }
         if(riskDefPopup != null){
             this.iconCRSSaved.setVisible(false);
             this.iconCRSSaveError.setVisible(false);
@@ -2425,6 +2422,7 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.executeAction("refreshRepository", params);
             setRepoRefreshed(Boolean.TRUE);
             ADFUtils.addPartialTarget(riskDefTable);
+            ADFUtils.addPartialTarget(stagingTable);
         } catch (Exception e) {
             e.printStackTrace();
         } 
@@ -3694,7 +3692,9 @@ public class ManageCRSBean implements Serializable {
             ViewObject childVO = childIter.getViewObject();
             logger.info("executeHierarchyChildNew for selected content ID");
             childVO.setNamedWhereClauseParam("bContentId", ADFUtils.evaluateEL("#{row.ContentId}"));
+            logger.info("executeHierarchyChildNew Query.." + childVO.getQuery());
             childVO.executeQuery();
+            logger.info("After executeHierarchyChildNew Query..");
             if (childVO.getEstimatedRowCount() > 0) {
                // HierarchyChildUIBean parRow = new HierarchyChildUIBean(childVO.first());
                 root = new HierarchyChildUIBean(childVO.first());
@@ -3985,38 +3985,6 @@ public class ManageCRSBean implements Serializable {
         logger.info("isRiskRelationsExistsForCRS..." + retVal);
         return retVal;
     }
-    
-    private Boolean validateRiskRelationsInSession(String safetyTopic, String rpList, Long crsRiskId, Integer domainId){
-        logger.info("Calling validateRiskRelationsInSession...");
-        Boolean isRiskRelExistsAlready = Boolean.FALSE;
-        DCIteratorBinding riskRelVOIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
-        ViewObject riskRelVO = riskRelVOIter.getViewObject();
-        Row [] riskRelRows = riskRelVO.getAllRowsInRange();
-        if (null != riskRelRows && riskRelRows.length > 1){
-            logger.info("validateRiskRelationsInSession row count..." + riskRelRows.length);
-            String tempSTOI = null;
-            String tempRPList = null;
-            Long tempRiskId = null;
-            Integer tempDomainId = null;
-            for (Row row : riskRelRows){
-                tempRiskId = (Long)row.getAttribute("CrsRiskId");
-                if (null != tempRiskId && tempRiskId != crsRiskId){
-                    tempSTOI = (String) row.getAttribute("SafetyTopicOfInterest");
-                    tempDomainId = (Integer) row.getAttribute("DomainId");
-                    tempRPList = (String) row.getAttribute("RiskPurposeList");
-                    if (null != tempRPList && tempRPList.equals(rpList) 
-                        && null != tempDomainId && tempDomainId == domainId 
-                        && null != tempSTOI && tempSTOI.equalsIgnoreCase(safetyTopic)){
-                        isRiskRelExistsAlready = Boolean.TRUE;
-                        logger.info("validateRiskRelationsInSession Failed..." + isRiskRelExistsAlready);
-                        break;
-                    }
-                }
-            }
-        }
-        return isRiskRelExistsAlready;
-    }
-    
     public void setIsCurrentUserInDesignee(Boolean currentUserInDesignee) {
         this.currentUserInDesignee = currentUserInDesignee;
     }
@@ -4048,5 +4016,13 @@ public class ManageCRSBean implements Serializable {
             logger.info("isCRSVersionInitial..." + initialVersion.booleanValue());
         }
         return initialVersion;
+    }
+    public Boolean getIsCRSVersionInitial(){
+        return isCRSVersionInitial();
+    }
+    public void onMedDRAQualifierUpdate(ValueChangeEvent valueChangeEvent) {
+        // Add event code here...
+        ADFUtils.setEL("#{row.bindings.MeddraQualifier.inputValue}",valueChangeEvent.getNewValue());
+        showStatus(ViewConstants.CRS_MODIFIED);
     }
 }

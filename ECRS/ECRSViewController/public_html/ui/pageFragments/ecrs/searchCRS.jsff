@@ -317,8 +317,8 @@
                 <f:selectItems value="#{row.bindings.MedicalLeadName.items}" id="si18"/>
               </af:selectOneChoice>
             </af:column>
-            <af:column id="c25" headerText="#{ecrsviewcontrollerBundle.RELEASE_DATE}" rendered="#{pageFlowScope.flowType eq 'S'  || (pageFlowScope.flowType eq 'U' and pageFlowScope.manageCRSBean.currReleaseStatus eq 'C')}">
-              <af:outputText value="#{null != row.ModificationTs ? row.ModificationTs : row.CreationTs}" id="ot19">
+            <af:column id="c25" headerText="#{ecrsviewcontrollerBundle.RELEASE_DATE}">
+              <af:outputText value="#{row.CrsEffectiveDt}" id="ot19">
                 <af:convertDateTime pattern="dd-MMM-yyy HH:mm:ss"/>
               </af:outputText>
             </af:column>
@@ -480,8 +480,9 @@
                                id="si14"/>
               </af:selectOneChoice>
             </af:column>
-            <af:column id="c27" headerText="#{ecrsviewcontrollerBundle.RELEASE_DATE}" rendered="#{pageFlowScope.flowType eq 'S'  || (pageFlowScope.flowType eq 'U' and pageFlowScope.manageCRSBean.currReleaseStatus eq 'C')}">
-              <af:outputText value="#{null != row.ModificationTs ? row.ModificationTs : row.CreationTs}" id="ot20">
+            <af:column id="c27" headerText="#{ecrsviewcontrollerBundle.RELEASE_DATE}">
+              <af:outputText value="#{row.CrsEffectiveDt}" id="ot20"
+                             visible="#{!pageFlowScope.manageCRSBean.isCRSVersionInitial}">
               <af:convertDateTime pattern="dd-MMM-yyy HH:mm:ss"/>
               </af:outputText>
             </af:column>

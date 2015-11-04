@@ -87,6 +87,7 @@
           <Item Value="DesigneeName"/>
           <Item Value="CreationTs"/>
           <Item Value="ModificationTs"/>
+          <Item Value="CrsEffectiveDt"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -122,6 +123,7 @@
           <Item Value="DesigneeName"/>
           <Item Value="ModificationTs"/>
           <Item Value="CreationTs"/>
+          <Item Value="CrsEffectiveDt"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -159,6 +161,12 @@
                   ReturnName="data.ECRSAppModuleDataControl.methodResults.retireCrs_ECRSAppModuleDataControl_dataProvider_retireCrs_result">
       <NamedData NDName="pCRSId" NDType="java.lang.Long"/>
       <NamedData NDName="pReasonForChange" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="isCRSVersionInitial" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="isCRSVersionInitial" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.isCRSVersionInitial_ECRSAppModuleDataControl_dataProvider_isCRSVersionInitial_result">
+      <NamedData NDName="crsId" NDValue="#{row.CrsId}" NDType="java.lang.Long"/>
     </methodAction>
   </bindings>
 </pageDefinition>

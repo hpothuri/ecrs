@@ -61,7 +61,7 @@
                     </af:commandButton>
                     <af:commandButton text="#{securityContext.userInRole['CRS_ADMIN'] ? ecrsviewcontrollerBundle.TASL_APPROVE : ecrsviewcontrollerBundle.APPROVE}"
                                       id="cb8"
-                                      disabled="#{bindings.StateId.inputValue ne 4 or (securityContext.userInRole['CRS_TASL'] and sessionBean.username  ne bindings.TaslName.inputValue)}"
+                                      disabled="#{bindings.StateId.inputValue ne 4}"
                                       visible="#{(securityContext.userInRole['CRS_TASL'] || securityContext.userInRole['CRS_ADMIN']) and bindings.ReleaseStatusFlag.inputValue eq 'P'}"
                                       partialSubmit="true"
                                       inlineStyle="margin-right:10px;">
