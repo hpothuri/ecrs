@@ -482,7 +482,7 @@
             </af:column>
             <af:column id="c27" headerText="#{ecrsviewcontrollerBundle.RELEASE_DATE}">
               <af:outputText value="#{row.CrsEffectiveDt}" id="ot20"
-                             visible="#{!pageFlowScope.manageCRSBean.isCRSVersionInitial}">
+                             visible="#{!(row.bindings.ReasonForChange.inputValue eq 'None' or row.bindings.ReasonForChange.inputValue eq 'Initial Version')}">
               <af:convertDateTime pattern="dd-MMM-yyy HH:mm:ss"/>
               </af:outputText>
             </af:column>

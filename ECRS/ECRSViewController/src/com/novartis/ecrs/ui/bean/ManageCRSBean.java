@@ -1132,7 +1132,7 @@ public class ManageCRSBean implements Serializable {
                 } else {
 
                     // if NOT a success
-                    if (!ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
+                    if (null != msg && !ModelConstants.PLSQL_CALL_SUCCESS.equals(msg)) {
                         if (msg.indexOf(ModelConstants.CRS_ACTIVATION_ERROR_CODE) > -1 ){
                             ADFUtils.showFacesMessage(uiBundle.getString("CRS_ACTIVATION_ERROR_ON_SAME_DAY"),
                                        FacesMessage.SEVERITY_ERROR);
@@ -1155,6 +1155,12 @@ public class ManageCRSBean implements Serializable {
         if (newState != ModelConstants.STATE_DRAFT && !isRiskRelationsExistsForCRS()){
             ADFUtils.showFacesMessage(uiBundle.getString("RISK_RELATION_REQURIED_MSG"), FacesMessage.SEVERITY_ERROR);
         } else {
+            if (ModelConstants.STATE_TASLAPPROVE.equals(newState) || ModelConstants.STATE_APPROVED.equals(newState)){
+                ADFUtils.setEL("#{bindings.TaslRejectComment.inputValue}", null);
+            }
+            if (ModelConstants.STATE_MLAPPROVE.equals(newState) || ModelConstants.STATE_APPROVED.equals(newState)){
+                ADFUtils.setEL("#{bindings.MedicalLeadRejectComment.inputValue}", null);
+            }
             OperationBinding oper = ADFUtils.findOperation("Commit");
             oper.execute();
             if (oper.getErrors().size() > 0)
