@@ -328,7 +328,7 @@
                 <af:outputText value="#{ecrsviewcontrollerBundle.THE_CRS_HAS_BEEN_PUBLISHED}" id="ot11"/>
                 <f:facet name="buttonBar">
                     <af:commandButton text="#{ecrsviewcontrollerBundle.OK}" id="cb12"
-                                      action="reloadSearch"/>
+                                      action="reloadSearchPage"/>
                 </f:facet>
             </af:dialog>
         </af:popup>

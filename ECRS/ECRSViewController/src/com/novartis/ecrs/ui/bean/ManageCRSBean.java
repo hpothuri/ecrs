@@ -4064,4 +4064,23 @@ public class ManageCRSBean implements Serializable {
         ADFUtils.setEL("#{row.bindings.MeddraQualifier.inputValue}",valueChangeEvent.getNewValue());
         showStatus(ViewConstants.CRS_MODIFIED);
     }
+    
+    /**
+     * Reload the search page after publish.
+     */
+    public void reloadSearchPage() {
+        logger.info("Begin reloadSearchPage after publishing...");
+        ADFUtils.closeDialog(getCrsPublishPopupBinding());
+        DCBindingContainer bc = ADFUtils.getDCBindingContainer();
+        OperationBinding ob = bc.getOperationBinding("filterCRSContent");
+        ob.getParamsMap().put("userInRole", loggedInUserRole);
+        ob.getParamsMap().put("userName", getUserName());
+        ob.getParamsMap().put("isInboxDisable", isInboxDisable());
+        ob.getParamsMap().put("flowType", getFlowType());
+        ob.execute();
+        if (ob.getErrors().size() > 0)
+            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"),
+                                      FacesMessage.SEVERITY_ERROR);
+        logger.info("End reloadSearchPage after publishing...");
+    }
 }

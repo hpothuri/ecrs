@@ -110,6 +110,12 @@
         <fixed-outcome>confirm</fixed-outcome>
       </outcome>
     </method-call>
+    <method-call id="reloadSearchPage">
+      <method>#{pageFlowScope.manageCRSBean.reloadSearchPage}</method>
+      <outcome>
+        <fixed-outcome>toSearchPage</fixed-outcome>
+      </outcome>
+    </method-call>
     <train/>
     <control-flow-rule id="__5">
       <from-activity-id>crsFlowRouter</from-activity-id>
@@ -168,6 +174,10 @@
       <control-flow-case id="__37">
         <from-outcome>initConfirmPage</from-outcome>
         <to-activity-id>initConfirmPage</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__43">
+        <from-outcome>reloadSearchPage</from-outcome>
+        <to-activity-id>reloadSearchPage</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__19">
@@ -246,6 +256,13 @@
       <control-flow-case id="__42">
         <from-outcome>toSearch</from-outcome>
         <to-activity-id>invokeEmptyRowSet</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__44">
+      <from-activity-id>reloadSearchPage</from-activity-id>
+      <control-flow-case id="__45">
+        <from-outcome>toSearchPage</from-outcome>
+        <to-activity-id>serach</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>
