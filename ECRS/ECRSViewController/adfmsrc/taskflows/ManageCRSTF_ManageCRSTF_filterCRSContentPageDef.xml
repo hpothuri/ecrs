@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36"
+                id="ManageCRSTF_ManageCRSTF_filterCRSContentPageDef" Package="taskflows" SkipValidation="true">
+  <parameters/>
+  <executables/>
+  <bindings>
+    <methodAction id="filterCRSContent" RequiresUpdateModel="true" Action="invokeMethod" MethodName="filterCRSContent"
+                  IsViewObjectMethod="false" DataControl="ECRSAppModuleDataControl"
+                  InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.filterCRSContent_ECRSAppModuleDataControl_dataProvider_filterCRSContent_result">
+      <NamedData NDName="userInRole" NDType="java.lang.String"/>
+      <NamedData NDName="userName" NDType="java.lang.String"/>
+      <NamedData NDName="isInboxDisable" NDType="boolean"/>
+      <NamedData NDName="flowType" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

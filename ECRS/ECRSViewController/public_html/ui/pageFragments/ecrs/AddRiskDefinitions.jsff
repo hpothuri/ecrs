@@ -152,6 +152,11 @@
                   <af:outputText value="#{row.DataDomain}" shortDesc="#{bindings.CrsRiskVO.hints.DataDomain.tooltip}"
                                  id="ot13"/>
                 </af:column>
+                <af:column sortProperty="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.name}" filterable="true"
+                           headerText="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.label}" id="c17" width="90">
+                  <af:outputText value="#{row.SearchCriteriaDetails}"
+                                 shortDesc="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.tooltip}" id="ot17"/>
+                </af:column>
                 <f:facet name="header">
                   <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}" id="plam1">
                     <af:outputText value="#{pageFlowScope.crsName}" id="ot2"/>
@@ -183,11 +188,7 @@
                   <af:outputText value="#{row.CrsQualifier}"
                                  shortDesc="#{bindings.CrsRiskVO.hints.MeddraQualifier.tooltip}" id="ot16"/>
                 </af:column>
-                <af:column sortProperty="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.name}" filterable="true"
-                           headerText="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.label}" id="c17" width="90">
-                  <af:outputText value="#{row.SearchCriteriaDetails}"
-                                 shortDesc="#{bindings.CrsRiskVO.hints.SearchCriteriaDetails.tooltip}" id="ot17"/>
-                </af:column>
+                
                 <af:column sortProperty="#{bindings.CrsRiskVO.hints.MqmComment.name}" filterable="true"
                            headerText="#{ecrsviewcontrollerBundle.COMMENT}" id="c18" width="50">
                   <af:outputText value="#{row.NonMeddraComponentComment}"
@@ -320,6 +321,12 @@
                   <af:outputText value="#{row.DataDomain}"
                                  shortDesc="#{bindings.CrsRiskBaseVO.hints.DataDomain.tooltip}" id="ot50"/>
                 </af:column>
+                <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.SearchCriteriaDetails.name}" filterable="true"
+                           sortable="true" headerText="#{ecrsviewcontrollerBundle.SEARCH_CRITERIA_DETAILS}" id="c77"
+                           >
+                  <af:outputText value="#{row.SearchCriteriaDetails}"
+                                 shortDesc="#{bindings.CrsRiskBaseVO.hints.SearchCriteriaDetails.tooltip}" id="ot54"/>
+                </af:column>
                 <f:facet name="header">
                   <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.NAME}" id="plam7">
                     <af:outputText value="#{pageFlowScope.manageCRSBean.selectedCrsName}" id="ot56"/>
@@ -348,12 +355,7 @@
                   <af:outputText value="#{row.CrsQualifier}"
                                  shortDesc="#{bindings.CrsRiskBaseVO.hints.MeddraQualifier.tooltip}" id="ot53"/>
                 </af:column>
-                <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.SearchCriteriaDetails.name}" filterable="true"
-                           sortable="true" headerText="#{ecrsviewcontrollerBundle.SEARCH_CRITERIA_DETAILS}" id="c77"
-                           width="80" rendered="false">
-                  <af:outputText value="#{row.SearchCriteriaDetails}"
-                                 shortDesc="#{bindings.CrsRiskBaseVO.hints.SearchCriteriaDetails.tooltip}" id="ot54"/>
-                </af:column>
+                
                 <af:column sortProperty="#{bindings.CrsRiskBaseVO.hints.MqmComment.name}" filterable="true"
                            sortable="true" headerText="#{ecrsviewcontrollerBundle.COMMENT}" id="c78" width="90">
                   <af:outputText value="#{row.NonMeddraComponentComment}"
@@ -500,11 +502,10 @@
                           label="#{bindings.SearchCriteriaDetails.hints.label}"
                           required="#{pageFlowScope.manageCRSBean.searchCriteriaRequired}"
                           columns="#{bindings.SearchCriteriaDetails.hints.displayWidth}"
-                          maximumLength="#{bindings.SearchCriteriaDetails.hints.precision}"
+                          maximumLength="200"
                           contentStyle="width:500px;" rows="3" autoSubmit="true"
                           readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                           valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
-                          visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
                           shortDesc="#{bindings.SearchCriteriaDetails.hints.tooltip}" id="it14"
                           binding="#{pageFlowScope.manageCRSBean.searchCriteriaDetails}">
               <f:validator binding="#{bindings.SearchCriteriaDetails.validator}"/>
@@ -928,8 +929,13 @@
               </af:column>-->
                <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.DataDomain.name}" sortable="true"
                          headerText="#{ecrsviewcontrollerBundle.DATA_DOMAIN}" id="c50">
-                <af:outputText value="#{copyRow.DataDomain}"
+                <af:outputText value="#{copyRow.DataDomain}" 
                                shortDesc="#{bindings.CopyCrsRiskVO.hints.DataDomain.tooltip}" id="ot84"/>
+              </af:column>
+              <af:column headerText="#{ecrsviewcontrollerBundle.SEARCH_CRITERIA_DETAILS}" id="c54" 
+                    sortProperty="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.name}" sortable="true">
+                <af:outputText value="#{copyRow.SearchCriteriaDetails}" 
+                               shortDesc="#{bindings.CopyCrsRiskVO.hints.SearchCriteriaDetails.tooltip}" id="ot66"/>
               </af:column>
               <af:column sortProperty="#{bindings.CopyCrsRiskVO.hints.MeddraCode.name}" sortable="true"
                          headerText="#{bindings.CopyCrsRiskVO.hints.MeddraCode.label}" id="c89">
@@ -1036,10 +1042,9 @@
                           label="#{bindings.SearchCriteriaDetails.hints.label}"
                           required="#{pageFlowScope.manageCRSBean.searchCriteriaRequired}"
                           columns="#{bindings.SearchCriteriaDetails.hints.displayWidth}"
-                          maximumLength="#{bindings.SearchCriteriaDetails.hints.precision}"
+                          maximumLength="200"
                           contentStyle="width:500px;" rows="3" autoSubmit="true"
                           readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                          visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
                           shortDesc="#{bindings.SearchCriteriaDetails.hints.tooltip}" id="it15"
                           binding="#{pageFlowScope.manageCRSBean.searchCriteriaDetails}">
               <f:validator binding="#{bindings.SearchCriteriaDetails.validator}"/>
@@ -1153,7 +1158,7 @@
       <af:dialog id="d8" title="#{ecrsviewcontrollerBundle.ENTER_SEARCH_CRITERIA_DETAILS}">
         <f:facet name="buttonBar"/>
         <af:inputText label="#{ecrsviewcontrollerBundle.SEARCH_CRITERIA_DETAILS}" id="it4" columns="50" rows="3"
-                      autoSubmit="true" value="#{bindings.SearchCriteriaDetails.inputValue}"/>
+                      autoSubmit="true" value="#{bindings.SearchCriteriaDetails.inputValue}" maximumLength="200"/>
       </af:dialog>
     </af:popup>
     <af:popup childCreation="deferred" autoCancel="disabled" id="p9"
