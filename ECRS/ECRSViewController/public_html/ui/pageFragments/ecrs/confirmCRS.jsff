@@ -141,6 +141,7 @@
                               styleClass="AFStretchWidth"
                               autoSubmit="true"
                               contentStyle="width:75%;"
+                              readOnly="true"
                               maximumLength="#{bindings.TaslRejectComment.hints.precision}"
                               shortDesc="#{bindings.TaslRejectComment.hints.tooltip}" id="it2"
                               disabled="#{!((securityContext.userInRole['CRS_TASL'] or securityContext.userInRole['CRS_ADMIN']) and bindings.StateId.inputValue eq 4 and bindings.ReviewApproveRequiredFlag1.inputValue eq 'Y')}"
@@ -154,6 +155,7 @@
                               contentStyle="width:75%;"
                               disabled="#{!((securityContext.userInRole['CRS_ADMIN']  or securityContext.userInRole['CRS_BSL'] or securityContext.userInRole['CRS_ML']) and bindings.StateId.inputValue eq 5 and bindings.ReviewApproveRequiredFlag1.inputValue eq 'Y')}"
                               styleClass="AFStretchWidth"
+                              readOnly="true"
                               maximumLength="#{bindings.MedicalLeadRejectComment.hints.precision}"
                               shortDesc="#{bindings.MedicalLeadRejectComment.hints.tooltip}" id="it3" autoSubmit="true">
                   <f:validator binding="#{bindings.MedicalLeadRejectComment.validator}"/>

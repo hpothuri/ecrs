@@ -1155,10 +1155,9 @@ public class ManageCRSBean implements Serializable {
         if (newState != ModelConstants.STATE_DRAFT && !isRiskRelationsExistsForCRS()){
             ADFUtils.showFacesMessage(uiBundle.getString("RISK_RELATION_REQURIED_MSG"), FacesMessage.SEVERITY_ERROR);
         } else {
-            if (ModelConstants.STATE_TASLAPPROVE.equals(newState) || ModelConstants.STATE_APPROVED.equals(newState)){
+            if (ModelConstants.STATE_MLAPPROVE.equals(newState)){
                 ADFUtils.setEL("#{bindings.TaslRejectComment.inputValue}", null);
-            }
-            if (ModelConstants.STATE_MLAPPROVE.equals(newState) || ModelConstants.STATE_APPROVED.equals(newState)){
+            } else if (ModelConstants.STATE_APPROVED.equals(newState)){
                 ADFUtils.setEL("#{bindings.MedicalLeadRejectComment.inputValue}", null);
             }
             OperationBinding oper = ADFUtils.findOperation("Commit");
