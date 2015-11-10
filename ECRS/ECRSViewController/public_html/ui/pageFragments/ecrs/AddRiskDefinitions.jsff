@@ -475,12 +475,12 @@
             </af:selectManyChoice>
             
             <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
-                                shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc4" required="#{pageFlowScope.manageCRSBean.socTermRequired}"
-                                disabled="#{pageFlowScope.manageCRSBean.disableSocTerm}"
+                                shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc4" required="#{bindings.DomainId1.inputValue eq 1}"
                                 contentStyle="width:300px;" autoSubmit="true"
+                                visible="#{bindings.DomainId1.inputValue == 1 or bindings.DomainId1.inputValue == null}"
                                 readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
-                                binding="#{pageFlowScope.manageCRSBean.socTermSOC}" >
+                                valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"                                
+                                binding="#{pageFlowScope.manageCRSBean.socTermSOC}" partialTriggers="soc9">
               <f:selectItems value="#{bindings.SocTerm.items}" id="si17"/>
             </af:selectOneChoice>
             
@@ -500,14 +500,14 @@
             </af:inputText>
             <af:inputText value="#{bindings.SearchCriteriaDetails.inputValue}"
                           label="#{bindings.SearchCriteriaDetails.hints.label}"
-                          required="#{pageFlowScope.manageCRSBean.searchCriteriaRequired}"
+                          showRequired="#{bindings.DomainId1.inputValue != 1}"
                           columns="#{bindings.SearchCriteriaDetails.hints.displayWidth}"
                           maximumLength="200"
                           contentStyle="width:500px;" rows="3" autoSubmit="true"
                           readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                           valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
                           shortDesc="#{bindings.SearchCriteriaDetails.hints.tooltip}" id="it14"
-                          binding="#{pageFlowScope.manageCRSBean.searchCriteriaDetails}">
+                          binding="#{pageFlowScope.manageCRSBean.searchCriteriaDetails}" partialTriggers="soc9">
               <f:validator binding="#{bindings.SearchCriteriaDetails.validator}"/>
             </af:inputText>
             <af:inputText value="#{bindings.MqmComment.inputValue}" label="#{bindings.MqmComment.hints.label}"
@@ -813,7 +813,8 @@
       </af:dialog>
     </af:popup>
     <af:popup childCreation="deferred" autoCancel="disabled" id="p7" contentDelivery="lazyUncached"
-              binding="#{pageFlowScope.manageCRSBean.copyPopup}">
+              binding="#{pageFlowScope.manageCRSBean.copyPopup}"
+              popupCanceledListener="#{pageFlowScope.manageCRSBean.onCloseRiskPopup}">
       <af:dialog id="d7" title="#{ecrsviewcontrollerBundle.COPY_RISK_DEFINTION}" type="none" contentWidth="800">
         <f:facet name="buttonBar">
           <af:panelGroupLayout id="pgl7">
@@ -992,7 +993,7 @@
                                   label="#{ecrsviewcontrollerBundle.DATA_DOMAIN}" autoSubmit="true"
                                   shortDesc="#{bindings.DomainId.hints.tooltip}" id="soc10" required="true"
                                   readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
-                                  valueChangeListener="#{pageFlowScope.manageCRSBean.onDomainIdChange}">
+                                  valueChangeListener="#{pageFlowScope.manageCRSBean.onDomainIdChangeInCopyRisk}">
                 <f:selectItems value="#{bindings.DomainId.items}" id="si66"/>
               </af:selectOneChoice>
               <!--<af:inputText value="#{bindings.DataDomain.inputValue}" label="#{bindings.DataDomain.hints.label}"
@@ -1020,9 +1021,9 @@
               
               <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
                                   shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc5" contentStyle="width:300px;"
-                                  required="#{pageFlowScope.manageCRSBean.socTermRequired}"
-                                  binding="#{pageFlowScope.manageCRSBean.socTermSOC}" autoSubmit="true"
-                                  disabled="#{pageFlowScope.manageCRSBean.disableSocTerm}"
+                                  required="#{bindings.DomainId1.inputValue eq 1}"
+                                  visible="#{bindings.DomainId1.inputValue eq 1}"
+                                  binding="#{pageFlowScope.manageCRSBean.socTermSOCCopy}" autoSubmit="true"
                                   partialTriggers="soc10">
                 <f:selectItems value="#{bindings.SocTerm.items}" id="si18"/>
               </af:selectOneChoice>
@@ -1040,13 +1041,13 @@
               </af:inputText>
               <af:inputText value="#{bindings.SearchCriteriaDetails.inputValue}"
                           label="#{bindings.SearchCriteriaDetails.hints.label}"
-                          required="#{pageFlowScope.manageCRSBean.searchCriteriaRequired}"
+                          showRequired="#{bindings.DomainId1.inputValue != 1}"
                           columns="#{bindings.SearchCriteriaDetails.hints.displayWidth}"
                           maximumLength="200"
                           contentStyle="width:500px;" rows="3" autoSubmit="true"
                           readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                           shortDesc="#{bindings.SearchCriteriaDetails.hints.tooltip}" id="it15"
-                          binding="#{pageFlowScope.manageCRSBean.searchCriteriaDetails}">
+                          binding="#{pageFlowScope.manageCRSBean.searchCriteriaDetailsCopy}" partialTriggers="soc10">
               <f:validator binding="#{bindings.SearchCriteriaDetails.validator}"/>
             </af:inputText>
             </af:panelFormLayout>

@@ -182,14 +182,13 @@ public class ManageCRSBean implements Serializable {
     private transient RichPanelGroupLayout workflowPG;
     private transient RichPopup delSTIConfPopup;
     private transient RichSelectOneChoice socTermSOC;
-    private boolean socTermRequired = false;
-    private boolean disableSocTerm = false;
+   // private boolean socTermRequired = true;
     private boolean meddraSearch = false;
     
     private transient HierarchyChildUIBean root;
     private transient Enumeration rows;
     private transient HashMap <String , HierarchyChildUIBean> parentNodesByLevel;
-    private boolean searchCriteriaRequired = false;
+    //private boolean searchCriteriaRequired = false;
     private transient RichInputText searchCriteriaDetails;
     private boolean routineRiskRelationCopied = false;
     
@@ -200,7 +199,9 @@ public class ManageCRSBean implements Serializable {
     private transient RichImage iconCRSSaved;
     
     private Boolean currentUserInDesignee = Boolean.FALSE;
-
+    private transient RichInputText searchCriteriaDetailsCopy;
+    private transient RichSelectOneChoice socTermSOCCopy;
+    
     public ManageCRSBean() {
         super();
         getUserRole();
@@ -664,9 +665,6 @@ public class ManageCRSBean implements Serializable {
             ResetUtils.reset(savedSuccessMessage);
         }
         showStatus(ViewConstants.CRS_MODIFIED);
-        if (null != this.socTermSOC){
-            this.socTermSOC.setVisible(true);
-        }
         if(riskDefPopupPanel != null)
             ResetUtils.reset(riskDefPopupPanel);
         ADFUtils.showPopup(riskDefPopup);
@@ -688,6 +686,20 @@ public class ManageCRSBean implements Serializable {
         logger.info("Editing Risk definition, popup mode edit.");
         ADFUtils.setPageFlowScopeValue("popupMode", "Edit");
         Long riskId = (Long)ADFUtils.evaluateEL("#{row.CrsRiskId}");
+        String dataDomain = (String)ADFUtils.evaluateEL("#{row.DataDomain}");
+        Integer domainId = 1;
+        if (null != dataDomain){
+            Map params2 = new HashMap<String, Object>();
+            params2.put("domainName", dataDomain);
+            try {
+               domainId = (Integer) ADFUtils.executeAction("fetchDomainIdFromName", params2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } 
+        }
+        if (null != domainId && domainId.intValue() != 1){
+            ADFUtils.setEL("#{bindings.DomainId.inputValue}", domainId);
+        }
         logger.info("Current crs risk id "+riskId);
 //        String databaseList = (String)ADFUtils.evaluateEL("#{row.DatabaseList}");
 //        List<String> dbList = new ArrayList<String>();
@@ -725,6 +737,7 @@ public class ManageCRSBean implements Serializable {
             savedSuccessMessage.setVisible(Boolean.FALSE);
             ResetUtils.reset(savedSuccessMessage);
         }
+       
         ADFUtils.showPopup(riskDefPopup);
     }
 
@@ -763,7 +776,7 @@ public class ManageCRSBean implements Serializable {
             }
             ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}", riskPurposes.substring(1));
         } else{
-            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, "Please select at least one Risk Purpose.");
+            ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, "Please select at least one Risk Purpose.");
             ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}",null);
             return;
         }
@@ -787,7 +800,7 @@ public class ManageCRSBean implements Serializable {
         if(domain != null && (domain == 1)){
             String soc = (String)ADFUtils.evaluateEL("#{bindings.SocTerm.inputValue}");
             if(soc == null || "".equals(soc)){
-                ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("SOC_MANDATE_ERROR"));
+                ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("SOC_MANDATE_ERROR"));
                 return;
             }
             DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
@@ -801,20 +814,21 @@ public class ManageCRSBean implements Serializable {
         logger.info("Saving risk defs.");
         
         if (domain != null && domain != 1){
+            ADFUtils.setEL("#{bindings.SocTerm.inputValue}", null);
             String searchCriteriaDetails = (String)ADFUtils.evaluateEL("#{bindings.SearchCriteriaDetails.inputValue}");
             if(searchCriteriaDetails == null || "".equals(searchCriteriaDetails)){
-                ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("SCD_MANDATE_ERROR"));
+                ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("SCD_MANDATE_ERROR"));
                 return;
             }
         }
         
         String stoi = (String)ADFUtils.evaluateEL("#{bindings.SafetyTopicOfInterest.inputValue}");
         if(stoi == null || "".equals(stoi)){
-            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("STOI_MANDATE_ERROR"));
+            ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("STOI_MANDATE_ERROR"));
             return;
         }
         if(domain == null){
-            ADFUtils.addMessage(FacesMessage.SEVERITY_WARN, uiBundle.getString("DATA_DOMAIN_MANDATE_ERROR"));
+            ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("DATA_DOMAIN_MANDATE_ERROR"));
             return;
         }
         
@@ -1937,6 +1951,7 @@ public class ManageCRSBean implements Serializable {
             if(ViewConstants.MEDDRA_DICTIONARY.equalsIgnoreCase((String)valueChangeEvent.getNewValue())){
                 setLevelItems(getMeddraItems());
                 this.setMeddraSearch(true);
+                this.setLevel(ViewConstants.SOC);
             }else{
                 setLevelItems(getFilterItems());
                 this.setMeddraSearch(false);
@@ -2130,13 +2145,27 @@ public class ManageCRSBean implements Serializable {
      * @param actionEvent
      */
     public void copyCrsRiskRelation(ActionEvent actionEvent) {
-        
+        //Clear the previously copied risk relation in same session if not saved to database
+        DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
+        ViewObject riskDefVO = iter.getViewObject();
+        Row currRow = riskDefVO.getCurrentRow();
+        if(currRow != null){
+            currRow.refresh(Row.REFRESH_REMOVE_NEW_ROWS);
+            logger.info("Closing CrsRisk Popup -- refresh risk def row.");
+        }
+        DCIteratorBinding relIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
+        ViewObject riskRelVO = relIter.getViewObject();
+        Row relCurrRow = riskRelVO.getCurrentRow();
+        if(relCurrRow != null){
+            relCurrRow.refresh(Row.REFRESH_REMOVE_NEW_ROWS);
+            logger.info("Closing CrsRisk Popup -- refresh risk relations row.");
+        }
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");  
         String riskPurposeList = (String)ADFUtils.evaluateEL("#{copyRow.RiskPurposeList}");
         String safetyTopic = (String)ADFUtils.evaluateEL("#{copyRow.SafetyTopicOfInterest}");
         Map params2 = new HashMap<String, Object>();
         params2.put("domainName", ADFUtils.evaluateEL("#{copyRow.DataDomain}"));
-        Integer domainId = 0;
+        Integer domainId = 1;
         try {
            domainId = (Integer) ADFUtils.executeAction("fetchDomainIdFromName", params2);
         } catch (Exception e) {
@@ -2209,16 +2238,9 @@ public class ManageCRSBean implements Serializable {
         }
         showStatus(ViewConstants.CRS_MODIFIED);
         copyPanel.setVisible(true);
-        if (null != domainId && domainId != 1){
-            if (null != this.socTermSOC){
-                this.socTermSOC.setVisible(false);
-            }
-        } else {
-            if (null != this.socTermSOC){
-                this.socTermSOC.setVisible(true);
-            }
-        }
         ADFUtils.addPartialTarget(copyPanel);
+        ADFUtils.addPartialTarget(socTermSOCCopy);
+        ADFUtils.addPartialTarget(searchCriteriaDetailsCopy);
     }
 
     /**
@@ -3643,32 +3665,8 @@ public class ManageCRSBean implements Serializable {
         logger.info("Refreshing SOC LOV based on the domain selected");
         Integer newValue = (Integer)valueChangeEvent.getNewValue();
         logger.info("Domain selected :: " + newValue);
-        if(null != newValue && valueChangeEvent.getNewValue() != valueChangeEvent.getOldValue()){
-            if(newValue.intValue() != 1){
-                logger.info("Domain selected is Others....");
-                this.socTermSOC.setValue(null);
-                this.socTermSOC.resetValue();
-                this.socTermSOC.setShowRequired(false);
-                this.socTermSOC.setVisible(false);
-                this.setSocTermRequired(false);
-                this.setDisableSocTerm(true);
-                this.setSearchCriteriaRequired(true);
-                this.searchCriteriaDetails.setShowRequired(true);
-            } else {
-                logger.info("onDomainIdChange else block....");
-                this.setSocTermRequired(true);
-                this.socTermSOC.setShowRequired(true);
-                this.setSocTermRequired(true);
-                this.setDisableSocTerm(false);
-                this.socTermSOC.setVisible(true);
-                this.setSearchCriteriaRequired(false);
-                this.searchCriteriaDetails.setShowRequired(false);
-            }
-        }
-        AdfFacesContext.getCurrentInstance().addPartialTarget(searchCriteriaDetails);
-        AdfFacesContext.getCurrentInstance().partialUpdateNotify(searchCriteriaDetails);
-        AdfFacesContext.getCurrentInstance().addPartialTarget(socTermSOC);
-        AdfFacesContext.getCurrentInstance().partialUpdateNotify(socTermSOC);
+        ADFUtils.addPartialTarget(searchCriteriaDetails);
+        ADFUtils.addPartialTarget(socTermSOC);
         showStatus(ViewConstants.CRS_MODIFIED);
         //ADFUtils.addPartialTarget(searchCriteriaDetails);
         //ADFUtils.addPartialTarget(socTermSOC);
@@ -3680,22 +3678,6 @@ public class ManageCRSBean implements Serializable {
 
     public RichSelectOneChoice getSocTermSOC() {
         return socTermSOC;
-    }
-
-    public void setSocTermRequired(boolean socTermRequired) {
-        this.socTermRequired = socTermRequired;
-    }
-
-    public boolean isSocTermRequired() {
-        return socTermRequired;
-    }
-
-    public void setDisableSocTerm(boolean disableSocTerm) {
-        this.disableSocTerm = disableSocTerm;
-    }
-
-    public boolean isDisableSocTerm() {
-        return disableSocTerm;
     }
 
     public void setMeddraSearch(boolean meddraSearch) {
@@ -3892,14 +3874,6 @@ public class ManageCRSBean implements Serializable {
 
         }
 
-    public void setSearchCriteriaRequired(boolean searchCriteriaRequired) {
-        this.searchCriteriaRequired = searchCriteriaRequired;
-    }
-
-    public boolean isSearchCriteriaRequired() {
-        return searchCriteriaRequired;
-    }
-
     public void setSearchCriteriaDetails(RichInputText searchCriteriaDetails) {
         this.searchCriteriaDetails = searchCriteriaDetails;
     }
@@ -4083,5 +4057,32 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"),
                                       FacesMessage.SEVERITY_ERROR);
         logger.info("End reloadSearchPage after publishing...");
+    }
+
+    public void setSearchCriteriaDetailsCopy(RichInputText searchCriteriaDetailsCopy) {
+        this.searchCriteriaDetailsCopy = searchCriteriaDetailsCopy;
+    }
+
+    public RichInputText getSearchCriteriaDetailsCopy() {
+        return searchCriteriaDetailsCopy;
+    }
+
+    public void setSocTermSOCCopy(RichSelectOneChoice socTermSOCCopy) {
+        this.socTermSOCCopy = socTermSOCCopy;
+    }
+
+    public RichSelectOneChoice getSocTermSOCCopy() {
+        return socTermSOCCopy;
+    }
+    
+    public void onDomainIdChangeInCopyRisk(ValueChangeEvent valueChangeEvent) {
+        logger.info("Refreshing SOC LOV based on the domain selected");
+        Integer newValue = (Integer)valueChangeEvent.getNewValue();
+        logger.info("Domain selected :: " + newValue);
+        ADFUtils.addPartialTarget(searchCriteriaDetailsCopy);
+        ADFUtils.addPartialTarget(socTermSOCCopy);
+        showStatus(ViewConstants.CRS_MODIFIED);
+        //ADFUtils.addPartialTarget(searchCriteriaDetails);
+        //ADFUtils.addPartialTarget(socTermSOC);
     }
 }
