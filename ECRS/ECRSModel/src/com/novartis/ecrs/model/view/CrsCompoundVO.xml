@@ -42,27 +42,6 @@
     Type="java.lang.String">
     <TransientExpression><![CDATA[adf.context.current.sessionScope.get('flowType')]]></TransientExpression>
   </Variable>
-  <ViewAccessor
-    Name="CompundTypeVA"
-    ViewObjectName="com.novartis.ecrs.model.lov.CompundTypeLOVVO"
-    RowLevelBinds="true"/>
-  <ListBinding
-    Name="LOV_CompoundType"
-    ListVOName="CompundTypeVA"
-    ListRangeSize="-1"
-    NullValueFlag="none"
-    MRUCount="0">
-    <AttrArray Name="AttrNames">
-      <Item Value="CompoundType"/>
-    </AttrArray>
-    <AttrArray Name="ListAttrNames">
-      <Item Value="CompoundType"/>
-    </AttrArray>
-    <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="CompoundType"/>
-    </AttrArray>
-    <DisplayCriteria/>
-  </ListBinding>
   <EntityUsage
     Name="CrsCompoundEO"
     Entity="com.novartis.ecrs.model.entity.CrsCompoundEO"/>
@@ -86,15 +65,7 @@
     PrecisionRule="true"
     EntityAttrName="CompoundType"
     EntityUsage="CrsCompoundEO"
-    AliasName="COMPOUND_TYPE"
-    LOVName="LOV_CompoundType">
-    <Properties>
-      <SchemaBasedProperties>
-        <CONTROLTYPE
-          Value="choice"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </ViewAttribute>
+    AliasName="COMPOUND_TYPE"/>
   <ViewAttribute
     Name="CompoundDesc"
     PrecisionRule="true"

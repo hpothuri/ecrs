@@ -24,10 +24,6 @@
     </SchemaBasedProperties>
   </Properties>
   <ViewAccessor
-    Name="CompundTypeLOVVA"
-    ViewObjectName="com.novartis.ecrs.model.lov.CompundTypeLOVVO"
-    RowLevelBinds="true"/>
-  <ViewAccessor
     Name="CrsCompoundVA"
     ViewObjectName="com.novartis.ecrs.model.view.CrsCompoundVO">
     <ViewCriteriaUsage
@@ -106,23 +102,6 @@
       </PIMap>
     </ParameterMap>
   </ViewAccessor>
-  <ListBinding
-    Name="LOV_CompoundType"
-    ListVOName="CompundTypeLOVVA"
-    ListRangeSize="-1"
-    NullValueFlag="none"
-    MRUCount="0">
-    <AttrArray Name="AttrNames">
-      <Item Value="CompoundType"/>
-    </AttrArray>
-    <AttrArray Name="ListAttrNames">
-      <Item Value="CompoundType"/>
-    </AttrArray>
-    <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="CompoundType"/>
-    </AttrArray>
-    <DisplayCriteria/>
-  </ListBinding>
   <ListBinding
     Name="LOV_CompoundCode"
     ListVOName="CrsCompoundVA"
@@ -250,14 +229,11 @@
     PrecisionRule="true"
     Type="java.lang.String"
     ColumnType="$none$"
-    LOVName="LOV_CompoundType"
     SQLType="VARCHAR">
     <Properties>
       <SchemaBasedProperties>
         <AUTOSUBMIT
           Value="true"/>
-        <CONTROLTYPE
-          Value="choice"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

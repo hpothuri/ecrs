@@ -164,16 +164,6 @@ public class ECrsSearchVORowImpl extends ViewRowImpl {
             }
         }
         ,
-        CompundTypeLOVVA {
-            public Object get(ECrsSearchVORowImpl obj) {
-                return obj.getCompundTypeLOVVA();
-            }
-
-            public void put(ECrsSearchVORowImpl obj, Object value) {
-                obj.setAttributeInternal(index(), value);
-            }
-        }
-        ,
         CrsCompoundVA {
             public Object get(ECrsSearchVORowImpl obj) {
                 return obj.getCrsCompoundVA();
@@ -297,7 +287,6 @@ public class ECrsSearchVORowImpl extends ViewRowImpl {
     public static final int CRSNAME = AttributesEnum.CrsName.index();
     public static final int CRSID = AttributesEnum.CrsId.index();
     public static final int RELEASESTATUS = AttributesEnum.ReleaseStatus.index();
-    public static final int COMPUNDTYPELOVVA = AttributesEnum.CompundTypeLOVVA.index();
     public static final int CRSCOMPOUNDVA = AttributesEnum.CrsCompoundVA.index();
     public static final int CRSSTATEVA = AttributesEnum.CrsStateVA.index();
     public static final int CRSUSERBSLVA = AttributesEnum.CrsUserBSLVA.index();
@@ -553,12 +542,6 @@ public class ECrsSearchVORowImpl extends ViewRowImpl {
         setAttributeInternal(RELEASESTATUS, value);
     }
 
-    /**
-     * Gets the view accessor <code>RowSet</code> CompundTypeLOVVA.
-     */
-    public RowSet getCompundTypeLOVVA() {
-        return (RowSet)getAttributeInternal(COMPUNDTYPELOVVA);
-    }
 
     /**
      * Gets the view accessor <code>RowSet</code> CrsCompoundVA.

@@ -15,9 +15,6 @@
   </executables>
   <bindings>
     <list IterBinding="ECrsSearchVOIterator" StaticList="false"
-          Uses="LOV_CompoundType" id="CompoundType" DTSupportsMRU="false"
-          SelectItemValueMode="ListObject"/>
-    <list IterBinding="ECrsSearchVOIterator" StaticList="false"
           Uses="LOV_CompoundCode" id="CompoundCode" DTSupportsMRU="false"
           SelectItemValueMode="ListObject"/>
     <list IterBinding="ECrsSearchVOIterator" StaticList="false" Uses="LOV_State"
@@ -163,5 +160,10 @@
       <NamedData NDName="pCRSId" NDType="java.lang.Long"/>
       <NamedData NDName="pReasonForChange" NDType="java.lang.String"/>
     </methodAction>
+    <attributeValues IterBinding="ECrsSearchVOIterator" id="CompoundType">
+      <AttrNames>
+        <Item Value="CompoundType"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>
