@@ -22,7 +22,8 @@
         <af:selectOneChoice value="#{bindings.CompoundType.inputValue}" label="#{bindings.CompoundType.label}"
                             required="#{bindings.CompoundType.hints.mandatory}"
                             shortDesc="#{bindings.CompoundType.hints.tooltip}" id="soc1">
-          <f:selectItems value="#{bindings.CompoundType.items}" id="si1"/>
+                <af:selectItem label="COMPOUND" value="COMPOUND" id="si1"/>
+                <af:selectItem label="NON-COMPOUND" value="NON-COMPOUND" id="si2"/>
         </af:selectOneChoice>
         <af:inputText value="#{bindings.CompoundCode.inputValue}" label="Compound Code"
                       required="#{bindings.CompoundCode.hints.mandatory}"
@@ -40,7 +41,7 @@
         </af:inputText>
         <af:selectOneChoice label="#{ecrsviewcontrollerBundle.ACTIVE_FLAG}" id="soc2"
                             value="#{bindings.ActiveFlag.inputValue}">
-          <af:selectItem label="Y" value="Y" id="si2"/>
+          <af:selectItem label="Y" value="Y" id="si4"/>
           <af:selectItem label="N" value="N" id="si3"/>
         </af:selectOneChoice>
         <af:inputText value="#{bindings.CompoundId.inputValue == -1 ? '' : bindings.CompoundId.inputValue}"

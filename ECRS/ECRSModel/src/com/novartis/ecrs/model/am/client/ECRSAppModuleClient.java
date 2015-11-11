@@ -72,6 +72,11 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
         return ((Boolean)_ret).booleanValue();
     }
 
+    public String getMedDRAFreezeFlag() {
+        Object _ret = this.riInvokeExportedMethod(this,"getMedDRAFreezeFlag",null,null);
+        return (String)_ret;
+    }
+
     public void initRiskRelation(Long crsId, String status) {
         Object _ret =
             this.riInvokeExportedMethod(this,"initRiskRelation",new String [] {"java.lang.Long","java.lang.String"},new Object[] {crsId, status});
@@ -109,6 +114,11 @@ public class ECRSAppModuleClient extends ApplicationModuleImpl implements ECRSAp
     public String retireCrs(Long pCRSId, String pReasonForChange) {
         Object _ret =
             this.riInvokeExportedMethod(this,"retireCrs",new String [] {"java.lang.Long","java.lang.String"},new Object[] {pCRSId, pReasonForChange});
+        return (String)_ret;
+    }
+
+    public String updateMedDRAFreezeFlag(String freezeFlag) {
+        Object _ret = this.riInvokeExportedMethod(this,"updateMedDRAFreezeFlag",new String [] {"java.lang.String"},new Object[] {freezeFlag});
         return (String)_ret;
     }
 

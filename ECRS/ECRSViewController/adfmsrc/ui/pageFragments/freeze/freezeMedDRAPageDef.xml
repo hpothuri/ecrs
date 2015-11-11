@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="freezeMedDRAPageDef"
+                Package="ui.pageFragments.freeze">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+  </executables>
+  <bindings>
+    <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <methodAction id="updateMedDRAFreezeFlag" InstanceName="data.ECRSAppModuleDataControl.dataProvider"
+                  DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="updateMedDRAFreezeFlag" IsViewObjectMethod="false"
+                  ReturnName="data.ECRSAppModuleDataControl.methodResults.updateMedDRAFreezeFlag_ECRSAppModuleDataControl_dataProvider_updateMedDRAFreezeFlag_result">
+      <NamedData NDName="freezeFlag" NDValue="" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="FreezeMedDRA">
+    <default-activity>getMedDRAFreezeFlag</default-activity>
+    <managed-bean id="__6">
+      <managed-bean-name>freezeMedDRABean</managed-bean-name>
+      <managed-bean-class>com.novartis.ecrs.view.FreezeMedDRABean</managed-bean-class>
+      <managed-bean-scope>pageFlow</managed-bean-scope>
+    </managed-bean>
+    <exception-handler>exceptionHandler</exception-handler>
+    <view id="freeze">
+      <page>/ui/pageFragments/freeze/freezeMedDRA.jsff</page>
+    </view>
+    <method-call id="getMedDRAFreezeFlag">
+      <method>#{pageFlowScope.freezeMedDRABean.getFreezeMedDRAFlagFromDB}</method>
+      <outcome>
+        <fixed-outcome>freeze</fixed-outcome>
+      </outcome>
+    </method-call>
+    <view id="exceptionHandler">
+      <page>/ui/pageFragments/exception/exceptionHandler.jsff</page>
+    </view>
+    <parent-action id="home">
+      <parent-outcome>home</parent-outcome>
+    </parent-action>
+    <control-flow-rule id="__1">
+      <from-activity-id>getMedDRAFreezeFlag</from-activity-id>
+      <control-flow-case id="__2">
+        <from-outcome>freeze</from-outcome>
+        <to-activity-id>freeze</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__4">
+      <from-activity-id>freeze</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome>home</from-outcome>
+        <to-activity-id>home</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

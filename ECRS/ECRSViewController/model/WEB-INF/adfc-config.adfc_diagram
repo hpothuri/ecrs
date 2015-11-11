@@ -84,7 +84,7 @@
       <property
          name="fromOutcome">roles</property>
       <property
-         name="sdm:polyPoints">B57,471.5,194.71286,501.02246,345.44824,T50</property>
+         name="sdm:polyPoints">B50,468.0,195.87708,501.02246,345.44824,T50</property>
    </ControlFlowCase>
    <View
       id="View9">
@@ -209,7 +209,7 @@
       <property
          name="fromOutcome">home</property>
       <property
-         name="sdm:polyPoints">T50,468.0,107.94824,493.5,51.448242,B50</property>
+         name="sdm:polyPoints">T57,471.5,107.94824,493.5,51.448242,B50</property>
    </ControlFlowCase>
    <View
       id="View19">
@@ -284,7 +284,7 @@
       <property
          name="fromOutcome">crsCountper</property>
       <property
-         name="sdm:polyPoints">B43,464.5,194.32184,384.69922,480.44824,T50</property>
+         name="sdm:polyPoints">B36,461.0,194.28593,384.69922,480.44824,T50</property>
    </ControlFlowCase>
    <View
       id="View25">
@@ -309,7 +309,7 @@
       <property
          name="fromOutcome">crsCurrentPending</property>
       <property
-         name="sdm:polyPoints">B29,457.5,192.94824,281.70312,513.44824,R50</property>
+         name="sdm:polyPoints">B23,454.0,192.94824,281.70312,513.44824,R50</property>
    </ControlFlowCase>
    <View
       id="View27">
@@ -460,5 +460,30 @@
          name="fromOutcome">ptReport</property>
       <property
          name="sdm:polyPoints">T43,464.5,107.94824,420.5,65.44824,B50</property>
+   </ControlFlowCase>
+   <View
+      id="View40">
+      <property
+         name="activityId">ManageMedDRAFreeze</property>
+      <property
+         name="page">/pages/ManageMedDRAFreeze.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>ManageMedDRAFreeze&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">577.7471</property>
+      <property
+         name="x">585.6963</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase41"
+      from="WildcardControlFlowRule2"
+      to="View40">
+      <property
+         name="fromOutcome">freezeMedDRA</property>
+      <property
+         name="sdm:polyPoints">B64,475.0,194.93297,585.6963,523.3965,T50</property>
    </ControlFlowCase>
 </SDM>

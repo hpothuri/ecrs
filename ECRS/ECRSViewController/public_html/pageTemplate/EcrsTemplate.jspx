@@ -55,10 +55,12 @@
                     <af:menuBar id="mb1">
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.CREATE}" id="cmi1" action="create" immediate="true"
                                             inlineStyle=" font-weight: bold;     padding-right: 10px;"
-                                            visible="#{securityContext.userInRole['CRS_BSL'] || securityContext.userInRole['CRS_ADMIN']}"/>
+                                            visible="#{securityContext.userInRole['CRS_BSL'] || securityContext.userInRole['CRS_ADMIN']}"
+                                            disabled="#{sessionScope.sessionBean.freezeMedDRAFlag}"/>
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.UPDATE}" id="cmi2" action="update" immediate="true"
                          inlineStyle=" font-weight: bold;     padding-right: 10px;"
-                                            visible="#{securityContext.authenticated}"/>
+                                            visible="#{securityContext.authenticated}"
+                                            disabled="#{sessionScope.sessionBean.freezeMedDRAFlag}"/>
                         <af:commandMenuItem text="#{ecrsviewcontrollerBundle.BROWSER__SEARCH}" id="cmi3" immediate="true"
                                             action="browseSearch"  inlineStyle=" font-weight: bold;     padding-right: 10px;"/>
                         <af:menu text="#{ecrsviewcontrollerBundle.REPORTS}" id="pt_m2"
@@ -112,8 +114,10 @@
                                                 inlineStyle="font-weight: bold;"/>
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.USER_ROLES}" id="pt_gmi5"
                                                 action="userRoles" immediate="true" inlineStyle="font-weight: bold;"/>
-                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.DOMAINS}" id="pt_cmi8"
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.DOMAINS}" id="pt_cmi8" immediate="true"
                                                 action="domains" inlineStyle="font-weight: bold;"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.MEDDRA_FREEZE}" id="pt_cmi9" immediate="true"
+                                                action="freezeMedDRA" inlineStyle="font-weight: bold;"/>
                         </af:menu>
                     </af:menuBar>
                     <af:separator id="s1"/>

@@ -45,4 +45,8 @@ public interface ECRSAppModule extends ApplicationModule {
     Boolean validateSafetyTopic(Long crsId, String safetyTopic, String rpList, Long crsRiskId, Integer domainId);
 
     Boolean isCRSVersionInitial(Long crsId);
+
+    String getMedDRAFreezeFlag();
+
+    String updateMedDRAFreezeFlag(String freezeFlag);
 }

@@ -82,6 +82,11 @@
     <page path="/ui/pageFragments/ecrs/confirmCRS.jsff" usageId="com_novartis_ecrs_view_confirmCRSPageDef"/>
     <page path="/WEB-INF/taskflows/ManageCRSTF.xml#ManageCRSTF@reloadSearchPage"
           usageId="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_filterCRSContentPageDef"/>
+    <page path="/pages/MedDRAFreeze.jspx" usageId="com_novartis_ecrs_view_MedDRAFreezePageDef"/>
+    <page path="/WEB-INF/taskflows/FreezeMedDRA.xml#FreezeMedDRA@getMedDRAFreezeFlag"
+          usageId="com_novartis_ecrs_view_FreezeMedDRA_FreezeMedDRA_getMedDRAFreezeFlagPageDef"/>
+    <page path="/pages/ManageMedDRAFreeze.jspx" usageId="com_novartis_ecrs_view_ManageMedDRAFreezePageDef"/>
+    <page path="/ui/pageFragments/freeze/freezeMedDRA.jsff" usageId="com_novartis_ecrs_view_freezeMedDRAPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -153,6 +158,11 @@
     <page id="com_novartis_ecrs_view_confirmCRSPageDef" path="ui.pageFragments.ecrs.confirmCRSPageDef"/>
     <page id="com_novartis_ecrs_view_ManageCRSTF_ManageCRSTF_filterCRSContentPageDef"
           path="taskflows.ManageCRSTF_ManageCRSTF_filterCRSContentPageDef"/>
+    <page id="com_novartis_ecrs_view_MedDRAFreezePageDef" path="pages.MedDRAFreezePageDef"/>
+    <page id="com_novartis_ecrs_view_FreezeMedDRA_FreezeMedDRA_getMedDRAFreezeFlagPageDef"
+          path="taskflows.FreezeMedDRA_FreezeMedDRA_getMedDRAFreezeFlagPageDef"/>
+    <page id="com_novartis_ecrs_view_ManageMedDRAFreezePageDef" path="pages.ManageMedDRAFreezePageDef"/>
+    <page id="com_novartis_ecrs_view_freezeMedDRAPageDef" path="ui.pageFragments.freeze.freezeMedDRAPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

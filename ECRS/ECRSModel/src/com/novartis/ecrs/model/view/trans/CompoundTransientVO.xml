@@ -20,27 +20,6 @@
         ResId="com.novartis.ecrs.model.view.trans.CompoundTransientVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
-  <ViewAccessor
-    Name="CompundTypeVA"
-    ViewObjectName="com.novartis.ecrs.model.lov.CompundTypeLOVVO"
-    RowLevelBinds="true"/>
-  <ListBinding
-    Name="LOV_CompoundType"
-    ListVOName="CompundTypeVA"
-    ListRangeSize="-1"
-    NullValueFlag="none"
-    MRUCount="0">
-    <AttrArray Name="AttrNames">
-      <Item Value="CompoundType"/>
-    </AttrArray>
-    <AttrArray Name="ListAttrNames">
-      <Item Value="CompoundType"/>
-    </AttrArray>
-    <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="CompoundType"/>
-    </AttrArray>
-    <DisplayCriteria/>
-  </ListBinding>
   <ViewAttribute
     Name="CompoundCode"
     IsSelected="false"
@@ -56,15 +35,7 @@
     PrecisionRule="true"
     Type="java.lang.String"
     ColumnType="$none$"
-    SQLType="VARCHAR"
-    LOVName="LOV_CompoundType">
-    <Properties>
-      <SchemaBasedProperties>
-        <CONTROLTYPE
-          Value="choice"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </ViewAttribute>
+    SQLType="VARCHAR"/>
   <ViewAttribute
     Name="CompoundId"
     IsSelected="false"

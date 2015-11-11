@@ -14,7 +14,8 @@
         <af:selectOneChoice value="#{bindings.CompoundType.inputValue}" label="Compound Type"
                             required="#{bindings.CompoundType.hints.mandatory}"
                             shortDesc="#{bindings.CompoundType.hints.tooltip}" id="soc1" autoSubmit="true">
-          <f:selectItems value="#{bindings.CompoundType.items}" id="si1"/>
+                <af:selectItem label="COMPOUND" value="COMPOUND" id="si1"/>
+                <af:selectItem label="NON-COMPOUND" value="NON-COMPOUND" id="si2"/>
         </af:selectOneChoice>
         <af:inputText value="#{bindings.CompoundCode.inputValue}" label="Compound Code"
                       required="#{bindings.CompoundCode.hints.mandatory}"

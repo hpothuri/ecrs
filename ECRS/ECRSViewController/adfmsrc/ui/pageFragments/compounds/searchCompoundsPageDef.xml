@@ -9,8 +9,6 @@
     <iterator Binds="CrsCompoundVO" RangeSize="25" DataControl="ECRSAppModuleDataControl" id="CrsCompoundVOIterator"/>
   </executables>
   <bindings>
-    <list IterBinding="CompoundTransientVOIterator" StaticList="false" Uses="LOV_CompoundType" id="CompoundType"
-          DTSupportsMRU="false" SelectItemValueMode="ListObject"/>
     <attributeValues IterBinding="CompoundTransientVOIterator" id="CompoundId">
       <AttrNames>
         <Item Value="CompoundId"/>
@@ -36,5 +34,10 @@
             DataControl="ECRSAppModuleDataControl" RequiresUpdateModel="true" Action="createInsertRow"/>
     <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
             RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <attributeValues IterBinding="CompoundTransientVOIterator" id="CompoundType">
+      <AttrNames>
+        <Item Value="CompoundType"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

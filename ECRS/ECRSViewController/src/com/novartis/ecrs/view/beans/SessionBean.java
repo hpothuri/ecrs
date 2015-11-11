@@ -4,11 +4,21 @@ import java.io.IOException;
 
 import java.security.Principal;
 
+import java.sql.Connection;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import javax.faces.event.ActionEvent;
+
+import javax.naming.InitialContext;
+
+import javax.naming.NamingException;
 
 import javax.security.auth.Subject;
 import javax.security.auth.login.AccountExpiredException;
@@ -21,8 +31,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.sql.DataSource;
+
 import oracle.adf.share.ADFContext;
 import oracle.adf.share.security.SecurityContext;
+
+import oracle.jbo.server.DBTransaction;
+import oracle.jbo.server.DBTransactionImpl;
 
 import org.apache.log4j.Logger;
 
@@ -43,6 +58,8 @@ public class SessionBean {
     private String password;
     private String remoteAddress = "";
     private String fullName;
+    private boolean freezeMedDRAFlag = false;
+    private final String dbUrlString = "jdbc/EcrsDS";
     public static final Logger logger = Logger.getLogger(SessionBean.class);
     
     public void setUserRole(String userRole) {
@@ -157,7 +174,7 @@ public class SessionBean {
             ctx.addMessage(null, msg);
             return null;
         }
-       
+        loadFreezeMedDRAFlagFromDB();
               
         return null;
     }
@@ -215,5 +232,65 @@ public class SessionBean {
 
     public String getFullName() {
         return fullName;
+    }
+    private void loadFreezeMedDRAFlagFromDB(){
+        logger.info("In SessionBean ..getFreezeMedDRAFlagFromDB");
+        String freezeMedDRA = null;
+        Connection dbConnection = getConnection();
+        if (null != dbConnection){
+            String query = "SELECT crs_ui_tms_utils.select_crs_freeze_flag as freeze_flag FROM DUAL";
+            //for the selected CRSID
+            PreparedStatement pstmt = null;
+            ResultSet rs = null;
+            try {
+                pstmt = dbConnection.prepareStatement(query);
+                rs = pstmt.executeQuery();
+                if (null != rs && rs.next()){
+                    freezeMedDRA = rs.getString("freeze_flag");
+                    logger.info("freezeFlag==" + freezeMedDRA);
+                }
+            } catch (SQLException e){
+                logger.error("Error while getting MedDRA Freeze Flag", e);
+            } finally{
+                try{
+                    rs.close();
+                    pstmt.close();
+                    dbConnection.close();
+                }catch (SQLException e){
+                    logger.error("Error while closing pstmt", e);
+                }
+            }
+        }
+        logger.info("freezeFlag == >" + freezeMedDRA);
+        if (null != freezeMedDRA && "Y".equalsIgnoreCase(freezeMedDRA)){
+            freezeMedDRAFlag = true;
+        }
+    }
+
+    public boolean isFreezeMedDRAFlag() {
+        
+        return freezeMedDRAFlag;
+    }
+    
+    private Connection getConnection(){
+        Connection dbConnection = null;
+        if (null != dbConnection){
+            return dbConnection;
+        }else {
+            try {
+                InitialContext initialContext = new InitialContext();
+                DataSource ds = (DataSource)initialContext.lookup(dbUrlString);
+                dbConnection = ds.getConnection();
+            } catch (NamingException e) {
+                        e.printStackTrace();
+            } catch (SQLException e) {
+                        e.printStackTrace();
+            }
+        }
+        return dbConnection;
+    }
+
+    public void setFreezeMedDRAFlag(boolean freezeMedDRAFlag) {
+        this.freezeMedDRAFlag = freezeMedDRAFlag;
     }
 }

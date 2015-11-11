@@ -54,6 +54,9 @@
   <view id="PTReport">
     <page>/pages/reports/PTReport.jspx</page>
   </view>
+  <view id="ManageMedDRAFreeze">
+    <page>/pages/ManageMedDRAFreeze.jspx</page>
+  </view>
   <control-flow-rule id="__2">
     <from-activity-id>*</from-activity-id>
     <control-flow-case id="__3">
@@ -127,6 +130,10 @@
     <control-flow-case id="__21">
       <from-outcome>ptReport</from-outcome>
       <to-activity-id>PTReport</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__22">
+      <from-outcome>freezeMedDRA</from-outcome>
+      <to-activity-id>ManageMedDRAFreeze</to-activity-id>
     </control-flow-case>
   </control-flow-rule>
   <managed-bean id="__1">

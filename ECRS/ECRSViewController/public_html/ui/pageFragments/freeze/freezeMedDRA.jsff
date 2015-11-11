@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:f="http://java.sun.com/jsf/core">
+          <c:set var="ecrsviewcontrollerBundle" value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
+    <af:panelHeader text="MedDRA Freeze" id="ph1">
+        <f:facet name="context"/>
+        <f:facet name="menuBar"/>
+        <f:facet name="toolbar"/>
+        <f:facet name="legend"/>
+        <f:facet name="info"/>
+        <af:panelGroupLayout id="pgl2" layout="horizontal" styleClass="AFStretchWidth" halign="center">
+        <f:facet name="separator">
+          <af:spacer width="10" height="10" id="s1"/>
+        </f:facet>
+      </af:panelGroupLayout>
+        <af:panelGroupLayout id="pgl3">
+            <af:panelFormLayout id="pfl1">
+                <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.FREEZE_FLAG}" id="plam1" for="sor1">
+                    <af:selectOneRadio id="sor1" layout="horizontal" autoSubmit="true"
+                                       value="#{pageFlowScope.freezeMedDRABean.freezeMedDRA}" valuePassThru="true">
+                        <af:selectItem label="Yes" value="Y" id="si1"/>
+                        <af:selectItem label="No" value="N" id="si2"/>
+                    </af:selectOneRadio>
+                </af:panelLabelAndMessage>
+                <af:spacer width="10" height="10" id="s4"/>
+                <af:outputFormatted value="#{ecrsviewcontrollerBundle.MEDDRA_FREEZE_NOTE}" id="of1"/>
+                <af:spacer width="10" height="10" id="s2"/>
+                
+            </af:panelFormLayout>
+            <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb1" action="#{pageFlowScope.freezeMedDRABean.updateFreezeMedDRAFlag}"/>
+            <af:spacer width="10" height="10" id="s3"/>
+            <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}" id="cb3" action="home" immediate="true"
+                          actionListener="#{bindings.Rollback.execute}"/>
+        </af:panelGroupLayout>
+          </af:panelHeader>
+</jsp:root>

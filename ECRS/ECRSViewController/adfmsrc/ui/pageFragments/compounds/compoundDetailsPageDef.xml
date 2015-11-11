@@ -24,8 +24,6 @@
         <Item Value="CompoundDesc"/>
       </AttrNames>
     </attributeValues>
-    <list IterBinding="CrsCompoundVOIterator" StaticList="false" Uses="LOV_CompoundType" id="CompoundType"
-          DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
     <action id="Rollback" InstanceName="ECRSAppModuleDataControl" DataControl="ECRSAppModuleDataControl"
             RequiresUpdateModel="false" Action="rollbackTransaction"/>
     <action IterBinding="CompoundTransientVOIterator" id="CreateInsert" RequiresUpdateModel="true"
@@ -35,6 +33,11 @@
     <attributeValues IterBinding="CrsCompoundVOIterator" id="ActiveFlag">
       <AttrNames>
         <Item Value="ActiveFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CrsCompoundVOIterator" id="CompoundType">
+      <AttrNames>
+        <Item Value="CompoundType"/>
       </AttrNames>
     </attributeValues>
   </bindings>

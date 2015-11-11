@@ -1150,4 +1150,67 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
             }
             return initialVersion;
     }
+    public String getMedDRAFreezeFlag(){
+        String freezeFlag = "N";
+        String query = "SELECT crs_ui_tms_utils.select_crs_freeze_flag as freeze_flag FROM DUAL";
+        //for the selected CRSID
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            DBTransaction txn = getDBTransaction();
+            pstmt = txn.createPreparedStatement(query, DBTransactionImpl.DEFAULT);
+            rs = pstmt.executeQuery();
+            if (null != rs && rs.next()){
+                freezeFlag = rs.getString("freeze_flag");
+                logger.info("freezeFlag==" + freezeFlag);
+            }
+        } catch (SQLException e){
+            logger.error("Error while getting MedDRA Freeze Flag", e);
+        } finally{
+            try{
+                rs.close();
+                pstmt.close();
+            }catch (SQLException e){
+                logger.error("Error while closing pstmt", e);
+            }
+        }
+        return freezeFlag;
+    }
+    public String updateMedDRAFreezeFlag(String freezeFlag){
+        logger.info("Start updateMedDRAFreezeFlag");
+        OracleCallableStatement cstmt = null;
+        String cs = null;
+        String outMsg = null;
+        String returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
+        DBTransaction txn = getDBTransaction();
+        if (freezeFlag != null) {
+            cs = "{?=call crs_ui_tms_utils.set_crs_freeze_flag(?,?)}";
+            cstmt = (OracleCallableStatement)txn.createCallableStatement(cs, DBTransaction.DEFAULT);
+            try {
+                cstmt.registerOutParameter(1, Types.VARCHAR);
+                cstmt.setString(2, freezeFlag);
+                cstmt.registerOutParameter(3, Types.VARCHAR);
+                cstmt.execute();
+                returnMessage = cstmt.getString(1);
+                outMsg = cstmt.getString(3);
+                logger.info("returnMessage==" + returnMessage);
+                logger.info("outMsg==" + outMsg);
+            } catch (Exception e) {
+               //e.printStackTrace();
+               logger.error("Exception in updateMedDRAFreezeFlag.." + e.getMessage(), e);
+               returnMessage = ModelConstants.PLSQL_CALL_FAILURE;
+            } finally {
+                try {
+                    if (cstmt != null && !cstmt.isClosed())
+                        cstmt.close();
+                } catch (Exception e) {
+                    throw new JboException(e);
+                }
+            }
+        } else {
+           returnMessage = ModelConstants.PLSQL_CALL_SUCCESS;
+        }
+        logger.info("End updateMedDRAFreezeFlag");
+        return returnMessage;
+    }
 }
