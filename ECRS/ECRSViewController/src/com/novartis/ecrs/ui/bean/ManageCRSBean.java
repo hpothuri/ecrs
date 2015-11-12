@@ -1621,7 +1621,11 @@ public class ManageCRSBean implements Serializable {
             if (oper.getErrors().size() > 0)
                 ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
             else{
-                ADFUtils.navigateToControlFlowCase("toSearch");
+                if (this.flowType.equalsIgnoreCase(ViewConstants.FLOW_TYPE_CREATE)){
+                    ADFUtils.navigateToControlFlowCase("home");
+                } else {
+                    ADFUtils.navigateToControlFlowCase("reloadSearchPage");
+                }
 //                String returnValue = (String)ADFUtils.invokeEL("#{controllerContext.currentViewPort.taskFlowContext.trainModel.getPrevious}");
 //                if(returnValue == null){
 //                    ADFUtils.navigateToControlFlowCase("home");
@@ -4084,5 +4088,14 @@ public class ManageCRSBean implements Serializable {
         showStatus(ViewConstants.CRS_MODIFIED);
         //ADFUtils.addPartialTarget(searchCriteriaDetails);
         //ADFUtils.addPartialTarget(socTermSOC);
+    }
+
+    public void redirectAfterPublishCRS(ActionEvent actionEvent) {
+        // Add event code here...
+        if (this.flowType.equalsIgnoreCase(ViewConstants.FLOW_TYPE_CREATE)){
+            ADFUtils.navigateToControlFlowCase("home");
+        } else {
+            ADFUtils.navigateToControlFlowCase("reloadSearchPage");
+        }
     }
 }

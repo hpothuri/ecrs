@@ -330,7 +330,7 @@
                 <af:outputText value="#{ecrsviewcontrollerBundle.THE_CRS_HAS_BEEN_PUBLISHED}" id="ot11"/>
                 <f:facet name="buttonBar">
                     <af:commandButton text="#{ecrsviewcontrollerBundle.OK}" id="cb12"
-                                      action="reloadSearchPage"/>
+                                      actionListener="#{pageFlowScope.manageCRSBean.redirectAfterPublishCRS}"/>
                 </f:facet>
             </af:dialog>
         </af:popup>
