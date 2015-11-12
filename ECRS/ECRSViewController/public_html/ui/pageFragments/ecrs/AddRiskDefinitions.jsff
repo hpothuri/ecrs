@@ -514,20 +514,6 @@
                           required="#{bindings.MqmComment.hints.mandatory}"
                           columns="#{bindings.MqmComment.hints.displayWidth}"
                           maximumLength="#{bindings.MqmComment.hints.precision}"
-                          shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it5" rows="3"
-                          contentStyle="width:500px;"
-                          disabled="#{!(securityContext.userInRole['CRS_ADMIN'] or (securityContext.userInRole['CRS_MQM'] and (bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)))}"
-                          autoSubmit="true"
-                          valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
-                          readOnly="#{pageFlowScope.manageCRSBean.flowType eq 'S' or !(bindings.StateId.inputValue eq 1 || bindings.StateId.inputValue eq 2 || bindings.StateId.inputValue eq 3)}"
-                          visible="#{securityContext.userInRole['CRS_MQM'] || securityContext.userInRole['CRS_ADMIN'] || securityContext.userInRole['CRS_BSL']}"
-                          rendered="false">
-              <f:validator binding="#{bindings.MqmComment.validator}"/>
-            </af:inputText>
-            <af:inputText value="#{bindings.MqmComment.inputValue}" label="#{bindings.MqmComment.hints.label}"
-                          required="#{bindings.MqmComment.hints.mandatory}"
-                          columns="#{bindings.MqmComment.hints.displayWidth}"
-                          maximumLength="#{bindings.MqmComment.hints.precision}"
                           shortDesc="#{bindings.MqmComment.hints.tooltip}" id="it13" contentStyle="width:500px;"
                           rows="3" autoSubmit="true"
                           valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}"
@@ -681,7 +667,7 @@
                                   actionListener="#{pageFlowScope.manageCRSBean.onClickHierarchySearch}"
                                   visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb13"
-                                  visible="#{securityContext.userInRole['CRS_MQM']}"
+                                  visible="#{securityContext.userInRole['CRS_MQM'] and pageFlowScope.manageCRSBean.flowType eq 'U'}"
                                   actionListener="#{pageFlowScope.manageCRSBean.onClickRiskDefSave}">
                 </af:commandButton>
                 <af:commandButton text="#{ecrsviewcontrollerBundle.REFRESH_REPOSITORY}" id="cb23"
