@@ -822,8 +822,8 @@ public class ManageCRSBean implements Serializable {
             }
         }
         
-        String stoi = (String)ADFUtils.evaluateEL("#{bindings.SafetyTopicOfInterest.inputValue}");
-        if(stoi == null || "".equals(stoi)){
+        //String stoi = (String)ADFUtils.evaluateEL("#{bindings.SafetyTopicOfInterest.inputValue}");
+        if(safetyTopic == null || "".equals(safetyTopic)){
             ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("STOI_MANDATE_ERROR"));
             return;
         }
@@ -3910,9 +3910,9 @@ public class ManageCRSBean implements Serializable {
         if (oper.getErrors().size() > 0){
             showStatus(ViewConstants.CRS_SAVE_ERROR);
             ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
-        }else {
+        } else {
             showStatus(ViewConstants.CRS_SAVED);
-            ADFUtils.showPopup(getSuccessPopup());
+            //ADFUtils.showPopup(getSuccessPopup());
         }
     }
 
