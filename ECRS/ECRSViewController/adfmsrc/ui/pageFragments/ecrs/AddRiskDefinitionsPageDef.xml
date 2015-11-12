@@ -705,5 +705,10 @@
         <Item Value="MeddraCode"/>
       </AttrNames>
     </attributeValues>
+    <attributeValues IterBinding="CrsRiskRelationVOIterator" id="DomainId1">
+      <AttrNames>
+        <Item Value="DomainId"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>
