@@ -25,7 +25,8 @@
     Type="java.lang.Long"
     ColumnType="NUMBER"
     TableName="CRS_RISK_RELATIONS_STG"
-    PrimaryKey="true">
+    PrimaryKey="true"
+    RetrievedOnInsert="true">
     <TransientExpression><![CDATA[(new oracle.jbo.server.SequenceImpl("crs_risk_relations_seq",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
   </Attribute>
   <Attribute
