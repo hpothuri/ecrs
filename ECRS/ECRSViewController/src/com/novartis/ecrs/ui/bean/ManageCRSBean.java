@@ -202,6 +202,12 @@ public class ManageCRSBean implements Serializable {
     private transient RichInputText searchCriteriaDetailsCopy;
     private transient RichSelectOneChoice socTermSOCCopy;
     
+    private transient RichToolbar cntrlStatusBarCopy;
+    private transient RichPanelGroupLayout copyRiskDefPopupPanel;
+    private transient  RichImage iconCopyCRSChanged;
+    private transient RichImage iconCopyCRSSaveError;
+    private transient RichImage iconCopyCRSSaved;
+    
     public ManageCRSBean() {
         super();
         getUserRole();
@@ -655,9 +661,14 @@ public class ManageCRSBean implements Serializable {
             savedSuccessMessage.setVisible(Boolean.FALSE);
             ResetUtils.reset(savedSuccessMessage);
         }
+        if (null != cntrlStatusBarCopy){
+            cntrlStatusBarCopy.setRendered(false);
+        }
         showStatus(ViewConstants.CRS_MODIFIED);
         if(riskDefPopupPanel != null)
             ResetUtils.reset(riskDefPopupPanel);
+        if(copyRiskDefPopupPanel != null)
+            ResetUtils.reset(copyRiskDefPopupPanel);
         ADFUtils.showPopup(riskDefPopup);
     }
 
@@ -728,7 +739,20 @@ public class ManageCRSBean implements Serializable {
             savedSuccessMessage.setVisible(Boolean.FALSE);
             ResetUtils.reset(savedSuccessMessage);
         }
-       
+        if(copyRiskDefPopupPanel != null)
+            ResetUtils.reset(copyRiskDefPopupPanel);
+        if (null != cntrlStatusBarCopy){
+            this.iconCopyCRSChanged.setVisible(false);
+            this.iconCopyCRSSaved.setVisible(false);
+            this.iconCopyCRSSaveError.setVisible(false);
+            cntrlStatusBarCopy.setRendered(false);
+        }
+        if (null != cntrlStatusBar){
+            this.iconCRSChanged.setVisible(false);
+            this.iconCRSSaved.setVisible(false);
+            this.iconCRSSaveError.setVisible(false);
+            ADFUtils.addPartialTarget(cntrlStatusBar);
+        }
         ADFUtils.showPopup(riskDefPopup);
     }
 
@@ -841,7 +865,16 @@ public class ManageCRSBean implements Serializable {
                 } catch (Exception e) {
                     logger.error("Exception occured in validateSafetyTopic()"+e);
                 }
-                
+                // Save desingee if not saved the CRS in details tab on creating new CRS
+                if (!isRoutineRiskRelationCopied() && null != this.flowType && ViewConstants.FLOW_TYPE_CREATE.equalsIgnoreCase(this.flowType)){
+                    if (selDesigneeList != null && selDesigneeList.size() > 0){
+                            String designees = "";
+                            for(String des : selDesigneeList){
+                                designees = designees + "," + des;
+                            }
+                            ADFUtils.setEL("#{bindings.Designee.inputValue}", designees.substring(1));
+                    }
+                }
                 OperationBinding oper = ADFUtils.findOperation("Commit");
                 oper.execute();
                 if (oper.getErrors().size() > 0) {
@@ -916,17 +949,24 @@ public class ManageCRSBean implements Serializable {
             ADFUtils.addPartialTarget(stagingTable);
         }
         if(riskDefPopup != null){
-            this.iconCRSSaved.setVisible(false);
-            this.iconCRSSaveError.setVisible(false);
-            this.iconCRSChanged.setVisible(false);
+            if (null != cntrlStatusBar && cntrlStatusBar.isRendered()){
+                this.iconCRSSaved.setVisible(false);
+                this.iconCRSSaveError.setVisible(false);
+                this.iconCRSChanged.setVisible(false);
+                ADFUtils.addPartialTarget(cntrlStatusBar);
+            }
             riskDefPopup.hide();
         }
         if(copyPopup != null){
-            this.iconCRSSaved.setVisible(false);
-            this.iconCRSSaveError.setVisible(false);
-            this.iconCRSChanged.setVisible(false);
+            if (null != cntrlStatusBarCopy && cntrlStatusBarCopy.isRendered()){
+                this.iconCopyCRSSaved.setVisible(false);
+                this.iconCopyCRSSaveError.setVisible(false);
+                this.iconCopyCRSChanged.setVisible(false);
+                ADFUtils.addPartialTarget(cntrlStatusBarCopy);
+            }
             copyPopup.hide();
         }
+        
         setRepoRefreshed(Boolean.FALSE);
     }
 
@@ -2005,21 +2045,27 @@ public class ManageCRSBean implements Serializable {
         oper1.execute();
         if (oper1.getErrors().size() > 0) 
             ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
-        if(riskDefTable != null)
-            ADFUtils.addPartialTarget(riskDefTable);
+//        if(riskDefTable != null)
+//            ADFUtils.addPartialTarget(riskDefTable);
         if(stagingTable != null){
             ADFUtils.addPartialTarget(stagingTable);
         }
         if(riskDefPopup != null){
-            this.iconCRSSaved.setVisible(false);
-            this.iconCRSSaveError.setVisible(false);
-            this.iconCRSChanged.setVisible(false);
+            if (null != cntrlStatusBar && cntrlStatusBar.isRendered()){
+                this.iconCRSSaved.setVisible(false);
+                this.iconCRSSaveError.setVisible(false);
+                this.iconCRSChanged.setVisible(false);
+                ADFUtils.addPartialTarget(cntrlStatusBar);
+            }
             riskDefPopup.hide();
         }
         if(copyPopup != null){
-            this.iconCRSSaved.setVisible(false);
-            this.iconCRSSaveError.setVisible(false);
-            this.iconCRSChanged.setVisible(false);
+            if (null != cntrlStatusBarCopy && cntrlStatusBarCopy.isRendered()){
+                this.iconCopyCRSSaved.setVisible(false);
+                this.iconCopyCRSSaveError.setVisible(false);
+                this.iconCopyCRSChanged.setVisible(false);
+                ADFUtils.addPartialTarget(cntrlStatusBarCopy);
+            }
             copyPopup.hide();
         }
     }
@@ -2149,14 +2195,14 @@ public class ManageCRSBean implements Serializable {
         ViewObject riskDefVO = iter.getViewObject();
         Row currRow = riskDefVO.getCurrentRow();
         if(currRow != null){
-            currRow.refresh(Row.REFRESH_REMOVE_NEW_ROWS);
+            currRow.refresh(Row.REFRESH_REMOVE_NEW_ROWS | Row.REFRESH_WITH_DB_FORGET_CHANGES | Row.REFRESH_UNDO_CHANGES);
             logger.info("Closing CrsRisk Popup -- refresh risk def row.");
         }
         DCIteratorBinding relIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
         ViewObject riskRelVO = relIter.getViewObject();
         Row relCurrRow = riskRelVO.getCurrentRow();
         if(relCurrRow != null){
-            relCurrRow.refresh(Row.REFRESH_REMOVE_NEW_ROWS);
+            relCurrRow.refresh(Row.REFRESH_REMOVE_NEW_ROWS | Row.REFRESH_WITH_DB_FORGET_CHANGES | Row.REFRESH_UNDO_CHANGES);
             logger.info("Closing CrsRisk Popup -- refresh risk relations row.");
         }
         Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");  
@@ -2235,6 +2281,9 @@ public class ManageCRSBean implements Serializable {
         } catch (Exception e) {
             logger.error("Exception occured in copyCrsRiskRelation()"+e);
         }
+        if (null != cntrlStatusBarCopy){
+            cntrlStatusBarCopy.setRendered(true);
+        }
         showStatus(ViewConstants.CRS_MODIFIED);
         copyPanel.setVisible(true);
         ADFUtils.addPartialTarget(copyPanel);
@@ -2312,16 +2361,21 @@ public class ManageCRSBean implements Serializable {
         setSafetyTopicOfInterest(null);
         if(stoiBinding != null)
             ResetUtils.reset(stoiBinding);
-        setSelDatabases(null);
-        setSelDesigneeList(null);
+        //setSelDatabases(null);
+        //setSelDesigneeList(null);
         DCIteratorBinding iter = ADFUtils.findIterator("CopyCrsRiskVOIterator");
         ViewObject crsSearchVO = iter.getViewObject();
         crsSearchVO.executeEmptyRowSet();
-        ADFUtils.showPopup(copyPopup);
+        if (null != copyRiskDefPopupPanel){
+            ResetUtils.reset(copyRiskDefPopupPanel);
+        }
+        if(riskDefPopupPanel != null)
+            ResetUtils.reset(riskDefPopupPanel);
         if(copyPanel != null)
             copyPanel.setVisible(Boolean.FALSE);
         if(copySuccessMessage != null)
             copySuccessMessage.setVisible(Boolean.FALSE);
+        ADFUtils.showPopup(copyPopup);
     }
 
     /**
@@ -3964,24 +4018,51 @@ public class ManageCRSBean implements Serializable {
     public void showStatus (int code) {
 
         try {
-            this.iconCRSSaved.setVisible(false);
-            this.iconCRSSaveError.setVisible(false);
-            this.iconCRSChanged.setVisible(false);
+            if (null != cntrlStatusBarCopy && cntrlStatusBarCopy.isRendered()){
+                this.iconCopyCRSSaved.setVisible(false);
+                this.iconCopyCRSSaveError.setVisible(false);
+                this.iconCopyCRSChanged.setVisible(false);
+                
+                switch (code) {
+                        case ViewConstants.CRS_SAVED:
+                                this.iconCopyCRSSaved.setVisible(true);
+                                break;
+                        case ViewConstants.CRS_SAVE_ERROR:
+                                this.iconCopyCRSSaveError.setVisible(true);
+                                break;
+                        case ViewConstants.CRS_MODIFIED:
+                                this.iconCopyCRSChanged.setVisible(true);
+                                break;
+                }
+                logger.info("In show Status ..cntrlStatusBarCopy");
+                ADFUtils.addPartialTarget(cntrlStatusBarCopy);
+            } else if (null != cntrlStatusBar){
+                this.iconCRSSaved.setVisible(false);
+                this.iconCRSSaveError.setVisible(false);
+                this.iconCRSChanged.setVisible(false);
+                
+                switch (code) {
+                        case ViewConstants.CRS_SAVED:
+                                this.iconCRSSaved.setVisible(true);
+                                break;
+                        case ViewConstants.CRS_SAVE_ERROR:
+                                this.iconCRSSaveError.setVisible(true);
+                                break;
+                        case ViewConstants.CRS_MODIFIED:
+                                this.iconCRSChanged.setVisible(true);
+                                break;
+                }
+                ADFUtils.addPartialTarget(cntrlStatusBar);
+                logger.info("In show Status ..cntrlStatusBar");
+            }
             
-            switch (code) {
-                    case ViewConstants.CRS_SAVED:
-                            this.iconCRSSaved.setVisible(true);
-                            break;
-                    case ViewConstants.CRS_SAVE_ERROR:
-                            this.iconCRSSaveError.setVisible(true);
-                            break;
-                    case ViewConstants.CRS_MODIFIED:
-                            this.iconCRSChanged.setVisible(true);
-                            break;
-                    }
-            
-            AdfFacesContext.getCurrentInstance().addPartialTarget(cntrlStatusBar); 
-            AdfFacesContext.getCurrentInstance().partialUpdateNotify(cntrlStatusBar);
+            if (null != cntrlStatusBarCopy && cntrlStatusBarCopy.isRendered()){
+                logger.info("In show Status ..cntrlStatusBarCopy");
+                ADFUtils.addPartialTarget(cntrlStatusBarCopy);
+            } else if (null != cntrlStatusBar){
+                ADFUtils.addPartialTarget(cntrlStatusBar);
+                logger.info("In show Status ..cntrlStatusBar");
+            }
         }
         catch (java.lang.NullPointerException e) {} //ignore it
             
@@ -4094,5 +4175,45 @@ public class ManageCRSBean implements Serializable {
         } else {
             ADFUtils.navigateToControlFlowCase("reloadSearchPage");
         }
+    }
+
+    public void setCntrlStatusBarCopy(RichToolbar cntrlStatusBarCopy) {
+        this.cntrlStatusBarCopy = cntrlStatusBarCopy;
+    }
+
+    public RichToolbar getCntrlStatusBarCopy() {
+        return cntrlStatusBarCopy;
+    }
+
+    public void setCopyRiskDefPopupPanel(RichPanelGroupLayout copyRiskDefPopupPanel) {
+        this.copyRiskDefPopupPanel = copyRiskDefPopupPanel;
+    }
+
+    public RichPanelGroupLayout getCopyRiskDefPopupPanel() {
+        return copyRiskDefPopupPanel;
+    }
+
+    public void setIconCopyCRSChanged(RichImage iconCopyCRSChanged) {
+        this.iconCopyCRSChanged = iconCopyCRSChanged;
+    }
+
+    public RichImage getIconCopyCRSChanged() {
+        return iconCopyCRSChanged;
+    }
+
+    public void setIconCopyCRSSaveError(RichImage iconCopyCRSSaveError) {
+        this.iconCopyCRSSaveError = iconCopyCRSSaveError;
+    }
+
+    public RichImage getIconCopyCRSSaveError() {
+        return iconCopyCRSSaveError;
+    }
+
+    public void setIconCopyCRSSaved(RichImage iconCopyCRSSaved) {
+        this.iconCopyCRSSaved = iconCopyCRSSaved;
+    }
+
+    public RichImage getIconCopyCRSSaved() {
+        return iconCopyCRSSaved;
     }
 }

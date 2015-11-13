@@ -527,7 +527,8 @@
             <f:facet name="menus"/>
             <f:facet name="toolbar"/>
             <f:facet name="statusbar">
-              <af:toolbar id="t12" binding="#{pageFlowScope.manageCRSBean.cntrlStatusBar}" partialTriggers="cb5 cb4">
+              <af:toolbar id="t12" binding="#{pageFlowScope.manageCRSBean.cntrlStatusBar}"
+                          partialTriggers="cb4 cb5 cb13" rendered="true" visible="true">
                 <af:image id="iconWarn" source="/images/alert.png" rendered="true"
 		  binding="#{pageFlowScope.manageCRSBean.iconCRSChanged}" visible="false"
 		  shortDesc="Risk Def Modified"/>
@@ -551,7 +552,7 @@
                       fetchSize="#{bindings.CrsRiskDefinitionsVO.rangeSize}" rowBandingInterval="0"
                       selectedRowKeys="#{bindings.CrsRiskDefinitionsVO.collectionModel.selectedRow}"
                       selectionListener="#{bindings.CrsRiskDefinitionsVO.collectionModel.makeCurrent}"
-                      rowSelection="multiple" id="t4" styleClass="AFStretchWidth" partialTriggers="::cb7 ::cb4"
+                      rowSelection="multiple" id="t4" styleClass="AFStretchWidth" partialTriggers="::cb4"
                       binding="#{pageFlowScope.manageCRSBean.riskDefTable}" contentDelivery="immediate"
                       columnStretching="column:c19">
               <af:column id="c85" width="20" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
@@ -808,7 +809,7 @@
                               actionListener="#{pageFlowScope.manageCRSBean.onCancelCrsRiskPopup}" immediate="true"/>
           </af:panelGroupLayout>
         </f:facet>
-        <af:panelGroupLayout id="pgl4" layout="vertical">
+        <af:panelGroupLayout id="pgl4" layout="vertical" binding="#{pageFlowScope.manageCRSBean.copyRiskDefPopupPanel}">
           <af:panelLabelAndMessage label="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_OF_INTEREST}" id="plam6">
             <af:inputText label="#{ecrsviewcontrollerBundle.SAFETY_TOPIC_OF_INTEREST}" id="it3" simple="true"
                           value="#{pageFlowScope.manageCRSBean.safetyTopicOfInterest}" autoSubmit="true"
@@ -967,7 +968,8 @@
                             columns="#{bindings.SafetyTopicOfInterest.hints.displayWidth}"
                             maximumLength="#{bindings.SafetyTopicOfInterest.hints.precision}"
                             shortDesc="#{bindings.SafetyTopicOfInterest.hints.tooltip}" id="it7" required="true"
-                            contentStyle="width:200px;" autoSubmit="true">
+                            contentStyle="width:200px;" autoSubmit="true"
+                            valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}">
                 <f:validator binding="#{bindings.SafetyTopicOfInterest.validator}"/>
               </af:inputText>
               <!--<af:selectManyChoice label="#{ecrsviewcontrollerBundle.DATABASE}" id="smc3"
@@ -993,7 +995,8 @@
               
               <af:selectManyChoice label="#{ecrsviewcontrollerBundle.RISK_PURPOSES}" id="smc4"
                                    value="#{pageFlowScope.manageCRSBean.selRiskPurposes}" autoSubmit="true"
-                                   binding="#{pageFlowScope.manageCRSBean.copyRPListBinding}">
+                                   binding="#{pageFlowScope.manageCRSBean.copyRPListBinding}"
+                                   valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}">
                 <af:selectItem label="SP (SPP)" id="si1" value="SP"/>
                 <af:selectItem label="DS (DSUR)" id="si2" value="DS"/>
                 <af:selectItem label="RM (RMP)" id="si3" value="RM"/>
@@ -1010,7 +1013,8 @@
                                   required="#{bindings.DomainId1.inputValue == 1}"
                                   visible="#{bindings.DomainId1.inputValue == 1}"
                                   binding="#{pageFlowScope.manageCRSBean.socTermSOCCopy}" autoSubmit="true"
-                                  partialTriggers="soc10">
+                                  partialTriggers="soc10"
+                                  valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}">
                 <f:selectItems value="#{bindings.SocTerm.items}" id="si18"/>
               </af:selectOneChoice>
               
@@ -1022,7 +1026,8 @@
                             columns="#{bindings.NonMeddraComponentComment.hints.displayWidth}"
                             maximumLength="#{bindings.NonMeddraComponentComment.hints.precision}"
                             shortDesc="#{bindings.NonMeddraComponentComment.hints.tooltip}" id="it9" rows="3"
-                            contentStyle="width:500px;" autoSubmit="true">
+                            contentStyle="width:500px;" autoSubmit="true"
+                            valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}">
                 <f:validator binding="#{bindings.NonMeddraComponentComment.validator}"/>
               </af:inputText>
               <af:inputText value="#{bindings.SearchCriteriaDetails.inputValue}"
@@ -1033,7 +1038,8 @@
                           contentStyle="width:500px;" rows="3" autoSubmit="true"
                           readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
                           shortDesc="#{bindings.SearchCriteriaDetails.hints.tooltip}" id="it15"
-                          binding="#{pageFlowScope.manageCRSBean.searchCriteriaDetailsCopy}" partialTriggers="soc10">
+                          binding="#{pageFlowScope.manageCRSBean.searchCriteriaDetailsCopy}" partialTriggers="soc10"
+                            valueChangeListener="#{pageFlowScope.manageCRSBean.onRiskDetailsUpdate}">
               <f:validator binding="#{bindings.SearchCriteriaDetails.validator}"/>
             </af:inputText>
             </af:panelFormLayout>
@@ -1041,15 +1047,17 @@
               <f:facet name="menus"/>
               <f:facet name="toolbar"/>
               <f:facet name="statusbar">
-                <af:toolbar id="t13" visible="true" partialTriggers="::t7:cl1 cb81 cb18">
+                <af:toolbar id="t13" visible="true"
+                            partialTriggers="cb81 cb18" rendered="true"
+                    binding="#{pageFlowScope.manageCRSBean.cntrlStatusBarCopy}">
                 <af:image id="iconWarn1" source="/images/alert.png" rendered="true"
-		  binding="#{pageFlowScope.manageCRSBean.iconCRSChanged}" visible="false"
+		  binding="#{pageFlowScope.manageCRSBean.iconCopyCRSChanged}" visible="false"
 		  shortDesc="Risk Def Modified"/>
                 <af:image id="iconError1" source="/images/error.png" rendered="true"
-		  binding="#{pageFlowScope.manageCRSBean.iconCRSSaveError}" visible="false"
+		  binding="#{pageFlowScope.manageCRSBean.iconCopyCRSSaveError}" visible="false"
 		  shortDesc="Error saving Risk Def"/>
                 <af:image id="iconSave1" source="/images/tick.png"
-		  binding="#{pageFlowScope.manageCRSBean.iconCRSSaved}" rendered="true"
+		  binding="#{pageFlowScope.manageCRSBean.iconCopyCRSSaved}" rendered="true"
 		  visible="false" shortDesc="Risk Def saved"/>
                 <!-- <af:panelLabelAndMessage id="plam9"
                                            binding="#{pageFlowScope.manageCRSBean.copySuccessMessage}">
@@ -1064,7 +1072,7 @@
                         fetchSize="#{bindings.CrsRiskDefinitionsVO1.rangeSize}" rowBandingInterval="0"
                         selectedRowKeys="#{bindings.CrsRiskDefinitionsVO1.collectionModel.selectedRow}"
                         selectionListener="#{bindings.CrsRiskDefinitionsVO1.collectionModel.makeCurrent}"
-                        rowSelection="multiple" id="t8" partialTriggers=":::pc2:cb7 ::cb81"
+                        rowSelection="multiple" id="t8" partialTriggers="::cb81"
                         columnStretching="column:c55" binding="#{pageFlowScope.manageCRSBean.copyRiskDefTable}"
                         styleClass="AFStretchWidth">
                 <af:column id="c86" width="20" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}">
@@ -1123,7 +1131,7 @@
                 <af:toolbar id="t9">
                   <af:commandButton text="#{ecrsviewcontrollerBundle.DELETE_SELECTED}" id="cb81"
                                     icon="/images/delete.png"
-                                    actionListener="#{pageFlowScope.manageCRSBean.deleteCopiedRiskDefs}"
+                                    actionListener="#{pageFlowScope.manageCRSBean.onClickOfRiskDefDelete}"
                                     partialSubmit="true" visible="#{pageFlowScope.manageCRSBean.crsFieldsUpdatable}"/>
                   <af:commandButton text="#{ecrsviewcontrollerBundle.SAVE}" id="cb18" icon="/images/filesave.png"
                                     actionListener="#{pageFlowScope.manageCRSBean.saveRiskDefs}" partialSubmit="true"/>
