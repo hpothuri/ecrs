@@ -322,16 +322,6 @@ public class ManageCRSBean implements Serializable {
             row.setReviewApproveRequiredFlag(ModelConstants.REVIEW_REQD_YES);
             row.setReleaseStatusFlag(ModelConstants.STATUS_PENDING);
             row.setCrsEffectiveDt(ADFUtils.getJBOTimeStamp());
-            Long crsId = row.getCrsId();
-            if (row.getCompoundType() != null &&
-                  ModelConstants.COMPOUND_TYPE_COMPOUND.equalsIgnoreCase(row.getCompoundType())) {
-                logger.info("--Before  copyRoutineDefinition--");
-                OperationBinding copyOper = bc.getOperationBinding("copyRoutineDefinition");
-                copyOper.getParamsMap().put("crsId", crsId);
-                copyOper.execute();
-                this.setRoutineRiskRelationCopied(true);
-                logger.info("--After-ManageCRSBean:createCrsRow--");
-            }
         }
         logger.info("--End-ManageCRSBean:createCrsRow--");
     }
@@ -585,6 +575,7 @@ public class ManageCRSBean implements Serializable {
         logger.info("Start-ManageCRSBean:onCompCodeSelect()");
         if (vce != null) {
             vce.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            Long crsId = (Long)ADFUtils.evaluateEL("#{bindings.CrsId.inputValue}");
             setNonCompoundSelected(Boolean.FALSE);
             if (vce.getNewValue() != null && !vce.getNewValue().equals(vce.getOldValue()) &&
                 ModelConstants.COMPOUND_TYPE_NON_COMPOUND.equals(ADFUtils.evaluateEL("#{bindings.CompoundType.inputValue}"))) {
@@ -768,116 +759,120 @@ public class ManageCRSBean implements Serializable {
     }
 
     public void saveRiskDefs(ActionEvent actionEvent) {
-
-        String riskPurposes = "";
-        if(selRiskPurposes != null && selRiskPurposes.size() > 0){
-            for(String riskPurpose : selRiskPurposes){
-                riskPurposes = riskPurposes + "," + riskPurpose;
+        DCIteratorBinding riskRelIter = ADFUtils.findIterator("CrsRiskRelationVOIterator");
+        if(null != riskRelIter){
+            Row relationRow = riskRelIter.getCurrentRow();
+            if (null != relationRow){
+                String safetyTopic = (String) relationRow.getAttribute("SafetyTopicOfInterest");
+                if(safetyTopic == null || "".equals(safetyTopic)){
+                    ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("STOI_MANDATE_ERROR"));
+                    return;
+                }
+                String riskPurposes = "";
+                if(selRiskPurposes != null && selRiskPurposes.size() > 0){
+                    for(String riskPurpose : selRiskPurposes){
+                        riskPurposes = riskPurposes + "," + riskPurpose;
+                    }
+                    //ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}", riskPurposes.substring(1));
+                    relationRow.setAttribute("RiskPurposeList", riskPurposes.substring(1));
+                } else{
+                    ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, "Please select at least one Risk Purpose.");
+                    ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}",null);
+                    return;
+                }
+                Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");  
+                String riskPurposeList = riskPurposes.substring(1);
+                //String safetyTopic = (String)ADFUtils.evaluateEL("#{bindings.SafetyTopicOfInterest.inputValue}");
+                
+                //Integer domain = (Integer)ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}");
+                Integer domain = (Integer) relationRow.getAttribute("DomainId");
+                String soc = (String) relationRow.getAttribute("SocTerm");
+                if(domain == null){
+                    ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("DATA_DOMAIN_MANDATE_ERROR"));
+                    return;
+                } else if(domain != null && (domain.intValue() == 1)){
+                    //String soc = (String) ADFUtils.evaluateEL("#{bindings.SocTerm.inputValue}");
+                    if(soc == null || "".equals(soc)){
+                        ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("SOC_MANDATE_ERROR"));
+                        return;
+                    }
+                    DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
+                    ViewObject riskDefVO = iter.getViewObject();
+                    if(riskDefVO.getEstimatedRowCount() == 0){
+                        ADFUtils.showFacesMessage(uiBundle.getString("MEDDRA_MANDATE_ERROR"), FacesMessage.SEVERITY_ERROR);
+                        return;
+                    }
+                }
+               
+                String searchCriteriaDetails = (String) relationRow.getAttribute("SearchCriteriaDetails");
+                if (domain != null && domain.intValue() != 1){
+                   // ADFUtils.setEL("#{bindings.SocTerm.inputValue}", null);
+                   relationRow.setAttribute("SocTerm" , null); 
+                   // String searchCriteriaDetails = (String)ADFUtils.evaluateEL("#{bindings.SearchCriteriaDetails.inputValue}");
+                    if(searchCriteriaDetails == null || "".equals(searchCriteriaDetails)){
+                        ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("SCD_MANDATE_ERROR"));
+                        return;
+                    }
+                }
+                
+                Long crsRiskId = (Long) relationRow.getAttribute("CrsRiskId");
+                
+                logger.info("crsId : "+selRiskPurposes);
+                logger.info("crsRiskId : "+ crsRiskId);
+                logger.info("Selected risk purposes : "+selRiskPurposes);
+                logger.info("safetyTopic  :: " + safetyTopic);
+                logger.info("Domain selected :: " + domain);
+                logger.info("searchCriteriaDetails :: " + searchCriteriaDetails);
+                logger.info("Saving risk defs.");
+                
+                Map params1 = new HashMap<String, Object>();
+                params1.put("crsId", crsId);
+                params1.put("safetyTopic", safetyTopic);
+                params1.put("rpList", riskPurposeList);
+                params1.put("crsRiskId", crsRiskId);
+                params1.put("domainId", domain);
+                try {
+                    logger.info("Calling model method validateSafetyTopic");
+                    Boolean invalid = (Boolean)ADFUtils.executeAction("validateSafetyTopic", params1);
+                    if(invalid){
+                        ADFUtils.showFacesMessage(uiBundle.getString("STOI_UNIQUE_ERROR"), FacesMessage.SEVERITY_ERROR);
+                        return;
+                    }
+                } catch (Exception e) {
+                    logger.error("Exception occured in validateSafetyTopic()"+e);
+                }
+                
+                OperationBinding oper = ADFUtils.findOperation("Commit");
+                oper.execute();
+                if (oper.getErrors().size() > 0) {
+                    ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
+                    if(savedSuccessMessage != null){
+                        savedSuccessMessage.setVisible(Boolean.FALSE);
+                        ADFUtils.addPartialTarget(savedSuccessMessage);
+                        ResetUtils.reset(savedSuccessMessage);
+                    }
+                    if(copySuccessMessage != null){
+                        copySuccessMessage.setVisible(Boolean.FALSE);
+                        ADFUtils.addPartialTarget(copySuccessMessage);
+                        ResetUtils.reset(savedSuccessMessage);
+                    }
+                    showStatus(ViewConstants.CRS_SAVE_ERROR);
+                }
+                else{
+                //            ADFUtils.showPopup(successPopup);
+                    if(savedSuccessMessage != null){
+                        savedSuccessMessage.setVisible(Boolean.TRUE);
+                        ADFUtils.addPartialTarget(savedSuccessMessage);
+                        ResetUtils.reset(savedSuccessMessage);
+                    }
+                    if(copySuccessMessage != null){
+                        copySuccessMessage.setVisible(Boolean.TRUE);
+                        ADFUtils.addPartialTarget(copySuccessMessage);
+                        ResetUtils.reset(copySuccessMessage);
+                    }
+                    showStatus(ViewConstants.CRS_SAVED);
+                }
             }
-            ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}", riskPurposes.substring(1));
-        } else{
-            ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, "Please select at least one Risk Purpose.");
-            ADFUtils.setEL("#{bindings.RiskPurposeList.inputValue}",null);
-            return;
-        }
-        logger.info("Selected risk purposes : "+selRiskPurposes);
-        
-        Long crsId = (Long)ADFUtils.getPageFlowScopeValue("crsId");  
-        String riskPurposeList = riskPurposes.substring(1);
-        String safetyTopic = (String)ADFUtils.evaluateEL("#{bindings.SafetyTopicOfInterest.inputValue}");
-        
-        
-//        if(selDatabases != null && selDatabases.size() > 0){
-//            String databases = "";
-//            for(String db : selDatabases){
-//                databases = databases + "," + db;
-//            }
-//            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}", databases.substring(1));
-//        } else
-//            ADFUtils.setEL("#{bindings.DatabaseList.inputValue}",null);
-        
-        Integer domain = (Integer)ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}");
-        if(domain != null && (domain == 1)){
-            String soc = (String)ADFUtils.evaluateEL("#{bindings.SocTerm.inputValue}");
-            if(soc == null || "".equals(soc)){
-                ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("SOC_MANDATE_ERROR"));
-                return;
-            }
-            DCIteratorBinding iter = ADFUtils.findIterator("CrsRiskDefinitionsVOIterator");
-            ViewObject riskDefVO = iter.getViewObject();
-            if(riskDefVO.getEstimatedRowCount() == 0){
-                ADFUtils.showFacesMessage(uiBundle.getString("MEDDRA_MANDATE_ERROR"), FacesMessage.SEVERITY_ERROR);
-                return;
-            }
-        }
-        
-        logger.info("Saving risk defs.");
-        
-        if (domain != null && domain != 1){
-            ADFUtils.setEL("#{bindings.SocTerm.inputValue}", null);
-            String searchCriteriaDetails = (String)ADFUtils.evaluateEL("#{bindings.SearchCriteriaDetails.inputValue}");
-            if(searchCriteriaDetails == null || "".equals(searchCriteriaDetails)){
-                ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("SCD_MANDATE_ERROR"));
-                return;
-            }
-        }
-        
-        //String stoi = (String)ADFUtils.evaluateEL("#{bindings.SafetyTopicOfInterest.inputValue}");
-        if(safetyTopic == null || "".equals(safetyTopic)){
-            ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("STOI_MANDATE_ERROR"));
-            return;
-        }
-        if(domain == null){
-            ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, uiBundle.getString("DATA_DOMAIN_MANDATE_ERROR"));
-            return;
-        }
-        
-        Map params1 = new HashMap<String, Object>();
-        params1.put("crsId", crsId);
-        params1.put("safetyTopic", safetyTopic);
-        params1.put("rpList", riskPurposeList);
-        params1.put("crsRiskId", ADFUtils.evaluateEL("#{bindings.CrsRiskId.inputValue}"));
-        params1.put("domainId", ADFUtils.evaluateEL("#{bindings.DomainId.inputValue}"));
-        try {
-            logger.info("Calling model method validateSafetyTopic");
-            Boolean invalid = (Boolean)ADFUtils.executeAction("validateSafetyTopic", params1);
-            if(invalid){
-                ADFUtils.showFacesMessage(uiBundle.getString("STOI_UNIQUE_ERROR"), FacesMessage.SEVERITY_ERROR);
-                return;
-            }
-        } catch (Exception e) {
-            logger.error("Exception occured in validateSafetyTopic()"+e);
-        }
-        
-        OperationBinding oper = ADFUtils.findOperation("Commit");
-        oper.execute();
-        if (oper.getErrors().size() > 0) {
-            ADFUtils.showFacesMessage(uiBundle.getString("INTERNAL_ERROR"), FacesMessage.SEVERITY_ERROR);
-            if(savedSuccessMessage != null){
-                savedSuccessMessage.setVisible(Boolean.FALSE);
-                ADFUtils.addPartialTarget(savedSuccessMessage);
-                ResetUtils.reset(savedSuccessMessage);
-            }
-            if(copySuccessMessage != null){
-                copySuccessMessage.setVisible(Boolean.FALSE);
-                ADFUtils.addPartialTarget(copySuccessMessage);
-                ResetUtils.reset(savedSuccessMessage);
-            }
-            showStatus(ViewConstants.CRS_SAVE_ERROR);
-        }
-        else{
-//            ADFUtils.showPopup(successPopup);
-            if(savedSuccessMessage != null){
-                savedSuccessMessage.setVisible(Boolean.TRUE);
-                ADFUtils.addPartialTarget(savedSuccessMessage);
-                ResetUtils.reset(savedSuccessMessage);
-            }
-            if(copySuccessMessage != null){
-                copySuccessMessage.setVisible(Boolean.TRUE);
-                ADFUtils.addPartialTarget(copySuccessMessage);
-                ResetUtils.reset(copySuccessMessage);
-            }
-            showStatus(ViewConstants.CRS_SAVED);
         }
     }
 
@@ -3667,6 +3662,7 @@ public class ManageCRSBean implements Serializable {
     }
     public void onDomainIdChange(ValueChangeEvent valueChangeEvent) {
         logger.info("Refreshing SOC LOV based on the domain selected");
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         Integer newValue = (Integer)valueChangeEvent.getNewValue();
         logger.info("Domain selected :: " + newValue);
         ADFUtils.addPartialTarget(searchCriteriaDetails);
@@ -4081,6 +4077,7 @@ public class ManageCRSBean implements Serializable {
     
     public void onDomainIdChangeInCopyRisk(ValueChangeEvent valueChangeEvent) {
         logger.info("Refreshing SOC LOV based on the domain selected");
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         Integer newValue = (Integer)valueChangeEvent.getNewValue();
         logger.info("Domain selected :: " + newValue);
         ADFUtils.addPartialTarget(searchCriteriaDetailsCopy);

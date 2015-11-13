@@ -475,7 +475,7 @@
             </af:selectManyChoice>
             
             <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
-                                shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc4" required="#{bindings.DomainId1.inputValue eq 1}"
+                                shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc4" showRequired="#{bindings.DomainId1.inputValue == 1}"
                                 contentStyle="width:300px;" autoSubmit="true"
                                 visible="#{bindings.DomainId1.inputValue == 1 or bindings.DomainId1.inputValue == null}"
                                 readOnly="#{!pageFlowScope.manageCRSBean.crsFieldsUpdatable}"
@@ -500,7 +500,7 @@
             </af:inputText>
             <af:inputText value="#{bindings.SearchCriteriaDetails.inputValue}"
                           label="#{bindings.SearchCriteriaDetails.hints.label}"
-                          showRequired="#{bindings.DomainId1.inputValue != 1}"
+                          showRequired="#{null != bindings.DomainId1.inputValue and bindings.DomainId1.inputValue != 1}"
                           columns="#{bindings.SearchCriteriaDetails.hints.displayWidth}"
                           maximumLength="200"
                           contentStyle="width:500px;" rows="3" autoSubmit="true"
@@ -1007,8 +1007,8 @@
               
               <af:selectOneChoice value="#{bindings.SocTerm.inputValue}" label="#{bindings.SocTerm.label}"
                                   shortDesc="#{bindings.SocTerm.hints.tooltip}" id="soc5" contentStyle="width:300px;"
-                                  required="#{bindings.DomainId1.inputValue eq 1}"
-                                  visible="#{bindings.DomainId1.inputValue eq 1}"
+                                  required="#{bindings.DomainId1.inputValue == 1}"
+                                  visible="#{bindings.DomainId1.inputValue == 1}"
                                   binding="#{pageFlowScope.manageCRSBean.socTermSOCCopy}" autoSubmit="true"
                                   partialTriggers="soc10">
                 <f:selectItems value="#{bindings.SocTerm.items}" id="si18"/>
@@ -1027,7 +1027,7 @@
               </af:inputText>
               <af:inputText value="#{bindings.SearchCriteriaDetails.inputValue}"
                           label="#{bindings.SearchCriteriaDetails.hints.label}"
-                          showRequired="#{bindings.DomainId1.inputValue != 1}"
+                          showRequired="#{null != bindings.DomainId1.inputValue and bindings.DomainId1.inputValue != 1}"
                           columns="#{bindings.SearchCriteriaDetails.hints.displayWidth}"
                           maximumLength="200"
                           contentStyle="width:500px;" rows="3" autoSubmit="true"
