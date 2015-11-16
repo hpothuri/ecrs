@@ -71,6 +71,10 @@
                             <af:commandMenuItem text="#{ecrsviewcontrollerBundle.RISK_DEFINITIONS_PER_SAFETY_TO}" id="pt_cmi4"
                                                 action="riskDefSafety" inlineStyle="font-weight: bold;"
                                                 immediate="true"/>
+                            <af:commandMenuItem text="#{ecrsviewcontrollerBundle.MEDDRA_VERSION_IMPACT}"
+                                                id="pt_cmi10"
+                                                action="MedDRAVersionImpact" inlineStyle="font-weight: bold;"
+                                                immediate="true"/>                    
                             <af:menu text="#{ecrsviewcontrollerBundle.ADMIN_REPORTS}" id="pt_m3"
                                      visible="#{securityContext.userInRole['CRS_ADMIN']}"
                                      inlineStyle="font-weight: bold;     padding-right: 10px;">

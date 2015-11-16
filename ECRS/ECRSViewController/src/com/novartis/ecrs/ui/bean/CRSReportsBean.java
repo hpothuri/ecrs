@@ -4,16 +4,25 @@ package com.novartis.ecrs.ui.bean;
 import com.novartis.ecrs.ui.utility.ADFUtils;
 import com.novartis.ecrs.ui.utility.ExcelExportUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import javax.faces.event.ValueChangeEvent;
+
 import oracle.adf.model.binding.DCIteratorBinding;
+
+import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 
 import oracle.javatools.resourcebundle.BundleFactory;
 
@@ -22,6 +31,7 @@ import oracle.jbo.RowSetIterator;
 
 import oracle.security.crypto.util.InvalidFormatException;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -31,11 +41,17 @@ import org.apache.poi.ss.util.CellRangeAddress;
 
 
 public class CRSReportsBean {
+    public static final Logger logger = Logger.getLogger(CRSReportsBean.class);
+    private RichSelectOneChoice cntrlReportList;
+    private String fileName = "NULL";
+    private ArrayList<String> reports;
+    private String reportDirectory;
+    ExcelExportUtils excelUtils = new ExcelExportUtils();
+    
     public CRSReportsBean() {
         super();
+        loadReportList();
     }
-
-    ExcelExportUtils excelUtils = new ExcelExportUtils();
     
     /**
      * @param facesContext
@@ -559,5 +575,103 @@ public class CRSReportsBean {
             excelInputStream.close();
             outputStream.close();
         }
+    }
+
+    public void setCntrlReportList(RichSelectOneChoice cntrlReportList) {
+        this.cntrlReportList = cntrlReportList;
+    }
+
+    public RichSelectOneChoice getCntrlReportList() {
+        return cntrlReportList;
+    }
+
+    public void setReports(ArrayList<String> reports) {
+        this.reports = reports;
+    }
+
+    public ArrayList<String> getReports() {
+        return reports;
+    }
+
+    public void setReportDirectory(String reportDirectory) {
+        this.reportDirectory = reportDirectory;
+    }
+
+    public String getReportDirectory() {
+        return reportDirectory;
+    }
+
+    public void setExcelUtils(ExcelExportUtils excelUtils) {
+        this.excelUtils = excelUtils;
+    }
+
+    public ExcelExportUtils getExcelUtils() {
+        return excelUtils;
+    }
+    private void loadReportList () {
+        logger.info("In loadReportList");
+        ResourceBundle rsBundle =
+            BundleFactory.getBundle("com.novartis.ecrs.view.ECRSViewControllerBundle");
+        reportDirectory = rsBundle.getString("DOWNLOAD_DIRECTORY");
+        logger.info("reportDirectory ==>" + reportDirectory);
+        if (reportDirectory.length() == 0)
+            return;
+        File folder = new File(reportDirectory);
+        if (null != folder){
+            reports = new ArrayList<String>();
+            File[] listOfFiles = folder.listFiles();
+            if (null != listOfFiles){
+                for (int i = 0; i < listOfFiles.length; i++) {
+                    if (listOfFiles[i].isFile()) {
+                        reports.add(listOfFiles[i].getName());
+                    }
+                }
+            }
+        }
+       
+        
+    }
+    public void reportDownloadAction(FacesContext facesContext, OutputStream outputStream) throws FileNotFoundException, IOException {
+        logger.info("In reportDownloadAction");
+        String fileName =  this.cntrlReportList.getValue().toString();
+        File f = new File(reportDirectory + fileName);
+        logger.info("selected fileName ==> " + f.getName());
+        if ("NULL".equals(fileName)){
+            ADFUtils.showFacesMessage("Please select a file." , FacesMessage.SEVERITY_ERROR);
+            return;
+        } else {
+            FileInputStream fis = null;
+            byte[] b;
+            try {
+                System.out.println("Opening file ["+ f.length() +"]: " + f.toString());
+                fis = new FileInputStream(f);
+                while (fis.available() > 0) {
+                    int count = fis.available();
+                    b = new byte[count];
+                    int result = fis.read(b);
+                    outputStream.write(b, 0, b.length);
+                    if (result == -1)
+                        break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            outputStream.flush();
+            outputStream.close();
+            fis.close();
+        }
+    }
+    public void reportNameChanged(ValueChangeEvent valueChangeEvent) {
+        this.fileName = valueChangeEvent.getNewValue().toString();
+        logger.info("Selected File Name.." + this.fileName);
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }

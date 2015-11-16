@@ -57,6 +57,9 @@
   <view id="ManageMedDRAFreeze">
     <page>/pages/ManageMedDRAFreeze.jspx</page>
   </view>
+  <view id="MedDRAVersionImpact">
+    <page>/pages/reports/MedDRAVersionImpact.jspx</page>
+  </view>
   <control-flow-rule id="__2">
     <from-activity-id>*</from-activity-id>
     <control-flow-case id="__3">
@@ -134,6 +137,10 @@
     <control-flow-case id="__22">
       <from-outcome>freezeMedDRA</from-outcome>
       <to-activity-id>ManageMedDRAFreeze</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__23">
+      <from-outcome>MedDRAVersionImpact</from-outcome>
+      <to-activity-id>MedDRAVersionImpact</to-activity-id>
     </control-flow-case>
   </control-flow-rule>
   <managed-bean id="__1">

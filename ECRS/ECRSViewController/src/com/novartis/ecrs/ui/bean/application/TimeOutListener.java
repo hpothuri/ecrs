@@ -96,9 +96,11 @@ public class TimeOutListener implements Filter {
         // chk if anonymous role and current page is a protected one
         if(!sessionInValid)
         sessionInValid =
-                httpServletRequest.getUserPrincipal() == null && !(httpServletRequest.getRequestURI().contains("BrowseSearch") ||
-                                                                   httpServletRequest.getRequestURI().contains("MedDRAComponentsReport") ||
-                                                                   httpServletRequest.getRequestURI().contains("RiskDefinitionsSafetyTopicReport"));
+                httpServletRequest.getUserPrincipal() == null 
+                    && !(httpServletRequest.getRequestURI().contains("BrowseSearch") 
+                         || httpServletRequest.getRequestURI().contains("MedDRAComponentsReport") 
+                         || httpServletRequest.getRequestURI().contains("RiskDefinitionsSafetyTopicReport")
+                         || httpServletRequest.getRequestURI().contains("MedDRAVersionImpact"));
         
         logger.info("is session invalid - "+ sessionInValid);
         return sessionInValid;

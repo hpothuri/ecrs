@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="ecrsviewcontrollerBundle"
+           value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="MedDRAVersionImpact.jspx" id="d1">
+            <af:form id="f1" usesUpload="true">
+                <af:pageTemplate viewId="/pageTemplate/EcrsTemplate.jspx"
+                                 id="pt1">
+                    <f:facet name="content">
+                            <af:panelGroupLayout id="pgl2">
+                                <af:panelHeader text="MedDRA Versioning Reports" id="ph2" size="3"
+                                    inlineStyle="height:130px; padding:5px;">
+                                <af:panelFormLayout id="pfl1">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice label="Report" id="soc2" autoSubmit="true" valuePassThru="true"
+                                                        binding="#{pageFlowScope.reportsBean.cntrlReportList}"
+                                                        value="NULL"
+                                                        valueChangeListener="#{pageFlowScope.reportsBean.reportNameChanged}">
+                                        <af:selectItem label="--Select a report--" value="NULL" id="si2"/>
+                                        <af:forEach var="prop" items="#{pageFlowScope.reportsBean.reports}">
+                                            <af:selectItem label="#{prop}" value="#{prop}" id="si1"/>
+                                        </af:forEach>
+                                    </af:selectOneChoice>
+                                </af:panelFormLayout>
+                                <af:spacer width="10" height="30" id="s2"/>
+                                <af:panelGroupLayout id="pgl3">
+                                    <af:commandButton text="Generate" id="cb2" partialSubmit="true"
+                                                      partialTriggers="soc2">
+                                        <af:fileDownloadActionListener contentType="application/x-download"
+                                                                       method="#{pageFlowScope.reportsBean.reportDownloadAction}"
+                                                                       filename="#{pageFlowScope.reportsBean.fileName}"/>
+                                    </af:commandButton>
+                                    <af:spacer width="10" height="10" id="s3"/>
+                                    <af:commandButton text="#{ecrsviewcontrollerBundle.CANCELEXIT}"
+                                                  id="cb1" action="home"/>
+                                </af:panelGroupLayout>
+                            </af:panelHeader>
+                        </af:panelGroupLayout>
+                    </f:facet>
+                </af:pageTemplate>
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

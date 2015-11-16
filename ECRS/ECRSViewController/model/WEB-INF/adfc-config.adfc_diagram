@@ -34,7 +34,7 @@
       <property
          name="fromOutcome">userRoles</property>
       <property
-         name="sdm:polyPoints">R55,506.8579,153.94824,710.6904,163.44824,L50</property>
+         name="sdm:polyPoints">R61,506.78546,157.44824,710.6904,163.44824,L50</property>
    </ControlFlowCase>
    <View
       id="View5">
@@ -59,7 +59,7 @@
       <property
          name="fromOutcome">states</property>
       <property
-         name="sdm:polyPoints">R77,504.0,167.94824,708.6924,338.44824,L50</property>
+         name="sdm:polyPoints">R83,504.0,171.44824,708.6924,338.44824,L50</property>
    </ControlFlowCase>
    <View
       id="View7">
@@ -84,7 +84,7 @@
       <property
          name="fromOutcome">roles</property>
       <property
-         name="sdm:polyPoints">B50,468.0,195.87708,501.02246,345.44824,T50</property>
+         name="sdm:polyPoints">B50,468.0,195.87822,501.02246,345.44824,T50</property>
    </ControlFlowCase>
    <View
       id="View9">
@@ -134,7 +134,7 @@
       <property
          name="fromOutcome">compound</property>
       <property
-         name="sdm:polyPoints">L55,428.70496,153.94824,247.03516,186.44824,R50</property>
+         name="sdm:polyPoints">L66,412.62466,160.44823,256.53516,186.44824,R50</property>
    </ControlFlowCase>
    <View
       id="View13">
@@ -159,7 +159,7 @@
       <property
          name="fromOutcome">update</property>
       <property
-         name="sdm:polyPoints">R23,504.0,132.94824,674.6787,39.448242,B50</property>
+         name="sdm:polyPoints">R28,507.12018,136.44824,674.6787,39.448242,B50</property>
    </ControlFlowCase>
    <View
       id="View15">
@@ -234,7 +234,7 @@
       <property
          name="fromOutcome">browseSearch</property>
       <property
-         name="sdm:polyPoints">R34,505.65204,139.94824,778.0176,15.74707,L50</property>
+         name="sdm:polyPoints">R39,508.82077,143.44824,778.0176,15.74707,L50</property>
    </ControlFlowCase>
    <View
       id="View21">
@@ -259,7 +259,7 @@
       <property
          name="fromOutcome">adminDashBoard</property>
       <property
-         name="sdm:polyPoints">B71,478.5,192.94824,720.041,439.44824,T50</property>
+         name="sdm:polyPoints">B77,482.0,192.94824,720.041,439.44824,T50</property>
    </ControlFlowCase>
    <View
       id="View23">
@@ -359,7 +359,7 @@
       <property
          name="fromOutcome">meddraCompStandard</property>
       <property
-         name="sdm:polyPoints">R66,506.02213,160.94824,973.3662,373.44824,L50</property>
+         name="sdm:polyPoints">R72,505.99066,164.44824,973.3662,373.44824,L50</property>
    </ControlFlowCase>
    <View
       id="View33">
@@ -384,7 +384,7 @@
       <property
          name="fromOutcome">riskDefSafety</property>
       <property
-         name="sdm:polyPoints">R45,506.958,146.94824,1081.3701,153.44824,L50</property>
+         name="sdm:polyPoints">R50,506.84537,150.44824,1081.3701,153.44824,L50</property>
    </ControlFlowCase>
    <View
       id="View34">
@@ -485,5 +485,30 @@
          name="fromOutcome">freezeMedDRA</property>
       <property
          name="sdm:polyPoints">B64,475.0,194.93297,585.6963,523.3965,T50</property>
+   </ControlFlowCase>
+   <View
+      id="View44">
+      <property
+         name="activityId">MedDRAVersionImpact</property>
+      <property
+         name="page">/pages/reports/MedDRAVersionImpact.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>MedDRAVersionImpact&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">-169.60352</property>
+      <property
+         name="x">622.68945</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase45"
+      from="WildcardControlFlowRule2"
+      to="View44">
+      <property
+         name="fromOutcome">MedDRAVersionImpact</property>
+      <property
+         name="sdm:polyPoints">R17,504.0,129.44824,622.68945,-115.9541,B50</property>
    </ControlFlowCase>
 </SDM>
