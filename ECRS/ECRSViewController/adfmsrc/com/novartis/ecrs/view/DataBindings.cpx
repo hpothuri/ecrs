@@ -87,6 +87,7 @@
     <page path="/pages/ManageMedDRAFreeze.jspx" usageId="com_novartis_ecrs_view_ManageMedDRAFreezePageDef"/>
     <page path="/ui/pageFragments/freeze/freezeMedDRA.jsff" usageId="com_novartis_ecrs_view_freezeMedDRAPageDef"/>
     <page path="/pages/reports/MedDRAVersionImpact.jspx" usageId="com_novartis_ecrs_view_MedDRAVersionImpactPageDef"/>
+    <page path="/pageTemplate/EcrsTemplate.jspx" usageId="com_novartis_ecrs_view_EcrsTemplatePageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_novartis_ecrs_view_createCRSPageDef"
@@ -164,6 +165,7 @@
     <page id="com_novartis_ecrs_view_ManageMedDRAFreezePageDef" path="pages.ManageMedDRAFreezePageDef"/>
     <page id="com_novartis_ecrs_view_freezeMedDRAPageDef" path="ui.pageFragments.freeze.freezeMedDRAPageDef"/>
     <page id="com_novartis_ecrs_view_MedDRAVersionImpactPageDef" path="pages.reports.MedDRAVersionImpactPageDef"/>
+    <page id="com_novartis_ecrs_view_EcrsTemplatePageDef" path="pageTemplate.EcrsTemplatePageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     

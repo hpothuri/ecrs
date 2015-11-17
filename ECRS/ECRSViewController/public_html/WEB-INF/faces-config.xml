@@ -3,4 +3,9 @@
   <application>
     <default-render-kit-id>oracle.adf.rich</default-render-kit-id>
   </application>
+  <managed-bean eager="true">
+    <managed-bean-name>crsBean</managed-bean-name>
+    <managed-bean-class>com.novartis.ecrs.view.beans.CRSBean</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
 </faces-config>

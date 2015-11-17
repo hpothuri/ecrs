@@ -4,6 +4,8 @@ package com.novartis.ecrs.ui.bean;
 import com.novartis.ecrs.ui.utility.ADFUtils;
 import com.novartis.ecrs.ui.utility.ExcelExportUtils;
 
+import com.novartis.ecrs.view.beans.CRSBean;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,12 +18,14 @@ import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import javax.faces.event.ValueChangeEvent;
 
 import oracle.adf.model.binding.DCIteratorBinding;
 
+import oracle.adf.share.ADFContext;
 import oracle.adf.view.rich.component.rich.input.RichSelectOneChoice;
 
 import oracle.javatools.resourcebundle.BundleFactory;
@@ -610,10 +614,18 @@ public class CRSReportsBean {
     }
     private void loadReportList () {
         logger.info("In loadReportList");
-        ResourceBundle rsBundle =
-            BundleFactory.getBundle("com.novartis.ecrs.view.ECRSViewControllerBundle");
-        reportDirectory = rsBundle.getString("DOWNLOAD_DIRECTORY");
-        logger.info("reportDirectory ==>" + reportDirectory);
+        ExternalContext exctxt = FacesContext.getCurrentInstance().getExternalContext();
+
+        CRSBean crsBean = (CRSBean) exctxt.getApplicationMap().get("crsBean");
+        if (null != crsBean){
+            reportDirectory = crsBean.getProperty("DOWNLOAD_DIRECTORY");
+            logger.info("reportDirectory from CRS Bean==>" + reportDirectory);
+        } else {
+            ResourceBundle rsBundle =
+                        BundleFactory.getBundle("com.novartis.ecrs.view.ECRSViewControllerBundle");
+                    reportDirectory = rsBundle.getString("DOWNLOAD_DIRECTORY");
+            logger.info("reportDirectory from resource bundle ==>" + reportDirectory);
+        }
         if (reportDirectory.length() == 0)
             return;
         File folder = new File(reportDirectory);
