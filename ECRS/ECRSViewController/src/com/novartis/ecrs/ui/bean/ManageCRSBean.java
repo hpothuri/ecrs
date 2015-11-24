@@ -4106,10 +4106,13 @@ public class ManageCRSBean implements Serializable {
     private Boolean isCRSVersionInitial(){
         Boolean initialVersion = Boolean.TRUE;
         OperationBinding oper = ADFUtils.findOperation("isCRSVersionInitial");
-        if (null != oper){
-            initialVersion = (Boolean) oper.execute();
-            logger.info("isCRSVersionInitial..." + initialVersion.booleanValue());
+        if (null != this.selectedCrsName && !this.selectedCrsName.isEmpty()){
+            if (null != oper){
+                initialVersion = (Boolean) oper.execute();
+                logger.info("isCRSVersionInitial..." + initialVersion.booleanValue());
+            }
         }
+        
         return initialVersion;
     }
     public Boolean getIsCRSVersionInitial(){
