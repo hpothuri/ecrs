@@ -1122,6 +1122,7 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
      */
     public Boolean isCRSVersionInitial(Long crsId){
             Boolean initialVersion = Boolean.TRUE;
+            
             String query = "SELECT COUNT(*) as count FROM crs_content WHERE crs_id = ?";
             //for the selected CRSID
             PreparedStatement pstmt = null;
@@ -1136,11 +1137,15 @@ public class ECRSAppModuleImpl extends ApplicationModuleImpl implements ECRSAppM
                     logger.info("row count in crs_content==" + count);
                     if (count > 0) {
                         initialVersion = Boolean.FALSE;
+                    } else {
+                        initialVersion = Boolean.TRUE;
                     }
                 }
             } catch (SQLException e){
                 logger.error("Error while querying crs_content table", e);
-            } finally{
+            } catch (Exception e){
+                logger.error("Error in isCRSVersionInitial...", e);
+            } finally {
                 try{
                     rs.close();
                     pstmt.close();

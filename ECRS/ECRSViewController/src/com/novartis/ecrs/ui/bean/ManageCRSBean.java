@@ -4109,7 +4109,12 @@ public class ManageCRSBean implements Serializable {
         if (null != this.selectedCrsName && !this.selectedCrsName.isEmpty()){
             if (null != oper){
                 initialVersion = (Boolean) oper.execute();
-                logger.info("isCRSVersionInitial..." + initialVersion.booleanValue());
+                if (null == initialVersion){
+                    initialVersion = Boolean.TRUE;
+                    logger.info("isCRSVersionInitial...initialVersion is null from AM");
+                } else {
+                    logger.info("isCRSVersionInitial..." + initialVersion);
+                }
             }
         }
         
