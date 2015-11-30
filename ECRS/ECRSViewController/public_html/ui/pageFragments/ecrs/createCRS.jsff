@@ -5,7 +5,7 @@
           xmlns:c="http://java.sun.com/jsp/jstl/core">
     <c:set var="ecrsviewcontrollerBundle"
            value="#{adfBundle['com.novartis.ecrs.view.ECRSViewControllerBundle']}"/>
-    <af:panelHeader text="#{pageFlowScope.flowType eq 'S' ? ecrsviewcontrollerBundle.BROWSER__SEARCH : (pageFlowScope.flowType eq 'C' ? ecrsviewcontrollerBundle.CREATE : ecrsviewcontrollerBundle.UPDATE)}" id="ph1" size="1" inlineStyle="padding:5px;">
+    <af:panelHeader text="#{pageFlowScope.flowType eq 'S' ? ecrsviewcontrollerBundle.BROWSE__SEARCH : (pageFlowScope.flowType eq 'C' ? ecrsviewcontrollerBundle.CREATE : ecrsviewcontrollerBundle.UPDATE)}" id="ph1" size="1" inlineStyle="padding:5px;">
         <f:facet name="context"/>
         <f:facet name="menuBar"/>
         <f:facet name="toolbar"/>
