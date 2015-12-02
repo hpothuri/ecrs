@@ -18,10 +18,10 @@ import org.apache.log4j.Logger;
 
 public class CRSBean implements Serializable {
     // ******** VERSION **********
-    public static final String APP_VERSION = "1.0.0";
+    public static final String APP_VERSION = "01.07.00";
     public static final String APP_BUILD = "1";
-    public static final String APP_BUILD_DATE = "16-NOV-2015";
-    public static final String RESOURCE_BUNDLE_NAME = "ECRS";
+    public static final String APP_BUILD_DATE = "30-NOV-2015";
+    public static final String RESOURCE_BUNDLE_NAME = "eCRS";
     @SuppressWarnings("compatibility:-2309154444791405523")
     private static final long serialVersionUID = -719374587308101131L;
     private final String dbUrlString = "jdbc/EcrsDS";
@@ -33,6 +33,7 @@ public class CRSBean implements Serializable {
     private static String defaultBaseDictionaryShortName;
     private static Hashtable properties;
     private String initialize;
+    private String version;
 
     public CRSBean() {
         super();
@@ -138,5 +139,13 @@ public class CRSBean implements Serializable {
     public String refreshProperties() {
         loadProperties();
         return null;
+    }
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getVersion() {
+        version = "Version: " + APP_VERSION + "\nDate: " + APP_BUILD_DATE;
+        return version;
     }
 }

@@ -33,7 +33,10 @@
             <af:panelGroupLayout id="pt_pgl4" layout="vertical"
                                  inlineStyle="width:#{attrs.contentWidth};margin: 0 auto; background-color: white;">
                 <af:panelGroupLayout id="pt_pgl3" layout="horizontal" styleClass="AFStretchWidth">
-                    <af:commandImageLink id="pt_gil1" icon="/images/crs.png" action="home" immediate="true"/>
+                    <af:commandImageLink id="pt_gil1" icon="/images/crs.png" action="home" immediate="true"
+                                         shortDesc="#{applicationScope.crsBean.version}">
+                        <af:showPopupBehavior popupId="pt_p2" triggerType="click" align="overlap"/>
+                    </af:commandImageLink>
                     <af:panelGroupLayout id="pt_pgl2" layout="horizontal" halign="end"
                                          inlineStyle="white-space:nowrap; padding:5px;">
                         <af:commandButton text="Login" id="pt_cb1" visible="#{!securityContext.authenticated}">
@@ -61,7 +64,7 @@
                          inlineStyle=" font-weight: bold;     padding-right: 10px;"
                                             visible="#{securityContext.authenticated}"
                                             disabled="#{sessionScope.sessionBean.freezeMedDRAFlag}"/>
-                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.BROWSER__SEARCH}" id="cmi3" immediate="true"
+                        <af:commandMenuItem text="#{ecrsviewcontrollerBundle.BROWSE__SEARCH}" id="cmi3" immediate="true"
                                             action="browseSearch"  inlineStyle=" font-weight: bold;     padding-right: 10px;"/>
                         <af:menu text="#{ecrsviewcontrollerBundle.REPORTS}" id="pt_m2"
                                  inlineStyle="font-weight: bold;     padding-right: 10px;">
@@ -139,6 +142,12 @@
                         <af:commandButton text="Login" id="pt_cb3" action="#{sessionBean.doLogin}"/>
                     </af:panelFormLayout>
                 </af:noteWindow>
+            </af:popup>
+            <af:popup childCreation="deferred" autoCancel="disabled" id="pt_p2">
+                    <af:dialog id="pt_d3" title="eCRS" type="ok">
+                            <f:facet name="buttonBar"/>
+                            <af:outputText value="#{applicationScope.crsBean.version}" id="pt_ot4" noWrap="true"/>
+                    </af:dialog>
             </af:popup>
         </af:panelGroupLayout>
     </af:pageTemplateDef>
